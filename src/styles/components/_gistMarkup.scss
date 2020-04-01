@@ -1,0 +1,94 @@
+.gist {
+  @extend .font;
+  color: $lightText !important;
+  background: $mainBackground !important;
+  padding: 3px !important;
+  border: none !important;
+  overflow: auto !important;
+  .gist-data,
+  .gist-highlight,
+  .highlight,
+  .markdown-body,
+  .gist-file {
+    background-color: $mainBackground !important;
+    @extend .font;
+  }
+}
+
+.gist .markdown-body h1,
+.gist .markdown-body h2 {
+  border: none !important;
+}
+.gist .gist-file {
+  border: none !important;
+  margin-bottom: 0 !important;
+  background: $mainBackground !important;
+  padding: 4px !important;
+}
+
+.gist .gist-file .gist-meta {
+  display: none !important;
+  border: none !important;
+  border-bottom: none;
+}
+
+.gist .gist-file .gist-data {
+  //   background: inherit !important;
+  color: $lightText !important;
+  // background: #fff !important;
+  padding: 3px !important;
+  overflow: auto !important;
+  border: none !important;
+  border-bottom: none;
+}
+.gist .gist-file {
+  border: none !important;
+  margin-bottom: 0 !important;
+  background: $mainBackground !important;
+  padding: 4px !important;
+  border: none !important;
+  border-bottom: none;
+}
+
+.gist .gist-file .gist-meta {
+  display: none !important;
+  border: none !important;
+  border-bottom: none;
+}
+
+.gist .gist-file .gist-data {
+  //   background: inherit !important;
+  border: none !important;
+  border-bottom: none;
+}
+
+.gist .gist-file .gist-data pre {
+  background: transparent !important;
+  margin: 0 !important;
+  border: none !important;
+  padding: 0 !important;
+  border: none !important;
+  border-bottom: none;
+}
+
+.gist .gist-file .gist-data .gist-highlight {
+  background: transparent !important;
+  border: none !important;
+  border-bottom: none;
+}
+
+.gist pre .line {
+  line-height: 1.3 !important;
+  border: none !important;
+  border-bottom: none;
+}
+
+.gist .gist-file .gist-data pre {
+  // font-family: "Monaco", "Courier New", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", monospace !important;
+  background: transparent !important;
+  margin: 0 !important;
+  border: none !important;
+  padding: 0 !important;
+  border: none !important;
+  border-bottom: none;
+}

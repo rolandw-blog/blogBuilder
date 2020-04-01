@@ -1,0 +1,59 @@
+html {
+  display: block;
+}
+
+body {
+  background-color: $mainBackground;
+  color: $lightText;
+  // account for borders when calculating width
+  box-sizing: border-box;
+  // remove the scrollbar when its not needed
+  overflow: auto;
+}
+
+// for making a container full height
+.fullHeight {
+  height: 100vh;
+}
+
+// generic wrapper. DO NOT make full height
+#contentWrapper {
+  margin: auto 10vw;
+  overflow-wrap: break-word;
+
+  @include desktop {
+    margin: 0 25vw;
+  }
+  @include tablet {
+    margin: 0 20vw;
+  }
+}
+
+.avatar {
+  background-image: url("../media/avatar.svg");
+  background-repeat: no-repeat;
+  height: 300px;
+  width: auto;
+}
+
+ul, li {
+  margin: 0.5rem 0;
+}
+
+article {
+  margin: 5rem 0;
+}
+
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: #000000;
+  color: white;
+  padding: 8px;
+  z-index: 100;
+}
+
+.skip-link:focus {
+  top: 0;
+}

@@ -1,0 +1,203 @@
+<!doctype html><html lang=en><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="Roland's Blog and WWWebsite"><meta property=og:title content="Roland's Blog and WWWebsite"><meta property=og:type content=website><meta property=og:image content=https://www.rolandw.dev/media/favicon.png><meta property=og:url content=https://www.rolandw.dev/ ><meta name=twitter:card content=summary_large_image><meta name=twitter:site content=@RolandIRL><link rel=icon type=image/png href=/media/favicon.ico><title>Roland</title><style>html{display:none}</style><link rel=stylesheet type=text/css href=/lightTheme.css></head><body><div id=contentWrapper><nav><h1><a href=/Notes/Programming>Web Components</a></h1><div class=dynamic-nav><div id=nav-prev-link><a href=/Notes/Programming/Richpreviews(OGP)>Rich previews (OGP)</a></div><div id=nav-next-link><a href=#>-</a></div></div></nav>sup<article><h1 id=web-components>Web components</h1><p>Web components are a modern way of writing components like you would in many front end javascript frameworks. But with the benefit of being baked into vanilla javascript.</p><p>Web Components are relatively well supported across the web and while i have not dived too far into using them i definitely plan to in the future for some web projects. They are great for when you need to reuse a lot of HTML but change the content inside.</p><p>An important note that i found early on was that <strong>Web Components are NOT HTML imports</strong>. HTML imports are a separate (now deprecated) and similar way of achieving what web components do. except without the use of the three technologies that make up web components, which i have listed below.</p><h2 id=web-components-are-made-up-of-these-things>Web components are made up of these things</h2><ol><li>Custom Elements<ol><li>Think of a component in react. This is what a web component is</li></ol></li><li>Shadow Dom<ol><li>Shadow DOMs help you build components</li><li>You can think of shadow DOM as a scoped subtree inside your element.</li><li>A shadow DOM is like talking a small DOM and putting it inside of a single element</li></ol></li><li>HTML Templates<ol><li>A template is a skeleton that has content injected into it when it is loaded into the Shadow DOM</li><li>A template is a template literal in javascript</li><li>You can pass arguments (think of props) to a template. And slots with written content to render in your template</li></ol></li></ol><h1 id=using-a-custom-element>Using a custom element</h1><ul><li>Create a custom HTML tag like <code>&lt;header&gt;</code> or <code>&lt;footer&gt;</code></li><li>You can also extend existing HTML tags of make them from scratch</li></ul><pre><code class=language-javascript><span class=hljs-class><span class=hljs-keyword>class</span> <span class=hljs-title>Header</span> <span class=hljs-keyword>extends</span> <span class=hljs-title>HTMLElement</span> </span>{...}
+window.customElements.define(<span class=hljs-string>"header"</span>, headerClass)
+
+<span class=hljs-comment>// now we can use &lt;header&gt; element in our HTML</span></code></pre><h2 id=custom-elements-life-cycle-methods>Custom elements life cycle methods</h2><p>The life cycle works much like the life cycle of a component in react Elements can take custom attributes (think of props)</p><ul><li>constructor() works like a normal constructor</li><li>connectedCallback() called every time the element is inserted into the DOM</li><li>disconnectedCallback() opposite of connectedCallback</li><li>attributeChangedCallback(attName, oldVal, newVal)<ul><li>called when an attribute is added, removed, updated, or replaced</li></ul></li></ul><h2 id=shadow-dom>Shadow DOM</h2><ul><li>Used for self contained components</li><li>encapsulates styles and markup<ul><li>separates its own styles from the global css of the webpage</li></ul></li></ul><pre><code class=language-html><span class=xml><span class=hljs-comment>&lt;!-- Create an "open" element that 
+we can interact with using dev tools --&gt;</span>
+element.attachShadow(</span><span class=hljs-template-variable>{mode: open}</span><span class=xml>) </span></code></pre><h2 id=html-templates>HTML templates</h2><ul><li>Used to define encapsulated markup for a web components</li><li>Includes both HTML and CSS in the template</li><li>The template can be dynamic with the use of &quot;slots&quot;</li></ul><h1 id=a-simple-web-component>A simple web component</h1><pre><code class=language-html><span class=hljs-comment>&lt;!-- Passing in a prop to the component --&gt;</span>
+<span class=hljs-tag>&lt;<span class=hljs-name>user-card</span> <span class=hljs-attr>name</span>=<span class=hljs-string>"Roland"</span>&gt;</span><span class=hljs-tag>&lt;/<span class=hljs-name>user-card</span>&gt;</span></code></pre><pre><code class=language-javascript><span class=hljs-comment>// Define the component as a class called UserCard</span>
+<span class=hljs-class><span class=hljs-keyword>class</span> <span class=hljs-title>UserCard</span> <span class=hljs-keyword>extends</span> <span class=hljs-title>HTMLElement</span> </span>{
+  constructor() {
+    <span class=hljs-comment>// call the constructor of HTMLElement too with super</span>
+    <span class=hljs-keyword>super</span>();
+    <span class=hljs-comment>// do something with the props</span>
+    <span class=hljs-keyword>this</span>.innerHTML = `<span class=hljs-type>Hello</span> ${<span class=hljs-keyword>this</span>.getAttribute(<span class=hljs-string>"name"</span>)}`
+  }
+}
+
+<span class=hljs-comment>// Associate the class UserCard with the element name </span>
+<span class=hljs-comment>// that we want to use in the DOM, ("user-card")</span>
+window.customElements.define(<span class=hljs-string>"user-card"</span>, <span class=hljs-type>UserCard</span>)</code></pre><p><img src=/media/SimpleComponent.png alt="Simple Web Component"></p><h1 id=styling-web-components-and-the-shadow-dom>Styling web components and the Shadow DOM</h1><p>The above element is not using the shadow DOM. It will inherit global styles and does not have access to the shadow DOMs life cycle methods. Using the shadow DOM in this example will separate it from the global styles so that the component will not inherit any styles and will have its own subtree in the DOM to manipulate.</p><p>Note that i have noticed that the Shadow DOM does not play nicely with the <a href="https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer">Live Server</a> Plugin on VS Code. So if doesn&#39;t work there, try experimenting with it on <a href=https://jsfiddle.net/RolandFiddles/zs2aeLv5/6/ >JSFiddle</a>.</p><p>Also remember to put a semicolon at the end of the template literal! This caused as lot of headaches.</p><pre><code class=language-html><span class=hljs-comment>&lt;!-- this style only applies to the vanilla h3 --&gt;</span>
+<span class=hljs-tag>&lt;<span class=hljs-name>style</span>&gt;</span><span class=css>
+  <span class=hljs-selector-tag>h3</span> {
+    <span class=hljs-attribute>color</span>: green;
+  }
+</span><span class=hljs-tag>&lt;/<span class=hljs-name>style</span>&gt;</span>
+<span class=hljs-tag>&lt;<span class=hljs-name>h3</span>&gt;</span>hello world<span class=hljs-tag>&lt;/<span class=hljs-name>h3</span>&gt;</span>
+<span class=hljs-comment>&lt;!-- pass in a "name" as a prop to this web component --&gt;</span>
+<span class=hljs-tag>&lt;<span class=hljs-name>user-card</span> <span class=hljs-attr>name</span>=<span class=hljs-string>"Roland"</span>&gt;</span><span class=hljs-tag>&lt;/<span class=hljs-name>user-card</span>&gt;</span></code></pre><pre><code class=language-javascript><span class=hljs-comment>// create a new div element in the DOM with its own styles</span>
+const template = document.createElement(<span class=hljs-string>"template"</span>);
+<span class=hljs-comment>// the template is just a frame. the h3 tag stays empty</span>
+<span class=hljs-comment>// content in the h3 is injected in the UserCard class</span>
+template.innerHTMl = `
+&lt;style&gt;
+  h3 {
+    color: blue;
+  }
+&lt;/style&gt;
+
+&lt;div <span class=hljs-class><span class=hljs-keyword>class</span></span>=<span class=hljs-string>"myClass"</span>&gt;
+    &lt;h3&gt;&lt;/h3&gt;
+&lt;/div&gt;
+`;
+
+<span class=hljs-class><span class=hljs-keyword>class</span> <span class=hljs-title>UserCard</span> <span class=hljs-keyword>extends</span> <span class=hljs-title>HTMLElement</span> </span>{
+  constructor() {
+    <span class=hljs-comment>// call the constructor of HTMLElement too</span>
+    <span class=hljs-keyword>super</span>();
+
+    <span class=hljs-comment>// Create a shadow DOM</span>
+    <span class=hljs-keyword>this</span>.attachShadow({mode: <span class=hljs-string>"open"</span>});
+
+    <span class=hljs-comment>// Attach the template above to the shadow DOM</span>
+    <span class=hljs-keyword>this</span>.shadowRoot.appendChild(template.content.cloneNode(<span class=hljs-literal>true</span>));
+
+    <span class=hljs-comment>// Inject some content from the props that we passed in</span>
+    <span class=hljs-keyword>this</span>.shadowRoot.querySelector(<span class=hljs-string>"h3"</span>)
+    .innerText = <span class=hljs-keyword>this</span>.getAttribute(<span class=hljs-string>"name"</span>);
+  }
+}
+
+window.customElements.define(<span class=hljs-string>"user-card"</span>, <span class=hljs-type>UserCard</span>);</code></pre><p><img src=/media/ShadowDom.png alt="Shadow Dom"></p><h1 id=multi-attribute-web-components>Multi attribute Web Components</h1><p>You can pass multiple arguments to a component.</p><pre><code class=language-html><span class=hljs-comment>&lt;!-- pass in a "name" and an "avatar"  --&gt;</span>
+<span class=hljs-tag>&lt;<span class=hljs-name>user-card</span> 
+<span class=hljs-attr>name</span>=<span class=hljs-string>"roland"</span> 
+<span class=hljs-attr>avatar</span>=<span class=hljs-string>"https://randomuser.me/api/portraits/men/1.jpg"</span>&gt;</span>
+<span class=hljs-tag>&lt;/<span class=hljs-name>user-card</span>&gt;</span>
+</code></pre><pre><code class=language-javascript><span class=hljs-comment>// create a new div element in the DOM with its own styles</span>
+const template = document.createElement(<span class=hljs-string>"template"</span>);
+
+<span class=hljs-comment>// the template is just a frame. the all its tags are empty</span>
+<span class=hljs-comment>// content will be injected in later</span>
+template.innerHTML = `
+&lt;style&gt;
+h3 {
+    color: blue;
+}
+&lt;/style&gt;
+
+&lt;div <span class=hljs-class><span class=hljs-keyword>class</span></span>=<span class=hljs-string>"user-card"</span>&gt;
+  &lt;img /&gt;
+  &lt;h3&gt;&lt;/h3&gt;
+&lt;/div&gt;
+`;
+
+<span class=hljs-class><span class=hljs-keyword>class</span> <span class=hljs-title>UserCard</span> <span class=hljs-keyword>extends</span> <span class=hljs-title>HTMLElement</span> </span>{
+  constructor() {
+  <span class=hljs-comment>// Call the constructor of HTMLElement too</span>
+  <span class=hljs-keyword>super</span>();
+
+    <span class=hljs-comment>// Create a shadow DOM</span>
+  <span class=hljs-keyword>this</span>.attachShadow({mode: <span class=hljs-string>"open"</span>});
+
+  <span class=hljs-comment>// Attach the template above to the shadow DOM</span>
+  <span class=hljs-keyword>this</span>.shadowRoot.appendChild(template.content.cloneNode(<span class=hljs-literal>true</span>));
+
+  <span class=hljs-comment>// Inject some content from the props that we passed in</span>
+  <span class=hljs-keyword>this</span>.shadowRoot.querySelector(<span class=hljs-string>"h3"</span>)
+  .innerText = <span class=hljs-keyword>this</span>.getAttribute(<span class=hljs-string>"name"</span>);
+
+  <span class=hljs-comment>// Inject some content for an image</span>
+  <span class=hljs-keyword>this</span>.shadowRoot.querySelector(<span class=hljs-string>"img"</span>).src = <span class=hljs-keyword>this</span>.getAttribute(<span class=hljs-string>"avatar"</span>);
+  }
+
+}
+
+window.customElements.define(<span class=hljs-string>"user-card"</span>, <span class=hljs-type>UserCard</span>);
+</code></pre><h2 id=slots>Slots</h2><p>Slots are content passed to the component inside the body. In this example Hello is the &quot;slot&quot;.</p><p>Pass a slot into the template using the slot=&quot;slotName&quot; HTML below.</p><pre><code class=language-html><span class=hljs-tag>&lt;<span class=hljs-name>user-card</span> <span class=hljs-attr>name</span>=<span class=hljs-string>"roland"</span>&gt;</span>
+  <span class=hljs-comment>&lt;!-- This is a slot! --&gt;</span>
+  <span class=hljs-comment>&lt;!-- A slot always begins with slot="" --&gt;</span>
+  <span class=hljs-comment>&lt;!-- You can then use "message" as an ID in the template --&gt;</span>
+  <span class=hljs-tag>&lt;<span class=hljs-name>div</span> <span class=hljs-attr>slot</span>=<span class=hljs-string>"message"</span>&gt;</span>Hello<span class=hljs-tag>&lt;/<span class=hljs-name>div</span>&gt;</span>
+<span class=hljs-tag>&lt;/<span class=hljs-name>user-card</span>&gt;</span></code></pre><pre><code class=language-javascript>const template = document.createElement(<span class=hljs-string>"template"</span>);
+template.innerHTML = `
+&lt;style&gt;
+  h3 {
+    color: blue;
+  }
+&lt;/style&gt;
+
+&lt;h1&gt;&lt;slot name=<span class=hljs-string>"message"</span> /&gt;&lt;/h1&gt;
+&lt;h3&gt;&lt;/h3&gt;
+`;
+
+
+<span class=hljs-class><span class=hljs-keyword>class</span> <span class=hljs-title>UserCard</span> <span class=hljs-keyword>extends</span> <span class=hljs-title>HTMLElement</span> </span>{
+  constructor() {
+    <span class=hljs-keyword>super</span>();
+
+    <span class=hljs-comment>// Create a shadow DOM</span>
+    <span class=hljs-keyword>this</span>.attachShadow({mode: <span class=hljs-string>"open"</span>});
+
+    <span class=hljs-comment>// Attach the template above to the shadow DOM</span>
+    <span class=hljs-keyword>this</span>.shadowRoot.appendChild(template.content.cloneNode(<span class=hljs-literal>true</span>));
+
+    <span class=hljs-comment>// Inject some content from the props that we passed in</span>
+    <span class=hljs-keyword>this</span>.shadowRoot.querySelector(<span class=hljs-string>"h3"</span>)
+    .innerText = <span class=hljs-keyword>this</span>.getAttribute(<span class=hljs-string>"name"</span>);
+  }
+
+}
+
+window.customElements.define(<span class=hljs-string>"user-card"</span>, <span class=hljs-type>UserCard</span>);</code></pre><h1 id=event-listeners---do-something-when-an-element-is-mounted>Event listeners - Do something when an element is mounted</h1><pre><code class=language-html><span class=hljs-tag>&lt;<span class=hljs-name>user-card</span> <span class=hljs-attr>name</span>=<span class=hljs-string>"John Doe"</span>&gt;</span>
+  <span class=hljs-tag>&lt;<span class=hljs-name>div</span> <span class=hljs-attr>slot</span>=<span class=hljs-string>"message"</span>&gt;</span>Hello<span class=hljs-tag>&lt;/<span class=hljs-name>div</span>&gt;</span>
+<span class=hljs-tag>&lt;/<span class=hljs-name>user-card</span>&gt;</span></code></pre><pre><code class=language-javascript><span class=hljs-keyword>const</span> template = document.createElement(<span class=hljs-string>"template"</span>);
+template.innerHTML = `
+&lt;style&gt;
+  h3 {
+    color: blue;
+  }
+&lt;/style&gt;
+
+&lt;h1 id=<span class=hljs-string>"targetMe"</span>&gt;&lt;slot name=<span class=hljs-string>"message"</span> /&gt;&lt;/h1&gt;
+&lt;h3&gt;&lt;/h3&gt;
+&lt;button id=<span class=hljs-string>"toggle"</span>&gt;Hide&lt;/button&gt;
+`;
+
+
+<span class=hljs-class><span class=hljs-keyword>class</span> <span class=hljs-title>UserCard</span> <span class=hljs-title>extends</span> <span class=hljs-title>HTMLElement</span> </span>{
+  <span class=hljs-keyword>constructor</span>() {
+    <span class=hljs-keyword>super</span>();
+
+    <span class=hljs-keyword>this</span>.myToggle = <span class=hljs-literal>false</span>
+
+    <span class=hljs-comment>// Create a shadow DOM</span>
+    <span class=hljs-keyword>this</span>.attachShadow({
+      mode: <span class=hljs-string>"open"</span>
+    });
+    <span class=hljs-comment>// Attach the template above to the shadow DOM</span>
+    <span class=hljs-keyword>this</span>.shadowRoot.appendChild(
+      template.content.cloneNode(<span class=hljs-literal>true</span>)
+      );
+    <span class=hljs-comment>// Inject some content from the props that we passed in</span>
+    <span class=hljs-keyword>this</span>.shadowRoot.querySelector(<span class=hljs-string>"h3"</span>)
+    .innerText = <span class=hljs-keyword>this</span>.getAttribute(<span class=hljs-string>"name"</span>);
+  }
+
+  myFunction() {
+    <span class=hljs-keyword>this</span>.myToggle = !<span class=hljs-keyword>this</span>.myToggle
+
+    <span class=hljs-keyword>const</span> target = <span class=hljs-keyword>this</span>.shadowRoot.querySelector(<span class=hljs-string>"#targetMe"</span>)
+    <span class=hljs-keyword>const</span> button = <span class=hljs-keyword>this</span>.shadowRoot.querySelector(<span class=hljs-string>"#toggle"</span>)
+
+    <span class=hljs-keyword>if</span>(<span class=hljs-keyword>this</span>.myToggle) {
+        target.style.display = <span class=hljs-string>"none"</span>
+      button.innerText = <span class=hljs-string>"Show"</span>
+    } <span class=hljs-keyword>else</span> {
+        target.style.display = <span class=hljs-string>"block"</span>
+      button.innerText = <span class=hljs-string>"Hide"</span>
+    }
+  }
+
+  <span class=hljs-comment>// Do something when mounted. Add an event listener in this case </span>
+  connectedCallback() {
+    <span class=hljs-keyword>this</span>.shadowRoot.querySelector(<span class=hljs-string>"#toggle"</span>)
+    .addEventListener(<span class=hljs-string>"click"</span>, () =&gt; <span class=hljs-keyword>this</span>.myFunction())
+  }
+
+  <span class=hljs-comment>// Do something when dismounted. Remove the event listener</span>
+  disconnectedCallback() {
+    <span class=hljs-keyword>this</span>.shadowRoot.querySelector(<span class=hljs-string>"#toggle"</span>).removeEventListener()
+  }
+
+}
+
+window.customElements.define(<span class=hljs-string>"user-card"</span>, UserCard);</code></pre></article></div><link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel=stylesheet></body></html>
