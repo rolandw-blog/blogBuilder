@@ -47,7 +47,7 @@ const generateHtmlpage = async function (templateData, filepath, githubToken) {
 		const count = templateData.target.length
 		
 		for(let i = 0; i < count; i ++) {
-			const response = await fetch(templateData.target[i].replace("TOKEN", githubToken));
+			const response = await fetch(templateData.target[i].replace("TOKEN", githubToken.trim()));
 			const result = await response.text();
 			data = await data + result
 		}

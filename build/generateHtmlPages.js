@@ -24,7 +24,7 @@ const minifyOptions = {
 module.exports = async () => {
 	let routeCounter = 0
 	const fp = path.resolve(process.cwd(), "githubToken.txt")
-	const githubToken = fs.readFileSync(fp)
+	const githubToken = fs.readFileSync(fp, "utf-8")
 
 	for await (const filepath of readdirp("./src/views")) {
 

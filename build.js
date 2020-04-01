@@ -4,6 +4,7 @@ const generateHtmlPages = require('./build/generateHtmlPages');
 const renderSass = require('./build/renderSass')
 const log = require('./build/log')
 
+process.chdir("/home/roland/staticFolio")
 
 // get some file directories to use later
 const viewsDir = path.resolve(process.cwd(), 'src/views')
