@@ -1,6 +1,4 @@
-const page = `
-
-`;
+const page = ``;
 
 module.exports = {
     page: page, 
