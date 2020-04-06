@@ -21,5 +21,6 @@ fs.copy(path.resolve(appRootPath, 'src/media'), path.resolve(appRootPath, 'dist/
 
 renderSass('src/styles/styles.scss', 'dist/app.css')
 renderSass('src/styles/light.scss', 'dist/lightTheme.css')
+renderSass('src/styles/gist.scss', 'dist/gist.css')
 
 generateHtmlPages()

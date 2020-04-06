@@ -1,116 +1,55 @@
 html {
-  font-size: calc(16px + 0.25vw);
-  font-family: "Roboto", sans-serif;
-  //   * {
-  //     @include desktop {
-  //       font-size: calc(1rem + 0.3vw);
-  //     }
-  //     @include tablet {
-  //       font-size: calc(1rem + 0.15vw);
-  //     }
-  //   }
+	font-size: calc(16px + 0.25vw);
+	font-family: "Roboto", sans-serif;
+	//   * {
+	//     @include desktop {
+	//       font-size: calc(1rem + 0.3vw);
+	//     }
+	//     @include tablet {
+	//       font-size: calc(1rem + 0.15vw);
+	//     }
+	//   }
 }
 
+// ==========================================
+// HEADINGS
+// ==========================================
 h1 {
-  font-size: 2rem;
+	font-size: 2rem;
 }
 
 h2 {
-  font-size: 1.5rem;
+	font-size: 1.5rem;
 }
 
 h3 {
-  font-size: 1.25rem;
+	font-size: 1.25rem;
 }
 
+// ==========================================
+// MISC COMPONENTS
+// ==========================================
 .dynamic-nav {
-  font-size: 0.75rem;
+	font-size: 0.75rem;
 }
 
 .bold {
-  font-weight: bold;
-}
-
-.title {
-  margin: 2rem 0;
+	font-weight: bold;
 }
 
 .underline {
-  text-decoration: underline;
+	text-decoration: underline;
 }
 
-article {
-  // style ULs
-  ul {
-    margin-left: 1rem;
-    * {
-      list-style-type: disc;
-    }
-    ul {
-      margin-left: 1rem;
-      li {
-        list-style-type: upper-roman;
-      }
-      ul {
-        margin-left: 1rem;
-      }
-    }
-  }
-
-  blockquote {
-    background-color: darken($mainBackground, 10%);
-    padding: 0.125rem 2ch;
-  }
-
-  pre {
-    // color: $darkText;
-    // font-weight: bolder;
-    background-color: invert($mainBackground);
-    padding: 2rem;
-    margin: 2rem 0;
-    overflow-x: scroll;
-  }
-
-  code {
-    article li * {
-      margin-left: 0;
-    }
-  }
-
-  // style OLs
-  ol,
-  li {
-    list-style-type: decimal-leading-zero;
-    margin-left: 2rem;
-  }
-
-  // give headings emphasis
-  h1 {
-    @extend .underline;
-    @extend .emLink;
-    padding: 0;
-    margin-top: 4rem;
-  }
-
-  h1,
-  h2 {
-    margin-top: 4rem;
-  }
-
-  p {
-    margin: 2rem 0;
-    &::first-letter {
-      text-transform: uppercase;
-    }
-  }
-}
-
+// ==========================================
+// TABLES
+// ==========================================
 table {
-  * {
-    text-align: left;
-    margin: 0.5rem;
-  }
-  td {
-    margin: 0.5rem;
-  }
+	* {
+		text-align: left;
+		margin: 0.5rem;
+	}
+	td {
+		margin: 0.5rem;
+	}
 }

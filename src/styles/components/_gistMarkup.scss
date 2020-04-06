@@ -1,94 +1,91 @@
-.gist {
-  @extend .font;
-  color: $lightText !important;
-  background: $mainBackground !important;
-  padding: 3px !important;
-  border: none !important;
-  overflow: auto !important;
-  .gist-data,
-  .gist-highlight,
-  .highlight,
-  .markdown-body,
-  .gist-file {
-    background-color: $mainBackground !important;
-    @extend .font;
-  }
-}
+// ==========================================
+// GIST STYLES
+// ==========================================
+article {
+	// First level indent
+	ul {
+		* {
+			list-style-type: disc;
+		}
+	}
+	ol {
+		* {
+			list-style-type: decimal-leading-zero;
+		}
+	}
+	ul,
+	ol,
+	p {
+		li,
+		p {
+			margin-left: 1.5rem;
+		}
+		pre {
+			// re adjust code blocks to start of parent
+			margin-left: -2rem;
+		}
+		// Second level indent
+		ul,
+		ol {
+			li,
+			p {
+				margin-left: 2rem;
+			}
+			pre {
+				// re adjust code blocks to start of parent
+				margin-left: -2rem;
+			}
+			// Third level indent
+			ul,
+			ol {
+				li,
+				p {
+					margin-left: 2rem;
+					// list-style-type: disc;
+				}
+				pre {
+					// re adjust code blocks to start of parent
+					margin-left: -2rem;
+				}
+			}
+		}
+	}
 
-.gist .markdown-body h1,
-.gist .markdown-body h2 {
-  border: none !important;
-}
-.gist .gist-file {
-  border: none !important;
-  margin-bottom: 0 !important;
-  background: $mainBackground !important;
-  padding: 4px !important;
-}
+	blockquote p {
+		background-color: darken($mainBackground, 10%);
+		padding: 1ch;
+		margin: 2ch 0;
+		font-style: italic;
+		quotes: "\"" "\"" "\'" "\'";
+		&::before {
+			content: open-quote;
+		}
 
-.gist .gist-file .gist-meta {
-  display: none !important;
-  border: none !important;
-  border-bottom: none;
-}
+		&::after {
+			content: close-quote;
+		}
+	}
 
-.gist .gist-file .gist-data {
-  //   background: inherit !important;
-  color: $lightText !important;
-  // background: #fff !important;
-  padding: 3px !important;
-  overflow: auto !important;
-  border: none !important;
-  border-bottom: none;
-}
-.gist .gist-file {
-  border: none !important;
-  margin-bottom: 0 !important;
-  background: $mainBackground !important;
-  padding: 4px !important;
-  border: none !important;
-  border-bottom: none;
-}
+	pre {
+		font-weight: bolder;
+		background-color: invert($mainBackground);
+		padding: 1rem;
+		margin: 2rem 0;
+		overflow-x: auto;
+	}
 
-.gist .gist-file .gist-meta {
-  display: none !important;
-  border: none !important;
-  border-bottom: none;
-}
+	// give headings emphasis
+	h1 {
+		@extend .emLink;
+	}
 
-.gist .gist-file .gist-data {
-  //   background: inherit !important;
-  border: none !important;
-  border-bottom: none;
-}
-
-.gist .gist-file .gist-data pre {
-  background: transparent !important;
-  margin: 0 !important;
-  border: none !important;
-  padding: 0 !important;
-  border: none !important;
-  border-bottom: none;
-}
-
-.gist .gist-file .gist-data .gist-highlight {
-  background: transparent !important;
-  border: none !important;
-  border-bottom: none;
-}
-
-.gist pre .line {
-  line-height: 1.3 !important;
-  border: none !important;
-  border-bottom: none;
-}
-
-.gist .gist-file .gist-data pre {
-  // font-family: "Monaco", "Courier New", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", monospace !important;
-  background: transparent !important;
-  margin: 0 !important;
-  border: none !important;
-  padding: 0 !important;
-  border: none !important;
-  border-bottom: none;
+	h1,
+	h2,
+	h3,
+	h4,
+	h5 {
+		margin-top: 4rem;
+		padding: 0;
+		text-decoration: underline;
+	}
 }
