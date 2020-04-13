@@ -66,13 +66,22 @@ article {
 		}
 	}
 
-	// code
+	// code blocks
 	pre {
 		font-weight: bolder;
 		background-color: darken($mainBackground, 20%);
 		padding: 1rem;
 		margin: 2rem 0;
 		overflow-x: auto;
+		code {
+			background-color: unset;
+		}
+	}
+
+	// inline code
+	code {
+		background-color: darken($mainBackground, 20%);
+		padding: 0 0.5ch;
 	}
 
 	// give headings emphasis
