@@ -6,6 +6,7 @@ const emoji = require('node-emoji');
 const minify = require('html-minifier').minify;
 const colors = require('colors');
 const mkdirp = require('mkdirp')
+require('dotenv').config()
 
 const generateHtmlPage = require('./generateHtmlPage')
 
@@ -23,7 +24,7 @@ const minifyOptions = {
 
 module.exports = async () => {
 	let routeCounter = 0
-	const fp = path.resolve(process.cwd(), "githubToken.txt")
+	const fp = path.resolve(process.env.ROOT, "githubToken.txt")
 	const githubToken = fs.readFileSync(fp, "utf-8")
 
 	for await (const filepath of readdirp("./src/views")) {
@@ -45,8 +46,8 @@ module.exports = async () => {
 		// the directory structure should look like...
 		// EG: views/notes will belong in dist/notes/index.html
 		const writeDir = (filepath.path != "index.js") ?
-			path.resolve(process.cwd(), "dist", path.parse(filepath.path).dir, path.parse(filepath.path).name).replace(/\s/g, '')
-			: path.resolve(process.cwd(), "dist").replace(/\s/g, '')
+			path.resolve(process.env.ROOT, "dist", path.parse(filepath.path).dir, path.parse(filepath.path).name).replace(/\s/g, '')
+			: path.resolve(process.env.ROOT, "dist").replace(/\s/g, '')
 
 		// make the dir with -p (recursive) and then write it to writeDir/index.html 
 		mkdirp(writeDir).then(dirname => { write(writeDir + "/index.html", html) })

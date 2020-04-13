@@ -3,6 +3,7 @@ const listFilesInDir = require('../build/listFilesInDir')
 const getRoutePositionInDir = require('../build/getRoutePositionInDir')
 const getLinkToHtmlFilepath = require('../build/getLinkToHtmlFilepath');
 const getFilepathNeighbours = require('../build/getFilepathNeighbours');
+require('dotenv').config()
 
 describe("Test listFilesInDir", () => {
 	test("Check if a path exists", () => {
@@ -15,7 +16,7 @@ describe("Test getRoutePositionInDir", () => {
 	test("get Route Position In Dir", () => {
 		expect(getRoutePositionInDir("tests/testViews", "about.js")).toEqual(0);
 		expect(getRoutePositionInDir("tests/testViews", "index.js")).toEqual(1);
-		expect(getRoutePositionInDir(path.resolve(process.cwd(), "src/views/notes"), "page3.js")).toEqual(0);
+		expect(getRoutePositionInDir(path.resolve(process.env.ROOT, "src/views/notes"), "page3.js")).toEqual(0);
 		expect(getRoutePositionInDir("/home/roland/Documents/Projects/folioSite/test2/src/views/notes", "page5.js")).toEqual(1);
 	});
 });

@@ -66,9 +66,10 @@ article {
 		}
 	}
 
+	// code
 	pre {
 		font-weight: bolder;
-		background-color: invert($mainBackground);
+		background-color: darken($mainBackground, 20%);
 		padding: 1rem;
 		margin: 2rem 0;
 		overflow-x: auto;

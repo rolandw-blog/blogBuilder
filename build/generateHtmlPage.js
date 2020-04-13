@@ -7,6 +7,7 @@ const log = require('./log')
 const hljs = require('highlight.js')
 const getFilepathNeighbours = require('./getFilepathNeighbours');
 const getPrevPath = require('./getPrevPath');
+require('dotenv').config()
 
 marked.setOptions({
 	highlight: function (code) {
@@ -32,7 +33,7 @@ const generateHtmlpage = async function (templateData, filepath, githubToken) {
 	if (templatePath == null) templatePath = "./templates/template.ejs"
 
 	// get the templateFile for this route
-	const templateFile = await fs.readFileSync(path.resolve(process.cwd(), templatePath), "utf-8")
+	const templateFile = await fs.readFileSync(path.resolve(process.env.ROOT, templatePath), "utf-8")
 
 	// get the page content from the js file by requiring the modules page
 	templateData.content = await require(filepath.fullPath).page
@@ -40,6 +41,9 @@ const generateHtmlpage = async function (templateData, filepath, githubToken) {
 	// get the target (if any) from the js file by requiring the modules target
 	// .target referrers to the online content that this page wants to pull
 	templateData.target = await require(filepath.fullPath).target
+
+	// pass down the root env variable to make it accessible in the template
+	templateData.ROOT = process.env.ROOT
 
 	// Fetch content from github if the page exported any target link
 	if (templateData.target != null) {
@@ -50,12 +54,15 @@ const generateHtmlpage = async function (templateData, filepath, githubToken) {
 			const response = await fetch(templateData.target[i].replace("TOKEN", githubToken.trim()));
 			const result = await response.text();
 			data = await data + "\n" + result
+			// console.log(templateData.target[i])
 		}
 
 		templateData.target = marked(data);
+		templateData.styles = "<link rel=\"stylesheet\" type=\"text/css\" href=\"/an-old-hope.css\">"
 	} else {
 		// return nothing because there was no content to load
 		templateData.target = undefined
+		templateData.styles = undefined
 	}
 
 	// render html from the template provided. and bake in the templateData json object
