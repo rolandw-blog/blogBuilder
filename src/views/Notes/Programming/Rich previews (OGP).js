@@ -1,6 +1,4 @@
-const page = `
-sup
-`;
+const page = ``;
 
 module.exports = {
     page: page, 
