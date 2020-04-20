@@ -24,8 +24,6 @@ const minifyOptions = {
 
 module.exports = async () => {
 	let routeCounter = 0
-	const fp = path.resolve(process.env.ROOT, "githubToken.txt")
-	const githubToken = fs.readFileSync(fp, "utf-8")
 
 	for await (const filepath of readdirp("./src/views")) {
 
@@ -34,7 +32,7 @@ module.exports = async () => {
 
 		// wait for the generated page to be loaded in
 		// html page comes back with all content injected
-		let html = await generateHtmlPage(templateData, filepath, githubToken)
+		let html = await generateHtmlPage(templateData, filepath, process.env.GITHUB_TOKEN)
 
 		// parse it for emoji
 		html = emoji.emojify(html)
