@@ -9,7 +9,7 @@
     "start:v": "rm -rf dist/* && node build.js -v",
     "server": "node server.js",
     "monitor": "rm -rf dist/* && concurrently \"nodemon build.js\" \"node server.js\"",
-    "monitor:sass": "concurrently \"npm run server\" \"nodemon build/rendersass.js -e .scss\""
+    "monitor:sass": "concurrently \"npm run server\" \"nodemon build/renderSassOnly.js -e .scss\""
   },
   "keywords": [],
   "author": "",

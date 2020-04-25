@@ -51,12 +51,13 @@ article {
 		}
 	}
 
+	// quotes
 	blockquote p {
 		background-color: darken($mainBackground, 10%);
 		padding: 1ch;
 		margin: 2ch 0;
 		font-style: italic;
-		quotes: "\"" "\"" "\'" "\'";
+		quotes: '"''"'"'""'";
 		&::before {
 			content: open-quote;
 		}
@@ -93,9 +94,34 @@ article {
 	h2,
 	h3,
 	h4,
-	h5 {
-		margin-top: 4rem;
+	h5,
+	h6 {
+		margin-top: 4ch;
 		padding: 0;
 		text-decoration: underline;
+	}
+
+	p {
+		margin: 3ch 0;
+	}
+
+	img {
+		overflow: hidden;
+		max-width: 80%;
+	}
+
+	// tables
+	table,
+	th,
+	td {
+		border: 1px solid black;
+		border-collapse: collapse;
+	}
+
+	// table cells
+	th,
+	td {
+		padding: 1ch;
+		background-color: darken($mainBackground, 20%);
 	}
 }
