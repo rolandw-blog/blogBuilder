@@ -1,0 +1,7 @@
+[Timer]
+OnBootSec=10 m
+OnCalendar=daily
+Unit=website.service
+
+[Install]
+WantedBy=timers.target
