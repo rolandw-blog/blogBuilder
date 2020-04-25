@@ -31,6 +31,7 @@
     "node-fetch": "^2.6.0",
     "node-sass": "^4.13.1",
     "nodemon": "^2.0.2",
+    "progress": "^2.0.3",
     "readdirp": "^3.4.0",
     "yargs": "^15.3.1"
   }
