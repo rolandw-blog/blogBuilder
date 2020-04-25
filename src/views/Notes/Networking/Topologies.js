@@ -6,6 +6,6 @@ const content = "https://raw.githubusercontent.com/RolandWarburton/knowledge/mas
 
 module.exports = {
     page: page, 
-	target: [],
+	target: [content],
 	template: "templates/navigablePage.ejs"
 };
