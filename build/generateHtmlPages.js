@@ -23,68 +23,71 @@ const minifyOptions = {
 }
 
 module.exports = async () => {
-	let routeCounter = 0
+	let pageTotal = 0
+	let pageCurrent = 0
 
 	const pages = [];
 
-	// ========================================
-	// get every page in the directory
-	for await (const filepath of readdirp("./src/views")) {
-		pages.push(filepath)
-	}
-	console.log(`${pages.length} routes found`)
+	// Get every page in the src/views and concurrently generate and write html to dist
+	readdirp("./src/views", { fileFilter: '*.js', alwaysStat: false })
+		.on('data', (filepath) => {
+			// increment the total number of pages found
+			pageTotal++
+			pages.push(filepath)
 
+			// =====================================
+			// Create the page
+			// =====================================
 
-	// ========================================
-	// for each filepath in src/views
-	pages.forEach((filepath) => {
+			// you could put some static information here
+			templateData = {}
 
-		// you could put some static information here
-		templateData = {}
+			// generated the html page
+			// html page comes back with all content injected
+			generateHtmlPage(templateData, filepath, process.env.GITHUB_TOKEN)
+				.then((html) => {
+					// Emojify it 💯
+					return emoji.emojify(html)
+				})
+				.then((html) => {
+					// Minify it 🗜
+					return minify(html, minifyOptions)
+				})
+				.then((html) => {
+					// Write it to dist 📤
 
-		// generated the html page
-		// html page comes back with all content injected
-		generateHtmlPage(templateData, filepath, process.env.GITHUB_TOKEN)
-			.then((html) => {
-				// Emojify it 💯
-				return emoji.emojify(html)
-			})
-			.then((html) => {
-				// Minify it 🗜
-				return minify(html, minifyOptions)
-			})
-			.then((html) => {
-				// Write it to dist 📤
+					// Get some directories to create a write path
 
-				// Get some directories to create a write path
+					// The base output directory
+					const dist = path.resolve(process.env.ROOT, "dist")
+					// The directory to place the writeDirectory
+					const writeBaseDirectory = path.parse(filepath.path).dir
+					// The name of the directory to place the index.html in
+					const writeDirectory = path.parse(filepath.path).name.replace(/\s/g, '')
 
-				// The base output directory
-				const dist = path.resolve(process.env.ROOT, "dist")
-				// The directory to place the writeDirectory
-				const writeBaseDirectory = path.parse(filepath.path).dir
-				// The name of the directory to place the index.html in
-				const writeDirectory = path.parse(filepath.path).name.replace(/\s/g, '')
+					// Builds the path for the index.html
+					// For example if the output file in views/... was "Notes/topic.js"
+					// ...then the fullWritePath will be ../Notes/topic/index.html
+					const fullWritePathToDirectory = path.resolve(dist, writeBaseDirectory, writeDirectory)
 
-				// Builds the path for the index.html
-				// For example if the output file in views/... was "Notes/topic.js"
-				// ...then the fullWritePath will be ../Notes/topic/index.html
-				const fullWritePathToDirectory = path.resolve(dist, writeBaseDirectory, writeDirectory)
+					// write the index to root of dist. ELSE imbed it in a directory
+					if (filepath.path == "index.js") {
+						mkdirp(dist)
+							.then(() => { write(dist + "/index.html", html) })
+					} else {
+						mkdirp(fullWritePathToDirectory)
+							.then(() => { write(fullWritePathToDirectory + "/index.html", html) })
+					}
 
-				// write the index to root of dist. ELSE imbed it in a directory
-				if (filepath.path == "index.js") {
-					mkdirp(dist)
-						.then(() => { write(dist + "/index.html", html) })
-				} else {
-					mkdirp(fullWritePathToDirectory)
-						.then(() => { write(fullWritePathToDirectory + "/index.html", html) })
-				}
-			})
-			.then(() => {
-				// Increment the progress bar 📶
-				routeCounter++
-			})
-
-	})
-	console.log(`generated ${routeCounter} pages!\n`.magenta)
-
+					return filepath
+				})
+				.then((filepath) => {
+					// Increment the progress bar 📶
+					pageCurrent++
+					console.log(`generated ${path.parse(filepath.path).name}`.magenta)
+				})
+		})
+		.on('end', () => {
+			console.log(`Discovered ${pages.length} routes`.green)
+		});
 } 
