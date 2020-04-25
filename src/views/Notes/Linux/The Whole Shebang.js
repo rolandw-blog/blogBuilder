@@ -10,7 +10,7 @@ const baseurl = "https://raw.githubusercontent.com/RolandWarburton/knowledge/mas
 
 const targets = []
 files.forEach((f) => {
-	targets.push(baseurl + path.parse(f).name.replace('%20', ' ') + ".md")
+	if (path.parse(f).name != "The Whole Shebang") targets.push(decodeURI(baseurl + path.parse(f).name) + ".md")
 })
 
 module.exports = {
