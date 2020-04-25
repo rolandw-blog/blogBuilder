@@ -6,6 +6,7 @@ const emoji = require('node-emoji');
 const minify = require('html-minifier').minify;
 const colors = require('colors');
 const mkdirp = require('mkdirp')
+var ProgressBar = require('progress');
 require('dotenv').config()
 
 const generateHtmlPage = require('./generateHtmlPage')
@@ -25,6 +26,8 @@ const minifyOptions = {
 module.exports = async () => {
 	let pageTotal = 0
 	let pageCurrent = 0
+
+	const bar = new ProgressBar(':bar :current :currentFile', { total: 1000, width: 30 });
 
 	const pages = [];
 
@@ -84,10 +87,18 @@ module.exports = async () => {
 				.then((filepath) => {
 					// Increment the progress bar 📶
 					pageCurrent++
-					console.log(`generated ${path.parse(filepath.path).name}`.magenta)
+					bar.tick({
+						'currentFile': path.parse(filepath.path).name
+					})
+					if (bar.complete) {
+						console.log(`completed ${pageTotal} pages!`.green);
+						clearInterval(bar);
+					}
 				})
 		})
 		.on('end', () => {
-			console.log(`Discovered ${pages.length} routes`.green)
+			// now that we have the number of files
+			// update the total number of ticks required from the default
+			bar.total = pageTotal
 		});
 } 
