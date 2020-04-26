@@ -1,59 +1,64 @@
 html {
-  display: block;
+	display: block;
 }
 
 body {
-  background-color: $mainBackground;
-  color: $lightText;
-  // account for borders when calculating width
-  box-sizing: border-box;
-  // remove the scrollbar when its not needed
-  overflow: auto;
+	background-color: $mainBackground;
+	// account for borders when calculating width
+	box-sizing: border-box;
+	// remove the scrollbar when its not needed
+	overflow: auto;
 }
 
 // for making a container full height
 .fullHeight {
-  height: 100vh;
+	height: 100vh;
 }
 
 // generic wrapper. DO NOT make full height
 #contentWrapper {
-  margin: auto 10vw;
-  overflow-wrap: break-word;
+	margin: auto 10vw;
+	overflow-wrap: break-word;
 
-  @include desktop {
-    margin: 0 25vw;
-  }
-  @include tablet {
-    margin: 0 15vw;
-  }
+	@include desktop {
+		margin: 0 25vw;
+	}
+	@include tablet {
+		margin: 0 15vw;
+	}
 }
 
 .avatar {
-  background-image: url("../media/avatar.svg");
-  background-repeat: no-repeat;
-  height: 300px;
-  width: auto;
+	background-image: url("../media/avatar.svg");
+	background-repeat: no-repeat;
+	height: 300px;
+	width: auto;
 }
 
-ul, li {
-  margin: 0.5rem 0;
+ul,
+li {
+	margin: 0.5rem 0;
 }
 
 article {
-  margin: 5rem 0;
+	margin: 5rem 0;
 }
 
 .skip-link {
-  position: absolute;
-  top: -40px;
-  left: 0;
-  background: #000000;
-  color: white;
-  padding: 8px;
-  z-index: 100;
+	position: absolute;
+	top: -40px;
+	left: 0;
+	background: #000000;
+	color: white;
+	padding: 8px;
+	z-index: 100;
 }
 
 .skip-link:focus {
-  top: 0;
+	top: 0;
+}
+
+.floatGradient {
+	box-shadow: 0 0.5ch 0px rgba(28, 29, 33, 0.05), 0 2px 2px rgba(28, 29, 33, 0.12), 0 4px 4px rgba(28, 29, 33, 0.12),
+		0 8px 8px rgba(28, 29, 33, 0.12), 0 16px 16px rgba(28, 29, 33, 0.12);
 }
