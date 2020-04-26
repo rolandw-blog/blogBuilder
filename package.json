@@ -6,7 +6,6 @@
   "scripts": {
     "test": "jest",
     "build": "rm -rf dist/* && node build.js",
-    "start:v": "rm -rf dist/* && node build.js -v",
     "server": "node server.js",
     "monitor": "rm -rf dist/* && concurrently \"nodemon build.js\" \"node server.js\"",
     "monitor:sass": "concurrently \"npm run server\" \"nodemon build/renderSassOnly.js -e .scss\""
