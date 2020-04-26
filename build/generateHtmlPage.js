@@ -82,7 +82,7 @@ const generateHtmlpage = async function (templateData, filepath, githubToken) {
 	templateData.target = require(filepath.fullPath).target
 
 	// add markdown styles
-	if (templateData.markdown != "") {
+	if (templateData.target != "") {
 		templateData.styles = "<link rel=\"stylesheet\" type=\"text/css\" href=\"/an-old-hope.css\">"
 	}
 
