@@ -88,16 +88,24 @@ article {
 		padding: 0 0.5ch;
 	}
 
-	// give all headings emphasis
+	// separate out the sections
 	h1,
-	h2,
+	h2 {
+		margin-top: 10ch;
+		padding: 0.5ch;
+		text-decoration: underline;
+		@extend .HyperLink;
+		color: invert(#1C1D21);
+		background: #1C1D21;
+	}
+
+	// give all headings emphasis
 	h3,
 	h4,
 	h5,
 	h6 {
 		margin: 2ch 0;
 		padding: 0.5ch;
-		text-decoration: underline;
 		@extend .emLink;
 	}
 
@@ -111,9 +119,9 @@ article {
 
 	img {
 		overflow: hidden;
-		width: 15vw;
+		width: 80%;
 		// border-radius: 1ch;
-		@extend .floatGradient;
+		// @extend .floatGradient;
 		// Change this to center
 		// margin: 0 auto;
 		// display: block;
@@ -125,6 +133,7 @@ article {
 	td {
 		border: 1px solid black;
 		border-collapse: collapse;
+		margin: 2ch 0;
 	}
 
 	// table cells
