@@ -91,22 +91,36 @@ article {
 	// separate out the sections
 	h1,
 	h2 {
-		margin-top: 10ch;
 		padding: 0.5ch;
-		text-decoration: underline;
 		@extend .HyperLink;
-		color: invert(#1C1D21);
-		background: #1C1D21;
+		text-decoration: underline;
+		
+		color: invert(#1c1d21);
+	}
+
+	h1 {
+		margin-top: 10ch;
+		background: lighten(#1c1d21, 20%);
+	}
+
+	h2 {
+		margin-top: 5ch;
+		background: #1c1d21;
 	}
 
 	// give all headings emphasis
-	h3,
+	h3 {
+		margin: 2ch 0;
+		padding: 0.5ch;
+		@extend .emLink;
+	}
+
 	h4,
 	h5,
 	h6 {
 		margin: 2ch 0;
 		padding: 0.5ch;
-		@extend .emLink;
+		// @extend .HyperLink;
 	}
 
 	p {
