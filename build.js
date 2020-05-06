@@ -22,7 +22,7 @@ fs.copyFile(path.resolve(process.env.ROOT, 'src/styles/an-old-hope.css'), path.r
 	if (err) return console.error(err);
 });
 
-renderSass('src/styles/styles.scss', 'dist/app.css')
+renderSass('src/styles/dark.scss', 'dist/dark.css')
 renderSass('src/styles/light.scss', 'dist/lightTheme.css')
 renderSass('src/styles/gist.scss', 'dist/gist.css')
 
