@@ -6,17 +6,8 @@ document.addEventListener("DOMContentLoaded", () => {
 		const socialBox = document.createElement("div")
 		socialBox.className = "socialBox"
 
-		// create things to put in the social box
-		const twitter = document.createElement("img")
-		twitter.src = "/media/twitter.svg"
-		twitter.className = "socialImg"
-		const linkedin = document.createElement("img")
-		linkedin.src = "/media/linkedin.svg"
-		linkedin.className = "socialImg"
-
-		// put the things in the social box
-		socialBox.appendChild(twitter)
-		socialBox.appendChild(linkedin)
+		socialBox.appendChild(createSocialIcon("/media/twitter.svg", "https://twitter.com/RolandIRL"))
+		socialBox.appendChild(createSocialIcon("/media/linkedin.svg", "https://www.linkedin.com/in/roland-w/"))
 
 		// get the little spinny logo thing
 		const caret = event.target;
@@ -24,13 +15,25 @@ document.addEventListener("DOMContentLoaded", () => {
 		// load in and out the social box when you click on the spinny logo
 		if (document.querySelector(".socialBox")) {
 			document.querySelector(".socialBox").remove();
-			caret.removeAttribute("id", "caret-flip")
+			caret.removeAttribute("id", "caret-flip");
 		} else {
 			event.target.parentNode.parentNode.appendChild(socialBox);
-			caret.setAttribute("id", "caret-flip")
-			socialBox.style.left = "50px;"
+			caret.setAttribute("id", "caret-flip");
 		}
 
 
 	})
 })
+
+const createSocialIcon = function(imagePath, socialLink) {
+	const socialIconAnchor = document.createElement("a");
+	socialIconAnchor.href = socialLink;
+	socialIconAnchor.className = "darkHyperLink"
+
+	const socialIconImage = document.createElement("img");
+	socialIconImage.src = imagePath;
+
+	socialIconAnchor.appendChild(socialIconImage)
+
+	return socialIconAnchor;
+}
