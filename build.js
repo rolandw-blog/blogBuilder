@@ -22,6 +22,11 @@ fs.copyFile(path.resolve(process.env.ROOT, 'src/styles/an-old-hope.css'), path.r
 	if (err) return console.error(err);
 });
 
+// copy index.js to dist
+fs.copyFile(path.resolve(process.env.ROOT, 'src/index.js'), path.resolve(process.env.ROOT, 'dist/index.js'), function (err) {
+	if (err) return console.error(err);
+});
+
 renderSass('src/styles/dark.scss', 'dist/dark.css')
 renderSass('src/styles/light.scss', 'dist/lightTheme.css')
 renderSass('src/styles/gist.scss', 'dist/gist.css')

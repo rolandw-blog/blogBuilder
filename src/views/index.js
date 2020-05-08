@@ -1,9 +1,14 @@
 const listFilesInDirPartial = require('../../templates/partials/listFilesInDirPartial')
 
 const page = `
-<div class="center">
-	${listFilesInDirPartial("src/views")}
-</div>
+	<div id="home">
+		<div class="center">
+			${listFilesInDirPartial("src/views")}
+		</div>
+		<a class="darkHyperLink">
+			<img height="25px" src="/media/logo.svg" class="caret" />
+		</a>
+	</div>
 `;
 
 module.exports = {
@@ -17,3 +22,5 @@ module.exports = {
 // 	target: "https://raw.githubusercontent.com/RolandWarburton/knowledge/master/Linux/gitOnLinux.md",
 // 	template: "./templates/home.ejs"
 // };
+
+// 

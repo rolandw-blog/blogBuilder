@@ -26,18 +26,20 @@
 
 // center things. attach this to the body tag to work
 .center {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	height: 100vh;
+	margin: 2ch auto;
+	text-align: center;
+
 	// ULs will display as rows
 	ul {
 		display: flex;
 		flex-direction: row;
-		li {
-			padding: 2rem;
-		}
+		justify-content: space-between;
+		width: 100%;
 	}
+}
+
+#home {
+	margin: 0 auto;
 }
 
 .dynamic-nav {
@@ -82,4 +84,24 @@ nav {
 	background-repeat: no-repeat;
 	height: 300px;
 	width: auto;
+}
+
+@keyframes slideInFromLeft {
+	0% {
+		transform: translateX(-10%);
+	}
+	100% {
+		transform: translateX(0);
+	}
+}
+
+.socialBox {
+	display: inline-block;
+	// margin: 0 1ch;
+	position: relative;
+	animation: 0.25s ease-out slideInFromLeft;
+}
+
+.socialImg {
+	margin: 0 1ch;
 }

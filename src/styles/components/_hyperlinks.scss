@@ -54,3 +54,13 @@
 a {
   @extend .emLink;
 }
+
+// the little spinny logo thing on the home page
+.caret {
+	transition: transform 0.25s ease-in-out;
+}
+
+// when the caret is triggered
+#caret-flip {
+	transform: rotate(180deg);
+}

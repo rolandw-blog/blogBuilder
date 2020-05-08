@@ -12,8 +12,12 @@ body {
 }
 
 // for making a container full height
+// puts stuff in the middle of the container
 .fullHeight {
 	height: 100vh;
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
 }
 
 // generic wrapper. DO NOT make full height
@@ -34,11 +38,6 @@ body {
 	background-repeat: no-repeat;
 	height: 300px;
 	width: auto;
-}
-
-ul,
-li {
-	margin: 0.5rem 0;
 }
 
 article {
