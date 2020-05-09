@@ -1,0 +1,11 @@
+{
+	"verbose": false,
+	"ignore": [
+		"./dist/*"
+	],
+	"watch": [
+		"js",
+		"ejs",
+		"scss"
+	] 
+}

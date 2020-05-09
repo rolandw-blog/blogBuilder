@@ -7,8 +7,8 @@
     "test": "jest",
     "build": "rm -rf dist/* && node build.js",
     "server": "node server.js",
-    "monitor": "rm -rf dist/* && concurrently \"nodemon build.js\" \"node server.js\"",
-    "monitor:sass": "concurrently \"npm run server\" \"nodemon build/renderSassOnly.js -e .scss\""
+    "monitor": "rm -rf dist/* && concurrently \"nodemon --config ./nodemon.json build.js\" \"node server.js\"",
+    "monitor:sass": "concurrently \"npm run server\" \"nodemon nodemon --config build/renderSassOnly.js\""
   },
   "keywords": [],
   "author": "",
