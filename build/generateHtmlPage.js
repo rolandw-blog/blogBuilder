@@ -3,8 +3,9 @@ const fs = require('fs');
 const path = require('path');
 const fetch = require('node-fetch');
 const marked = require('marked')
-const log = require('./log')
 const hljs = require('highlight.js')
+const crypto = require('crypto')
+const log = require('./log')
 const getFilepathNeighbours = require('./getFilepathNeighbours');
 const getPrevPath = require('./getPrevPath');
 require('dotenv').config()
@@ -15,6 +16,11 @@ marked.setOptions({
 	}
 });
 
+// fetch one to many markdown files
+/**
+ * 
+ * @param {Array} targets - an array of urls pointing to markdown
+ */
 const fetchContent = async function (targets) {
 	// concat multiple markdown files into this
 	let markdownContent = ""
@@ -33,7 +39,10 @@ const fetchContent = async function (targets) {
 				const response = await fetch(url.replace("TOKEN", process.env.GITHUB_TOKEN.trim()));
 
 				// complain if the content doesnt return
-				if (response.status != 200) throw `${target} returned ${response.status}`;
+				if (response.status != 200) {
+					fs.appendFileSync("log.txt", `\n${new Date().toISOString()} ${target} returned ${response.status}`);
+					throw `${target} returned ${response.status}`;
+				}
 
 				// extract the text markdown
 				markdown += await response.text()
@@ -56,6 +65,7 @@ const generateHtmlpage = async function (templateData, filepath, githubToken) {
 	const title = path.parse(filepath.path).name
 
 	templateData = {
+		...templateData,
 		links: { next: links.next, prev: links.prev },
 		backlink: backlink,
 		title: title,
@@ -90,7 +100,7 @@ const generateHtmlpage = async function (templateData, filepath, githubToken) {
 	templateData.markdown = await fetchContent(templateData.target)
 
 	const html = ejs.render(templateFile, templateData)
-	return html
+	return {html: html, templateData: templateData}
 
 }
 

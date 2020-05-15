@@ -2,3 +2,5 @@
 *githubToken.txt*
 dist
 .env
+log.txt
+fileHashes/*

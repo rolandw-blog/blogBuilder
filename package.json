@@ -5,9 +5,11 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "build": "rm -rf dist/* && node build.js",
+    "clean": "rm -rf dist/* && rm -f ./log.json",
+    "build": "npm run clean && node build.js",
+    "build:quiet": "npm run clean && node build.js -q",
     "server": "node server.js",
-    "monitor": "rm -rf dist/* && concurrently \"nodemon --config ./nodemon.json build.js\" \"node server.js\"",
+    "monitor": "npm run clean && concurrently \"nodemon --config ./nodemon.json\" \"node server.js\"",
     "monitor:sass": "concurrently \"npm run server\" \"nodemon nodemon --config build/renderSassOnly.js\""
   },
   "keywords": [],
