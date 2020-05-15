@@ -10,7 +10,7 @@
 	<meta property="og:type" content="website" />
 	<meta property="og:image" content="https://www.rolandw.dev/media/favicon.png" />
 	<meta property="og:url" content="https://www.rolandw.dev/" />
-	<meta name="twitter:card" content="summary_large_image"/>
+	<meta name="twitter:card" content="summary_large_image" />
 	<meta name="twitter:site" content="@RolandIRL" />
 	<link rel="icon" type="image/png" href="/media/favicon.ico" />
 	<title>Roland</title>
@@ -26,7 +26,11 @@
 	<div id="contentWrapper" class="fullHeight">
 		<%- content%>
 		<%- target%>
+		<div class="build">
+			Last build <%- build.date%> (<%- build.sha%>)
+		</div>
 	</div>
+
 	<script src="/index.js"></script>
 	<link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
 </body>

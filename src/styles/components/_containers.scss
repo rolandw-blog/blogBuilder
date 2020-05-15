@@ -105,3 +105,12 @@ nav {
 .socialImg {
 	margin: 0 1ch;
 }
+
+// used for the build info box on home page template
+.build {
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	padding: 1ch;
+	font-size: 0.8rem;
+}
