@@ -5,6 +5,9 @@ const listFilesInDir = require('./listFilesInDir');
 const getLinkToHtmlFilepath = require('./getLinkToHtmlFilepath');
 const log = require('./log');
 
+/**
+ * @param {JSON} filepath - readdirp object containing at least a fullpath and path key
+ */
 module.exports = (filepath) => {
 
 	// get directory of the filepath

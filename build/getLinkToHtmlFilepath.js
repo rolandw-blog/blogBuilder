@@ -6,6 +6,11 @@ const log = require('./log');
 const colors = require('colors');
 
 // the targetFilepath MUST be in the SAME directory that the filepath is
+
+/**
+ * @param {JSON} filepath - readdirp object containing at least a path key
+ * @param {string} targetfile - file you want to find (eg: index.js)
+ */
 module.exports = (filepath, targetFile) => {
 	// the path up until the current dir that we are grabbing the targetFile in
 	targetFile = (targetFile != "index.js") ? path.parse(targetFile).name : '#'
