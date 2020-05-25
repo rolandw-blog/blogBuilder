@@ -84,12 +84,12 @@ const generateAndWriteHTML = async function (templateData, filepath) {
 			// ...then the fullWritePath will be ../Notes/topic/index.html
 			// const fullWritePathToDirectory = 
 			const fullWritePathToDirectory = (filepath.path != "index.js") ?
-				path.resolve(dist, writeBaseDirectory, writeDirectory, "index")
-				: path.resolve(dist);
+				path.resolve(dist, writeBaseDirectory, writeDirectory, "index.html")
+				: path.resolve(dist, "index.html");
 
 			// write it to the dist folder
-			mkdirp(fullWritePathToDirectory)
-				.then(() => { write(path.resolve(fullWritePathToDirectory, "index.html"), html) }).catch(err => console.log(err))
+			mkdirp(path.parse(fullWritePathToDirectory).dir)
+				.then(() => { write(fullWritePathToDirectory, html) }).catch(err => console.log(err))
 
 			return filepath
 		})
