@@ -21,9 +21,12 @@ const W7Lab = "https://TOKEN@raw.githubusercontent.com/RolandWarburton/Swinburne
 const W8L1 = "https://TOKEN@raw.githubusercontent.com/RolandWarburton/Swinburne2020S1/master/TNE30009_Network_Security_and_Resilience/W8/W8_Lecture1.md"
 const W8L2 = "https://TOKEN@raw.githubusercontent.com/RolandWarburton/Swinburne2020S1/master/TNE30009_Network_Security_and_Resilience/W8/W8_Lecture2.md"
 const W8L3 = "https://TOKEN@raw.githubusercontent.com/RolandWarburton/Swinburne2020S1/master/TNE30009_Network_Security_and_Resilience/W8/W8_Lecture3.md"
+const W8L4 = "https://TOKEN@raw.githubusercontent.com/RolandWarburton/Swinburne2020S1/master/TNE30009_Network_Security_and_Resilience/W8/W8_Lecture4.md"
+const W8L5 = "https://TOKEN@raw.githubusercontent.com/RolandWarburton/Swinburne2020S1/master/TNE30009_Network_Security_and_Resilience/W8/W8_Lecture5.md"
+const W8L6 = "https://TOKEN@raw.githubusercontent.com/RolandWarburton/Swinburne2020S1/master/TNE30009_Network_Security_and_Resilience/W8/W8_Lecture6.md"
 
 module.exports = {
     page: page, 
-	target: [W1L1, W1L2, W2L1, W2L2, W3L1, W3L2, W4L1, W4L2, W4L3, W5L1, W6L1, W6L2, W6L3, W6Lab, W7L1, W7L2, W7Lab, W8L1, W8L2, W8L3],
+	target: [W1L1, W1L2, W2L1, W2L2, W3L1, W3L2, W4L1, W4L2, W4L3, W5L1, W6L1, W6L2, W6L3, W6Lab, W7L1, W7L2, W7Lab, W8L1, W8L2, W8L3, W8L4, W8L5, W8L6],
 	template: "templates/navigablePage.ejs"
 };
