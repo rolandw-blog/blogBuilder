@@ -84,7 +84,10 @@ article {
 
 	// inline code
 	code {
-		background-color: darken($mainBackground, 20%);
+		// todo set the color to be the same as pre > code blocks
+		// background-color: darken($mainBackground, 20%);
+		background-color: #1c1d21;
+		color: #e3e2de;
 		// padding: 0 0.5ch;
 	}
 
