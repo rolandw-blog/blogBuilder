@@ -22,20 +22,20 @@
 .HyperLink {
   list-style-type: none;
   text-decoration: none;
-  padding: 0 1ch;
+//   padding: 0 1ch;
 }
 
 // em links will be outlines against the background
-.emLink {
-  @extend .HyperLink;
-  @include getColors($mainBackground, $lightText);
-}
+// .emLink {
+//   @extend .HyperLink;
+//   @include getColors($mainBackground, $lightText);
+// }
 
-.emLinks {
-  a {
-    @extend .emLink;
-  }
-}
+// .emLinks {
+//   a {
+//     @extend .emLink;
+//   }
+// }
 
 // dark hyperlinks: dark background.
 // usually underlined as a style rule :)
@@ -50,9 +50,20 @@
   }
 }
 
+.plainHyperLink {
+	background-color: rgba(0,0,0,0);
+	color: $text;
+	text-decoration: none;
+}
+
+.heroHyperlink {
+	// background-color: red;
+}
+
 // global fallback for any links that aren't styled
 a {
-  @extend .emLink;
+//   @extend .emLink;
+	color: $text;
 }
 
 // the little spinny logo thing on the home page

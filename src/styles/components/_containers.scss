@@ -35,6 +35,19 @@
 		flex-direction: row;
 		justify-content: space-between;
 		width: 100%;
+
+		// pad the home screen links
+		li:not(:first-child):not(:last-child) {
+			a {
+				margin: 0 1ch;
+			}
+		}
+		li:first-child {
+			margin: 0 1ch 0 0;
+		}
+		li:last-child {
+			margin: 0 0 0 1ch;
+		}
 	}
 }
 
@@ -97,9 +110,14 @@ nav {
 
 .socialBox {
 	display: inline-block;
-	// margin: 0 1ch;
 	position: relative;
 	animation: 0.25s ease-out slideInFromLeft;
+	a:last-child {
+		padding: 0 1ch 0 0;
+	}
+	a:first-child {
+		padding: 0 1ch;
+	}
 }
 
 .socialImg {

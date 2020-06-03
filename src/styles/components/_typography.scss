@@ -14,6 +14,13 @@ html {
 // ==========================================
 // HEADINGS
 // ==========================================
+h1,
+h2,
+h3 {
+	// background-color: lighten($text, 50%);
+	padding: 0.25ch;
+}
+
 h1 {
 	font-size: 2rem;
 }
@@ -39,6 +46,10 @@ h3 {
 
 .underline {
 	text-decoration: underline;
+}
+
+em {
+	color: lighten($text, 20%);
 }
 
 // ==========================================

@@ -2,6 +2,32 @@
 // GIST STYLES
 // ==========================================
 article {
+	color: $darkText;
+
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6,
+	a {
+		color: $darkText;
+		background-color: none;
+		padding: 0.25ch;
+		text-decoration: underline;
+	}
+
+	h1 {
+		// background-color: lighten($text, 50%);
+		background-color: #1c1d21;
+		color: $lightText;
+	}
+
+	h2 {
+		background-color: lighten(#1c1d21, 20%);
+		color: $lightText;
+	}
+
 	// First level indent
 	ul {
 		* {
@@ -53,9 +79,10 @@ article {
 
 	// quotes
 	blockquote p {
-		background-color: darken($mainBackground, 10%);
+		// background-color: darken($mainBackground, 10%);
+		font-weight: bold;
 		padding: 1ch;
-		margin: 2ch 0;
+		margin: 2ch;
 		font-style: italic;
 		quotes: '"' '"' "'" "'";
 		&::before {
@@ -79,50 +106,54 @@ article {
 		code {
 			background-color: unset;
 			color: #e3e2de;
+			font-family: "Fira Code", monospace;
 		}
 	}
 
 	// inline code
 	code {
-		// todo set the color to be the same as pre > code blocks
 		// background-color: darken($mainBackground, 20%);
-		background-color: #1c1d21;
-		color: #e3e2de;
-		// padding: 0 0.5ch;
+		// background-color: rgba(28, 29, 33, 0.5);
+		background-color: darken($mainBackground, 10%);
+		font-weight: 500;
+		padding: 0 0.5ch;
+		font-family: "Fira Code", monospace;
 	}
 
 	// separate out the sections
 	h1,
 	h2 {
-		padding: 0.5ch;
+		// padding: 0.5ch;
 		@extend .HyperLink;
-		text-decoration: underline;
-		
-		color: invert(#1c1d21);
+		// text-decoration: underline;
+		// color: invert(#1c1d21);
 	}
 
-	h1 {
-		margin-top: 10ch;
-		background: lighten(#1c1d21, 20%);
+	.headingInfoBar {
+		background-color: red;
 	}
+	// h1 {
+	// 	margin-top: 10ch;
+	// 	// background: lighten(#1c1d21, 20%);
+	// }
 
-	h2 {
-		margin-top: 5ch;
-		background: #1c1d21;
-	}
+	// h2 {
+	// 	margin-top: 5ch;
+	// 	// background: #1c1d21;
+	// }
 
-	// give all headings emphasis
-	h3 {
-		margin: 2ch 0;
-		padding: 0.5ch;
-		@extend .emLink;
-	}
+	// // give all headings emphasis
+	// h3 {
+	// 	margin: 2ch 0;
+	// 	// padding: 0.5ch;
+	// 	// @extend .emLink;
+	// }
 
 	h4,
 	h5,
 	h6 {
 		margin: 2ch 0;
-		padding: 0.5ch;
+		// padding: 0.5ch;
 		// @extend .HyperLink;
 	}
 
@@ -163,5 +194,26 @@ article {
 	.floatGradient {
 		box-shadow: 0 0.5ch 0px rgba(28, 29, 33, 0.05), 0 2px 2px rgba(28, 29, 33, 0.12),
 			0 4px 4px rgba(28, 29, 33, 0.12), 0 8px 8px rgba(28, 29, 33, 0.12), 0 16px 16px rgba(28, 29, 33, 0.12);
+	}
+
+	.gistShareAnchor {
+		opacity: 0;
+		// color: invert($mainBackground);
+		// background: $mainBackground;
+		background-color: inherit;
+		color: inherit;
+		&:hover {
+			// background-color: inherit;
+			color: unset;
+			color: invert($mainBackground, 50%);
+			mix-blend-mode: unset;
+			// color: invert($mainBackground);
+			// background-color: #1c1d21;
+			// background-color: invert($mainBackground);
+		}
+	}
+
+	li {
+		margin: 1ch 0;
 	}
 }
