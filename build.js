@@ -29,6 +29,7 @@ fs.copy(path.resolve(process.env.ROOT, 'src/media'), path.resolve(process.env.RO
 
 copyToDist("src/styles/an-old-hope.css")
 copyToDist("src/index.js")
+copyToDist("src/gist.js")
 
 renderSass('src/styles/dark.scss', 'dist/dark.css')
 renderSass('src/styles/light.scss', 'dist/lightTheme.css')

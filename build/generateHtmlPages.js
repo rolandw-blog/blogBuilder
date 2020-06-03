@@ -118,7 +118,7 @@ module.exports = async () => {
 	}
 
 	// Get every page in the src/views and concurrently generate and write html to dist
-	readdirp("./src/views", { fileFilter: '*.js', alwaysStat: false })
+	readdirp("./src/views/", { fileFilter: '*.js', alwaysStat: false })
 		.on('data', (filepath) => {
 			// increment the total number of pages found
 			pageTotal++;
