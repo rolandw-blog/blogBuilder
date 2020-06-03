@@ -105,6 +105,7 @@ article {
 		border-radius: 1ch;
 		code {
 			background-color: unset;
+			border: unset;
 			color: #e3e2de;
 			font-family: "Fira Code", monospace;
 		}
@@ -112,12 +113,15 @@ article {
 
 	// inline code
 	code {
-		// background-color: darken($mainBackground, 20%);
-		// background-color: rgba(28, 29, 33, 0.5);
-		background-color: darken($mainBackground, 10%);
+		background-color: desaturate($mainBackground, 50%);
 		font-weight: 500;
 		padding: 0 0.5ch;
+		hyphens: none;
 		font-family: "Fira Code", monospace;
+		border: 1px solid;
+		box-sizing: border-box;
+		border-radius: 0.5em;
+		line-height: 1.5em;
 	}
 
 	// separate out the sections
@@ -132,22 +136,6 @@ article {
 	.headingInfoBar {
 		background-color: red;
 	}
-	// h1 {
-	// 	margin-top: 10ch;
-	// 	// background: lighten(#1c1d21, 20%);
-	// }
-
-	// h2 {
-	// 	margin-top: 5ch;
-	// 	// background: #1c1d21;
-	// }
-
-	// // give all headings emphasis
-	// h3 {
-	// 	margin: 2ch 0;
-	// 	// padding: 0.5ch;
-	// 	// @extend .emLink;
-	// }
 
 	h4,
 	h5,
