@@ -181,6 +181,8 @@ const generateHtmlpage = async function (templateData, filepath, githubToken) {
 	// .target referrers to the online content that this page wants to pull
 	templateData.target = require(filepath.fullPath).target
 
+	templateData.uniqueSources = (templateData.target) ? templateData.target.length : 0;
+
 	// add markdown styles
 	if (templateData.target != "") {
 		templateData.styles = "<link rel=\"stylesheet\" type=\"text/css\" href=\"/an-old-hope.css\">"

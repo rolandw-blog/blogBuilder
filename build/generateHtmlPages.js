@@ -61,11 +61,11 @@ const generateAndWriteHTML = async function (templateData, filepath) {
 	await generateHtmlPage(templateData, filepath)
 		.then(({ html, templateData }) => {
 			// Emojify it 💯
-			return emoji.emojify(html)
-		})
-		.then((html) => {
+			html = emoji.emojify(html);
 			// Minify it 🗜
-			return minify(html, minifyOptions)
+			html = minify(html, minifyOptions);
+
+			return html;
 		})
 		.then((html) => {
 			// Write it to dist 📤
@@ -96,13 +96,26 @@ const generateAndWriteHTML = async function (templateData, filepath) {
 		.catch(err => console.log(err))
 }
 
+const tickBar = (bar) => {
+	if (!argv.q) {
+		bar.tick({
+			'currentFile': path.parse(filepath.path).name
+		})
+	}
+}
+
 module.exports = async () => {
+	// number of pages read
 	let pageTotal = 0
-	let pageCurrent = 0
+	// number of targets read
+	let targetTotal = 0;
+	// track the url targets as a KVP array of filepaths and targets
+	const targetURLTracker = [];
+	// 
+	const pageFilepaths = [];
 
 	const bar = new ProgressBar(':bar :current :currentFile', { total: 1000, width: 30 });
 
-	const pageFilepaths = [];
 
 	const buildData = await fetchGitData(`https://${process.env.GITHUB_TOKEN}@api.github.com/repos/RolandWarburton/staticFolio/commits/refs/heads/master`);
 	console.log(`Commit ID ${buildData.sha.substring(0, 4)}`)
@@ -116,96 +129,42 @@ module.exports = async () => {
 			author: buildData.commit.author
 		}
 	}
-
+	
 	// Get every page in the src/views and concurrently generate and write html to dist
 	readdirp("./src/views/", { fileFilter: '*.js', alwaysStat: false })
-		.on('data', (filepath) => {
-			// increment the total number of pages found
-			pageTotal++;
-			pageFilepaths.push(filepath);
+	.on('data', (filepath) => {
+		pageTotal++;
+		// get the targets
+		const targets = require(fp.fullPath).target;
+		const lengthOfTargets = (targets) ? targets.length : 0;
+
+		// Add these targets to the filepath to target tracker
+		targetURLTracker.push({
+			filepath: fp.fullPath,
+			targets: targets
+		})
+
+		// Increment the number of total targets
+		targetTotal += lengthOfTargets;
+		
+		// pageFilepaths.push(filepath);
 		})
 		.on('end', () => {
-			// now that we have the number of files
-			// update the total number of ticks required to fill the progress bar
-			bar.total = pageTotal;
 			console.log(`finished reading local files (${pageTotal})`);
 
-			// for this filepath
-			pageFilepaths.map((filepath) => {
-				// get the targets as an array
-				const targets = require(filepath.fullPath).target;
+			// now that we have the number of files that we need to source
+			// update the total number of ticks required to fill the progress bar
+			console.log(`found ${pageTotal} pages and ${targetTotal} targets`.blue)
+			bar.total = pageTotal;
+			// =================================================================================
 
-				// get the output filepath to write the hash information to 
-				const hashFilepath = path.resolve("fileHashes", path.parse(filepath.path).name + ".json");
-
-				// bool to track if the hashes are the same. if not set to true then the page will be built
-				let hashMatch = false;
-
-				// create an array to store promises that will later be fufilled to become commit data (from the api)
-				const gitData = [];
-				if (targets) {
-					// put all the git data promises into gitData to resolve
-					for (url of targets) {
-						// a url might look like: https://api.github.com/repos/RolandWarburton/knowledge/commits?path=Linux/Terminals.md
-						const targetRequestURL = constructGithubApiCommitRequest(new URL(url))
-						const data = fetchGitData(targetRequestURL)
-						gitData.push(data)
-					}
-
-					// resolve all of gitData into github commit json from the api
-					Promise.all(gitData).then((allCommitData) => {
-						// update the progress bar
-						if (!argv.q) {
-							bar.tick({
-								'currentFile': path.parse(filepath.path).name
-							})
-						}
-
-						// create a json structure to store the hash in
-						// ! could be bit buggy because it needs to handle any amount of targets and the fetching system will only
-						// ! randomly store the most recent hash only that happened to return last
-						const newFileHash = []
-
-						// for each commitData for this page (0 to many)
-						for (commit of allCommitData) {
-							// put it in the newFileHash list
-							newFileHash.push({ filepath: filepath, sha: commit[0].sha });
-						}
-
-						// read the old hash for this page
-						fs.readFile(hashFilepath, (err, data) => {
-							// if the file was found
-							if (!err) {
-								// else the hash file was found... parse it
-								const oldFileHashe = JSON.parse(data);
-
-								// if the hash we have doesnt match the new one
-								if (newFileHash[0].sha == oldFileHashe[0].sha) {
-									// page is up to date ❤
-									// console.log("page is up to date. skipping")
-									hashMatch = true;
-								}
-							}
-
-							// hash file either doesnt exist or does not match the new hash
-							if (!hashMatch) {
-								// write the hash to fileHashes/*
-								fs.writeFile(hashFilepath, JSON.stringify(newFileHash), () => { })
-							}
-						})
-					});
-				} else {
-					// no targets for this file
-					if (!argv.q) {
-						bar.tick({
-							'currentFile': path.parse(filepath.path).name
-						})
-					}
-				}
-				// if theres no match then write it!
-				if (!hashMatch) {
-					generateAndWriteHTML(templateData, filepath);
-				}
-			})
+			// for each filepath
+			for (filepath of pageFilepaths) {
+				// generate a file and then tick the bar
+				generateAndWriteHTML(templateData, filepath)
+					.then((result) => {
+						tickBar(bar);
+					})
+			}
 		})
 }
