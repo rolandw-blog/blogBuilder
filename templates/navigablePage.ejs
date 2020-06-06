@@ -24,6 +24,7 @@
 </head>
 
 <body>
+	<%- toc%>
 	<div id="contentWrapper">
 		<%- include(ROOT + '/templates/partials/navBar.ejs', {links, title, backlink}) %>
 		<%- content%>
@@ -32,7 +33,7 @@
 		</article>
 	</div>
 	<link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet"> 
+	<link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
 	<!-- additional styles passed down from generateHtmlPage -->
 	<%- styles%>
 	<script src="/gist.js"></script>

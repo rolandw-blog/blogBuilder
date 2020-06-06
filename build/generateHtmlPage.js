@@ -10,53 +10,37 @@ const getFilepathNeighbours = require('./getFilepathNeighbours');
 const getPrevPath = require('./getPrevPath');
 require('dotenv').config()
 
-// !!! The following function is garbage and isnt being used
-// its part of the ToC generator that is on hold until the end of semester/i have more time to work on it.
-// I left it in the master branch because im lazy and VC is hard
+// ! choo choo its the code police! Idealy this should be converting the jsonToc to markdown and then converting it
+// ! that would make it way more "unified" and intergrated with the rest of the md -> html workflow...
+// ! ...if json is passed then it should be json -> md -> html to allow markedjs to change render the md instead
 /**
- * needs to take {type: 'heading', depth: INT, text: 'STRING' }
+ * needs to take {type: 'heading', depth: INT, text: 'STRING' }. returns UL or OL ToC in html
  * @param {JSON} jsonToc - json object created by marked lexer thats been filtered to just type: headings
+ * @param {boolean} ordered - Generate a UL or OL list
  */
-const jsonTOC2md = (jsonToc) => {
-	const itemLength = jsonToc.length;
+const jsonTOC2html = (jsonToc, ordered) => {
 	let tocItems = "";
+	let currentindent = 0;
+	const listSymbol = (ordered) ? "ol" : "ul";
 
-	const toc = [];
-
-
-	// set the renderer
-	const renderer = new marked.Renderer()
-	renderer.list = (body, ordered, start) => {
-		return `<div>${body}</div>`;
-	}
-
-	renderer.listitem = (body, ordered, start) => {
-		return `<span>${body}</span>\n`;
-	}
-
-	renderer.paragraph = (text) => {
-		const extractedResults = text.split("|||")
-		const depth = extractedResults[0];
-		const title = extractedResults[1]
-		return `<li class="indent-${depth}">${title}</li>`;
-	}
-
-	const tokenizer = {
-		paragraph(src) {
-			console.log("src");
-			return false;
+	tocItems += `<div class="table-of-contents">`;
+	for (heading of jsonToc) {
+		// sanitize to get anchor friendly tags
+		let anchorLink = heading.text.toLowerCase().replace(/[^\w]+/g, "-")
+		anchorLink = anchorLink.replace(/"|'|`/g, '');
+		// filter out small headings
+		if (heading.depth < 4) {
+			tocItems += `<li class="listAnchorDepth${heading.depth}"><a class="plainHyperLink" href=#${anchorLink}>${heading.text}</a></li>`
 		}
 	}
 
-	// ! bad. this is bad
-	for (let i = 0; i < jsonToc.length; i++) {
-		const heading = jsonToc[i];
-		
-		const r = marked(`${heading.depth}|||${heading.text}`, { renderer: renderer})
-		
-		console.log(r)
-		fs.appendFileSync("temp.html", r)
+	for (let i = 0; i < currentindent; i++) {
+		tocItems += `</${listSymbol}>`;
 	}
+
+	tocItems += "</div>";
+
+	return tocItems;
 }
 
 // TODO just make this a const variable. No need to recall/regenerate it each time the page is built
@@ -69,7 +53,9 @@ const jsonTOC2md = (jsonToc) => {
 const createRenderer = () => {
 	const renderer = new marked.Renderer();
 	renderer.heading = (text, level) => {
-		const escapedText = text.toLowerCase().replace(/[^\w]+/g, '-');
+		let escapedText = text.toLowerCase().replace(/[^\w]+/g, '-');
+		// sanitize the link anchors
+		escapedText = escapedText.replace(/"|'|`/g, '');
 		let output;
 
 		output = `
@@ -89,6 +75,7 @@ const createRenderer = () => {
 			</strong>`;
 		return output;
 	}
+
 	return renderer;
 }
 
@@ -192,13 +179,16 @@ const generateHtmlpage = async function (templateData, filepath, githubToken) {
 	const markdown = await fetchContent(templateData.target, templateData.title)
 	templateData.markdown = marked(markdown)
 
+
 	// TODO markedjs heading tokens -> html TOC generator
 	// get the toc as a json array of markedjs tokens
-	// const tokens = marked.lexer(markdown)
+	const tokens = marked.lexer(markdown)
 	// get just the headings from the tokens by filtering it
-	// const headings = tokens.filter(token => token.type === 'heading')
+	const headings = tokens.filter(token => token.type === 'heading')
 	// generate a html ToC
-	// jsonTOC2md(headings)
+	const toc = jsonTOC2html(headings)
+
+	templateData.toc = toc;
 
 	const html = ejs.render(templateFile, await templateData)
 

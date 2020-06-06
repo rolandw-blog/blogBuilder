@@ -24,6 +24,9 @@ body {
 #contentWrapper {
 	margin: auto 10vw;
 	overflow-wrap: break-word;
+	// display: grid;
+	// grid-template-columns: auto 1fr;
+	// grid-template-rows: 1fr;
 
 	@include desktop {
 		margin: 0 25vw;

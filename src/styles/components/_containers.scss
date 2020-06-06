@@ -132,3 +132,54 @@ nav {
 	padding: 1ch;
 	font-size: 0.8rem;
 }
+
+.table-of-contents {
+	scrollbar-width: none;
+	display: none;
+	width: 20vw;
+	max-height: 100vh;
+	position: fixed;
+	padding: 2ch 0ch;
+	top: 0;
+	left: 0;
+	overflow-y: scroll;
+	overflow-x: hidden;
+
+	li {
+		color: black;
+		font-size: 0.8em;
+	}
+
+	padding-right: 17px; /* Increase/decrease this value for cross-browser compatibility */
+	box-sizing: content-box; /* So the width will be 100% + 17px */
+
+	.listAnchorDepth1 {
+		text-decoration: underline;
+		font-weight: bold;
+		margin: 7ch 0 0 2ch;
+	}
+
+	.listAnchorDepth2 {
+		list-style-type: disc;
+		margin: 0 0 0 4ch;
+	}
+
+	.listAnchorDepth3 {
+		&::after {
+			content: ".";
+		}
+		list-style-type: disc;
+		a {
+			color: #4a4a4a;
+		}
+		margin: 0 0 0 6ch;
+	}
+
+	.listAnchorDepth4 {
+		margin: 0 0 0 8ch;
+	}
+
+	@include desktop {
+		display: block;
+	}
+}
