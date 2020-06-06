@@ -135,26 +135,26 @@ module.exports = async () => {
 	.on('data', (filepath) => {
 		pageTotal++;
 		// get the targets
-		const targets = require(fp.fullPath).target;
+		const targets = require(filepath.fullPath).target;
 		const lengthOfTargets = (targets) ? targets.length : 0;
 
 		// Add these targets to the filepath to target tracker
 		targetURLTracker.push({
-			filepath: fp.fullPath,
+			filepath: filepath.fullPath,
 			targets: targets
 		})
 
 		// Increment the number of total targets
 		targetTotal += lengthOfTargets;
 		
-		// pageFilepaths.push(filepath);
+		pageFilepaths.push(filepath);
 		})
 		.on('end', () => {
 			console.log(`finished reading local files (${pageTotal})`);
 
 			// now that we have the number of files that we need to source
 			// update the total number of ticks required to fill the progress bar
-			console.log(`found ${pageTotal} pages and ${targetTotal} targets`.blue)
+			// console.log(`found ${pageTotal} pages and ${targetTotal} targets`.blue)
 			bar.total = pageTotal;
 			// =================================================================================
 
