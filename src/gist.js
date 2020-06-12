@@ -35,10 +35,10 @@ const toggleToc = (event) => {
 	const nav = document.getElementById("table-of-contents")
 	// if it exisits toggle between display block and none
 	if (nav) {
-		const display = nav.style.display;
+		const block = (window.getComputedStyle(nav).display == "block") ? true : false;
 
 		// if its in block (or unset) then hide it 
-		if (display == "block") {
+		if (block) {
 			nav.style.animationName = "toc-slide-out";
 			window.setTimeout(() => {
 				nav.style.display = "none";
