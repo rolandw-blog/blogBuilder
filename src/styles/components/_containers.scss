@@ -132,17 +132,52 @@ nav {
 	font-size: 0.8rem;
 }
 
-.table-of-contents {
-	scrollbar-width: none;
+@keyframes toc-slide-in {
+	from {
+		left: -20vw;
+		opacity: 0;
+	}
+	to {
+		left: 0;
+		opacity: 1;
+	}
+}
+
+@keyframes toc-slide-out {
+	from {
+		left: 0;
+		opacity: 1;
+	}
+	to {
+		left: -20vw;
+		opacity: 0;
+	}
+}
+
+#table-of-contents {
+	// initially hide
 	display: none;
-	width: 20vw;
-	max-height: 100vh;
+	animation-duration: 0.25s;
+	scrollbar-width: none;
+	height: 100vh;
 	position: fixed;
-	padding: 2ch 0ch;
 	top: 0;
 	left: 0;
 	overflow-y: scroll;
 	overflow-x: hidden;
+	background-color: $mainBackground;
+	width: 100vw;
+	@include desktop {
+		// nav will start hidden on mobiles but should be shown on load on desktops
+		display: block;
+		width: 20vw;
+		padding: 2ch 2ch 5ch 2ch;
+	}
+
+	ul {
+		// give mobile more padding than desktop
+		padding: 4ch 4ch 6ch 4ch;
+	}
 
 	li {
 		color: black;
@@ -180,5 +215,30 @@ nav {
 
 	@include desktop {
 		display: block;
+	}
+}
+
+#toc-toggle {
+	display: block;
+	transition: opacity 0.25s ease-in-out;
+	z-index: 999;
+	position: fixed;
+	top: 50px;
+	transform: translate(0, -50%);
+	img {
+		position: relative;
+		left: -40px;
+		transition: left 0.125s ease-in-out;
+	}
+	@include desktop {
+		opacity: 0.5;
+		&:hover {
+			opacity: 1;
+		}
+		img {
+			&:hover {
+				left: -32.5px;
+			}
+		}
 	}
 }

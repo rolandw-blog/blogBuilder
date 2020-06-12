@@ -23,7 +23,13 @@ const jsonTOC2html = (jsonToc, ordered) => {
 	let currentindent = 0;
 	const listSymbol = (ordered) ? "ol" : "ul";
 
-	tocItems += `<div class="table-of-contents">`;
+	// broken
+	// tocItems += `<button id="toc-toggle" onClick="toggleToc(this)" style="background: url(/media/menu.svg);width: 100px;height:100px;"></button>`
+	// works
+	// tocItems += `<input id="toc-toggle" onClick="toggleToc(this)" type="image" src="/media/menu.svg" />`
+	// works
+	tocItems += `<a onClick="toggleToc(this)" id="toc-toggle"><img src="/media/menu.svg"></img></a>`
+	tocItems += `<div id="table-of-contents"><ul>`;
 	for (heading of jsonToc) {
 		// sanitize to get anchor friendly tags
 		let anchorLink = heading.text.toLowerCase().replace(/[^\w]+/g, "-")
@@ -34,11 +40,11 @@ const jsonTOC2html = (jsonToc, ordered) => {
 		}
 	}
 
-	for (let i = 0; i < currentindent; i++) {
-		tocItems += `</${listSymbol}>`;
-	}
+	// for (let i = 0; i < currentindent; i++) {
+	// 	tocItems += `</${listSymbol}>`;
+	// }
 
-	tocItems += "</div>";
+	tocItems += "</ul></div>";
 
 	return tocItems;
 }
