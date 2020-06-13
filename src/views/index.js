@@ -3,7 +3,7 @@ const listFilesInDirPartial = require('../../templates/partials/listFilesInDirPa
 const page = `
 	<div id="home">
 		<div class="center">
-			${listFilesInDirPartial("src/views")}
+			${listFilesInDirPartial("src/views", ["Resume"])}
 		</div>
 		<a class="darkHyperLink">
 			<img height="25px" src="/media/logo.svg" class="caret" />

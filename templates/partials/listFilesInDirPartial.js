@@ -1,17 +1,20 @@
 const listFilesInDir = require('../../build/listFilesInDir')
 const path = require('path')
 
-module.exports = (filepath, linkStyleClass="darkHyperLink") => {
-	const files = listFilesInDir(filepath)
+/**
+ * @param {Array} exclude - Array of file names to exclude. eg. ["About"]
+ */
+module.exports = (filepath, exclude, linkStyleClass = "darkHyperLink") => {
+	const files = listFilesInDir(filepath, exclude)
 	const parsedFiles = []
-	files.forEach((f) => {if (f != 'index.js') parsedFiles.push(path.parse(f).name)})
+	files.forEach((f) => { if (f != 'index.js') parsedFiles.push(path.parse(f).name) })
 
 	return (
-    `
-    <ul class="darkHyperlink">
-        ${parsedFiles.map((route, i) => `
-        <li><a class="${linkStyleClass}" href="${route.replace(/\s/g, '')}">${route}</a></li>
-      `.trim()).join('')}
-    </ul>
-	`)
+		`<ul class="darkHyperlink">
+			${parsedFiles.map((route, i) => `
+			<li><a class="${linkStyleClass}" href="${route.replace(/\s/g, '')}">${route}</a></li>
+		`
+			.trim()).join('')}
+		</ul>`
+	)
 }

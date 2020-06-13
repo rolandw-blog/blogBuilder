@@ -1,10 +1,18 @@
 const fs = require('fs')
 const path = require('path')
 
-module.exports = (filepath) => {
+/**
+ * @param {Array} exclude - array of files to exclude
+ */
+module.exports = (filepath, exclude) => {
 	const files = []
+
+	// turn any unpassed or empty arrays into []
+	if (exclude == undefined || exclude.length == 0 || exclude == undefined) exclude = [];
+
 	fs.readdirSync(filepath).forEach((f) => {
-		if (path.parse(f).ext) files.push(f)
+		const stat = path.parse(f);
+		if (stat.ext == ".js" && !exclude.includes(stat.name)) files.push(f)
 	})
 	return files;
 }
