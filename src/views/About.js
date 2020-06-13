@@ -2,7 +2,8 @@ const listFilesInDirPartial = require('../../templates/partials/listFilesInDirPa
 
 const page = `
 <div class='imageAndTextWrapper'>
-    <aside>
+	<aside>
+		<a href="/Resume">View my resume.</a>
         <p>
             I am a Computer enthusiast writing software and building things.
         </p>
