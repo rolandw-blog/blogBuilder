@@ -205,3 +205,10 @@ article {
 		margin: 1ch 0;
 	}
 }
+
+// hljs overwrites
+.language-none {
+	span {
+		color: $lightText;
+	}
+}
