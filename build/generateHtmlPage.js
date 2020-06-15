@@ -82,6 +82,11 @@ const createRenderer = () => {
 		return output;
 	}
 
+	// return tables in a wrapper
+	renderer.table = (header, body) => {
+		return `<div style="overflow-x: scroll;"><table><thead>${header}</thead>${body}</table></div>`
+	}
+
 	return renderer;
 }
 
