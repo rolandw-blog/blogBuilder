@@ -52,6 +52,19 @@ const toggleToc = (event) => {
 
 document.addEventListener("DOMContentLoaded", (e) => {
 	scrollToHash()
+
+	window.addEventListener('scroll', (e) => {
+		const scrollPercentage = getScrollPercent();
+		const gotoTopButton = document.getElementById("gotoTop");
+		// if scrolled > 200px
+		if (scrollPercentage > 500) {
+			if (gotoTopButton) {
+				gotoTopButton.style.display = "block";
+			}
+		} else {
+			gotoTopButton.style.display = "none";
+		}
+	})
 })
 
 const togglePermalinkAnchor = (id, entering) => {
@@ -59,4 +72,17 @@ const togglePermalinkAnchor = (id, entering) => {
 	if (e) {
 		if (entering) e.style.opacity = 1; else e.style.opacity = 0;
 	}
+}
+
+function getScrollPercent() {
+	var h = document.documentElement,
+		b = document.body,
+		st = 'scrollTop',
+		sh = 'scrollHeight';
+
+	// return a percentage
+	// return (h[st] || b[st]) / ((h[sh] || b[sh]) - h.clientHeight) * 100;
+
+	// return an absolute height
+	return h[st]
 }

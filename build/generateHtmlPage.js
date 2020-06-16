@@ -87,6 +87,16 @@ const createRenderer = () => {
 		return `<div style="overflow-x: scroll;"><table><thead>${header}</thead>${body}</table></div>`
 	}
 
+	// renderer.code = (code, infostring, escaped) => {
+	// 	// console.log(code)
+	// 	// let output = ``;
+	// 	if (infostring == "output") {
+	// 		return `<pre class="code-output">${code}</pre>`;
+	// 	} else {
+	// 		return `<pre>${code}</pre>`;
+	// 	}
+	// }
+
 	return renderer;
 }
 

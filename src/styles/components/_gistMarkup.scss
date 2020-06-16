@@ -186,18 +186,12 @@ article {
 
 	.gistShareAnchor {
 		opacity: 0;
-		// color: invert($mainBackground);
-		// background: $mainBackground;
 		background-color: inherit;
 		color: inherit;
 		&:hover {
-			// background-color: inherit;
 			color: unset;
 			color: invert($mainBackground, 50%);
 			mix-blend-mode: unset;
-			// color: invert($mainBackground);
-			// background-color: #1c1d21;
-			// background-color: invert($mainBackground);
 		}
 	}
 
@@ -210,5 +204,19 @@ article {
 .language-none {
 	span {
 		color: $lightText;
+	}
+}
+
+// go to top button
+#gotoTop {
+	display: none;
+	background-color: #121212;
+	position: fixed;
+	margin: 1rem;
+	padding: 1ch;
+	bottom: 0;
+	left: 0;
+	a {
+		color: #dedede;
 	}
 }
