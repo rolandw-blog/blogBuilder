@@ -1,13 +1,15 @@
 * {
 	margin: 0;
 	padding: 0;
+	scrollbar-width: thin;
+	scrollbar-color: #121212 $mainBackground;
 
 	//   yeet scrollbars
-	::-webkit-scrollbar {
-		display: none; // Safari and Chrome
-	}
-	-ms-overflow-style: none; // Internet Explorer 10+
-	scrollbar-width: none; // Firefox
+	// ::-webkit-scrollbar {
+	// 	display: none; // Safari and Chrome
+	// }
+	// -ms-overflow-style: none; // Internet Explorer 10+
+	// scrollbar-width: none; // Firefox
 }
 
 ul,
