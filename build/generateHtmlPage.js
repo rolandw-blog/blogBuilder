@@ -36,7 +36,7 @@ const jsonTOC2html = (jsonToc, ordered) => {
 		anchorLink = anchorLink.replace(/"|'|`/g, '');
 		// filter out small headings
 		if (heading.depth < 4) {
-			tocItems += `<li class="listAnchorDepth${heading.depth}"><a class="plainHyperLink" href=#${anchorLink}>${heading.text}</a></li>`
+			tocItems += `<li class="listAnchorDepth${heading.depth}"><a href=#${anchorLink}>${heading.text}</a></li>`
 		}
 	}
 
@@ -72,7 +72,7 @@ const createRenderer = () => {
 						name="${escapedText}" 
 						id="${escapedText}-permalinkAnchor" 
 						onClick="copyUrlToClipboard('${escapedText}')" 
-						class="plainHyperLink gistShareAnchor" 
+						class="gistShareAnchor" 
 						title="Permalink to this headline"
 						href="#${escapedText}">
 						#
@@ -85,6 +85,15 @@ const createRenderer = () => {
 	// return tables in a wrapper
 	renderer.table = (header, body) => {
 		return `<div style="overflow-x: scroll;"><table><thead>${header}</thead>${body}</table></div>`
+	}
+
+	// return images in a wrapper
+	renderer.image = (href, title, text) => {
+		return (
+			`
+				<div class="markdown-image-wrapper"><img src="${href}" alt=${title}></div>
+			`
+		)
 	}
 
 	// renderer.code = (code, infostring, escaped) => {

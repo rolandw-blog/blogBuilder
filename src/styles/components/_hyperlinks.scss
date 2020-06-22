@@ -1,51 +1,36 @@
-@mixin getColors($foreground, $background) {
-  @if ($theme == "light") {
-    // if the theme is light. invert the foreground color a tiny amount
-    // and set it as the background to make it a bit darker
-    background: darken(invert($foreground, 8%), 10%);
-    color: $background;
-  } @else {
-    // if the theme is dark. do nothing. 
-    // If this is an emLink then the values were passed in back to front
-    // then they will be inverted without needing to do anything
-    background: $background;
-    color: $foreground;
-  }
-
-  &:hover {
-    color: $lightest;
-    background-color: $mainBackground;
-    text-decoration: underline;
-  }
-}
-
 .HyperLink {
   list-style-type: none;
   text-decoration: none;
+  &:hover {
+	text-decoration: underline;
+  }
 }
 
 // dark hyperlinks: dark background.
 // usually underlined as a style rule :)
 .darkHyperLink {
-  @extend .HyperLink;
-  @include getColors($lightest, $mainBackground);
+	@extend .HyperLink;
+	color: $darkest;
 }
 
-.darkHyperLinks {
-  a {
-    @extend .darkHyperLink;
-  }
+.darkHyperLinks * {
+	@extend .darkHyperLink;
 }
 
-.plainHyperLink {
-	background-color: rgba(0,0,0,0);
-	// color: $text;
-	text-decoration: none;
+.lightHyperLink {
+	@extend .HyperLink;
+	color: $lightest;
+}
+
+.lightHyperLinks * {
+	@extend .lightHyperLink;
 }
 
 // global fallback for any links that aren't styled
 a {
-	color: $lightest;
+	background-color: rgba(0,0,0,0);
+	text-decoration: none;
+	color: $darkest;
 }
 
 // the little spinny logo thing on the home page
@@ -58,10 +43,18 @@ a {
 	transform: rotate(180deg);
 }
 
-.heroHyperlink * {
+.darkHeroHyperlink * {
 	color: $darkest;
 }
 
-.dynamic-nav a {
-	color: $darkest;
+.lightHeroHyperlink * {
+	color: $lightest;
+}
+
+// .dynamic-nav a {
+// 	color: $darkest;
+// }
+
+nav * {
+	color: $lightest;
 }

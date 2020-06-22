@@ -10,9 +10,9 @@ module.exports = (filepath, exclude, linkStyleClass = "darkHyperLink") => {
 	files.forEach((f) => { if (f != 'index.js') parsedFiles.push(path.parse(f).name) })
 
 	return (
-		`<ul class="darkHyperlink">
+		`<ul class="">
 			${parsedFiles.map((route, i) => `
-			<li><a class="${linkStyleClass}" href="${route.replace(/\s/g, '')}">${route}</a></li>
+			<li><a class="lightHyperLink" href="${route.replace(/\s/g, '')}">${route}</a></li>
 		`
 			.trim()).join('')}
 		</ul>`
