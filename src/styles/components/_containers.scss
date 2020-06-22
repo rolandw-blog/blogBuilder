@@ -167,54 +167,91 @@ nav {
 	overflow-x: hidden;
 	background-color: $mainBackground;
 	width: 100vw;
-	@include desktop {
-		// nav will start hidden on mobiles but should be shown on load on desktops
-		display: block;
-		width: 20vw;
-		padding: 2ch 2ch 5ch 2ch;
-	}
+	
 
 	ul {
 		// give mobile more padding than desktop
-		padding: 4ch 4ch 6ch 4ch;
+		// padding: 4ch 0;
+		text-align: center;
 	}
-
+	
 	li {
 		color: black;
-		font-size: 0.8em;
+		font-size: 1.5em;
+		padding: 0.25ch 0;
 	}
-
-	padding-right: 17px; /* Increase/decrease this value for cross-browser compatibility */
-	box-sizing: content-box; /* So the width will be 100% + 17px */
-
+	
 	.listAnchorDepth1 {
-		text-decoration: underline;
 		font-weight: bold;
-		margin: 7ch 0 0 2ch;
+		text-decoration: underline;
 	}
-
-	.listAnchorDepth2 {
-		list-style-type: disc;
-		margin: 0 0 0 4ch;
-	}
-
+	
 	.listAnchorDepth3 {
 		&::after {
 			content: ".";
 		}
-		list-style-type: disc;
 		a {
 			color: #4a4a4a;
 		}
-		margin: 0 0 0 6ch;
-	}
-
-	.listAnchorDepth4 {
-		margin: 0 0 0 8ch;
 	}
 
 	@include desktop {
-		display: block;
+		// nav will start hidden on mobiles but should be shown on load on desktops
+		// ! actually doing an initial hide on desktops AND mobiles
+		display: none;
+		width: 15vw;
+		// padding: 2ch 2ch 5ch 2ch;
+
+		ul {
+			text-align: left;
+		}
+
+		li {
+			font-size: 0.8em;
+			
+		}
+
+		.listAnchorDepth1 {
+			margin: 7ch 0 0 2ch;
+		}
+		
+		.listAnchorDepth2 {
+			list-style-type: disc;
+			margin: 0 0 0 4ch;
+		}
+		
+		.listAnchorDepth3 {
+			list-style-type: disc;
+			margin: 0 0 0 6ch;
+		}
+		
+		.listAnchorDepth4 {
+			margin: 0 0 0 8ch;
+		}
+	}
+
+	box-sizing: content-box; /* So the width will be 100% + the scrollbar */
+}
+
+#table-of-contents-wrapper {
+	width: 50%;
+	height: 100%;
+	display: flex;
+	flex-direction: row;
+
+	// center the menu on mobile displays
+	margin: auto;
+	ul {
+		margin: auto 0;
+	}
+
+	@include desktop {
+		width: 100%;
+		flex: none;
+		ul {
+			margin: 0;
+			padding: 1em;
+		}
 	}
 }
 
