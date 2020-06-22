@@ -123,6 +123,7 @@ article {
 		border-radius: 0.5em;
 		line-height: 1.5em;
 		display: inline-block;
+		word-break: break-all;
 
 		&::selection {
 			color: $dark;
