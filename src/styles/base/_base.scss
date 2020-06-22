@@ -8,7 +8,13 @@ body {
 	box-sizing: border-box;
 	// remove the scrollbar when its not needed
 	overflow: auto;
-	color: $lightText;
+	color: $lightest;
+
+	// change the select text colors
+	*::selection { 
+		color: $lightest;
+		background-color: $dark;
+	}
 }
 
 // for making a container full height
@@ -24,9 +30,6 @@ body {
 #contentWrapper {
 	margin: auto 10vw;
 	overflow-wrap: break-word;
-	// display: grid;
-	// grid-template-columns: auto 1fr;
-	// grid-template-rows: 1fr;
 
 	@include desktop {
 		margin: 0 20vw;
@@ -41,10 +44,6 @@ body {
 	background-repeat: no-repeat;
 	height: 300px;
 	width: auto;
-}
-
-article {
-	// margin: 5rem 0;
 }
 
 // .skip-link {

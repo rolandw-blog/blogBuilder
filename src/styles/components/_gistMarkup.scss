@@ -2,7 +2,7 @@
 // GIST STYLES
 // ==========================================
 article {
-	color: $darkText;
+	color: $darkest;
 
 	h1,
 	h2,
@@ -11,7 +11,7 @@ article {
 	h5,
 	h6,
 	a {
-		color: $darkText;
+		color: $darkest;
 		background-color: none;
 		padding: 0.25ch;
 		text-decoration: underline;
@@ -19,13 +19,13 @@ article {
 
 	h1 {
 		// background-color: lighten($text, 50%);
-		background-color: #1c1d21;
-		color: $lightText;
+		background-color: $darkest;
+		color: $lightest;
 	}
 
 	h2 {
-		background-color: lighten(#1c1d21, 20%);
-		color: $lightText;
+		background-color: $light;
+		color: $darkest;
 	}
 
 	// First level indent
@@ -97,7 +97,7 @@ article {
 	// code blocks
 	pre {
 		font-weight: bolder;
-		background-color: #1c1d21;
+		background-color: $darkest;
 		padding: 1ch;
 		margin: 2ch 0;
 		@extend .floatGradient;
@@ -112,25 +112,28 @@ article {
 	}
 
 	:not(pre) > code {
-		background-color: desaturate($mainBackground, 50%);
+		background-color: $dark;
+		color: $lightest;
 		font-weight: 500;
-		padding: 0 0.5ch;
+		padding: 0 1ch;
 		hyphens: none;
 		font-family: "Fira Code", monospace;
 		border: 1px solid;
 		box-sizing: border-box;
 		border-radius: 0.5em;
 		line-height: 1.5em;
+		display: inline-block;
+
+		&::selection {
+			color: $dark;
+			background-color: $lightest;
+		}
 	}
 
 	// separate out the sections
 	h1,
 	h2 {
 		@extend .HyperLink;
-	}
-
-	.headingInfoBar {
-		background-color: red;
 	}
 
 	h4,
@@ -151,28 +154,30 @@ article {
 
 	img {
 		overflow: hidden;
+		display: block;
+		margin: auto;
 		width: 80%;
-		// border-radius: 1ch;
-		// @extend .floatGradient;
-		// Change this to center
-		// margin: 0 auto;
-		// display: block;
+	}
+
+	.markdown-image-wrapper {
+		width: 100%;
 	}
 
 	// tables
 	table,
 	th,
 	td {
-		border: 1px solid black;
+		border: 1px solid $darkest;
 		border-collapse: collapse;
 		margin: 2ch 0;
-	}
-
-	// table cells
-	th,
-	td {
 		padding: 1ch;
-		background-color: darken($mainBackground, 20%);
+		color: $darkest;
+		background-color: $lightest;
+	}
+	
+	th {
+		background-color: $light;
+		text-align: center;
 	}
 
 	.floatGradient {
@@ -200,7 +205,7 @@ article {
 // hljs overwrites
 .language-none {
 	span {
-		color: $lightText;
+		color: $lightest;
 	}
 }
 

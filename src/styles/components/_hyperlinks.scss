@@ -13,7 +13,7 @@
   }
 
   &:hover {
-    color: $lightText;
+    color: $lightest;
     background-color: $mainBackground;
     text-decoration: underline;
   }
@@ -22,26 +22,13 @@
 .HyperLink {
   list-style-type: none;
   text-decoration: none;
-//   padding: 0 1ch;
 }
-
-// em links will be outlines against the background
-// .emLink {
-//   @extend .HyperLink;
-//   @include getColors($mainBackground, $lightText);
-// }
-
-// .emLinks {
-//   a {
-//     @extend .emLink;
-//   }
-// }
 
 // dark hyperlinks: dark background.
 // usually underlined as a style rule :)
 .darkHyperLink {
   @extend .HyperLink;
-  @include getColors($lightText, $mainBackground);
+  @include getColors($lightest, $mainBackground);
 }
 
 .darkHyperLinks {
@@ -52,14 +39,13 @@
 
 .plainHyperLink {
 	background-color: rgba(0,0,0,0);
-	color: $text;
+	// color: $text;
 	text-decoration: none;
 }
 
 // global fallback for any links that aren't styled
 a {
-//   @extend .emLink;
-	color: $text;
+	color: $lightest;
 }
 
 // the little spinny logo thing on the home page
@@ -70,4 +56,12 @@ a {
 // when the caret is triggered
 #caret-flip {
 	transform: rotate(180deg);
+}
+
+.heroHyperlink * {
+	color: $darkest;
+}
+
+.dynamic-nav a {
+	color: $darkest;
 }

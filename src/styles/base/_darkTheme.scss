@@ -1,6 +1,12 @@
 // Dark
 $theme: 'dark';
-$mainBackground: #121212;
-$lightText: #dedede;
-$darkText: #dedede;
-$text: #dedede;
+
+// colors
+$lightest: #e0e0e0;
+$darkest: #121212;
+$dark: #343434;
+$light: #787878;
+$light2: #c1c1c1;
+
+// special
+$mainBackground: $darkest;
