@@ -3,6 +3,7 @@ HELLLLLOOOOOO
 `;
 
 module.exports = {
-    page: page, 
-    target: null
+	page: page,
+	target: null,
+	template: null
 };
