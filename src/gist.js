@@ -32,13 +32,12 @@ const copyTextToClipboard = (text) => {
  * @param {HTML element} elem - HTML element of the copy button
  */
 const copyCodeblockToClipboard = (elem) => {
-	const codeWrapperElement = getNearestParentNodeOfClass(elem, ".codeblock-wrapper");
-	const codeBlockText = getNearestChildNodeOfClass(codeWrapperElement, "pre").innerText;
+	const codeWrapperElement = getNearestParentNodeOfClass(elem, ".code-wrapper");
+	const codeBlockText = getNearestChildNodeOfClass(codeWrapperElement, ".codeblock-wrapper").innerText;
 	copyTextToClipboard(codeBlockText);
 }
 
-/**
- * 
+/** 
  * @param {HTML element} elem - The element that you are on now
  * @param {*} targetElement - The nearest parent class element you want to find
  */
@@ -49,8 +48,7 @@ const getNearestParentNodeOfClass = (elem, targetElement) => {
 	return null;
 }
 
-/**
- * 
+/** Only looks at the directly attached children
  * @param {HTML element} elem - The element that you are on now
  * @param {*} targetElement - The nearest parent class element you want to find
  */
