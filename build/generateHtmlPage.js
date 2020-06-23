@@ -71,7 +71,7 @@ const createRenderer = () => {
 					<a 
 						name="${escapedText}" 
 						id="${escapedText}-permalinkAnchor" 
-						onClick="copyUrlToClipboard('${escapedText}')" 
+						onClick="copyTextToClipboard(document.location.href);" 
 						class="gistShareAnchor" 
 						title="Permalink to this headline"
 						href="#${escapedText}">
@@ -99,10 +99,11 @@ const createRenderer = () => {
 	renderer.code = (code, infostring, escaped) => {
 		const codeSpans = hljs.highlightAuto(code).value;
 		const isOutput = (infostring == "output") ? true : false;
+		const copyButton = `<span class="codeblock-copy-label" onClick="copyCodeblockToClipboard(this)"><a class="lightHyperLink">Copy</a></span>`
 		return (
 			`
 			<div class="codeblock-wrapper language-${infostring}">
-			${infostring == "output" ? "<span class='codeblock-output-label'>output</span>" : ""}
+			${infostring == "output" ? "<span class='codeblock-output-label'>Output</span>" : copyButton}
 			<pre><code class="language-${infostring}">${isOutput ? code : codeSpans}</code></pre>
 			</div>
 			`

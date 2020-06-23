@@ -109,11 +109,17 @@ article {
 			color: #e3e2de;
 			font-family: "Fira Code", monospace;
 		}
+		&:hover {
+			// show copy button on hover
+			.codeblock-copy-label {
+				display: inline-block;
+			}
+		}
 	}
 
 	// color "output" code blocks lighter
 	.codeblock-wrapper.language-output {
-		background-color: $light;
+		background-color: $lightest;
 		code {
 			color: $darkest;
 		}
@@ -121,8 +127,19 @@ article {
 
 	.codeblock-output-label {
 		float: right;
-		background: $light;
+		background: $lightest;
 		color: $darkest;
+	}
+
+	.codeblock-copy-label {
+		float: right;
+		background: $darkest;
+		color: $lightest;
+		cursor: pointer;
+		font-size: 0.9em;
+
+		// when the .codeblock-wrapper is hovered this rule is overwritten
+		display: none;
 	}
 
 	:not(pre) > code {

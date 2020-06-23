@@ -12,22 +12,54 @@ const scrollToHash = () => {
 		// timeout the window then set the color back for the anchor
 		window.setTimeout(() => {
 			e.style.background = oldColor;
-			console.log("test")
 		}, 1500);
 	}
 }
 
-const copyUrlToClipboard = (id) => {
-	const e = (id) ? document.getElementById(id) : undefined
-	// if the element exists on the page and the clipboard api is avaliable (ie running in https)
-	if (e && navigator.clipboard) {
-		navigator.clipboard.writeText(document.location.href)
+const copyTextToClipboard = (text) => {
+	// if the clipboard api is avaliable (ie running in https)
+	if (navigator.clipboard) {
+		navigator.clipboard.writeText(text)
 			.then(() => { console.log("copied to clipboard") })
 			.catch(err => console.log(err))
 	}
 	else {
 		console.warn("failed to clopy to clipboard (possibly not running on https. Roland fucked up!)")
 	}
+}
+
+/** Pass a "copy" anchor element and it finds the nearest codeblock text and puts it into the clipboard
+ * @param {HTML element} elem - HTML element of the copy button
+ */
+const copyCodeblockToClipboard = (elem) => {
+	const codeWrapperElement = getNearestParentNodeOfClass(elem, ".codeblock-wrapper");
+	const codeBlockText = getNearestChildNodeOfClass(codeWrapperElement, "pre").innerText;
+	copyTextToClipboard(codeBlockText);
+}
+
+/**
+ * 
+ * @param {HTML element} elem - The element that you are on now
+ * @param {*} targetElement - The nearest parent class element you want to find
+ */
+const getNearestParentNodeOfClass = (elem, targetElement) => {
+	for (; elem && elem !== document; elem = elem.parentNode) {
+		if (elem.matches(targetElement)) return elem;
+	}
+	return null;
+}
+
+/**
+ * 
+ * @param {HTML element} elem - The element that you are on now
+ * @param {*} targetElement - The nearest parent class element you want to find
+ */
+const getNearestChildNodeOfClass = (elem, targetElement) => {
+	const children = elem.children;
+	for (let i = 0; i < children.length; i++) {
+		if (children[i].matches(targetElement)) return children[i];
+	}
+	return null;
 }
 
 const toggleToc = () => {
