@@ -162,7 +162,8 @@ article {
 		padding: 0 1ch;
 		hyphens: none;
 		font-family: "Fira Code", monospace;
-		border: 1px solid;
+		border: 2px solid;
+		border-color: $darkest;
 		box-sizing: border-box;
 		border-radius: 0.5em;
 		line-height: 1.5em;
