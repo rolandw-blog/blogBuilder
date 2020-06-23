@@ -95,7 +95,7 @@ article {
 	}
 
 	// code blocks
-	pre {
+	.codeblock-wrapper {
 		font-weight: bolder;
 		background-color: $darkest;
 		padding: 1ch;
@@ -109,6 +109,20 @@ article {
 			color: #e3e2de;
 			font-family: "Fira Code", monospace;
 		}
+	}
+
+	// color "output" code blocks lighter
+	.codeblock-wrapper.language-output {
+		background-color: $light;
+		code {
+			color: $darkest;
+		}
+	}
+
+	.codeblock-output-label {
+		float: right;
+		background: $light;
+		color: $darkest;
 	}
 
 	:not(pre) > code {

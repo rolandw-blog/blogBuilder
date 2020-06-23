@@ -96,15 +96,18 @@ const createRenderer = () => {
 		)
 	}
 
-	// renderer.code = (code, infostring, escaped) => {
-	// 	// console.log(code)
-	// 	// let output = ``;
-	// 	if (infostring == "output") {
-	// 		return `<pre class="code-output">${code}</pre>`;
-	// 	} else {
-	// 		return `<pre>${code}</pre>`;
-	// 	}
-	// }
+	renderer.code = (code, infostring, escaped) => {
+		const codeSpans = hljs.highlightAuto(code).value;
+		const isOutput = (infostring == "output") ? true : false;
+		return (
+			`
+			<div class="codeblock-wrapper language-${infostring}">
+			${infostring == "output" ? "<span class='codeblock-output-label'>output</span>" : ""}
+			<pre><code class="language-${infostring}">${isOutput ? code : codeSpans}</code></pre>
+			</div>
+			`
+		)
+	}
 
 	return renderer;
 }

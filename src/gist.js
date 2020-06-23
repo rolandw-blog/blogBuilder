@@ -30,7 +30,7 @@ const copyUrlToClipboard = (id) => {
 	}
 }
 
-const toggleToc = (event) => {
+const toggleToc = () => {
 	// get the table of contents
 	const nav = document.getElementById("table-of-contents")
 	// if it exisits toggle between display block and none
