@@ -8,7 +8,7 @@ article {
 	// base class for h1 and h2
 	.big-heading {
 		text-align: center;
-		
+
 		@include desktop {
 			text-align: left;
 			padding: 1rem 5rem;
@@ -28,8 +28,12 @@ article {
 	}
 
 	// underline small headings
-	h3,h4,h5,h6 {
+	h3,
+	h4,
+	h5,
+	h6 {
 		text-decoration: underline;
+		font-size: 150%;
 	}
 
 	// set list style types
@@ -43,10 +47,11 @@ article {
 			list-style-type: decimal-leading-zero;
 		}
 	}
-	
+
 	// list Indents
 	@mixin setIndents($li-p-left, $code-left) {
-		li, p {
+		li,
+		p {
 			margin-left: $li-p-left;
 		}
 
@@ -119,7 +124,7 @@ article {
 			background: $lightest;
 			color: $darkest;
 		}
-		
+
 		.codeblock-wrapper {
 			// make the scrollbar invisible
 			scrollbar-color: $dark $darkest;
@@ -193,8 +198,6 @@ article {
 		width: 80%;
 	}
 
-
-
 	// tables
 	table,
 	th,
@@ -206,7 +209,7 @@ article {
 		color: $darkest;
 		background-color: $lightest;
 	}
-	
+
 	th {
 		background-color: $light;
 		text-align: center;
