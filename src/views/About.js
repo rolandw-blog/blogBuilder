@@ -3,7 +3,7 @@ const listFilesInDirPartial = require('../../templates/partials/listFilesInDirPa
 const page = `
 <div class='imageAndTextWrapper'>
 	<aside>
-		<a href="/Resume">View my resume.</a>
+		<a href="/Resume">View my resume.</a> <a href="/files">Copy my resume cls</a>
         <p>
             I am a Computer enthusiast writing software and building things.
         </p>
