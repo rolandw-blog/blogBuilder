@@ -9,6 +9,7 @@ const mkdirp = require('mkdirp')
 const ProgressBar = require('progress');
 const fetch = require('node-fetch')
 const argv = require('yargs').argv
+const debug = require("debug")("staticFolio:genPages")
 require('dotenv').config()
 const generateHtmlPage = require('./generateHtmlPage')
 
@@ -62,10 +63,18 @@ const generateAndWriteHTML = async function (templateData, filepath) {
 		.then(({ html, templateData }) => {
 			// Emojify it 💯
 			html = emoji.emojify(html);
-			// Minify it 🗜
-			html = minify(html, minifyOptions);
+			debug(`emojified ${templateData.title}`)
 
 			return html;
+		}).then(html => {
+			// Minify it 🗜
+			try {
+				html = minify(html, minifyOptions);
+			} catch(err) {
+				return html
+			}
+			debug(`minified ${templateData.title}`)
+			return html
 		})
 		.then((html) => {
 			// Write it to dist 📤
@@ -91,6 +100,7 @@ const generateAndWriteHTML = async function (templateData, filepath) {
 			mkdirp(path.parse(fullWritePathToDirectory).dir)
 				.then(() => { write(fullWritePathToDirectory, html) }).catch(err => console.log(err))
 
+			debug(`wrote ${templateData.title}`)
 			return filepath
 		})
 		.catch(err => console.log(err))

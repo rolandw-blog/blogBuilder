@@ -36,5 +36,8 @@
 		"progress": "^2.0.3",
 		"readdirp": "^3.4.0",
 		"yargs": "^15.3.1"
+	},
+	"dependencies": {
+		"debug": "^4.1.1"
 	}
 }

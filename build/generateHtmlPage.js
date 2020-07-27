@@ -8,6 +8,7 @@ const crypto = require('crypto')
 const log = require('./log')
 const getFilepathNeighbours = require('./getFilepathNeighbours');
 const getPrevPath = require('./getPrevPath');
+const debug = require("debug")("staticFolio:genPage")
 require('dotenv').config()
 
 // ! choo choo its the code police! Idealy this should be converting the jsonToc to markdown and then converting it
@@ -223,11 +224,14 @@ const generateHtmlpage = async function (templateData, filepath, githubToken) {
 	// get just the headings from the tokens by filtering it
 	const headings = tokens.filter(token => token.type === 'heading')
 	// generate a html ToC
+	debug(`json2html ${templateData.title}`)
 	const toc = jsonTOC2html(headings)
 
 	templateData.toc = toc;
 
+	debug(`render ${templateData.title}`)
 	const html = ejs.render(templateFile, await templateData)
+	debug(`rendered ${templateData.title}`)
 
 	return { html: html, templateData: templateData }
 
