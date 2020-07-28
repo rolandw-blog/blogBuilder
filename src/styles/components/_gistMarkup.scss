@@ -6,7 +6,9 @@ article {
 	color: $darkest;
 
 	// style hyperlinks for markdown articles 🔗
-	a {
+	p a,
+	li a,
+	ul a {
 		font-weight: bold;
 		&:hover {
 			text-decoration: underline;
@@ -14,6 +16,7 @@ article {
 		&::before {
 			content: "🔗";
 			font-size: 0.75em;
+			font-stretch: ultra-condensed;
 		}
 	}
 
