@@ -35,9 +35,8 @@
 		"nodemon": "^2.0.2",
 		"progress": "^2.0.3",
 		"readdirp": "^3.4.0",
+		"chalk": "^4.1.0",
+		"debug": "^4.1.1",
 		"yargs": "^15.3.1"
-	},
-	"dependencies": {
-		"debug": "^4.1.1"
 	}
 }
