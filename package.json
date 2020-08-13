@@ -6,7 +6,8 @@
 	"scripts": {
 		"test": "jest",
 		"clean": "rm -rf dist/* && rm -f ./log.json",
-		"build": "npm run clean && node build.js",
+		"build": "DEBUG=staticFolio:* npm run clean && node build.js",
+		"debug": "DEBUG=staticFolio:* node build.js",
 		"build:quiet": "npm run clean && node build.js -q",
 		"server": "node server.js",
 		"monitor": "npm run clean && concurrently \"nodemon --config ./nodemon.json\" \"node server.js\"",
@@ -17,8 +18,10 @@
 	"author": "",
 	"license": "ISC",
 	"devDependencies": {
+		"chalk": "^4.1.0",
 		"colors": "^1.4.0",
 		"concurrently": "^5.1.0",
+		"debug": "^4.1.1",
 		"dotenv": "^8.2.0",
 		"ejs": "^3.0.1",
 		"emojify": "^1.0.0",
@@ -35,8 +38,6 @@
 		"nodemon": "^2.0.2",
 		"progress": "^2.0.3",
 		"readdirp": "^3.4.0",
-		"chalk": "^4.1.0",
-		"debug": "^4.1.1",
 		"yargs": "^15.3.1"
 	}
 }
