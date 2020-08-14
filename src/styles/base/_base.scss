@@ -8,13 +8,7 @@ body {
 	box-sizing: border-box;
 	// remove the scrollbar when its not needed
 	overflow: auto;
-	color: $lightest;
-
-	// change the select text colors
-	*::selection { 
-		color: $lightest;
-		background-color: $dark;
-	}
+	// color: $lightest;
 }
 
 // for making a container full height

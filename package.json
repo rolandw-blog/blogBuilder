@@ -7,7 +7,7 @@
 		"test": "jest",
 		"clean": "rm -rf dist/* && rm -f ./log.json",
 		"build": "DEBUG=staticFolio:* npm run clean && node build.js",
-		"debug": "DEBUG=staticFolio:* node build.js",
+		"debug": "npm run clean && DEBUG=staticFolio:* nodemon build.js",
 		"build:quiet": "npm run clean && node build.js -q",
 		"server": "node server.js",
 		"monitor": "npm run clean && concurrently \"nodemon --config ./nodemon.json\" \"node server.js\"",

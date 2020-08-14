@@ -1,9 +1,9 @@
 .HyperLink {
-  list-style-type: none;
-  text-decoration: none;
-  &:hover {
-	text-decoration: underline;
-  }
+	list-style-type: none;
+	text-decoration: none;
+	&:hover {
+		text-decoration: underline;
+	}
 }
 
 // dark hyperlinks: dark background.
@@ -28,9 +28,7 @@
 
 // global fallback for any links that aren't styled
 a {
-	background-color: rgba(0,0,0,0);
 	text-decoration: none;
-	color: $darkest;
 }
 
 // the little spinny logo thing on the home page
@@ -50,10 +48,6 @@ a {
 .lightHeroHyperlink * {
 	color: $lightest;
 }
-
-// .dynamic-nav a {
-// 	color: $darkest;
-// }
 
 nav * {
 	color: $lightest;

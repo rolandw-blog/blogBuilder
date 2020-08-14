@@ -1,4 +1,4 @@
-const debug = require("debug")("staticFolio:getSiblings");
+const debug = require("debug")("v_staticFolio:getSiblings");
 
 /**
  * returns siblings in a mask in order they were inserted into the db

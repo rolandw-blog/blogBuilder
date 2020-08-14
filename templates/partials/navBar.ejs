@@ -1,4 +1,11 @@
 <nav>
-	<h1 class="darkHyperLinks"><a href="<%- backlink%>"><%- title%></a></h1>
-	<%- include('./prevNext.ejs', {links}) %>
+	<div class="dynamic-nav">
+		<div id="nav-prev-link">
+			<a class="darkHyperLink" href="<%=prev%>">Prev</a>
+		</div>
+
+		<div id="nav-next-link">
+			<a class="darkHyperLink" href="<%=prev%>">Next</a>
+		</div>
+	</div>
 </nav>

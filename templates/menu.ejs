@@ -20,12 +20,20 @@
 	</head>
 
 	<body>
-		<h1><%- pageName %></h1>
-		<nav>
-			<div id="contentWrapper" class="fullHeight">
+		<div id="contentWrapper">
+			<h1 class="lightHyperLink"><%- pageName %></h1>
+			<a class="lightHyperLink" href="<%- backLink%>">
+				← back to <%- parentName %>
+			</a>
+			<nav>
+				<% children.forEach((child) => { %>
+				<li><a href="<%- child %>"><%- child %></a></li>
+				<% }); %>
+			</nav>
+			<article>
 				<%- content%>
-			</div>
-		</nav>
+			</article>
+		</div>
 
 		<% scripts.forEach((script) => { %> <%- script %> <% }); %>
 	</body>

@@ -264,13 +264,13 @@ article {
 // go to top button
 #gotoTop {
 	display: none;
-	background-color: #121212;
+	background-color: $darkest;
 	position: fixed;
 	margin: 1rem;
 	padding: 1ch;
 	bottom: 0;
 	left: 0;
 	a {
-		color: #dedede;
+		color: $lightest;
 	}
 }

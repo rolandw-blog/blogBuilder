@@ -5,9 +5,13 @@ const renderSass = require("./build/renderSass");
 const util = require("util");
 require("dotenv").config();
 
+process.env.ROOT = __dirname;
 // process.chdir(process.env.ROOT)
 
-// const copy = util.promisify(fs.copyFile)
+const copy = util.promisify(fs.copyFile);
+
+copy("scripts/gist.js", "dist/gist.js");
+copy("scripts/index.js", "dist/index.js");
 
 // const copyToDist = (fpath) => {
 // 	const stat = path.parse(fpath);
@@ -31,8 +35,8 @@ require("dotenv").config();
 // copyToDist("src/index.js")
 // copyToDist("src/gist.js")
 
-// renderSass('src/styles/dark.scss', 'dist/dark.css')
-// renderSass('src/styles/light.scss', 'dist/lightTheme.css')
-// renderSass('src/styles/gist.scss', 'dist/gist.css')
+renderSass("src/styles/dark.scss", "dist/dark.css");
+renderSass("src/styles/light.scss", "dist/light.css");
+renderSass("src/styles/gist.scss", "dist/gist.css");
 
 generateHtmlPages();

@@ -20,12 +20,18 @@
 	</head>
 
 	<body>
-		<h1><%- pageName %></h1>
-		<nav>
-			<div id="contentWrapper" class="fullHeight">
+		<div id="contentWrapper">
+			<h1><%- pageName %></h1>
+			<a class="darkHyperLink" href="<%- backLink%>">
+				← back to <%- parentName %>
+			</a>
+			<nav>
+				<%- include(templateDir + '/p_nav_neighbours.ejs') %>
+			</nav>
+			<article>
 				<%- content%>
-			</div>
-		</nav>
+			</article>
+		</div>
 
 		<% scripts.forEach((script) => { %> <%- script %> <% }); %>
 	</body>
