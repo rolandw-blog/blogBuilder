@@ -1,6 +1,6 @@
 const path = require("path");
 const fs = require("fs-extra");
-const generateHtmlPages = require("./build/generateHtmlPages2");
+const generateHtmlPages = require("./build/generateHtmlPages");
 const renderSass = require("./build/renderSass");
 const util = require("util");
 require("dotenv").config();
