@@ -4,6 +4,8 @@ const path = require("path");
 const marked = require("marked");
 const mkdirp = require("mkdirp");
 const debug = require("debug")("staticFolio:genPage");
+const emoji = require("node-emoji");
+const { minify } = require("html-minifier");
 const wrote = require("debug")("out_staticFolio:wrotePage");
 const log = require("debug")("v_staticFolio:log");
 const error = require("debug")("staticFolio:ERROR");
@@ -11,6 +13,16 @@ const getSiblings = require("./getSiblings");
 const getParent = require("./getParent");
 const getNeighbours = require("./getNeighbours");
 require("dotenv").config();
+
+const minifyOptions = {
+	removeAttributeQuotes: true,
+	collapseWhitespace: true,
+	html5: true,
+	minifyCSS: true,
+	removeEmptyElements: true,
+	removeComments: true,
+	useShortDoctype: true,
+};
 
 const assignScripts = (template) => {
 	const scripts = [];
@@ -48,7 +60,7 @@ const assignStyles = (template) => {
 			break;
 		case "home.ejs":
 			scripts.push(
-				`<link rel="stylesheet" type="text/css" href="/dark.css" />`
+				`<link rel="stylesheet" type="text/css" href="/home.css" />`
 			);
 			break;
 		default:
@@ -58,6 +70,19 @@ const assignStyles = (template) => {
 			break;
 	}
 	return scripts;
+};
+
+/**
+ *
+ * @param {String} html - rendered html to parse through for extra stuff
+ */
+const postProcessing = (html) => {
+	// then parse for emoji 💯
+	html = emoji.emojify(html);
+	// Minify it 🗜
+	html = minify(html, minifyOptions);
+	// return it
+	return html;
 };
 
 /**
@@ -96,7 +121,7 @@ const generateHtmlpage = async (markdown, pages, templateData) => {
 	);
 
 	// rendered html result
-	const result = ejs.render(template, templateData);
+	const result = postProcessing(ejs.render(template, templateData));
 
 	// get paths to write to
 	const relativeWebPath = templateData.websitePath.substring(1);
