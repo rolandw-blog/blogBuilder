@@ -1,8 +1,9 @@
 const debug = require("debug")("staticFolio:paths");
+const debugv = require("debug")("v_staticFolio:paths");
 const error = require("debug")("staticFolio:error");
 
 const findMissingPaths = async (startPath, endPath, pages) => {
-	debug(`checking path from ${endPath} to ${startPath}`);
+	debug(`checking path from "${endPath}" to "${startPath}"`);
 	const missingPaths = [];
 	// const websitePaths = [];
 	const endPathArray = endPath.split("/").filter(String);
@@ -19,7 +20,7 @@ const findMissingPaths = async (startPath, endPath, pages) => {
 		const exists = websitePaths.includes(`/${endPathArray.join("/")}`);
 		const start = endPathArray.join("/");
 		if (exists) {
-			debug(`found path from "/${dest}" to "/${start}"`);
+			debugv(`found path from "/${dest}" to "/${start}"`);
 		} else {
 			error(`WARNING: no path found between "/${dest}" and "/${start}"`);
 			// // get the parent of dest (the missing path)
@@ -29,6 +30,9 @@ const findMissingPaths = async (startPath, endPath, pages) => {
 			// debug("added missing path");
 			missingPaths.push("/" + start);
 		}
+	}
+	if (missingPaths.length == 0) {
+		debug("no missing paths found");
 	}
 	return missingPaths;
 };
