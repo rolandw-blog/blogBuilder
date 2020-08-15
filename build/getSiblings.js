@@ -1,5 +1,5 @@
 const debug = require("debug")("v_staticFolio:getSiblings");
-const error = require("debug")("staticFolio:error");
+const error = require("debug")("v_staticFolio:error");
 
 /**
  * returns siblings in a mask in order they were inserted into the db
@@ -10,26 +10,28 @@ const error = require("debug")("staticFolio:error");
  */
 const genSiblings = (pages, mask, sort) => {
 	let siblings = [];
-	debug(`mask: ${mask}`);
+	error(`mask: ${mask}`);
 
 	// check each page websitePath against the mask
 	for (page of pages) {
-		// debug(`CHECKING THE PAGE ${page.websitePath}`);
+		debug(`CHECKING THE PAGE ${page.websitePath}`);
 		const totalLength = page.websitePath.length;
 		const webPath = page.websitePath;
 		const lhs = webPath.substring(0, mask.length);
 		const rhs = webPath.substring(mask.length + 1, totalLength);
 		// add 1 to the rhs to avoid the "/" at the split (i think, idk it just works™)
 
-		// debugging info
-		// debug(`mask: ${mask}`);
-		// debug(`lhs: ${lhs}`);
-		// debug(`rhs: ${rhs}`);
-
-		// if you are on the root path "/" then the sibling is the 1st index
-		const siblingIndex = mask != "/" ? 0 : 1;
 		// get the first part of the path
-		const pathSibling = rhs.split("/")[siblingIndex];
+		let pathSibling;
+		if (mask == "/") {
+			// if you are on the root path "/"
+			// then the sibling is the first item after "/"
+			// we need to get it like this bc rhs has +1 on the mask which breaks it
+			pathSibling = page.websitePath.split("/").filter(String)[0];
+		} else {
+			// else its not on the root path so the RHS[0] element is the sibling
+			pathSibling = rhs.split("/")[0];
+		}
 
 		// if there is a sibling
 		// and it doesnt already exist
