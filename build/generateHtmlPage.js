@@ -87,7 +87,6 @@ const generateHtmlpage = async (markdown, pages, templateData) => {
 	templateData.scripts = assignScripts(templateData.meta.template);
 	templateData.styles = assignStyles(templateData.meta.template);
 	templateData.templateDir = path.resolve(process.env.ROOT, "templates");
-	debug(templateData.templateDir);
 
 	// read in the requested template
 	const templateName = templateData.meta.template || "template.ejs";
