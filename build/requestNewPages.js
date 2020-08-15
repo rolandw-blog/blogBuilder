@@ -22,11 +22,10 @@ const requestNewPages = async (missingPaths) => {
 		const missingPageName = pathArray[pathArray.length - 1];
 
 		// make a new page for submission
+		// everything should be flat json for it to be encoded as x-www-form-urlencoded
 		const newPage = {
 			pageName: missingPageName,
-			meta: {
-				template: "menu.ejs",
-			},
+			template: "menu.ejs",
 			source: [],
 			websitePath: missingPath,
 		};
