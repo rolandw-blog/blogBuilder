@@ -3,12 +3,14 @@ const fetch = require("node-fetch");
 const debug = require("debug")("staticFolio:reqNewPage");
 const error = require("debug")("staticFolio:");
 
-const requestNewPage = (page) => {
+const requestNewPage = async (page) => {
+	debug(`requesting a new page for: "${page.pageName}"`);
 	const secret = process.env.DB_API_SECRET;
 
 	// create x-www-form-urlencoded object for posting
 	const payload = new URLSearchParams(page);
 
+	debug(page);
 	// encrypt the JSON page
 	let sig =
 		"sha1=" +
@@ -18,7 +20,7 @@ const requestNewPage = (page) => {
 
 	// Attach the actual payload as x-www-form-urlencoded
 	// Attach the x-blogwatcher-signature header based on the page JSON
-	fetch("http://10.10.10.12:8080/page", {
+	return fetch("http://10.10.10.12:8080/page", {
 		method: "post",
 		body: payload, // attach the payload as x-www-form-urlencoded
 		headers: {
@@ -27,7 +29,7 @@ const requestNewPage = (page) => {
 		},
 	})
 		.then((res) => res.json())
-		.then((json) => console.log(json));
+		.then((json) => json);
 };
 
 module.exports = requestNewPage;
