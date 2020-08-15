@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
+	console.log("loaded index.js");
 	document.querySelector(".caret").addEventListener("mousedown", () => {
 		// create the social box
 		const socialBox = document.createElement("div");

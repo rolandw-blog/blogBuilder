@@ -20,12 +20,20 @@
 	</head>
 
 	<body>
-		<h1><%- pageName %></h1>
-		<nav>
-			<div id="contentWrapper" class="fullHeight">
-				<%- content%>
+		<div id="content_wrapper">
+			<div id="home_wrapper">
+				<div id="home_link_wrapper">
+					<% siblings.forEach((sibling) => { %>
+					<a class="lightHyperLink" href="<%- sibling %>"
+						><%- sibling %></a
+					>
+					<% }); %>
+				</div>
+				<a id="caret_anchor" class="darkHyperLink">
+					<img height="25px" src="/media/logo.svg" class="caret" />
+				</a>
 			</div>
-		</nav>
+		</div>
 
 		<% scripts.forEach((script) => { %> <%- script %> <% }); %>
 	</body>

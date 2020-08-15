@@ -63,6 +63,11 @@ const assignStyles = (template) => {
 				`<link rel="stylesheet" type="text/css" href="/home.css" />`
 			);
 			break;
+		case "menu.ejs":
+			scripts.push(
+				`<link rel="stylesheet" type="text/css" href="/menu.css" />`
+			);
+			break;
 		default:
 			scripts.push(
 				`<link rel="stylesheet" type="text/css" href="/dark.css" />`

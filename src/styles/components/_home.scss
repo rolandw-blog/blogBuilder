@@ -1,0 +1,45 @@
+body {
+	background-color: $darkest;
+}
+
+#content_wrapper {
+	height: 100vh;
+	margin: auto;
+	display: flex;
+}
+
+#home_wrapper {
+	margin: auto;
+}
+#home_link_wrapper {
+	margin: auto;
+	grid-row: 1;
+	margin: 1ch 0;
+	a {
+		margin: 0 0.5em;
+	}
+	a:first-child {
+		margin: 0 0.5em 0 0;
+	}
+	a:last-child {
+		margin: 0 0 0 0.5em;
+	}
+}
+
+@keyframes slideInFromLeft {
+	0% {
+		transform: translateX(-10%);
+	}
+	100% {
+		transform: translateX(0);
+	}
+}
+
+.socialBox {
+	display: inline-block;
+	position: relative;
+	animation: 0.25s ease-out slideInFromLeft;
+	a {
+		padding: 0 0.5ch;
+	}
+}
