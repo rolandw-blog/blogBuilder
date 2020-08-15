@@ -15,41 +15,11 @@ const timer = require("debug")("staticFolio:timer");
 require("dotenv").config();
 const generateHtmlPage = require("./generateHtmlPage");
 const findMissingPaths = require("./findMissingPaths");
-const requestNewPage = require("./requestNewPage");
+const requestNewPages = require("./requestNewPages");
 const { check } = require("yargs");
 const read = util.promisify(fs.readFile);
 
 const databaseAddress = "10.10.10.12";
-
-const generateMissingPaths = async (missingPaths) => {
-	const result = [];
-	if (missingPaths.length == 0) {
-		return null;
-	}
-
-	for (missingPath of missingPaths) {
-		// get the missing path as an array
-		const pathArray = missingPath.split("/");
-
-		// get the name
-		const missingPageName = pathArray[pathArray.length - 1];
-
-		// make a new page for submission
-		const newPage = {
-			pageName: missingPageName,
-			meta: {
-				template: "menu.ejs",
-			},
-			source: [],
-			websitePath: missingPath,
-		};
-
-		// post the new page
-		const createdPage = await requestNewPage(newPage);
-		result.push(createdPage);
-	}
-	return result;
-};
 
 const fetchPages = () => {
 	return fetch(`http://${databaseAddress}:8080/pages`)
@@ -61,13 +31,8 @@ const fetchPages = () => {
 };
 
 module.exports = async () => {
-	// const siteLayout = await fetch(`http://${databaseAddress}:8080/preview`)
-	// 	.then((res) => res.json())
-	// 	.then((json) => {
-	// 		return json;
-	// 	});
-
 	debug("fetching pages");
+
 	// get all the page db info
 	let pages = await fetchPages();
 
@@ -98,7 +63,7 @@ module.exports = async () => {
 			debug(`missing paths: ${missingPaths}`);
 
 			// request the missing paths to be created into pages
-			const newPages = await generateMissingPaths(missingPaths);
+			const newPages = await requestNewPages(missingPaths);
 
 			// update the pages array with the newly added pages
 			pages.push(...newPages);
