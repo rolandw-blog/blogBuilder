@@ -1,23 +1,14 @@
-const path = require("path");
 const fs = require("fs");
 const util = require("util");
-const readdirp = require("readdirp");
-const marked = require("marked");
-const emoji = require("node-emoji");
-const minify = require("html-minifier").minify;
-const colors = require("colors");
-const mkdirp = require("mkdirp");
-const ProgressBar = require("progress");
 const fetch = require("node-fetch");
-const argv = require("yargs").argv;
 const debug = require("debug")("staticFolio:genPages");
 const timer = require("debug")("staticFolio:timer");
-require("dotenv").config();
+const ProgressBar = require("progress");
 const generateHtmlPage = require("./generateHtmlPage");
 const findMissingPaths = require("./findMissingPaths");
 const requestNewPages = require("./requestNewPages");
-const { check } = require("yargs");
 const read = util.promisify(fs.readFile);
+require("dotenv").config();
 
 const databaseAddress = "10.10.10.12";
 

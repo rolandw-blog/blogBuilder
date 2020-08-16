@@ -9,6 +9,7 @@ const path = require("path");
 const getNeighbours = (siblings, page) => {
 	// get the parent of this page to find its index
 	const parent = getParent(page.websitePath);
+
 	// get the name (last item in the websitePath)
 	const lastPathName = path.parse(page.websitePath).name;
 

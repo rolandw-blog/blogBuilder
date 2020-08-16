@@ -12,7 +12,6 @@ const findMissingPaths = async (startPath, endPath, pages) => {
 	const websitePaths = pages.map((p) => {
 		return p.websitePath;
 	});
-	// // debug(websitePaths);
 	for (let i = 0; i < endPathLength; i++) {
 		// debug(endPathArray);
 		const dest = endPathArray.join("/");
@@ -23,11 +22,6 @@ const findMissingPaths = async (startPath, endPath, pages) => {
 			debugv(`found path from "/${dest}" to "/${start}"`);
 		} else {
 			error(`WARNING: no path found between "/${dest}" and "/${start}"`);
-			// // get the parent of dest (the missing path)
-			// const temp = endPathArray;
-			// temp.pop();
-			// // put it in the list of missing paths
-			// debug("added missing path");
 			missingPaths.push("/" + start);
 		}
 	}

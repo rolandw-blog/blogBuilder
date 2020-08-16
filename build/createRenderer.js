@@ -1,6 +1,6 @@
 const marked = require("marked");
 const hljs = require("highlight.js");
-const debug = require("debug")("marked");
+const debug = require("debug")("staticFolio:marked");
 
 // PURPOSE
 //
@@ -24,8 +24,9 @@ const renderHeading = (text, level) => {
 				onClick="copyTextToClipboard(document.location.href);" 
 				class="gistShareAnchor" 
 				title="Permalink to this headline"
-				href="#${escapedText}">
-				🔗
+				href="#${escapedText}"
+			>
+				#
 			</a>	
 		</h${level}>
 	</strong>`;
@@ -64,6 +65,15 @@ const renderImage = (href, title, text) => {
 	`;
 };
 
+const renderPre = (infoString, code, codeSpans, isOutput) => {
+	return `
+	<div class="codeblock-wrapper language-${infostring}">
+<pre><code class="language-${infostring}">${
+		isOutput ? code : codeSpans
+	}</code><pre>
+	`;
+};
+
 // PURPOSE
 //
 /**
@@ -77,16 +87,34 @@ const renderCode = (code, infostring, escaped) => {
 	const isOutput = infostring == "output" ? true : false;
 	const copyButton = `<span class="codeblock-copy-label" onClick="copyCodeblockToClipboard(this)"><a class="darkHyperLink">Copy</a></span>`;
 	const outputLabel = `<div class='codeblock-output-label'>Output</div>`;
-	return `
-	<div class="code-wrapper">
-		${infostring == "output" ? outputLabel : copyButton}
-		<div class="codeblock-wrapper language-${infostring}">
-			<code class="language-${infostring}">
-				${isOutput ? code : codeSpans}
-			</code>
+
+	let output = `
+		<div class="code-wrapper">
+			${infostring == "output" ? outputLabel : copyButton}
+			<div class="codeblock-wrapper language-${infostring}">
+				<pre>
+					<code class="language-${infostring}">
+						${isOutput ? code : codeSpans}
+					</code>
+				<pre>
+			</div>
 		</div>
-	</div>
-			`;
+	`;
+
+	// replace 1 new line, followed by 1+ tabs with blank space (i.e remove it)
+	return output.replace(/\n\t+/g, "");
+};
+
+/**
+ *
+ * @param {String} href
+ * @param {String} title
+ * @param {String} text
+ */
+const renderLink = (href, title, text) => {
+	return `
+	<a href="${href}" class="darkHyperLink"><strong>${text}</strong></a>
+	`;
 };
 
 const createRenderer = () => {
@@ -108,6 +136,10 @@ const createRenderer = () => {
 	// render code correctly
 	renderer.code = (code, infostring, escaped) => {
 		return renderCode(code, infostring, escaped);
+	};
+
+	renderer.link = (href, title, text) => {
+		return renderLink(href, title, text);
 	};
 
 	return renderer;

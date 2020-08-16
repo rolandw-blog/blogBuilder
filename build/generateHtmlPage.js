@@ -2,18 +2,14 @@ const ejs = require("ejs");
 const fs = require("fs");
 const path = require("path");
 const marked = require("marked");
-const mkdirp = require("mkdirp");
-const debug = require("debug")("staticFolio:genPage");
 const emoji = require("node-emoji");
 const { minify } = require("html-minifier");
-const wrote = require("debug")("out_staticFolio:wrotePage");
-const log = require("debug")("v_staticFolio:log");
-const error = require("debug")("staticFolio:ERROR");
 const getSiblings = require("./getSiblings");
 const getParent = require("./getParent");
 const getNeighbours = require("./getNeighbours");
 const writeHtml = require("./writeHtml");
 const createRenderer = require("./createRenderer");
+const debug = require("debug")("staticFolio:genPage");
 require("dotenv").config();
 
 const minifyOptions = {
@@ -74,6 +70,9 @@ const assignStyles = (template) => {
 		case "menu.ejs":
 			scripts.push(
 				`<link rel="stylesheet" type="text/css" href="/menu.css" />`
+			);
+			scripts.push(
+				`<link rel="stylesheet" type="text/css" href="/dark.css" />`
 			);
 			break;
 		default:
