@@ -13,6 +13,7 @@ const getSiblings = require("./getSiblings");
 const getParent = require("./getParent");
 const getNeighbours = require("./getNeighbours");
 const writeHtml = require("./writeHtml");
+const createRenderer = require("./createRenderer");
 require("dotenv").config();
 
 const minifyOptions = {
@@ -58,6 +59,12 @@ const assignStyles = (template) => {
 			scripts.push(
 				`<link rel="stylesheet" type="text/css" href="/light.css" />`
 			);
+			scripts.push(
+				`<link rel="stylesheet" type="text/css" href="/gist.css" />`
+			);
+			scripts.push(
+				`<link rel="stylesheet" type="text/css" href="/an-old-hope.css" />`
+			);
 			break;
 		case "home.ejs":
 			scripts.push(
@@ -99,6 +106,11 @@ const postProcessing = (html) => {
  */
 const generateHtmlpage = async (markdown, pages, templateData) => {
 	debug(`Building html for ${templateData.source.length} sources`);
+
+	// import the custom renderer from createRenderer.js
+	marked.setOptions({
+		renderer: createRenderer(),
+	});
 
 	// determine info for building
 	const html = marked(markdown);
