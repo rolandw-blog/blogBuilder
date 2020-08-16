@@ -20,6 +20,7 @@ for (f of fs.readdirSync("src/media")) {
 	copy(`src/media/${f}`, `dist/media/${f}`);
 }
 
+copy("src/styles/an-old-hope.css", "dist/an-old-hope.css");
 // const copyToDist = (fpath) => {
 // 	const stat = path.parse(fpath);
 // 	const src = path.resolve(process.env.ROOT, stat.dir, stat.base);

@@ -38,6 +38,7 @@ body {
 .socialBox {
 	display: inline-block;
 	position: relative;
+	margin-left: 0.5ch;
 	animation: 0.25s ease-out slideInFromLeft;
 	a {
 		padding: 0 0.5ch;

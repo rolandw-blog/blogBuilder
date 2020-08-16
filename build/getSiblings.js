@@ -40,7 +40,7 @@ const genSiblings = (pages, mask, sort) => {
 			siblings.push(pathSibling);
 		}
 	}
-	// sort them alphabetically if {orderBy: "alpha"} is passed into options
+	// sort them alphabetically if (sort = true) is passed into options
 	if (sort) {
 		// debug("sorting");
 		siblings = siblings.sort();
