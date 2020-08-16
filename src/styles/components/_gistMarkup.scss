@@ -5,50 +5,74 @@ article {
 	// set the color of the text to be black
 	color: $darkest;
 
-	// style hyperlinks for markdown articles 🔗
-	p a,
-	li a,
-	ul a {
-		font-weight: bold;
-		&:hover {
-			text-decoration: underline;
-		}
-		&::before {
-			content: "🔗";
-			font-size: 0.75em;
-			font-stretch: ultra-condensed;
-		}
-	}
+	// style hyperlinks for markdown articles
+	// p a,
+	// li a,
+	// ul a {
+	// 	font-weight: bold;
+	// 	&:hover {
+	// 		text-decoration: underline;
+	// 	}
+	// 	&::before {
+	// 		content: "🔗";
+	// 		font-size: 0.75em;
+	// 		font-stretch: ultra-condensed;
+	// 	}
+	// }
+
+	// *:not(h1) {
+	// 	content: "🔗";
+	// 	font-size: 0.75em;
+	// 	font-stretch: ultra-condensed;
+	// }
 
 	// base class for h1 and h2
-	.big-heading {
-		text-align: center;
+	// .big-heading {
+	// 	text-align: center;
 
-		@include desktop {
-			text-align: left;
-			padding: 1rem 5rem;
-		}
-	}
+	// 	@include desktop {
+	// 		text-align: left;
+	// 		padding: 1rem 5rem;
+	// 	}
+	// }
 
-	h1 {
-		@extend .big-heading;
-		background-color: $darkest;
-		color: $lightest;
-	}
+	// h1 {
+	// 	@extend .big-heading;
+	// 	background-color: $darkest;
+	// 	color: $lightest;
+	// }
 
-	h2 {
-		@extend .big-heading;
-		background-color: $light;
-		color: $darkest;
-	}
+	// h2 {
+	// 	@extend .big-heading;
+	// 	background-color: $light;
+	// 	color: $darkest;
+	// }
 
 	// underline small headings
-	h3,
+	// h3,
+	// h4,
+	// h5,
+	// h6 {
+	// 	text-decoration: underline;
+	// 	font-size: 150%;
+	// }
+
+	// h1 {
+	// 	// background-color: red;
+	// 	overflow: hidden;
+	// }
+
 	h4,
 	h5,
 	h6 {
-		text-decoration: underline;
-		font-size: 150%;
+		font-size: 1em;
+		// font-size: bold;
+	}
+	h5,
+	h6 {
+		&::before {
+			content: ">";
+		}
 	}
 
 	// set list style types
@@ -239,6 +263,8 @@ article {
 
 	// copy to clipboard url '#' button
 	.gistShareAnchor {
+		position: absolute;
+		margin-left: 10px;
 		opacity: 0;
 		background-color: inherit;
 		color: inherit;

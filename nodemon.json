@@ -1,11 +1,7 @@
 {
 	"verbose": false,
-	"ignore": [
-		"dist/*",
-		"log.txt",
-		"fileHashes/*"
-	],
+	"ignore": ["dist/*", "log.txt", "fileHashes/*"],
 	"watch": ["*"],
 	"ext": "js, ejs, html, scss, json",
-	"exec": "node ./build.js"
+	"exec": "node server/server.js"
 }

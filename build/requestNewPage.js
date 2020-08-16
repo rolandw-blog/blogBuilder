@@ -4,13 +4,12 @@ const debug = require("debug")("staticFolio:reqNewPage");
 const error = require("debug")("staticFolio:");
 
 const requestNewPage = async (page) => {
-	debug(`requesting a new page for: "${page.pageName}"`);
+	debug(`requesting a new page for: "${page.pageName}"...`);
 	const secret = process.env.DB_API_SECRET;
 
 	// create x-www-form-urlencoded object for posting
 	const payload = new URLSearchParams(page);
 
-	debug(page);
 	// encrypt the JSON page
 	let sig =
 		"sha1=" +

@@ -20,16 +20,18 @@ body {
 	flex-direction: column;
 }
 
-// generic wrapper. DO NOT make full height
-#contentWrapper {
-	margin: auto 10vw;
+// generic wrapper.
+#content_wrapper {
+	margin-top: 2ch;
 	overflow-wrap: break-word;
 
 	@include desktop {
-		margin: 0 20vw;
+		margin-left: 20vw;
+		margin-right: 20vw;
 	}
 	@include tablet {
-		margin: 0 15vw;
+		margin-left: 10vw;
+		margin-right: 10vw;
 	}
 }
 

@@ -2,12 +2,12 @@
 	"name": "test",
 	"version": "1.0.0",
 	"description": "",
-	"main": "index.js",
+	"main": "server/server.js",
 	"scripts": {
 		"test": "jest",
 		"clean": "rm -rf dist/* && rm -f ./log.json",
-		"build": "DEBUG=staticFolio:* npm run clean && node build.js",
-		"debug": "npm run clean && DEBUG=staticFolio:* nodemon build.js",
+		"build": "DEBUG=staticFolio:* npm run clean && node server/server.js",
+		"debug": "npm run clean && DEBUG=staticFolio:* nodemon",
 		"build:quiet": "npm run clean && node build.js -q",
 		"server": "node server.js",
 		"monitor": "npm run clean && concurrently \"nodemon --config ./nodemon.json\" \"node server.js\"",
@@ -39,5 +39,9 @@
 		"progress": "^2.0.3",
 		"readdirp": "^3.4.0",
 		"yargs": "^15.3.1"
+	},
+	"dependencies": {
+		"common-tags": "^1.8.0",
+		"cors": "^2.8.5"
 	}
 }

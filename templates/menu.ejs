@@ -21,24 +21,24 @@
 
 	<body>
 		<div id="content_wrapper">
-			<div id="menu_wrapper">
-				<h1 class="lightHyperLink"><%- pageName %></h1>
-				<a class="lightHyperLink" href="<%- backLink%>">
-					← back to <%- parentName %>
-				</a>
-				<nav>
-					<% children.forEach((child) => { %>
-					<li>
-						<a class="lightHyperLink" href="<%- child %>"
-							><%- child %></a
-						>
-					</li>
-					<% }); %>
-				</nav>
-				<article>
-					<%- content%>
-				</article>
-			</div>
+			<!-- <div id="menu_wrapper"> -->
+			<h1 class="lightHyperLink"><%- pageName %></h1>
+			<a class="lightHyperLink" href="<%- backLink%>">
+				← back to <%- parentName %>
+			</a>
+			<nav>
+				<% children.forEach((child) => { %>
+				<li>
+					<a class="lightHyperLink" href="<%- child %>"
+						><%- child %></a
+					>
+				</li>
+				<% }); %>
+			</nav>
+			<article>
+				<%- content%>
+			</article>
+			<!-- </div> -->
 		</div>
 
 		<% scripts.forEach((script) => { %> <%- script %> <% }); %>
