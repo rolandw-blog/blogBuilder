@@ -12,6 +12,7 @@ const error = require("debug")("staticFolio:ERROR");
 const getSiblings = require("./getSiblings");
 const getParent = require("./getParent");
 const getNeighbours = require("./getNeighbours");
+const writeHtml = require("./writeHtml");
 require("dotenv").config();
 
 const minifyOptions = {
@@ -128,23 +129,8 @@ const generateHtmlpage = async (markdown, pages, templateData) => {
 	// rendered html result
 	const result = postProcessing(ejs.render(template, templateData));
 
-	// get paths to write to
-	const relativeWebPath = templateData.websitePath.substring(1);
-	const writePath = path.resolve("dist", relativeWebPath, "index.html");
-	const distpath = path.resolve("dist", relativeWebPath);
-	log("writePath", path.relative(".", writePath));
-	log("distpath", path.relative(".", distpath));
-
-	// make the dir
-	await mkdirp(path.resolve("dist", distpath)).catch((err) => {
-		error(err);
-	});
-
-	// write a html file here
-	fs.writeFile(writePath, result, (err) => {
-		if (err) error(err);
-		else wrote(`Wrote:\t${templateData.websitePath}`);
-	});
+	// write the html
+	writeHtml(result, templateData);
 };
 
 module.exports = generateHtmlpage;
