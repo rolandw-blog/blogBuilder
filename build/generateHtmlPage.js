@@ -91,8 +91,14 @@ const assignStyles = (template) => {
 const postProcessing = (html) => {
 	// then parse for emoji 💯
 	html = emoji.emojify(html);
-	// Minify it 🗜
-	html = minify(html, minifyOptions);
+	try {
+		// TODO fix this mess
+		// ! for some reason this fails when you use interesting utf8
+		// ! ...at least i think thats the cause
+		// Minify it 🗜
+		html = minify(html, minifyOptions);
+		return html;
+	} catch (err) {}
 	// return it
 	return html;
 };
