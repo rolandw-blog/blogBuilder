@@ -1,5 +1,7 @@
 const debug = require("debug")("v_staticFolio:getSiblings");
 const error = require("debug")("v_staticFolio:error");
+const fetch = require("node-fetch");
+const { string } = require("yargs");
 
 /**
  * returns siblings in a mask in order they were inserted into the db
@@ -14,7 +16,7 @@ const genSiblings = (pages, mask, sort) => {
 
 	// check each page websitePath against the mask
 	for (page of pages) {
-		debug(`CHECKING THE PAGE ${page.websitePath}`);
+		// debug(`CHECKING THE PAGE ${page.websitePath}`);
 		const totalLength = page.websitePath.length;
 		const webPath = page.websitePath;
 		const lhs = webPath.substring(0, mask.length);
@@ -37,6 +39,9 @@ const genSiblings = (pages, mask, sort) => {
 		// and it doesnt already exist
 		// and the lhs is matching the mask
 		if (pathSibling && !siblings.includes(pathSibling) && lhs == mask) {
+			// pathSibling =
+			// 	pathSibling.charAt(0).toUpperCase() + pathSibling.slice(1);
+			// pathSibling = pathSibling.replace(/_/g, " ");
 			siblings.push(pathSibling);
 		}
 	}
@@ -46,8 +51,8 @@ const genSiblings = (pages, mask, sort) => {
 		siblings = siblings.sort();
 	}
 
-	debug(`the siblings for ${mask} are:`);
-	debug(siblings);
+	// debug(`the siblings for ${mask} are:`);
+	// debug(siblings);
 	return siblings;
 };
 
