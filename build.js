@@ -8,6 +8,7 @@ const debug = require("debug")("staticFolio:Build");
 require("dotenv").config();
 
 const build = () => {
+	debug("BUILDING");
 	// set the ROOT
 	process.env.ROOT = __dirname;
 

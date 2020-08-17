@@ -8,11 +8,12 @@ const sigHeaderName = "x-payload-signature";
 function verifyBuilderPayload(req, res, next) {
 	debug("running payload verify middleware");
 
+	// we receive the body as JSON so need to stringify it first
 	let sig =
 		"sha1=" +
 		crypto
 			.createHmac("sha1", secret)
-			.update(req.body.toString())
+			.update(JSON.stringify(req.body))
 			.digest("hex");
 
 	debug(`sig: ${sig}`);

@@ -26,8 +26,6 @@ app.listen(process.env.PORT, () =>
 );
 
 app.post("/build", verifyPayload, (req, res) => {
-	debug("BUILDING");
-	const jobs = [];
 	build();
 	return res.status(200).json({ success: true });
 });
@@ -43,16 +41,21 @@ app.post("/download", verifyPayload, (req, res) => {
 	if (!fs.existsSync("content")) fs.mkdirSync("content");
 	fs.writeFile(`content/${req.body.fileName}`, req.body.markdown, (err) => {
 		if (err) {
+			debug("wrote file FAILED");
 			return res.status(500).json({ success: false });
 		} else {
+			debug(`wrote file ${req.body.fileName}`);
 			return res.status(200).json({ success: true });
 		}
 	});
+	// return res.status(200).json({ success: true });
 });
 
 app.post("/", (req, res) => {
 	debug("ROOOOOOT");
 	res.status(200).json({ success: true });
 });
+
+// build();
 
 // app.get("/build", (req, res) => {});
