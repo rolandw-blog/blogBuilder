@@ -8,6 +8,7 @@ const build = require("../build");
 const cors = require("cors");
 const fetch = require("node-fetch");
 const bodyParser = require("body-parser");
+const renderSass = require("../build/renderSass");
 const generateHtmlpage = require("../build/generateHtmlPage");
 require("dotenv").config();
 
@@ -36,12 +37,14 @@ app.listen(process.env.PORT, () =>
 	debug(`app listening at http://localhost:${process.env.PORT}`)
 );
 
-app.post("/build", [verifyPayload, urlencodedParser], (req, res) => {
+// ! DONT forget to add [verifyPayload] to the middleware for production
+app.post("/build", [urlencodedParser], (req, res) => {
 	build();
 	return res.status(200).json({ success: true });
 });
 
-app.post("/build/:id", [verifyPayload, urlencodedParser], async (req, res) => {
+// ! DONT forget to add [verifyPayload] to the middleware for production
+app.post("/build/:id", [urlencodedParser], async (req, res) => {
 	debug(`building page ${req.params.id}`);
 
 	// get all the pages data
@@ -62,11 +65,16 @@ app.post("/build/:id", [verifyPayload, urlencodedParser], async (req, res) => {
 		});
 	}
 
-	let outputMarkdown = "";
-	for (i in page.source) {
-		const pageMarkdown = await read(`content/${page._id}_${i}.md`, "utf8");
-		outputMarkdown += `\n${pageMarkdown}\n`;
-	}
+	// ! this is a temp holdover from build() all pages
+	// TODO seperate this into its own function or something
+	renderSass("src/styles/dark.scss", "dist/dark.css");
+	renderSass("src/styles/light.scss", "dist/light.css");
+	renderSass("src/styles/blue.scss", "dist/blue.css");
+	renderSass("src/styles/gist.scss", "dist/gist.css");
+	renderSass("src/styles/home.scss", "dist/home.css");
+	renderSass("src/styles/menu.scss", "dist/menu.css");
+
+	let outputMarkdown = await read(`content/${page._id}.md`, "utf8");
 
 	try {
 		generateHtmlpage(outputMarkdown, pages, { ...page });
@@ -81,20 +89,21 @@ app.post("/build/:id", [verifyPayload, urlencodedParser], async (req, res) => {
 	}
 });
 
-app.post("/download", [verifyPayload, urlencodedParser], (req, res) => {
-	debug("downloading", req.body.fileName);
+app.post("/download/:id", [verifyPayload, urlencodedParser], (req, res) => {
+	debug(req.params.id);
+	debug("downloading", req.params.id);
+	// return res.status(200).json({ success: true });
 	// write the file
 	if (!fs.existsSync("content")) fs.mkdirSync("content");
-	fs.writeFile(`content/${req.body.fileName}`, req.body.markdown, (err) => {
+	fs.writeFile(`content/${req.params.id}.md`, req.body.markdown, (err) => {
 		if (err) {
 			debug("wrote file FAILED");
 			return res.status(500).json({ success: false });
 		} else {
-			debug(`wrote file ${req.body.fileName}`);
+			debug(`wrote file ${req.params.id}`);
 			return res.status(200).json({ success: true });
 		}
 	});
-	// return res.status(200).json({ success: true });
 });
 
 app.post("/", (req, res) => {

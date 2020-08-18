@@ -36,10 +36,11 @@ body {
 }
 
 .avatar {
-	background-image: url("../media/avatar.svg");
-	background-repeat: no-repeat;
+	background-image: url("/media/avatar.svg");
+	// background-repeat: no-repeat;
 	height: 300px;
-	width: auto;
+	width: 100px;
+	// width: auto;
 }
 
 // .skip-link {
@@ -61,3 +62,35 @@ body {
 		0 2px 2px rgba(28, 29, 33, 0.12), 0 4px 4px rgba(28, 29, 33, 0.12),
 		0 8px 8px rgba(28, 29, 33, 0.12), 0 16px 16px rgba(28, 29, 33, 0.12);
 }
+
+aside {
+	color: $lightest;
+	display: block;
+	margin: 5em 0;
+}
+
+#about {
+	display: grid;
+	grid-template-columns: auto 1fr;
+	grid-template-rows: 1;
+	aside {
+		grid-column: 1;
+		grid-row: 100%;
+		// background-color: red;
+	}
+	svg {
+		display: none;
+		grid-column: 2;
+		grid-row: 1;
+		width: 125px;
+		align-self: center;
+		margin: 0 2em;
+		// background-color: blue;
+		@include desktop {
+			display: block;
+		}
+	}
+}
+
+// .avatar {
+// }

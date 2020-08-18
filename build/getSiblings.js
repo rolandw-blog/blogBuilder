@@ -1,5 +1,5 @@
 const debug = require("debug")("staticFolio:getSiblings");
-const error = require("debug")("v_staticFolio:error");
+const error = require("debug")("staticFolio:error");
 const fetch = require("node-fetch");
 const path = require("path");
 const { string } = require("yargs");
@@ -13,56 +13,53 @@ const { string } = require("yargs");
  */
 const genSiblings = (pages, mask, sort) => {
 	let siblings = [];
-	// error(`mask: ${mask}`);
+	// debug(`mask: ${mask}`);
+	const maskArray = mask.split("/").filter(String);
+	debug(maskArray);
 
 	// check each page websitePath against the mask
 	for (page of pages) {
-		// debug(`CHECKING THE PAGE ${page.websitePath}`);
-		const totalLength = page.websitePath.length;
-		const webPath = page.websitePath;
-		const lhs = webPath.substring(0, mask.length);
-		const rhs = webPath.substring(mask.length + 1, totalLength);
-		// add 1 to the rhs to avoid the "/" at the split (i think, idk it just works™)
+		// split the websitePath into an array
+		const pathArray = page.websitePath.split("/").filter(String);
 
-		// get the first part of the path
-		let pathSibling;
-		if (mask == "/") {
-			// if you are on the root path "/"
-			// then the sibling is the first item after "/"
-			// we need to get it like this bc rhs has +1 on the mask which breaks it
-			pathSibling = page.websitePath.split("/").filter(String)[0];
-		} else {
-			// else its not on the root path so the RHS[0] element is the sibling
-			pathSibling = rhs.split("/")[0];
-		}
+		// get the LHS and RHS of the website path array
+		const maskedArrayLeft = pathArray.splice(0, maskArray.length);
+		const maskedArrayRight = pathArray;
 
-		// if there is a sibling
-		// and it doesnt already exist
-		// and the lhs is matching the mask
-		if (pathSibling && !siblings.includes(pathSibling) && lhs == mask) {
-			// pathSibling =
-			// 	pathSibling.charAt(0).toUpperCase() + pathSibling.slice(1);
-			// pathSibling = pathSibling.replace(/_/g, " ");
+		// get the mask of this page using the LHS array
+		const pathsiblingMask = "/" + maskedArrayLeft.join("/");
 
-			// find the page for this sibling
-			pages.filter((p) => {
-				// debug(p.websitePath);
-				const t = path.parse(p.websitePath).name;
-				const s = path.parse(pathSibling).name;
-				// debug(t);
-				// debug(`does ${s} == ${t}`);
-				if (s == t) {
-					// debug(`neighbour: ${JSON.stringify(p, null, 2)}`);
-					siblings.push(p);
-					return p;
-				}
-			});
+		// get the potential sibling using the RHS array
+		const pathSibling = maskedArrayRight.join("/");
+
+		// const matches = (sibling, i) => sibling == siblings[i];
+		// check that ${pathsiblingMask} matches ${mask}
+		if (pathsiblingMask == mask) {
+			// now we need to check that ${pathSibling} is the last bit of ${page.websitePath}
+			if (maskedArrayRight[maskedArrayRight.length - 1] == pathSibling) {
+				// add it to the result
+				siblings.push(page);
+			}
 		}
 	}
-	// sort them alphabetically if (sort = true) is passed into options
+
+	// Great help from c-sharpcorner on this
+	// https://www.c-sharpcorner.com/UploadFile/fc34aa/sort-json-object-array-based-on-a-key-attribute-in-javascrip/
+	const GetSortOrder = (prop) => {
+		return (a, b) => {
+			if (a[prop] > b[prop]) {
+				return true;
+			} else if (a[prop] < b[prop]) {
+				return false;
+			}
+			return 0;
+		};
+	};
+
+	// sort the siblings alphabetically if (sort = true) is passed into options
 	if (sort) {
-		// debug("sorting");
-		// siblings = siblings.sort();
+		debug("sorting");
+		siblings = siblings.sort(GetSortOrder("pageName"));
 	}
 
 	// debug(`the siblings for ${mask} are:`);

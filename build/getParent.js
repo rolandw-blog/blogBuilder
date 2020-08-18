@@ -1,4 +1,4 @@
-const debug = require("debug")("v_staticFolio:getParent");
+const debug = require("debug")("staticFolio:getParent");
 
 const getParent = (websitePath) => {
 	debug(`${websitePath} - getting the parent`);
@@ -9,7 +9,7 @@ const getParent = (websitePath) => {
 	// join it back as a string. If you are already on the highest dir then return "/"
 	const parentPath = parent.join("/") || "/";
 
-	debug(`${parentPath}`);
+	debug(`parent: ${parentPath}`);
 	return parentPath;
 };
 

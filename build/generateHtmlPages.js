@@ -31,16 +31,16 @@ module.exports = async () => {
 	for (page of pages) {
 		timer("=========================================================");
 		debug(`Building page:\t${page.pageName}`);
-		let outputMarkdown = "";
+		let outputMarkdown = await read(`content/${page._id}.md`, "utf8");
 
-		// ! for each markdown page on this page
-		for (i in page.source) {
-			debug(`reading:\t${page._id}_${i}.md`);
+		// // ! for each markdown page on this page
+		// for (i in page.source) {
+		// 	debug(`reading:\t${page._id}_${i}.md`);
 
-			// read the page and add it to the output
-			const pageMarkdown = read(`content/${page._id}_${i}.md`, "utf8");
-			outputMarkdown += `\n${await pageMarkdown}\n`;
-		}
+		// 	// read the page and add it to the output
+		// 	const pageMarkdown = read(`content/${page._id}_${i}.md`, "utf8");
+		// 	outputMarkdown += `\n${await pageMarkdown}\n`;
+		// }
 
 		// ! check for missing paths
 		const missingPaths = await findMissingPaths(
