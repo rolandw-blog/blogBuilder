@@ -1,4 +1,5 @@
 const getParent = require("./getParent");
+const debug = require("debug")("staticFolio:neighbours");
 const path = require("path");
 /**
  *
@@ -7,27 +8,15 @@ const path = require("path");
  * @example getNeighbours(['page1', 'page2'], {websitePath: '/path/pages'})
  */
 const getNeighbours = (siblings, page) => {
-	// get the parent of this page to find its index
-	const parent = getParent(page.websitePath);
-
-	// get the name (last item in the websitePath)
-	const lastPathName = path.parse(page.websitePath).name;
-
-	const l = siblings.length;
 	const result = { prev: {}, next: {} };
 
-	const nIndex = siblings.indexOf(lastPathName) + 1;
-	const pIndex = siblings.indexOf(lastPathName) - 1;
-
-	if (nIndex < l && nIndex >= 0) {
-		result.next.path = `${parent}/${siblings[nIndex]}`;
-		result.next.name = siblings[nIndex];
-	}
-
-	if (pIndex < l && pIndex >= 0) {
-		result.prev.path = `${parent}/${siblings[pIndex]}`;
-		result.prev.name = siblings[pIndex];
-	}
+	// use find() to get the first page that matches the arguments websitePath by checking every sibling
+	siblings.find((potentialPage, i) => {
+		if (page.websitePath == potentialPage.websitePath) {
+			result.next = siblings[i + 1];
+			result.prev = siblings[i - 1];
+		}
+	});
 
 	return result;
 };

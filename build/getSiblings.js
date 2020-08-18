@@ -1,6 +1,7 @@
-const debug = require("debug")("v_staticFolio:getSiblings");
+const debug = require("debug")("staticFolio:getSiblings");
 const error = require("debug")("v_staticFolio:error");
 const fetch = require("node-fetch");
+const path = require("path");
 const { string } = require("yargs");
 
 /**
@@ -12,7 +13,7 @@ const { string } = require("yargs");
  */
 const genSiblings = (pages, mask, sort) => {
 	let siblings = [];
-	error(`mask: ${mask}`);
+	// error(`mask: ${mask}`);
 
 	// check each page websitePath against the mask
 	for (page of pages) {
@@ -42,13 +43,26 @@ const genSiblings = (pages, mask, sort) => {
 			// pathSibling =
 			// 	pathSibling.charAt(0).toUpperCase() + pathSibling.slice(1);
 			// pathSibling = pathSibling.replace(/_/g, " ");
-			siblings.push(pathSibling);
+
+			// find the page for this sibling
+			pages.filter((p) => {
+				// debug(p.websitePath);
+				const t = path.parse(p.websitePath).name;
+				const s = path.parse(pathSibling).name;
+				// debug(t);
+				// debug(`does ${s} == ${t}`);
+				if (s == t) {
+					// debug(`neighbour: ${JSON.stringify(p, null, 2)}`);
+					siblings.push(p);
+					return p;
+				}
+			});
 		}
 	}
 	// sort them alphabetically if (sort = true) is passed into options
 	if (sort) {
 		// debug("sorting");
-		siblings = siblings.sort();
+		// siblings = siblings.sort();
 	}
 
 	// debug(`the siblings for ${mask} are:`);

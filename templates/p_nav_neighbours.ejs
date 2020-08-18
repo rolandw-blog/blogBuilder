@@ -1,13 +1,21 @@
 <div class="dynamic-nav">
 	<div id="nav-prev-link">
-		<a class="darkHyperLink" href="<%=neighbours.prev.path%>"
-			>↑ <strong><%=neighbours.prev.name%></strong></a
+		<% if(neighbours.prev){ %>
+		<a class="darkHyperLink" href="<%=neighbours.prev.websitePath%>"
+			>↑ <strong><%=neighbours.prev.pageName%></strong></a
 		>
+		<% } else { %>
+		<a class="darkHyperLink" href="#">↑ <strong></strong></a>
+		<% } %>
 	</div>
 
 	<div id="nav-next-link">
-		<a class="darkHyperLink" href="<%=neighbours.next.path%>"
-			>↓ <strong><%=neighbours.next.name%></strong></a
+		<% if(neighbours.next){ %>
+		<a class="darkHyperLink" href="<%=neighbours.next.websitePath%>"
+			>↓ <strong><%=neighbours.next.pageName%></strong></a
 		>
+		<% } else { %>
+		<a class="darkHyperLink" href="#">↓ <strong></strong></a>
+		<% } %>
 	</div>
 </div>
