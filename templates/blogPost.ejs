@@ -15,7 +15,7 @@
 		<meta name="twitter:card" content="summary_large_image" />
 		<meta name="twitter:site" content="@RolandIRL" />
 		<link rel="icon" type="image/png" href="/media/favicon.ico" />
-		<title>Roland</title>
+		<title><%- pageName%></title>
 		<% styles.forEach((script) => { %> <%- script %> <% }); %>
 	</head>
 
@@ -27,11 +27,11 @@
 					← back to <%- parentName %>
 				</a>
 			</div>
-			<nav>
+			<nav id="dynamic-nav">
 				<%- include(templateDir + '/p_nav_neighbours.ejs') %>
 			</nav>
 			<article>
-				<%- _id %> <%- content%>
+				<%- content%>
 			</article>
 		</div>
 

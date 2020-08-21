@@ -1,6 +1,7 @@
 nav {
 	// margin-bottom: 4rem;
 	// background-color: $dark;
+	margin: 0;
 
 	ul {
 		list-style-type: none;
@@ -12,12 +13,9 @@ nav {
 
 // styling for dynamic prev/next nav buttons
 #dynamic-nav {
-	// min-height: 5rem;
-	// background-color: red;
-	transition: all 1s ease-in-out;
-	margin: 1rem 0;
+	// min-height: 5em;
 	display: grid;
-	grid-template-columns: auto auto auto;
+	grid-template-columns: auto auto;
 	grid-template-rows: auto auto;
 	li {
 		margin: auto 0;
@@ -34,12 +32,16 @@ nav {
 		grid-row: 2;
 		vertical-align: bottom;
 	}
-	// #nav-home-link {
-	//   text-align: right;
-	//   margin-top: 0;
-	//   grid-column: 3;
-	//   grid-row: 1;
-	// }
+	#nav-created-box {
+		grid-column: 2;
+		grid-row: 1;
+		text-align: right;
+	}
+	#nav-edited-box {
+		grid-column: 2;
+		grid-row: 2;
+		text-align: right;
+	}
 }
 
 // styles for /src/views/partials/router

@@ -78,7 +78,7 @@ aside {
 		grid-row: 100%;
 		// background-color: red;
 	}
-	svg {
+	img {
 		display: none;
 		grid-column: 2;
 		grid-row: 1;
@@ -90,6 +90,10 @@ aside {
 			display: block;
 		}
 	}
+}
+
+.breadCrumbs {
+	display: block;
 }
 
 // .avatar {

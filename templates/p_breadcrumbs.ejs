@@ -1,0 +1,24 @@
+<div class="breadCrumbs">
+	<% breadCrumbs.forEach((crumb, i) => { %>
+
+	<!-- if on the last loop dont link the segment -->
+	<% if (i != breadCrumbs.length - 1) {%>
+
+	<span style="color: white; display: inline;">/</span>
+	<strong>
+		<a class="lightHyperLink" href="<%- crumb.websitePath %>">
+			<%- crumb.pageName %>
+		</a>
+	</strong>
+
+	<%} else { %>
+
+	<span style="color: white; display: inline;">/</span>
+	<strong>
+		<span style="color: #494f5c; display: inline;">
+			<%- crumb.pageName %>
+		</span>
+	</strong>
+
+	<%} %> <% }); %>
+</div>

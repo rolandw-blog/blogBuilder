@@ -1,5 +1,5 @@
-const debug = require("debug")("staticFolio:getSiblings");
-const error = require("debug")("staticFolio:error");
+const debug = require("debug")("v_staticFolio:getSiblings");
+const error = require("debug")("v_staticFolio:error");
 const fetch = require("node-fetch");
 const path = require("path");
 const { string } = require("yargs");

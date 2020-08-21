@@ -1,21 +1,29 @@
-<div class="dynamic-nav">
-	<div id="nav-prev-link">
-		<% if(neighbours.prev){ %>
-		<a class="darkHyperLink" href="<%=neighbours.prev.websitePath%>"
-			>↑ <strong><%=neighbours.prev.pageName%></strong></a
-		>
-		<% } else { %>
-		<a class="darkHyperLink" href="#">↑ <strong></strong></a>
-		<% } %>
-	</div>
-
-	<div id="nav-next-link">
-		<% if(neighbours.next){ %>
-		<a class="darkHyperLink" href="<%=neighbours.next.websitePath%>"
-			>↓ <strong><%=neighbours.next.pageName%></strong></a
-		>
-		<% } else { %>
-		<a class="darkHyperLink" href="#">↓ <strong></strong></a>
-		<% } %>
-	</div>
+<!-- <div > -->
+<div id="nav-prev-link">
+	<% if(neighbours.prev){ %>
+	<a class="darkHyperLink" href="<%=neighbours.prev.websitePath%>"
+		>↑ <strong><%=neighbours.prev.pageName%></strong></a
+	>
+	<% } else { %>
+	<a class="darkHyperLink" href="#">↑ <strong></strong></a>
+	<% } %>
 </div>
+
+<div id="nav-next-link">
+	<% if(neighbours.next){ %>
+	<a class="darkHyperLink" href="<%=neighbours.next.websitePath%>"
+		>↓ <strong><%=neighbours.next.pageName%></strong></a
+	>
+	<% } else { %>
+	<a class="darkHyperLink" href="#">↓ <strong></strong></a>
+	<% } %>
+</div>
+
+<div id="nav-created-box">
+	Added: <%=createdDate.year%>.<%=createdDate.month%>.<%=createdDate.day%>
+</div>
+
+<div id="nav-edited-box">
+	Added: <%=lastEdit.year%>.<%=lastEdit.month%>.<%=lastEdit.day%>
+</div>
+<!-- </div> -->

@@ -21,11 +21,9 @@
 
 	<body>
 		<div id="content_wrapper">
-			<!-- <div id="menu_wrapper"> -->
 			<h1 class="lightHyperLink"><%- pageName %></h1>
-			<a class="lightHyperLink" href="<%- backLink%>">
-				← back to <%- parentName %>
-			</a>
+
+			<%-include(templateDir + '/p_breadcrumbs.ejs') %>
 			<nav>
 				<% children.forEach((child) => { %>
 				<li>
@@ -38,7 +36,6 @@
 			<article>
 				<%- content%>
 			</article>
-			<!-- </div> -->
 		</div>
 
 		<% scripts.forEach((script) => { %> <%- script %> <% }); %>

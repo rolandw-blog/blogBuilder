@@ -9,6 +9,7 @@ const getParent = require("./getParent");
 const getNeighbours = require("./getNeighbours");
 const writeHtml = require("./writeHtml");
 const createRenderer = require("./createRenderer");
+const getBreadcrumbs = require("./getBreadcrumbs");
 const debug = require("debug")("staticFolio:genPage");
 require("dotenv").config();
 
@@ -103,6 +104,10 @@ const postProcessing = (html) => {
 	return html;
 };
 
+const mongoIDtoDate = (_id) => {
+	return new Date(parseInt(_id.substring(0, 8), 16) * 1000);
+};
+
 /**
  *
  * @param {String} markdown - markdown text to use for the article
@@ -123,6 +128,27 @@ const generateHtmlpage = async (markdown, pages, templateData) => {
 	const siblings = getSiblings(pages, parent, true);
 	const children = getSiblings(pages, templateData.websitePath, true);
 	const neighbours = getNeighbours(siblings, templateData);
+	const breadCrumbs = await getBreadcrumbs(templateData.websitePath);
+	const dateData = mongoIDtoDate(templateData._id);
+
+	// last edit date
+	let modDate;
+	let lastEdit = {};
+	const historyHead =
+		templateData.meta.history[templateData.meta.history.length - 1];
+	if (historyHead != undefined) {
+		// debug(historyHead);
+		// const modHead = JSON.parse(historyHead);
+		const modDateRFC = Date.parse(historyHead.timestamp);
+		modDate = new Date(modDateRFC);
+		lastEdit = {
+			full: modDate,
+			year: modDate.getFullYear(),
+			month: modDate.getMonth(),
+			day: modDate.getDay(),
+			message: historyHead.message,
+		};
+	}
 
 	// set template content for injection
 	templateData.content = html;
@@ -132,9 +158,27 @@ const generateHtmlpage = async (markdown, pages, templateData) => {
 	templateData.siblings = siblings;
 	templateData.children = children;
 	templateData.neighbours = neighbours;
+	templateData.breadCrumbs = breadCrumbs;
 	templateData.scripts = assignScripts(templateData.meta.template);
 	templateData.styles = assignStyles(templateData.meta.template);
 	templateData.templateDir = path.resolve(process.env.ROOT, "templates");
+	templateData.lastEdit = lastEdit || undefined;
+	templateData.createdDate = {
+		full: dateData,
+		year: dateData.getFullYear(),
+		month: dateData.getMonth(),
+		day: dateData.getDate(),
+	};
+
+	// debug(templateData.lastEdit);
+	// for (let i = 0; i < templateData.meta.history.length; i++) {
+	// 	const history = templateData.meta.history[i];
+	// 	templateData.meta.history[i] = JSON.parse(history);
+	// }
+
+	// const a = new Date(Date.parse(templateData.meta.history[0].timestamp));
+	// debug(a.getFullYear());
+	// debug(lastEditDate);
 
 	// read in the requested template
 	const templateName = templateData.meta.template || "template.ejs";

@@ -1,4 +1,4 @@
-const debug = require("debug")("staticFolio:getParent");
+const debug = require("debug")("v_staticFolio:getParent");
 
 const getParent = (websitePath) => {
 	debug(`${websitePath} - getting the parent`);

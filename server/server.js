@@ -10,6 +10,7 @@ const fetch = require("node-fetch");
 const bodyParser = require("body-parser");
 const renderSass = require("../build/renderSass");
 const generateHtmlpage = require("../build/generateHtmlPage");
+const signPayload = require("../build/signPayload");
 require("dotenv").config();
 
 const copy = util.promisify(fs.copyFile);
@@ -38,32 +39,30 @@ app.listen(process.env.PORT, () =>
 );
 
 // ! DONT forget to add [verifyPayload] to the middleware for production
-app.post("/build", [urlencodedParser], (req, res) => {
+app.get("/build", [urlencodedParser], (req, res) => {
 	build();
 	return res.status(200).json({ success: true });
 });
 
 // ! DONT forget to add [verifyPayload] to the middleware for production
-app.post("/build/:id", [urlencodedParser], async (req, res) => {
+app.get("/build/:id", [urlencodedParser], async (req, res) => {
 	debug(`building page ${req.params.id}`);
 
 	// get all the pages data
 	const pagesReq = await fetch(`http://10.10.10.12:8080/pages`);
 	const pages = await pagesReq.json();
 
-	// find my page in this data
-	const page = pages.filter((p) => {
-		if (p._id == req.params.id) {
-			return p;
-		}
-	})[0];
+	// try and download the page from blog watcher
+	const body = { id: req.params.id };
+	const sig = signPayload(body);
 
-	if (!page) {
-		return res.status(400).json({
-			success: false,
-			message: `tried to find page ${req.body.id} and failed to find it`,
-		});
-	}
+	// fetch the page fresh from blog watcher
+	let result = await fetch(`http://10.10.10.12:8080/build/${req.params.id}`, {
+		method: "GET",
+		headers: { "x-payload-signature": sig },
+	});
+	result = await result.json();
+	page = result.page;
 
 	// ! this is a temp holdover from build() all pages
 	// TODO seperate this into its own function or something
@@ -76,6 +75,7 @@ app.post("/build/:id", [urlencodedParser], async (req, res) => {
 
 	let outputMarkdown = await read(`content/${page._id}.md`, "utf8");
 
+	// now try and build it and write it to dist
 	try {
 		generateHtmlpage(outputMarkdown, pages, { ...page });
 		debug(`finished building page ${page._id}!`);
@@ -104,6 +104,15 @@ app.post("/download/:id", [verifyPayload, urlencodedParser], (req, res) => {
 			return res.status(200).json({ success: true });
 		}
 	});
+});
+
+app.get("/download", [urlencodedParser], async (req, res) => {
+	debug("downloading everything");
+	// write the file
+	await fetch(`http://10.10.10.12:8080/build`, {
+		method: "GET",
+	});
+	return res.status(200).json({ success: true });
 });
 
 app.post("/", (req, res) => {
