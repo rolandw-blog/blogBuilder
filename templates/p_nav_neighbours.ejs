@@ -20,10 +20,17 @@
 </div>
 
 <div id="nav-created-box">
-	Added: <%=createdDate.year%>.<%=createdDate.month%>.<%=createdDate.day%>
+	<strong>Added:</strong>
+	<%=createdDate.year%>.<%=createdDate.month%>.<%=createdDate.day%>
 </div>
 
+<% if(lastEdit.year != undefined){ %>
 <div id="nav-edited-box">
-	Edited: <%=lastEdit.year%>.<%=lastEdit.month%>.<%=lastEdit.day%>
+	<strong>Edited:</strong>
+	<%=lastEdit.year%>.<%=lastEdit.month%>.<%=lastEdit.day%>
 </div>
+<% } else { %>
+<div id="nav-edited-box"><strong>Edited:</strong> Unknown</div>
+<% } %>
+
 <!-- </div> -->
