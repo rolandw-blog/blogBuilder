@@ -137,15 +137,15 @@ const generateHtmlpage = async (markdown, pages, templateData) => {
 	const historyHead =
 		templateData.meta.history[templateData.meta.history.length - 1];
 	if (historyHead != undefined) {
-		// debug(historyHead);
-		// const modHead = JSON.parse(historyHead);
-		const modDateRFC = Date.parse(historyHead.timestamp);
-		modDate = new Date(modDateRFC);
+		// modified date of the most recent thing in the history head
+		modDate = new Date(historyHead.timestamp);
+
 		lastEdit = {
 			full: modDate,
 			year: modDate.getFullYear(),
-			month: modDate.getMonth(),
-			day: modDate.getDay(),
+			month: modDate.getMonth() + 1,
+			day: modDate.getDate(),
+			hour: modDate.getHours(),
 			message: historyHead.message,
 		};
 	}
@@ -166,11 +166,14 @@ const generateHtmlpage = async (markdown, pages, templateData) => {
 	templateData.createdDate = {
 		full: dateData,
 		year: dateData.getFullYear(),
-		month: dateData.getMonth(),
+		month: dateData.getMonth() + 1,
 		day: dateData.getDate(),
+		hour: dateData.getHours(),
 	};
 
-	// debug(templateData.lastEdit);
+	// debug(templateData);
+
+	debug(templateData.lastEdit);
 	// for (let i = 0; i < templateData.meta.history.length; i++) {
 	// 	const history = templateData.meta.history[i];
 	// 	templateData.meta.history[i] = JSON.parse(history);
