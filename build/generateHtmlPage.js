@@ -171,18 +171,6 @@ const generateHtmlpage = async (markdown, pages, templateData) => {
 		hour: dateData.getHours(),
 	};
 
-	// debug(templateData);
-
-	debug(templateData.lastEdit);
-	// for (let i = 0; i < templateData.meta.history.length; i++) {
-	// 	const history = templateData.meta.history[i];
-	// 	templateData.meta.history[i] = JSON.parse(history);
-	// }
-
-	// const a = new Date(Date.parse(templateData.meta.history[0].timestamp));
-	// debug(a.getFullYear());
-	// debug(lastEditDate);
-
 	// read in the requested template
 	const templateName = templateData.meta.template || "template.ejs";
 	const template = fs.readFileSync(
