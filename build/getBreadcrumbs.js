@@ -1,6 +1,6 @@
 const fetch = require("node-fetch");
 const signPayload = require("./signPayload");
-const debug = require("debug")("staticFolio:breadCrumbs");
+const debug = require("debug")("v_staticFolio:breadCrumbs");
 
 const getPage = async (websitePath, callback) => {
 	const sig = signPayload({ query: websitePath });
