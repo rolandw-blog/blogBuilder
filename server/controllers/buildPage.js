@@ -44,8 +44,10 @@ const buildPage = async (req, res) => {
 	// now try and build it and write it to dist
 	try {
 		debug("trying to generate html");
-		generateHtmlpage(outputMarkdown, pages, { ...page });
-		debug(`finished building page ${page._id}!`);
+		generateHtmlpage(outputMarkdown, pages, { ...page }).then(() => {
+			debug(`finished building page ${page._id}.`);
+		});
+
 		return res.status(200).json({ success: true });
 	} catch (err) {
 		debug(`error building page ${page._id}! ${err}`);

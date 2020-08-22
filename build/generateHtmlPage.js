@@ -10,6 +10,7 @@ const getNeighbours = require("./getNeighbours");
 const writeHtml = require("./writeHtml");
 const createRenderer = require("./createRenderer");
 const getBreadcrumbs = require("./getBreadcrumbs");
+const deletePage = require("./deletePage");
 const debug = require("debug")("staticFolio:genPage");
 require("dotenv").config();
 
@@ -115,6 +116,13 @@ const mongoIDtoDate = (_id) => {
  * @param {JSOn} templateData - optional templateData
  */
 const generateHtmlpage = async (markdown, pages, templateData) => {
+	if (templateData.hidden) {
+		debug(`This page is hidde!. Skipping it`);
+
+		// if the page was built before it needs to be removed
+		await deletePage(templateData.websitePath);
+		return false;
+	}
 	debug(`Building html for ${templateData.source.length} sources`);
 
 	// import the custom renderer from createRenderer.js

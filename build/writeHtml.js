@@ -15,12 +15,14 @@ const writeHtml = async (html, templateData) => {
 	// make the dir
 	await mkdirp(path.resolve("dist", distpath)).catch((err) => {
 		error(err);
+		return false;
 	});
 
 	// write a html file here
 	fs.writeFile(writePath, html, (err) => {
 		if (err) error(err);
 		else debug(`Wrote:\t${templateData.websitePath}`);
+		return true;
 	});
 };
 
