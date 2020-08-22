@@ -5,7 +5,7 @@ const debug = require("debug")("v_staticFolio:breadCrumbs");
 const getPage = async (websitePath, callback) => {
 	const sig = signPayload({ query: websitePath });
 	const page = await fetch(
-		`http://10.10.10.12:8080/page?websitePath=${websitePath}`,
+		`http://${process.env.WATCHER_IP}/page?websitePath=${websitePath}`,
 		{
 			method: "GET",
 			headers: { "x-payload-signature": sig },

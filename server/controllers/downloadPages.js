@@ -6,7 +6,7 @@ const debug = require("debug")("staticFolio:DownloadPagesC");
 // ! Blog builder does not be able to request Blog watcher to refresh its content right now
 const downloadPages = async (req, res) => {
 	debug("downloading everything");
-	await fetch(`http://10.10.10.12:8080/build`, {
+	await fetch(`http://${process.env.WATCHER_IP}/build`, {
 		method: "GET",
 	});
 	return res.status(200).json({ success: true });

@@ -14,7 +14,7 @@ const buildPage = async (req, res) => {
 
 	// get all the pages data
 	debug("getting all the pages");
-	const pagesReq = await fetch(`http://10.10.10.12:8080/pages`);
+	const pagesReq = await fetch(`http://${process.env.WATCHER_IP}/pages`);
 	const pages = await pagesReq.json();
 
 	// try and download the page from blog watcher
@@ -23,10 +23,13 @@ const buildPage = async (req, res) => {
 
 	// fetch the page fresh from blog watcher
 	debug("requesting the page", req.params.id);
-	let result = await fetch(`http://10.10.10.12:8080/build/${req.params.id}`, {
-		method: "GET",
-		headers: { "x-payload-signature": sig },
-	});
+	let result = await fetch(
+		`http://${process.env.WATCHER_IP}/build/${req.params.id}`,
+		{
+			method: "GET",
+			headers: { "x-payload-signature": sig },
+		}
+	);
 	result = await result.json();
 	page = result.page;
 

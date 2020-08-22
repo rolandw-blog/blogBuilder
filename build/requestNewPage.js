@@ -19,7 +19,7 @@ const requestNewPage = async (page) => {
 
 	// Attach the actual payload as x-www-form-urlencoded
 	// Attach the x-blogwatcher-signature header based on the page JSON
-	return fetch("http://10.10.10.12:8080/page", {
+	return fetch(`http://${process.env.WATCHER_IP}/page`, {
 		method: "post",
 		body: payload, // attach the payload as x-www-form-urlencoded
 		headers: {

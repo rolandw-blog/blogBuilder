@@ -10,7 +10,7 @@ const requestNewPages = require("./requestNewPages");
 const read = util.promisify(fs.readFile);
 require("dotenv").config();
 
-const databaseAddress = "10.10.10.12";
+const databaseAddress = process.env.WATCHER_IP;
 
 const fetchPages = () => {
 	return fetch(`http://${databaseAddress}:8080/pages`)
