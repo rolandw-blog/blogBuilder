@@ -1,5 +1,6 @@
 const fetch = require("node-fetch");
 const fs = require("fs");
+const path = require("path");
 const util = require("util");
 const signPayload = require("../../build/signPayload");
 const renderSass = require("../../build/renderSass");
@@ -28,6 +29,28 @@ const buildPage = async (req, res) => {
 	});
 	result = await result.json();
 	page = result.page;
+
+	const copy = util.promisify(fs.copyFile);
+
+	// copy js to dist
+	await copy(
+		path.resolve(process.env.ROOT, "scripts/gist.js"),
+		path.resolve(process.env.ROOT, "dist/gist.js")
+	);
+	await copy(
+		path.resolve(process.env.ROOT, "scripts/index.js"),
+		path.resolve(process.env.ROOT, "dist/index.js")
+	);
+
+	// copy media to dist
+	debug("copying stuff to dist");
+	const mediaSrcPath = path.resolve(process.env.ROOT, "src/media");
+	const mediaDistPath = path.resolve(process.env.ROOT, "dist/media");
+
+	if (!fs.existsSync(mediaDistPath)) fs.mkdirSync(mediaDistPath);
+	for (f of fs.readdirSync(mediaSrcPath)) {
+		copy(`${mediaSrcPath}/${f}`, `${mediaDistPath}/${f}`);
+	}
 
 	// ! this is a temp holdover from build() all pages
 	// TODO seperate this into its own function or something
