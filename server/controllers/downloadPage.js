@@ -20,7 +20,7 @@ const downloadPage = (req, res) => {
 			debug("wrote file FAILED");
 			return res.status(500).json({ success: false });
 		} else {
-			debug(`wrote file ${req.params.id}`);
+			debug(`wrote file ${req.body.id}`);
 			return res.status(200).json({ success: true });
 		}
 	});
