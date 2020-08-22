@@ -3,11 +3,14 @@ const debug = require("debug")("staticFolio:DownloadPageC");
 
 // download some markdown from blog watcher
 const downloadPage = (req, res) => {
-	if (!req.body) {
+	if (!req.body.markdown) {
+		debug("no body attached");
 		return res.status(400).json({
 			success: false,
 			message: "No body attached",
 		});
+	} else {
+		debug("body attached");
 	}
 
 	debug("downloading page ", req.body.id);
