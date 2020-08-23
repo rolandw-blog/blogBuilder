@@ -20,15 +20,15 @@ services:
         container_name: blog
         restart: unless-stopped
         environment:
-            - VIRTUAL_HOST=blog.0x8.host
-            - LETSENCRYPT_HOST=blog.0x8.host
-            - LETSENCRYPT_EMAIL=warburtonroland@gmail.com
-            - VIRTUAL_PORT=3000
-            - VIRTUAL_NETWORK=nginx-proxy
+           - VIRTUAL_HOST=blog.0x8.host
+           - LETSENCRYPT_HOST=blog.0x8.host
+           - LETSENCRYPT_EMAIL=warburtonroland@gmail.com
+           - VIRTUAL_PORT=3000
+           - VIRTUAL_NETWORK=nginx-proxy
         tty: true
         volumes:
-            - ./app/dist:/usr/share/nginx/html
-           #- ./nginx/conf.d/:/etc/nginx/conf.d/
+           - ./app/dist:/usr/share/nginx/html
+          #- ./nginx/conf.d/:/etc/nginx/conf.d/
 
 networks:
     default:
