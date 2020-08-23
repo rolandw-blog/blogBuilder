@@ -1,0 +1,36 @@
+version: "2.2"
+services:
+    website:
+        container_name: blogbuilder
+        image: blogbuilder
+        environment:
+            - VIRTUAL_HOST=build.0x8.host
+            - LETSENCRYPT_HOST=build.0x8.host
+            - LETSENCRYPT_EMAIL=warburtonroland@gmail.com
+            - VIRTUAL_PORT=3000
+            - VIRTUAL_NETWORK=nginx-proxy
+        volumes:
+            - ./content:/usr/src/app/content
+            - ./app/dist:/usr/src/app/dist
+        ports:
+            - 3000
+
+    blog:
+        image: nginx:alpine
+        container_name: blog
+        restart: unless-stopped
+        environment:
+            - VIRTUAL_HOST=blog.0x8.host
+            - LETSENCRYPT_HOST=blog.0x8.host
+            - LETSENCRYPT_EMAIL=warburtonroland@gmail.com
+            - VIRTUAL_PORT=3000
+            - VIRTUAL_NETWORK=nginx-proxy
+        tty: true
+        volumes:
+            - ./app/dist:/usr/share/nginx/html
+           #- ./nginx/conf.d/:/etc/nginx/conf.d/
+
+networks:
+    default:
+        external:
+            name: nginx-proxy
