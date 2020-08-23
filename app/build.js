@@ -14,6 +14,7 @@ const build = () => {
 
 	const copy = util.promisify(fs.copyFile);
 
+	if (!fs.existsSync("dist")) fs.mkdirSync("dist");
 	// copy js to dist
 	copy("scripts/gist.js", "dist/gist.js");
 	copy("scripts/index.js", "dist/index.js");

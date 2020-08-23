@@ -27,15 +27,12 @@
 			<nav>
 				<% children.forEach((child) => { %>
 				<li>
-					<a class="lightHyperLink" href="<%- child.websitePath %>"
-						><%- child.pageName %></a
-					>
+					<a class="lightHyperLink" href="<%- child.websitePath %>"></a>
+						<%- child.pageName %>
+					</a>
 				</li>
 				<% }); %>
 			</nav>
-			<article>
-				<%- content%>
-			</article>
 		</div>
 
 		<% scripts.forEach((script) => { %> <%- script %> <% }); %>

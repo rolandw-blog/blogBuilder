@@ -10,10 +10,10 @@ const requestNewPages = require("./requestNewPages");
 const read = util.promisify(fs.readFile);
 require("dotenv").config();
 
-const databaseAddress = process.env.WATCHER_IP;
-
+const databaseAddress = "watch.0x8.host";
 const fetchPages = () => {
-	return fetch(`${process.env.PROTOCOL}://${databaseAddress}:8080/pages`)
+	debug(`fetching: https://${databaseAddress}/pages`);
+	return fetch(`https://${databaseAddress}/pages`)
 		.then((res) => res.json())
 		.then((json) => {
 			debug(`fetched ${json.length} pages!`);

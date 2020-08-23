@@ -19,6 +19,10 @@ const downloadRoutes = require("./routes/downloadRoutes");
 const copy = util.promisify(fs.copyFile);
 const read = util.promisify(fs.readFile);
 
+if (!fs.existsSync("dist")) fs.mkdirSync("dist");
+
+// fs.writeFileSync("dist")
+
 // this needs to be 50mb to stop the server from crapping itself
 // with a "request entity too large" error
 const urlencodedParser = bodyParser.urlencoded({
