@@ -1,6 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const buildRouter = require("./buildRouter");
+const verifyPayload = require("../middleware/verifyPayload");
 const debug = require("debug")("staticFolio:routers");
 const router = express.Router();
 
@@ -23,7 +24,7 @@ const routes = [
 	{
 		path: "/",
 		method: "post",
-		middleware: [urlencodedParser],
+		middleware: [urlencodedParser, verifyPayload],
 		handler: downloadPage,
 		help: {
 			description: "build 1 page without downloading",

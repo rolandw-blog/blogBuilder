@@ -1,6 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const buildRouter = require("./buildRouter");
+const verifyPayload = require("../middleware/verifyPayload");
 const debug = require("debug")("staticFolio:routers");
 const router = express.Router();
 
@@ -15,7 +16,7 @@ const urlencodedParser = bodyParser.urlencoded({
 });
 
 // ! remember to protect the routes in production
-//  [urlencodedParser, verifyBuilderPayload]
+//  [urlencodedParser, verifyPayload]
 const routes = [
 	{
 		path: "/:id",

@@ -5,7 +5,7 @@ require("dotenv").config();
 const secret = process.env.DB_API_SECRET;
 const sigHeaderName = "x-payload-signature";
 
-function verifyBuilderPayload(req, res, next) {
+function verifyPayload(req, res, next) {
 	debug("running payload verify middleware");
 
 	// we receive the body as JSON so need to stringify it first
@@ -28,4 +28,4 @@ function verifyBuilderPayload(req, res, next) {
 	return next();
 }
 
-module.exports = verifyBuilderPayload;
+module.exports = verifyPayload;

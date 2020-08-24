@@ -1,5 +1,5 @@
 const crypto = require("crypto");
-const debug = require("debug")("blogWatcher:crypto");
+const debug = require("debug")("staticFolio:crypto");
 
 /**
  *
@@ -8,6 +8,7 @@ const debug = require("debug")("blogWatcher:crypto");
 const signPayload = (body) => {
 	const secret = process.env.DB_API_SECRET;
 	const jsonBody = body;
+	debug(JSON.stringify(body));
 	let sig =
 		"sha1=" +
 		crypto

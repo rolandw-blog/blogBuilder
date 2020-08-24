@@ -1,14 +1,20 @@
 const fetch = require("node-fetch");
 const signPayload = require("./signPayload");
 const debug = require("debug")("staticFolio:breadCrumbs");
+const { URLSearchParams } = require("url");
 
 const getPage = async (websitePath) => {
-	const sig = signPayload({ query: websitePath });
+	const body = { query: websitePath };
+	const params = new URLSearchParams(body);
+	const sig = signPayload(body);
 	return fetch(
 		`${process.env.PROTOCOL}://${process.env.WATCHER_IP}/page?websitePath=${websitePath}`,
 		{
-			method: "GET",
-			headers: { "x-payload-signature": sig },
+			method: "POST",
+			body: params,
+			headers: {
+				"x-payload-signature": sig,
+			},
 		}
 	);
 };
