@@ -41,7 +41,6 @@ const getBreadcrumbs = async (websitePath) => {
 
 	// resolve all the page queries
 	await Promise.all(jobs);
-	debug(result);
 	return result;
 };
 
