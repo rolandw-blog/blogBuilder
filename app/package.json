@@ -4,7 +4,7 @@
 	"description": "",
 	"main": "server/server.js",
 	"scripts": {
-		"start": "DEBUG=staticFolio:* node server/server.js",
+		"start": "DEBUG=staticFolio:* DEBUG_COLORS=true node server/server.js",
 		"test": "jest",
 		"clean": "rm -rf dist/* && rm -f ./log.json",
 		"build": "DEBUG=staticFolio:* npm run clean && node server/server.js",
