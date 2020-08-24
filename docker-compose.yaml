@@ -4,8 +4,8 @@ services:
         container_name: blogbuilder
         image: blogbuilder
         environment:
-            - VIRTUAL_HOST=build.0x8.host
-            - LETSENCRYPT_HOST=build.0x8.host
+            - VIRTUAL_HOST=build.rolandw.dev
+            - LETSENCRYPT_HOST=build.rolandw.dev
             - LETSENCRYPT_EMAIL=warburtonroland@gmail.com
             - VIRTUAL_PORT=3000
             - VIRTUAL_NETWORK=nginx-proxy
@@ -20,8 +20,8 @@ services:
         container_name: blog
         restart: unless-stopped
         environment:
-           - VIRTUAL_HOST=blog.0x8.host
-           - LETSENCRYPT_HOST=blog.0x8.host
+           - VIRTUAL_HOST=blog.rolandw.dev
+           - LETSENCRYPT_HOST=blog.rolandw.dev
            - LETSENCRYPT_EMAIL=warburtonroland@gmail.com
            - VIRTUAL_PORT=3000
            - VIRTUAL_NETWORK=nginx-proxy
