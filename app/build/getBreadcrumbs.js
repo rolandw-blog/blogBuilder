@@ -23,8 +23,9 @@ const getBreadcrumbs = async (websitePath) => {
 	let webpathCurrentURL = "";
 
 	// get the first page which is not included in the webPathArray
-	const home = (await getPage("/")).json();
-	jobs.push(result.push(await home));
+	const home = await (await getPage("/")).json();
+	home.pageName = "~";
+	jobs.push(result.push(home));
 
 	// loop through the rest of the segments in the websitePath and get their pages
 	// each time append the segment to the other ones to follow build the path
@@ -40,6 +41,7 @@ const getBreadcrumbs = async (websitePath) => {
 
 	// resolve all the page queries
 	await Promise.all(jobs);
+	debug(result);
 	return result;
 };
 
