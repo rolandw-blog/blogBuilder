@@ -1,17 +1,16 @@
 const fetch = require("node-fetch");
 const signPayload = require("./signPayload");
-const debug = require("debug")("v_staticFolio:breadCrumbs");
+const debug = require("debug")("staticFolio:breadCrumbs");
 
-const getPage = async (websitePath, callback) => {
+const getPage = async (websitePath) => {
 	const sig = signPayload({ query: websitePath });
-	const page = await fetch(
+	return fetch(
 		`${process.env.PROTOCOL}://${process.env.WATCHER_IP}/page?websitePath=${websitePath}`,
 		{
 			method: "GET",
 			headers: { "x-payload-signature": sig },
 		}
 	);
-	callback(await page.json());
 };
 
 const getBreadcrumbs = async (websitePath) => {
@@ -25,16 +24,16 @@ const getBreadcrumbs = async (websitePath) => {
 	let webpathCurrentURL = "";
 
 	// get the first page which is not included in the webPathArray
-	jobs.push(getPage("/", (json) => result.push(json)));
+	const home = (await getPage("/")).json();
+	jobs.push(result.push(await home));
 
 	// loop through the rest of the segments in the websitePath and get their pages
 	// each time append the segment to the other ones to follow build the path
 	for (segment of webPathArray) {
 		webpathCurrentURL = `${webpathCurrentURL}/${segment}`;
 		debug(`looking for ${webpathCurrentURL}`);
-		const page = getPage(webpathCurrentURL, (json) => {
-			result.push(json);
-		});
+		const page = await getPage(webpathCurrentURL);
+		result.push(await page.json());
 
 		// track concurrent jobs to resolve later
 		jobs.push(page);
