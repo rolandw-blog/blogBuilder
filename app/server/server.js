@@ -16,9 +16,11 @@ require("dotenv").config();
 const buildRoutes = require("./routes/buildRoutes");
 const downloadRoutes = require("./routes/downloadRoutes");
 
-console.log("catchall");
 debug("============================================");
-debug("STARTING");
+debug("Blog builder is starting...");
+debug(`WORKING IN:\t${process.env.ROOT}`);
+debug(`RUNNING ON PORT:\t${process.env.PROTOCOL}`);
+debug(`WATCHER IP:\t${process.env.PROTOCOL}:${process.env.WATCHER_IP}`);
 debug("============================================");
 
 if (!fs.existsSync("dist")) fs.mkdirSync("dist");
