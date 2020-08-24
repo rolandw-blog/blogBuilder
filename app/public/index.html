@@ -64,18 +64,11 @@
 					"application/x-www-form-urlencoded"
 				);
 
-				const digestBuffer = await digestMessage("text");
-
-				const urlencoded = new URLSearchParams();
-				urlencoded.append("a", 1);
-
 				const requestOptions = {
-					method: "POST",
+					method: "GET",
 					headers: {
 						...myHeaders,
-						"x-payload-signature": digestBuffer,
 					},
-					body: urlencoded,
 					redirect: "follow",
 				};
 
@@ -85,17 +78,13 @@
 						requestOptions
 					)
 						.then((response) => {
-							console.log("post done!");
-							// console.log(response.json());
-							return response.json();
+							console.log("done!");
 						})
 						.catch((error) => console.log("error", error));
 				} else {
 					fetch(`https://build.rolandw.dev/build`, requestOptions)
 						.then((response) => {
 							console.log("post done!");
-							// console.log(response.json());
-							return response.json();
 						})
 						.catch((error) => console.log("error", error));
 				}

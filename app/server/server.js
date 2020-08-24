@@ -39,7 +39,7 @@ app.use("/build", buildRoutes);
 app.use("/download", downloadRoutes);
 
 // quick and dirty upload form
-app.use("/upload", express.static(path.resolve(process.env.ROOT, "public")));
+app.use("/build_ui", express.static(path.resolve(process.env.ROOT, "public")));
 
 // Setup cors
 const corsOptions = { origin: "*" };
