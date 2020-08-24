@@ -14,7 +14,9 @@ const buildPage = async (req, res) => {
 
 	// get all the pages data
 	debug("getting all the pages");
-	const pagesReq = await fetch(`https://${process.env.WATCHER_IP}/pages`);
+	const pagesReq = await fetch(
+		`${process.env.PROTOCOL}://${process.env.WATCHER_IP}/pages`
+	);
 	const pages = await pagesReq.json();
 
 	// try and download the page from blog watcher
