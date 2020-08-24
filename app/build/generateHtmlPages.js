@@ -14,6 +14,7 @@ const fetchPages = () => {
 	debug(
 		`fetching: ${process.env.PROTOCOL}://${process.env.WATCHER_IP}/pages`
 	);
+
 	return fetch(`${process.env.PROTOCOL}://${process.env.WATCHER_IP}/pages`)
 		.then((res) => res.json())
 		.then((json) => {
