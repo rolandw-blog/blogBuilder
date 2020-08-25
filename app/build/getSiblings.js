@@ -71,7 +71,6 @@ const genSiblings = async (mask, sort) => {
 	}
 
 	debug(`the siblings for ${mask} are:`);
-	debug(siblings);
 	return siblings;
 };
 

@@ -21,6 +21,13 @@ const buildPage = async (req, res) => {
 	result = await result.json();
 	page = result.page;
 
+	if (!page) {
+		return res.status(400).json({
+			success: false,
+			message: `failed to rebuild page. It likely didnt exist or it was hidden`,
+		});
+	}
+
 	const copy = util.promisify(fs.copyFile);
 
 	// copy js to dist
