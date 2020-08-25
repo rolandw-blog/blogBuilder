@@ -33,16 +33,7 @@ module.exports = async () => {
 	// for each page
 	for (page of pages) {
 		timer("=========================================================");
-
-		if (page.hidden) {
-			debug(`${page.pageName} page is hidde!. Skipping it`);
-
-			// if the page was built before it needs to be removed
-			await deletePage(page.websitePath);
-			continue;
-		} else {
-			debug(`Building page:\t${page.pageName}`);
-		}
+		debug(`Building page:\t${page.pageName}`);
 
 		let outputMarkdown = await read(`content/${page._id}.md`, "utf8");
 

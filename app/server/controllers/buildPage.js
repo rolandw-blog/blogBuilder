@@ -31,14 +31,6 @@ const buildPage = async (req, res) => {
 	result = await result.json();
 	page = result.page;
 
-	if (page.hidden) {
-		debug("this page is hidden so returning 400");
-		deletePage(page.websitePath);
-		return res
-			.status(400)
-			.json({ success: false, message: "page is hidden" });
-	}
-
 	const copy = util.promisify(fs.copyFile);
 
 	// copy js to dist
