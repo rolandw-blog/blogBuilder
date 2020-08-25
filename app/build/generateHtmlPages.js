@@ -38,11 +38,7 @@ module.exports = async () => {
 		let outputMarkdown = await read(`content/${page._id}.md`, "utf8");
 
 		// ! check for missing paths
-		const missingPaths = await findMissingPaths(
-			"/",
-			page.websitePath,
-			pages
-		);
+		const missingPaths = await findMissingPaths(page.websitePath);
 
 		// ! if missing paths were found create them
 		if (missingPaths.length > 0) {

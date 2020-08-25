@@ -1,33 +1,35 @@
 const debug = require("debug")("staticFolio:paths");
-const debugv = require("debug")("v_staticFolio:paths");
-const error = require("debug")("staticFolio:error");
+const fetch = require("node-fetch");
 
-const findMissingPaths = async (startPath, endPath, pages) => {
-	debug(`checking path from "${endPath}" to "${startPath}"`);
+// get a single page by its name. Please dont enter 2 pages with the same name 😢
+// use the upload form to prevent this, never manually insert data!
+const getPage = async (websitePath) => {
+	const url = `${process.env.PROTOCOL}://${process.env.WATCHER_IP}/page?pageName=${websitePath}`;
+	const request = await fetch(url);
+	const json = await request.json();
+	return json;
+};
+
+/**
+ *
+ * @param {String} endPath Will look for a path between "/" and here.
+ */
+const findMissingPaths = async (endPath) => {
 	const missingPaths = [];
-	// const websitePaths = [];
-	const endPathArray = endPath.split("/").filter(String);
-	const endPathLength = endPathArray.length;
+	const pathArray = endPath.split("/").filter(String);
 
-	const websitePaths = pages.map((p) => {
-		return p.websitePath;
-	});
-	for (let i = 0; i < endPathLength; i++) {
-		// debug(endPathArray);
-		const dest = endPathArray.join("/");
-		endPathArray.pop();
-		const exists = websitePaths.includes(`/${endPathArray.join("/")}`);
-		const start = endPathArray.join("/");
-		if (exists) {
-			debugv(`found path from "/${dest}" to "/${start}"`);
-		} else {
-			error(`WARNING: no path found between "/${dest}" and "/${start}"`);
-			missingPaths.push("/" + start);
-		}
+	let curpath = "";
+	for (segment of pathArray) {
+		curpath = `${curpath}/${segment}`;
+		const page = await getPage(`${curpath}`);
+		if (!page) missingPaths.push(curpath);
 	}
-	if (missingPaths.length == 0) {
-		debug("no missing paths found");
+
+	if (missingPaths.length > 0) {
+		debug("MISSING PATHS");
+		debug(missingPaths);
 	}
+
 	return missingPaths;
 };
 

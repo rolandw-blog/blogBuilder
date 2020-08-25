@@ -15,6 +15,7 @@ const requestNewPages = async (missingPaths) => {
 	}
 
 	for (missingPath of missingPaths) {
+		missingPath = missingPath.websitePath;
 		// get the missing path as an array
 		const pathArray = missingPath.split("/");
 
