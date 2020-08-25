@@ -5,10 +5,6 @@ const debug = require("debug")("staticFolio:DownloadPageC");
 const downloadPage = (req, res) => {
 	if (!req.body.markdown) {
 		debug("no body attached");
-		return res.status(400).json({
-			success: false,
-			message: "No body attached",
-		});
 	} else {
 		debug("body attached");
 	}
