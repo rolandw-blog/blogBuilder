@@ -6,9 +6,14 @@ const deletePage = async (websitePath) => {
 	const relativeWebPath = websitePath.substring(1);
 	const deletePath = path.resolve("dist", relativeWebPath, "index.html");
 
-	return fs.unlink(deletePath, () => {
-		debug(`removed ${deletePath}`);
-	});
+	try {
+		return fs.unlink(deletePath, () => {
+			debug(`removed ${deletePath}`);
+		});
+	} catch (err) {
+		debug(err);
+		return false;
+	}
 };
 
 module.exports = deletePage;
