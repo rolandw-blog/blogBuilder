@@ -7,6 +7,7 @@ const ProgressBar = require("progress");
 const generateHtmlPage = require("./generateHtmlPage");
 const findMissingPaths = require("./findMissingPaths");
 const requestNewPages = require("./requestNewPages");
+const deletePage = require("./deletePage");
 const read = util.promisify(fs.readFile);
 require("dotenv").config();
 
@@ -32,7 +33,17 @@ module.exports = async () => {
 	// for each page
 	for (page of pages) {
 		timer("=========================================================");
-		debug(`Building page:\t${page.pageName}`);
+
+		if (page.hidden) {
+			debug(`${page.pageName} page is hidde!. Skipping it`);
+
+			// if the page was built before it needs to be removed
+			await deletePage(page.websitePath);
+			continue;
+		} else {
+			debug(`Building page:\t${page.pageName}`);
+		}
+
 		let outputMarkdown = await read(`content/${page._id}.md`, "utf8");
 
 		// ! check for missing paths

@@ -5,6 +5,7 @@ const util = require("util");
 const signPayload = require("../../build/signPayload");
 const renderSass = require("../../build/renderSass");
 const generateHtmlpage = require("../../build/generateHtmlPage");
+const deletePage = require("../../build/deletePage");
 const debug = require("debug")("staticFolio:BuildPageC");
 
 const read = util.promisify(fs.readFile);
@@ -21,19 +22,22 @@ const buildPage = async (req, res) => {
 
 	// try and download the page from blog watcher
 	const body = { id: req.params.id };
-	const sig = signPayload(body);
 
 	// fetch the page fresh from blog watcher
 	debug("requesting the page", req.params.id);
 	let result = await fetch(
-		`${process.env.PROTOCOL}://${process.env.WATCHER_IP}/build/${req.params.id}`,
-		{
-			method: "GET",
-			headers: { "x-payload-signature": sig },
-		}
+		`${process.env.PROTOCOL}://${process.env.WATCHER_IP}/build/${req.params.id}`
 	);
 	result = await result.json();
 	page = result.page;
+
+	if (page.hidden) {
+		debug("this page is hidden so returning 400");
+		deletePage(page.websitePath);
+		return res
+			.status(400)
+			.json({ success: false, message: "page is hidden" });
+	}
 
 	const copy = util.promisify(fs.copyFile);
 
