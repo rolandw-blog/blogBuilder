@@ -1,8 +1,16 @@
-const debug = require("debug")("v_staticFolio:getSiblings");
+const debug = require("debug")("staticFolio:getSiblings");
 const error = require("debug")("v_staticFolio:error");
 const fetch = require("node-fetch");
 const path = require("path");
 const { string } = require("yargs");
+
+// return all the pages from the mask onwards
+const getPages = async (websitePath) => {
+	const url = `${process.env.PROTOCOL}://${process.env.WATCHER_IP}/pages?websitePath=${websitePath}.*[^/]&regex=true`;
+	const request = await fetch(url);
+	const json = await request.json();
+	return json;
+};
 
 /**
  * returns siblings in a mask in order they were inserted into the db
@@ -11,11 +19,11 @@ const { string } = require("yargs");
  * @param {Boolean} sort - Sort by alpha (default is date added to db)
  * @example getNeighbours([{...},{...}], "/page/mask")
  */
-const genSiblings = (pages, mask, sort) => {
+const genSiblings = async (mask, sort) => {
+	debug("getting pages");
+	const pages = await getPages(mask);
 	let siblings = [];
-	// debug(`mask: ${mask}`);
 	const maskArray = mask.split("/").filter(String);
-	debug(maskArray);
 
 	// check each page websitePath against the mask
 	for (page of pages) {
@@ -62,8 +70,8 @@ const genSiblings = (pages, mask, sort) => {
 		siblings = siblings.sort(GetSortOrder("pageName"));
 	}
 
-	// debug(`the siblings for ${mask} are:`);
-	// debug(siblings);
+	debug(`the siblings for ${mask} are:`);
+	debug(siblings);
 	return siblings;
 };
 

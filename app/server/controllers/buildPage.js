@@ -13,16 +13,6 @@ const read = util.promisify(fs.readFile);
 const buildPage = async (req, res) => {
 	debug(`building page ${req.params.id}`);
 
-	// get all the pages data
-	debug("getting all the pages");
-	const pagesReq = await fetch(
-		`${process.env.PROTOCOL}://${process.env.WATCHER_IP}/pages`
-	);
-	const pages = await pagesReq.json();
-
-	// try and download the page from blog watcher
-	const body = { id: req.params.id };
-
 	// fetch the page fresh from blog watcher
 	debug("requesting the page", req.params.id);
 	let result = await fetch(
@@ -68,7 +58,7 @@ const buildPage = async (req, res) => {
 	// now try and build it and write it to dist
 	try {
 		debug("trying to generate html");
-		generateHtmlpage(outputMarkdown, pages, { ...page }).then(() => {
+		generateHtmlpage(outputMarkdown, { ...page }).then(() => {
 			debug(`finished building page ${page._id}.`);
 		});
 

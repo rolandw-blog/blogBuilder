@@ -4,9 +4,6 @@ const debug = require("debug")("staticFolio:breadCrumbs");
 const { URLSearchParams } = require("url");
 
 const getPage = async (websitePath) => {
-	// const body = { query: websitePath };
-	// const params = new URLSearchParams(body);
-	// const sig = signPayload(body);
 	return fetch(
 		`${process.env.PROTOCOL}://${process.env.WATCHER_IP}/page?websitePath=${websitePath}`
 	);

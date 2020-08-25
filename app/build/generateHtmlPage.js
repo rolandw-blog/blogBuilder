@@ -115,7 +115,7 @@ const mongoIDtoDate = (_id) => {
  * @param {Array} pages - array of pages from the db app
  * @param {JSOn} templateData - optional templateData
  */
-const generateHtmlpage = async (markdown, pages, templateData) => {
+const generateHtmlpage = async (markdown, templateData) => {
 	debug(`Building html for ${templateData.source.length} sources`);
 
 	// import the custom renderer from createRenderer.js
@@ -126,8 +126,9 @@ const generateHtmlpage = async (markdown, pages, templateData) => {
 	// determine info for building
 	const html = marked(markdown);
 	const parent = getParent(templateData.websitePath);
-	const siblings = getSiblings(pages, parent, true);
-	const children = getSiblings(pages, templateData.websitePath, true);
+	debug("getting siblings");
+	const siblings = await getSiblings(parent, true);
+	const children = await getSiblings(templateData.websitePath, true);
 	const neighbours = getNeighbours(siblings, templateData);
 	const breadCrumbs = await getBreadcrumbs(templateData.websitePath);
 	const dateData = mongoIDtoDate(templateData._id);

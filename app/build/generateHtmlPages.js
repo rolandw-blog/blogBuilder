@@ -56,7 +56,7 @@ module.exports = async () => {
 		}
 
 		// ! build the page
-		await generateHtmlPage(outputMarkdown, pages, { ...page });
+		await generateHtmlPage(outputMarkdown, { ...page });
 	}
 	debug("done");
 };
