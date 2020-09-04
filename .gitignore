@@ -5,3 +5,4 @@ dist
 log.txt
 fileHashes/*
 content
+jwtPublic.key

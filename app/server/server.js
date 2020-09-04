@@ -1,16 +1,12 @@
 const path = require("path");
 const fs = require("fs");
-const util = require("util");
 const express = require("express");
 const debug = require("debug")("staticFolio:server");
-const verifyPayload = require("./middleware/verifyPayload");
-const build = require("../build");
 const cors = require("cors");
-const fetch = require("node-fetch");
 const bodyParser = require("body-parser");
-const renderSass = require("../build/renderSass");
-const generateHtmlpage = require("../build/generateHtmlPage");
-const signPayload = require("../build/signPayload");
+const session = require("express-session");
+const checkSSORedirect = require("./middleware/checkSSORedirect");
+const isAuthenticated = require("./middleware/isAuthenticated");
 require("dotenv").config();
 
 const buildRoutes = require("./routes/buildRoutes");
@@ -35,11 +31,36 @@ const urlencodedParser = bodyParser.urlencoded({
 // Create server
 const app = express();
 
+// express session configuration
+// ! Single Sign On system
+app.use(
+	session({
+		secret: "keyboard cat",
+		resave: false,
+		saveUninitialized: true,
+		cookie: {
+			maxAge: 3600000,
+		},
+	})
+);
+
+// check for sign on communications from the sso server
+// ! Single Sign On system
+app.use(checkSSORedirect());
+
+// run authentication on all GET routes
+app.use(isAuthenticated);
+
+// routes
 app.use("/build", buildRoutes);
 app.use("/download", downloadRoutes);
 
 // quick and dirty upload form
-app.use("/build_ui", express.static(path.resolve(process.env.ROOT, "public")));
+app.use(
+	"/build_ui",
+	[isAuthenticated],
+	express.static(path.resolve(process.env.ROOT, "public"))
+);
 
 // Setup cors
 const corsOptions = { origin: "*" };
@@ -53,11 +74,59 @@ app.listen(process.env.PORT, () =>
 	debug(`app listening at http://localhost:${process.env.PORT}`)
 );
 
-app.post("/", (req, res) => {
-	debug("ROOOOOOT");
-	res.status(200).json({ success: true });
+// ! Single Sign On system
+app.get("/", isAuthenticated, (req, res, next) => {
+	// const now = new Date().toISOString();
+	debug(`This session is: ${req.session.id}`);
+	res.status(200).json({
+		what: `SSO-Consumer One`,
+		title: "Blog Builder | Home",
+		role: req.session.user.role,
+		email: req.session.user.email,
+		uid: req.session.user.uid,
+		globalSessionID: req.session.user.globalSessionID,
+		iat: req.session.user.iat,
+		exp: req.session.user.exp,
+		iss: req.session.user.iss,
+		cookie: req.session.cookie || "not sure",
+		expires: req.session.cookie.maxAge / 1000 + "'s",
+	});
 });
 
-// build();
+// ! Single Sign On system (error handling)
+app.use((err, req, res, next) => {
+	if (err) debug("some ERROR occurred:");
+	console.error({
+		message: err.message,
+		error: err,
+	});
+	const statusCode = err.status || 500;
+	let message = err.message || "Internal Server Error";
 
-// app.get("/build", (req, res) => {});
+	debug(err.status);
+	debug(statusCode);
+
+	if (statusCode === 500) {
+		message = "Internal Server Error";
+	}
+	res.status(statusCode).json({
+		message: message,
+		returnCode: statusCode,
+		actualStatusCode: err.statusCode,
+		query: req.query,
+		route: req.route,
+		err: {
+			error: err,
+			errorMessage: err.message,
+		},
+		url: {
+			params: req.params,
+			url: req.url,
+			ogURL: req.originalUrl,
+			baseURL: req.baseURL,
+			hostname: req.hostname,
+			path: req.path,
+		},
+		cookies: req.cookies,
+	});
+});

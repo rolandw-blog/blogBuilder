@@ -128,9 +128,13 @@ const generateHtmlpage = async (markdown, templateData) => {
 	const parent = getParent(templateData.websitePath);
 	debug("getting siblings");
 	const siblings = await getSiblings(parent, true);
+	debug("getting children");
 	const children = await getSiblings(templateData.websitePath, true);
+	debug("getting neighbours");
 	const neighbours = getNeighbours(siblings, templateData);
+	debug("getting breadcrumbs");
 	const breadCrumbs = await getBreadcrumbs(templateData.websitePath);
+	debug("getting date data");
 	const dateData = mongoIDtoDate(templateData._id);
 
 	// last edit date

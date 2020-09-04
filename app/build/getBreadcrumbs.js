@@ -4,9 +4,25 @@ const debug = require("debug")("staticFolio:breadCrumbs");
 const { URLSearchParams } = require("url");
 
 const getPage = async (websitePath) => {
-	return fetch(
-		`${process.env.PROTOCOL}://${process.env.WATCHER_IP}/page?websitePath=${websitePath}`
-	);
+	const body = {
+		websitePath: websitePath,
+		uuid: "some uuid here",
+	};
+
+	const sig = signPayload(body);
+
+	const headers = {
+		Authorization: "Bearer 3imim8awgeq99ikbmg14lnqe0fu8",
+		"x-payload-signature": sig,
+	};
+
+	const url = `${process.env.PROTOCOL}://${process.env.WATCHER_IP}/page?websitePath=${websitePath}`;
+
+	return fetch(url, {
+		method: "post",
+		headers: headers,
+		body: new URLSearchParams(body),
+	});
 };
 
 const getBreadcrumbs = async (websitePath) => {

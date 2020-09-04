@@ -17,7 +17,8 @@
 	"keywords": [],
 	"author": "",
 	"license": "ISC",
-	"devDependencies": {
+	"devDependencies": {},
+	"dependencies": {
 		"chalk": "^4.1.0",
 		"colors": "^1.4.0",
 		"concurrently": "^5.1.0",
@@ -38,11 +39,11 @@
 		"nodemon": "^2.0.2",
 		"progress": "^2.0.3",
 		"readdirp": "^3.4.0",
-		"yargs": "^15.3.1"
-	},
-	"dependencies": {
+		"axios": "^0.20.0",
 		"body-parser": "^1.19.0",
 		"common-tags": "^1.8.0",
-		"cors": "^2.8.5"
+		"cors": "^2.8.5",
+		"express-session": "^1.17.1",
+		"jsonwebtoken": "^8.5.1"
 	}
 }

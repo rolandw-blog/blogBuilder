@@ -9,6 +9,7 @@ const findMissingPaths = require("./findMissingPaths");
 const requestNewPages = require("./requestNewPages");
 const deletePage = require("./deletePage");
 const read = util.promisify(fs.readFile);
+const signPayload = require("./signPayload");
 require("dotenv").config();
 
 const fetchPages = () => {
@@ -16,7 +17,23 @@ const fetchPages = () => {
 		`fetching: ${process.env.PROTOCOL}://${process.env.WATCHER_IP}/pages`
 	);
 
-	return fetch(`${process.env.PROTOCOL}://${process.env.WATCHER_IP}/pages`)
+	const body = {
+		temp: "gimmie pages pls",
+	};
+
+	const sig = signPayload(body);
+
+	const headers = {
+		Authorization: "Bearer 3imim8awgeq99ikbmg14lnqe0fu8",
+		"x-payload-signature": sig,
+	};
+
+	return fetch(`${process.env.PROTOCOL}://${process.env.WATCHER_IP}/pages`, {
+		method: "post",
+		body: new URLSearchParams(body),
+		headers: headers,
+		credentials: "include",
+	})
 		.then((res) => res.json())
 		.then((json) => {
 			debug(`fetched ${json.length} pages!`);

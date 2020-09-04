@@ -1,6 +1,5 @@
 FROM nginx:latest
 EXPOSE 3000
-EXPOSE 8080
 EXPOSE 27017
 COPY ./docker/nginx.conf /etc/nginx/nginx.conf
 
@@ -14,7 +13,6 @@ RUN npm install
 COPY ./app .
  # Expose ports
 EXPOSE 3000
-EXPOSE 8080
 EXPOSE 27017
  # Start!
 CMD [ "npm", "run", "start" ]

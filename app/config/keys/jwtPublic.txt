@@ -1,0 +1,7 @@
+-----BEGIN PUBLIC KEY-----
+PUT your public key here and rename it to .key
+
+openssl genrsa -out private.pem 2048
+
+openssl rsa -in private.pem -outform PEM -pubout -out public.pem
+-----END PUBLIC KEY-----
