@@ -10,13 +10,42 @@ const debug = require("debug")("staticFolio:BuildPageC");
 
 const read = util.promisify(fs.readFile);
 
+/**
+ * Return the commit data for the HEAD of this repo
+ */
+const getHeadCommit = async () => {
+	// put the repo name here
+	const repo = "rolandWarburton/staticFolio";
+	const url = `https://api.github.com/repos/${repo}/commits/master`;
+
+	debug("fetching head commit information");
+	return fetch(url, { method: "get" })
+		.then((res) => res.json())
+		.then((json) => {
+			debug(`fetched ${json.length} pages!`);
+			return json;
+		});
+};
+
 const buildPage = async (req, res) => {
 	debug(`building page ${req.params.id}`);
 
+	const head = await getHeadCommit();
+
 	// fetch the page fresh from blog watcher
 	debug("requesting the page", req.params.id);
+	const body = {
+		id: req.params.id,
+	};
+	const sig = signPayload(body);
+	const headers = {
+		Authorization: "Bearer 3imim8awgeq99ikbmg14lnqe0fu8",
+		"x-payload-signature": sig,
+	};
+
 	let result = await fetch(
-		`${process.env.PROTOCOL}://${process.env.WATCHER_IP}/build/${req.params.id}`
+		`${process.env.WATCHER_IP}/build/${req.params.id}`,
+		{ method: "post", headers: headers, body: new URLSearchParams(body) }
 	);
 	result = await result.json();
 	page = result.page;
@@ -65,7 +94,7 @@ const buildPage = async (req, res) => {
 	// now try and build it and write it to dist
 	try {
 		debug("trying to generate html");
-		generateHtmlpage(outputMarkdown, { ...page }).then(() => {
+		generateHtmlpage(outputMarkdown, { ...page, head: head }).then(() => {
 			debug(`finished building page ${page._id}.`);
 		});
 

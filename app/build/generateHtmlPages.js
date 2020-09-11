@@ -13,9 +13,7 @@ const signPayload = require("./signPayload");
 require("dotenv").config();
 
 const fetchPages = () => {
-	debug(
-		`fetching: ${process.env.PROTOCOL}://${process.env.WATCHER_IP}/pages`
-	);
+	debug(`fetching: ${process.env.WATCHER_IP}/pages`);
 
 	const body = {
 		temp: "gimmie pages pls",
@@ -28,7 +26,9 @@ const fetchPages = () => {
 		"x-payload-signature": sig,
 	};
 
-	return fetch(`${process.env.PROTOCOL}://${process.env.WATCHER_IP}/pages`, {
+	debug(sig);
+
+	return fetch(`${process.env.WATCHER_IP}/pages`, {
 		method: "post",
 		body: new URLSearchParams(body),
 		headers: headers,
@@ -41,11 +41,31 @@ const fetchPages = () => {
 		});
 };
 
+/**
+ * Return the commit data for the HEAD of this repo
+ */
+const getHeadCommit = async () => {
+	// put the repo name here
+	const repo = "rolandWarburton/staticFolio";
+	const url = `https://api.github.com/repos/${repo}/commits/master`;
+
+	debug("fetching head commit information");
+	return fetch(url, { method: "get" })
+		.then((res) => res.json())
+		.then((json) => {
+			debug(`fetched ${json.length} pages!`);
+			return json;
+		});
+};
+
 module.exports = async () => {
 	debug("fetching pages");
 
 	// get all the page db info
 	let pages = await fetchPages();
+
+	// get the head commit data
+	const head = await getHeadCommit();
 
 	// for each page
 	for (page of pages) {
@@ -69,7 +89,7 @@ module.exports = async () => {
 		}
 
 		// ! build the page
-		await generateHtmlPage(outputMarkdown, { ...page });
+		await generateHtmlPage(outputMarkdown, { ...page, head: head });
 	}
 	debug("done");
 };

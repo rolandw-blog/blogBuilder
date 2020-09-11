@@ -17,7 +17,7 @@ const getPage = async (websitePath) => {
 		"x-payload-signature": sig,
 	};
 
-	const url = `${process.env.PROTOCOL}://${process.env.WATCHER_IP}/page?pageName=${websitePath}`;
+	const url = `${process.env.WATCHER_IP}/page?pageName=${websitePath}`;
 
 	const request = await fetch(url, {
 		method: "post",

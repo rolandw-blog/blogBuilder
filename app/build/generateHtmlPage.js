@@ -20,7 +20,7 @@ const minifyOptions = {
 	html5: true,
 	minifyCSS: true,
 	removeEmptyElements: true,
-	removeComments: true,
+	removeComments: false,
 	useShortDoctype: true,
 };
 
@@ -176,6 +176,7 @@ const generateHtmlpage = async (markdown, templateData) => {
 		day: dateData.getDate(),
 		hour: dateData.getHours(),
 	};
+	templateData.renderTime = new Date();
 
 	// read in the requested template
 	const templateName = templateData.meta.template || "template.ejs";

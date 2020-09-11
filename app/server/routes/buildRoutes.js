@@ -24,7 +24,7 @@ const routes = [
 	{
 		path: "/:id",
 		method: "get",
-		middleware: [isAuthenticated],
+		middleware: [],
 		handler: buildPage,
 		help: {
 			description: "Build 1 route",
@@ -36,7 +36,7 @@ const routes = [
 	{
 		path: "/",
 		method: "get",
-		middleware: [isAuthenticated],
+		middleware: [],
 		handler: buildPages,
 		help: {
 			description: "Build all routes",
