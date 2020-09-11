@@ -6,36 +6,21 @@ const signPayload = require("../../build/signPayload");
 const renderSass = require("../../build/renderSass");
 const generateHtmlpage = require("../../build/generateHtmlPage");
 const deletePage = require("../../build/deletePage");
+const getHeadCommit = require("../../build/getHeadCommit");
 const debug = require("debug")("staticFolio:BuildPageC");
 
 const read = util.promisify(fs.readFile);
+const copy = util.promisify(fs.copyFile);
 
 /**
- * Return the commit data for the HEAD of this repo
+ * ! Redownload the page and get its page object back from the db
+ * @param {String} id - ID of the page
  */
-const getHeadCommit = async () => {
-	// put the repo name here
-	const repo = "rolandWarburton/staticFolio";
-	const url = `https://api.github.com/repos/${repo}/commits/master`;
-
-	debug("fetching head commit information");
-	return fetch(url, { method: "get" })
-		.then((res) => res.json())
-		.then((json) => {
-			debug(`fetched ${json.length} pages!`);
-			return json;
-		});
-};
-
-const buildPage = async (req, res) => {
-	debug(`building page ${req.params.id}`);
-
-	const head = await getHeadCommit();
-
+const refreshPage = async (id) => {
 	// fetch the page fresh from blog watcher
-	debug("requesting the page", req.params.id);
+	debug("requesting the page and DOWNLOADING IT AGAIN", id);
 	const body = {
-		id: req.params.id,
+		_id: id,
 	};
 	const sig = signPayload(body);
 	const headers = {
@@ -43,12 +28,58 @@ const buildPage = async (req, res) => {
 		"x-payload-signature": sig,
 	};
 
-	let result = await fetch(
-		`${process.env.WATCHER_IP}/build/${req.params.id}`,
-		{ method: "post", headers: headers, body: new URLSearchParams(body) }
-	);
+	let result = await fetch(`${process.env.WATCHER_IP}/build/${id}`, {
+		method: "post",
+		headers: headers,
+		body: new URLSearchParams(body),
+	});
 	result = await result.json();
 	page = result.page;
+	return page;
+};
+
+/**
+ * ! Just get the page object
+ * @param {String} id - ID of the page
+ */
+const fetchPage = async (id) => {
+	// fetch the page fresh from blog watcher
+	debug("requesting the page OBJECT ONLY", id);
+	const body = {
+		_id: id,
+	};
+	const sig = signPayload(body);
+	const headers = {
+		Authorization: "Bearer 3imim8awgeq99ikbmg14lnqe0fu8",
+		"x-payload-signature": sig,
+	};
+
+	let result = await fetch(`${process.env.WATCHER_IP}/page?_id=${id}`, {
+		method: "post",
+		headers: headers,
+		body: new URLSearchParams(body),
+	});
+	return await result.json();
+};
+
+const buildPage = async (req, res) => {
+	debug(`building page ${req.params.id}`);
+
+	const head = await getHeadCommit();
+
+	if (!head) {
+		return res.status(500).json({
+			success: false,
+			reason: "there was nothing in the github head",
+		});
+	}
+
+	// Get the page
+	// If redownloadPage is true then skip redownloading it, just fetch the page instead
+	let page = undefined;
+	if (req.body.redownloadPage == "true")
+		page = await refreshPage(req.params.id);
+	else page = await fetchPage(req.params.id);
 
 	if (!page) {
 		return res.status(400).json({
@@ -56,8 +87,6 @@ const buildPage = async (req, res) => {
 			message: `failed to rebuild page. It likely didnt exist or it was hidden`,
 		});
 	}
-
-	const copy = util.promisify(fs.copyFile);
 
 	// copy js to dist
 	await copy(

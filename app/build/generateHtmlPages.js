@@ -53,7 +53,6 @@ const getHeadCommit = async () => {
 	return fetch(url, { method: "get" })
 		.then((res) => res.json())
 		.then((json) => {
-			debug(`fetched ${json.length} pages!`);
 			return json;
 		});
 };
