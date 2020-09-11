@@ -5,6 +5,8 @@ article {
 	// set the color of the text to be black
 	color: $darkest;
 
+	padding: 2em 0;
+
 	// style hyperlinks for markdown articles
 	// p a,
 	// li a,
@@ -299,8 +301,4 @@ article {
 	a {
 		color: $lightest;
 	}
-}
-
-#hero {
-	height: 200px;
 }

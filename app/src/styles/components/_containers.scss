@@ -62,10 +62,6 @@
 	}
 }
 
-nav {
-	margin: 3rem 0;
-}
-
 // wraps two children. left is text, right is an image
 // the image vanishes when in mobile view
 .imageAndTextWrapper {
@@ -167,25 +163,24 @@ nav {
 	overflow-x: hidden;
 	background-color: $mainBackground;
 	width: 100vw;
-	
 
 	ul {
 		// give mobile more padding than desktop
 		// padding: 4ch 0;
 		text-align: center;
 	}
-	
+
 	li {
 		color: black;
 		font-size: 1.5em;
 		padding: 0.25ch 0;
 	}
-	
+
 	.listAnchorDepth1 {
 		font-weight: bold;
 		text-decoration: underline;
 	}
-	
+
 	.listAnchorDepth3 {
 		&::after {
 			content: ".";
@@ -208,23 +203,22 @@ nav {
 
 		li {
 			font-size: 0.8em;
-			
 		}
 
 		.listAnchorDepth1 {
 			margin: 7ch 0 0 2ch;
 		}
-		
+
 		.listAnchorDepth2 {
 			list-style-type: disc;
 			margin: 0 0 0 4ch;
 		}
-		
+
 		.listAnchorDepth3 {
 			list-style-type: disc;
 			margin: 0 0 0 6ch;
 		}
-		
+
 		.listAnchorDepth4 {
 			margin: 0 0 0 8ch;
 		}

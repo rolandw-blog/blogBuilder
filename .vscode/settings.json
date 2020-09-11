@@ -1,3 +1,10 @@
 {
-	"discord.enabled": true
+	"discord.enabled": true,
+	"liveServer.settings.https": {
+		"enable": true, //set it true to enable the feature.
+		"cert": "/home/roland/Documents/certificates/server.crt", //full path of the certificate
+		"key": "/home/roland/Documents/certificates/server.key", //full path of the private key
+		"passphrase": "P@ssw0rd"
+	},
+	"liveServer.settings.multiRootWorkspaceName": "staticFolio"
 }
