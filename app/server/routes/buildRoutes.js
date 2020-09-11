@@ -34,6 +34,18 @@ const routes = [
 		},
 	},
 	{
+		path: "/:id",
+		method: "post",
+		middleware: [urlencodedParser, verifyPayload],
+		handler: buildPage,
+		help: {
+			description: "Build 1 route",
+			method: this.method,
+			parameters: [],
+			example: "/5f3fb41fdb3c861093356530",
+		},
+	},
+	{
 		path: "/",
 		method: "get",
 		middleware: [],
