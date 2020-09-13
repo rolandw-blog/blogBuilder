@@ -5,6 +5,7 @@ const renderSass = require("./build/renderSass");
 // const server = require("./server/server");
 const util = require("util");
 const debug = require("debug")("staticFolio:Build");
+const uglify = require("uglify-js");
 require("dotenv").config();
 
 const build = () => {
@@ -16,8 +17,23 @@ const build = () => {
 
 	if (!fs.existsSync("dist")) fs.mkdirSync("dist");
 	// copy js to dist
-	copy("scripts/gist.js", "dist/gist.js");
-	copy("scripts/index.js", "dist/index.js");
+	// const gistJS = require("scripts/gist.js");
+	// const indexJS = require("scripts/index.js");
+
+	// copy("scripts/gist.js", "dist/gist.js");
+	// copy("scripts/index.js", "dist/index.js");
+
+	debug("writing");
+	fs.writeFileSync(
+		"./dist/gist.js",
+		UglifyJS.minify(require("dist/scripts/gist.js")),
+		{ encoding: "utf8", flag: "w" }
+	);
+	fs.writeFileSync(
+		"./dist/index.js",
+		UglifyJS.minify(require("dist/scripts/index.js")),
+		{ encoding: "utf8", flag: "w" }
+	);
 
 	// copy media to dist
 	if (!fs.existsSync("dist/media")) fs.mkdirSync("dist/media");

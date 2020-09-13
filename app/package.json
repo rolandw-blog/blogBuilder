@@ -45,6 +45,7 @@
 		"node-sass": "^4.13.1",
 		"nodemon": "^2.0.2",
 		"progress": "^2.0.3",
-		"readdirp": "^3.4.0"
+		"readdirp": "^3.4.0",
+		"terser": "^5.3.1"
 	}
 }

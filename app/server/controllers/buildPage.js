@@ -7,6 +7,7 @@ const renderSass = require("../../build/renderSass");
 const generateHtmlpage = require("../../build/generateHtmlPage");
 const deletePage = require("../../build/deletePage");
 const getHeadCommit = require("../../build/getHeadCommit");
+const { minify } = require("terser");
 const debug = require("debug")("staticFolio:BuildPageC");
 
 const read = util.promisify(fs.readFile);
@@ -84,14 +85,33 @@ const buildPage = async (req, res) => {
 		});
 	}
 
-	// copy js to dist
-	await copy(
-		path.resolve(process.env.ROOT, "scripts/gist.js"),
-		path.resolve(process.env.ROOT, "dist/gist.js")
-	);
-	await copy(
+	// TODO put this in a seperate function
+	let index = fs.readFileSync(
 		path.resolve(process.env.ROOT, "scripts/index.js"),
-		path.resolve(process.env.ROOT, "dist/index.js")
+		"utf-8"
+	);
+	index = await minify(index);
+	fs.writeFileSync(
+		path.resolve(process.env.ROOT, "dist/index.js"),
+		index.code,
+		{
+			encoding: "utf8",
+			flag: "w",
+		}
+	);
+
+	let gist = fs.readFileSync(
+		path.resolve(process.env.ROOT, "scripts/gist.js"),
+		"utf-8"
+	);
+	gist = await minify(gist);
+	fs.writeFileSync(
+		path.resolve(process.env.ROOT, "dist/gist.js"),
+		gist.code,
+		{
+			encoding: "utf8",
+			flag: "w",
+		}
 	);
 
 	// copy media to dist
