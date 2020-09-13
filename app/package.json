@@ -11,7 +11,7 @@
 		"monitor": "npm run clean && DEBUG=staticFolio:* nodemon",
 		"build:quiet": "npm run clean && node build.js -q",
 		"server": "node server.js",
-		"monitor:sass": "concurrently \"npm run server\" \"nodemon build/renderSassOnly.js --exec node build/renderSassOnly.js\"",
+		"monitor:sass": "DEBUG=staticFolio:* nodemon build/devFunctions/renderSass.js --exec node build/devFunctions/renderSass.js",
 		"clean:server": "kill -9 $(lsof -t -i:8080)"
 	},
 	"keywords": [],
