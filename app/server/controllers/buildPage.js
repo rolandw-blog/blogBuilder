@@ -75,11 +75,7 @@ const buildPage = async (req, res) => {
 	}
 
 	// Get the page
-	// If redownloadPage is true then skip redownloading it, just fetch the page instead
-	let page = undefined;
-	if (req.body.redownloadPage == "true")
-		page = await refreshPage(req.params.id);
-	else page = await fetchPage(req.params.id);
+	let page = await refreshPage(req.params.id);
 
 	if (!page) {
 		return res.status(400).json({

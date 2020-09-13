@@ -14,8 +14,8 @@ const writeHtml = async (html, templateData) => {
 		"index.html"
 	);
 	const distpath = path.resolve(process.env.ROOT, "dist", relativeWebPath);
-	debug("writePath", path.relative(".", writePath));
-	debug("distpath", path.relative(".", distpath));
+	// debug("writePath", path.relative(".", writePath));
+	// debug("distpath", path.relative(".", distpath));
 
 	// make the dir
 	await mkdirp(path.resolve("dist", distpath)).catch((err) => {
@@ -26,6 +26,7 @@ const writeHtml = async (html, templateData) => {
 	// write a html file here
 	fs.writeFile(writePath, html, (err) => {
 		if (err) error(err);
+		else debug(writePath);
 		// else debug(`Wrote:\t${templateData.websitePath}`);
 		return true;
 	});

@@ -8,7 +8,7 @@
 		"test": "jest",
 		"clean": "rm -rf dist/* && rm -f ./log.json",
 		"build": "DEBUG=staticFolio:* npm run clean && node server/server.js",
-		"monitor": "npm run clean && DEBUG=staticFolio:* nodemon",
+		"monitor": "DEBUG=staticFolio:* nodemon",
 		"build:quiet": "npm run clean && node build.js -q",
 		"server": "node server.js",
 		"monitor:sass": "DEBUG=staticFolio:* nodemon build/devFunctions/renderSass.js --exec node build/devFunctions/renderSass.js",

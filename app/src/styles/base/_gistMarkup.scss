@@ -1,74 +1,22 @@
 // ==========================================
 // GIST STYLES
 // ==========================================
+
+.floatGradient {
+	box-shadow: 0 0.5ch 0px rgba(28, 29, 33, 0.05),
+		0 2px 2px rgba(28, 29, 33, 0.12), 0 4px 4px rgba(28, 29, 33, 0.12),
+		0 8px 8px rgba(28, 29, 33, 0.12), 0 16px 16px rgba(28, 29, 33, 0.12);
+}
+
 article {
 	// set the color of the text to be black
 	color: $darkest;
-
 	padding: 2em 0;
-
-	// style hyperlinks for markdown articles
-	// p a,
-	// li a,
-	// ul a {
-	// 	font-weight: bold;
-	// 	&:hover {
-	// 		text-decoration: underline;
-	// 	}
-	// 	&::before {
-	// 		content: "🔗";
-	// 		font-size: 0.75em;
-	// 		font-stretch: ultra-condensed;
-	// 	}
-	// }
-
-	// *:not(h1) {
-	// 	content: "🔗";
-	// 	font-size: 0.75em;
-	// 	font-stretch: ultra-condensed;
-	// }
-
-	// base class for h1 and h2
-	// .big-heading {
-	// 	text-align: center;
-
-	// 	@include desktop {
-	// 		text-align: left;
-	// 		padding: 1rem 5rem;
-	// 	}
-	// }
-
-	// h1 {
-	// 	@extend .big-heading;
-	// 	background-color: $darkest;
-	// 	color: $lightest;
-	// }
-
-	// h2 {
-	// 	@extend .big-heading;
-	// 	background-color: $light;
-	// 	color: $darkest;
-	// }
-
-	// underline small headings
-	// h3,
-	// h4,
-	// h5,
-	// h6 {
-	// 	text-decoration: underline;
-	// 	font-size: 150%;
-	// }
-
-	// h1 {
-	// 	// background-color: red;
-	// 	overflow: hidden;
-	// }
 
 	h4,
 	h5,
 	h6 {
 		font-size: 1em;
-		// font-size: bold;
 	}
 	h5,
 	h6 {
@@ -120,7 +68,6 @@ article {
 
 	// quotes
 	blockquote p {
-		// background-color: darken($mainBackground, 10%);
 		font-weight: bold;
 		padding: 1ch;
 		margin: 2ch;
@@ -135,9 +82,18 @@ article {
 		}
 	}
 
+	// generic code to be extended
+	// .codeblock-generic {
+	// 	float: right;
+	// 	padding: 5px;
+	// 	border-radius: 1ch;
+	// 	@extend .floatGradient;
+	// }
+
 	// code blocks
 	.code-wrapper {
 		margin: 2ch 0;
+		// copy button
 		.codeblock-copy-label {
 			float: right;
 			position: relative;
@@ -152,22 +108,23 @@ article {
 			cursor: pointer;
 		}
 
+		// special block thats added to output code that says "Output"
 		.codeblock-output-label {
 			float: right;
 			padding: 5px;
 			border-radius: 1ch 1ch 0 0;
 			border: 2px solid;
 			border-bottom: none;
-			z-index: 2;
 			position: relative;
 			top: 2px;
 			border-color: $darkest;
 			background: $lightest;
 			color: $darkest;
+			cursor: default;
 		}
 
+		// general codeblock style
 		.codeblock-wrapper {
-			// make the scrollbar invisible
 			scrollbar-color: $dark $darkest;
 			scrollbar-shadow-color: none;
 			font-weight: bolder;

@@ -32,12 +32,13 @@ nav {
 }
 
 #hero {
-	// position: sticky;
-	// top: 0;
-	// height: 200px;
+	display: flex;
+	flex-direction: column;
+	height: 30vh;
+	max-height: 500px;
+	min-height: 200px;
 	background-color: $darkest;
-	// padding-top: 2em;
-	padding: 2em 4em;
+	padding: 1em 2em;
 	padding-top: 4em;
 
 	@include desktop {
@@ -52,18 +53,8 @@ nav {
 
 #heroNav {
 	background-color: $darkest;
-	// padding-bottom: 4em;
-	padding: 2em 4em;
-	padding-bottom: 4em;
-
-	@include desktop {
-		padding-left: 20vw;
-		padding-right: 20vw;
-	}
-	@include tablet {
-		padding-left: 10vw;
-		padding-right: 10vw;
-	}
+	width: 100%;
+	margin-top: auto;
 }
 
 // styling for dynamic prev/next nav buttons
@@ -71,6 +62,9 @@ nav {
 	display: grid;
 	grid-template-columns: auto auto;
 	grid-template-rows: auto auto;
+	// position: relative;
+	// top: 10%;
+	// margin: 4em 0;
 	li {
 		margin: auto 0;
 	}
@@ -84,7 +78,6 @@ nav {
 		margin-bottom: 0;
 		grid-column: 1;
 		grid-row: 2;
-		vertical-align: bottom;
 	}
 	#nav-created-box {
 		grid-column: 3;

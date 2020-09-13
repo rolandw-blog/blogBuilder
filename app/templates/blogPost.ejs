@@ -28,16 +28,14 @@
 			<a class="lightHyperLink" href="<%- backLink%>">
 				← back to <%- parentName %>
 			</a>
+			<nav id="heroNav">
+				<div id="dynamic-nav">
+					<%- include(templateDir + '/p_nav_neighbours.ejs') %>
+				</div>
+			</nav>
 		</div>
-		<nav id="heroNav">
-			<div id="dynamic-nav">
-				<%- include(templateDir + '/p_nav_neighbours.ejs') %>
-			</div>
-		</nav>
 		<div id="content_wrapper">
-			<article>
-				<%- content%>
-			</article>
+			<article><%- content%></article>
 		</div>
 		<div id="gotoTop"><a href="#">Top</a></div>
 
