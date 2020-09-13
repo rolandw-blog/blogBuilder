@@ -61,7 +61,7 @@ const assignStyles = (template) => {
 				`<link rel="stylesheet" type="text/css" href="/gist.css" />`
 			);
 			scripts.push(
-				`<link rel="stylesheet" type="text/css" href="/an-old-hope.css" />`
+				`<link rel="stylesheet" type="text/css" href="/an-old-hope.min.css" />`
 			);
 			break;
 		case "home.ejs":

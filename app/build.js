@@ -26,7 +26,7 @@ const build = () => {
 	}
 
 	// copy code styles to dist
-	copy("src/styles/an-old-hope.css", "dist/an-old-hope.css");
+	copy("src/styles/an-old-hope.min.css", "dist/an-old-hope.min.css");
 
 	// render sass and copy to dist
 	renderSass("src/styles/dark.scss", "dist/dark.css");
