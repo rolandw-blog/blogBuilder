@@ -4,12 +4,7 @@ const express = require("express");
 const debug = require("debug")("staticFolio:server");
 const cors = require("cors");
 const bodyParser = require("body-parser");
-// const session = require("express-session");
 const checkSSORedirect = require("./middleware/checkSSORedirect");
-const isAuthenticated = require("./middleware/isAuthenticated");
-const fetch = require("node-fetch");
-const ip = require("internal-ip");
-const signPayload = require("../build/signPayload");
 const expressSession = require("./expressSession");
 const devRebuildPage = require("../build/devFunctions/rebuildPage");
 const errorHandler = require("./errorHandler");
@@ -37,8 +32,7 @@ const urlencodedParser = bodyParser.urlencoded({
 
 // Check if we should pseudo "hot reload" some predifined pages on start
 const hotReload =
-	process.env.NODE_ENV == "development" &&
-	process.env.rebuildPagesOnStart == "true";
+	process.env.NODE_ENV == "development" && process.env.hotReload == "true";
 
 hotReload ? debug("hot reload is on") : debug("hot reload is off");
 
@@ -49,11 +43,9 @@ const app = express();
 app.set("view engine", "ejs");
 
 // express session configuration
-// ! Single Sign On system
 app.use(expressSession.session);
 
 // check for sign on communications from the sso server
-// ! Single Sign On system
 app.use(checkSSORedirect());
 
 // routes
@@ -72,7 +64,7 @@ app.use(urlencodedParser);
 app.listen(process.env.PORT, async () => {
 	debug(`app listening at http://localhost:${process.env.PORT}`);
 
-	// ! pseudo hot reload
+	// pseudo hot reload
 	if (hotReload) devRebuildPage.execute();
 });
 
