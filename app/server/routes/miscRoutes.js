@@ -29,10 +29,37 @@ const routes = [
 			res.render("index.ejs");
 		},
 		help: {
-			description: "Build 1 route",
+			description: "Get the build UI",
 			method: this.method,
 			parameters: [],
-			example: "/5f3fb41fdb3c861093356530",
+			example: "/build_ui",
+		},
+	},
+	{
+		path: "/",
+		method: "get",
+		middleware: [isAuthenticated],
+		handler: (req, res) => {
+			debug(`This session is: ${req.session.id}`);
+			res.status(200).json({
+				what: `SSO-Consumer One`,
+				title: "Blog Builder | Home",
+				role: req.session.user.role,
+				email: req.session.user.email,
+				uid: req.session.user.uid,
+				globalSessionID: req.session.user.globalSessionID,
+				iat: req.session.user.iat,
+				exp: req.session.user.exp,
+				iss: req.session.user.iss,
+				cookie: req.session.cookie || "not sure",
+				expires: req.session.cookie.maxAge / 1000 + "'s",
+			});
+		},
+		help: {
+			description: "Show some info about the current session",
+			method: this.method,
+			parameters: [],
+			example: "/",
 		},
 	},
 ];
