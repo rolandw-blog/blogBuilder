@@ -126,15 +126,15 @@ const generateHtmlpage = async (markdown, templateData) => {
 	// determine info for building
 	const html = marked(markdown);
 	const parent = getParent(templateData.websitePath);
-	debug("getting siblings");
+	// debug("getting siblings");
 	const siblings = await getSiblings(parent, true);
-	debug("getting children");
+	// debug("getting children");
 	const children = await getSiblings(templateData.websitePath, true);
-	debug("getting neighbours");
+	// debug("getting neighbours");
 	const neighbours = getNeighbours(siblings, templateData);
-	debug("getting breadcrumbs");
+	// debug("getting breadcrumbs");
 	const breadCrumbs = await getBreadcrumbs(templateData.websitePath);
-	debug("getting date data");
+	// debug("getting date data");
 	const dateData = mongoIDtoDate(templateData._id);
 
 	// last edit date

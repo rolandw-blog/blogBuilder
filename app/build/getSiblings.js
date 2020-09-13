@@ -35,7 +35,7 @@ const getPages = async (websitePath) => {
  * @example getNeighbours([{...},{...}], "/page/mask")
  */
 const genSiblings = async (mask, sort) => {
-	debug("getting pages");
+	// debug("getting pages");
 	const pages = await getPages(mask);
 	let siblings = [];
 	const maskArray = mask.split("/").filter(String);
@@ -81,11 +81,11 @@ const genSiblings = async (mask, sort) => {
 
 	// sort the siblings alphabetically if (sort = true) is passed into options
 	if (sort) {
-		debug("sorting");
+		// debug("sorting");
 		siblings = siblings.sort(GetSortOrder("pageName"));
 	}
 
-	debug(`the siblings for ${mask} are:`);
+	// debug(`the siblings for ${mask} are:`);
 	return siblings;
 };
 

@@ -18,11 +18,10 @@ const getHeadCommit = async () => {
 	const repo = "rolandWarburton/staticFolio";
 	const url = `https://api.github.com/repos/${repo}/commits/master`;
 
-	debug("fetching head commit information");
+	// debug("fetching head commit information");
 	return fetch(url, { method: "get" })
 		.then((res) => res.json())
 		.then((json) => {
-			debug(`fetched ${json.length} pages!`);
 			return json;
 		});
 };
@@ -33,7 +32,7 @@ const buildPage = async (req, res) => {
 	const head = await getHeadCommit();
 
 	// fetch the page fresh from blog watcher
-	debug("requesting the page", req.params.id);
+	// debug("requesting the page", req.params.id);
 	const body = {
 		id: req.params.id,
 	};
@@ -70,7 +69,7 @@ const buildPage = async (req, res) => {
 	);
 
 	// copy media to dist
-	debug("copying stuff to dist");
+	// debug("copying stuff to dist");
 	const mediaSrcPath = path.resolve(process.env.ROOT, "src/media");
 	const mediaDistPath = path.resolve(process.env.ROOT, "dist/media");
 
@@ -88,19 +87,19 @@ const buildPage = async (req, res) => {
 	renderSass("src/styles/home.scss", "dist/home.css");
 	renderSass("src/styles/menu.scss", "dist/menu.css");
 
-	debug("reading the file", page._id);
+	// debug("reading the file", page._id);
 	let outputMarkdown = await read(`content/${page._id}.md`, "utf8");
 
 	// now try and build it and write it to dist
 	try {
-		debug("trying to generate html");
+		// debug("trying to generate html");
 		generateHtmlpage(outputMarkdown, { ...page, head: head }).then(() => {
-			debug(`finished building page ${page._id}.`);
+			// debug(`finished building page ${page._id}.`);
 		});
 
 		return res.status(200).json({ success: true });
 	} catch (err) {
-		debug(`error building page ${page._id}! ${err}`);
+		// debug(`error building page ${page._id}! ${err}`);
 		return res.status(500).json({
 			success: false,
 			message: `failed to rebuild single page ${page._id}`,

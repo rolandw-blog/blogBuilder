@@ -2,6 +2,7 @@ const fs = require("fs");
 const path = require("path");
 const mkdirp = require("mkdirp");
 const debug = require("debug")("staticFolio:writeHtml");
+const error = require("debug")("staticFolio:writeHtmlError");
 
 const writeHtml = async (html, templateData) => {
 	// get paths to write to
@@ -25,7 +26,7 @@ const writeHtml = async (html, templateData) => {
 	// write a html file here
 	fs.writeFile(writePath, html, (err) => {
 		if (err) error(err);
-		else debug(`Wrote:\t${templateData.websitePath}`);
+		// else debug(`Wrote:\t${templateData.websitePath}`);
 		return true;
 	});
 };

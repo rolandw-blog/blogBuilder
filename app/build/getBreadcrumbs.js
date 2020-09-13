@@ -44,7 +44,7 @@ const getBreadcrumbs = async (websitePath) => {
 	// each time append the segment to the other ones to follow build the path
 	for (segment of webPathArray) {
 		webpathCurrentURL = `${webpathCurrentURL}/${segment}`;
-		debug(`looking for ${webpathCurrentURL}`);
+		// debug(`looking for ${webpathCurrentURL}`);
 		const page = await getPage(webpathCurrentURL);
 		result.push(await page.json());
 

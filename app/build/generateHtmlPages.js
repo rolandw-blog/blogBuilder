@@ -69,7 +69,7 @@ module.exports = async () => {
 
 	// for each page
 	for (page of pages) {
-		timer("=========================================================");
+		// timer("=========================================================");
 		debug(`Building page:\t${page.pageName}`);
 
 		let outputMarkdown = await read(`content/${page._id}.md`, "utf8");
