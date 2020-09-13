@@ -1,4 +1,6 @@
 const fetch = require("node-fetch");
+const debug = require("debug")("staticFolio:DEV_HotReload");
+const ip = require("internal-ip");
 const signPayload = require("../../build/signPayload");
 
 /**
@@ -21,7 +23,7 @@ const devRebuildPage = (id) => {
 		"x-payload-signature": sig,
 	};
 
-	const ipaddr = internalIp.v4.sync();
+	const ipaddr = ip.v4.sync();
 	const url = `${process.env.PROTOCOL}://${ipaddr}:${process.env.PORT}/build/${id}`;
 	debug(url);
 	return fetch(url, {
