@@ -7,6 +7,8 @@ const bodyParser = require("body-parser");
 const session = require("express-session");
 const checkSSORedirect = require("./middleware/checkSSORedirect");
 const isAuthenticated = require("./middleware/isAuthenticated");
+const fetch = require("node-fetch");
+const signPayload = require("../build/signPayload");
 require("dotenv").config();
 
 const buildRoutes = require("./routes/buildRoutes");
@@ -18,6 +20,37 @@ debug(`WORKING IN:\t${process.env.ROOT}`);
 debug(`RUNNING ON PORT:\t${process.env.PROTOCOL}`);
 debug(`WATCHER IP:\t${process.env.WATCHER_IP}`);
 debug("============================================");
+
+/**
+ * ! DEBUG METHOD
+ * Rebuild a page via the api, only for debug purposes
+ * @param {String} id - ID of the page
+ */
+const devRebuildPage = (id) => {
+	// TODO allow bools to be passed to the verifpayload system
+	// TODO it doesnt work rn because of stringify on the payload signer
+	const body = {
+		id: id,
+		redownloadPage: "false",
+	};
+
+	const sig = signPayload(body);
+
+	const headers = {
+		Authorization: "Bearer 3imim8awgeq99ikbmg14lnqe0fu8",
+		"x-payload-signature": sig,
+	};
+
+	const url = `${process.env.PROTOCOL}://devel:${process.env.PORT}/build/${id}`;
+	debug(url);
+	return fetch(url, {
+		method: "post",
+		headers: headers,
+		body: new URLSearchParams(body),
+	})
+		.then((data) => data.json())
+		.then((json) => debug(json));
+};
 
 if (!fs.existsSync("dist")) fs.mkdirSync("dist");
 
@@ -49,7 +82,7 @@ app.use(
 app.use(checkSSORedirect());
 
 // run authentication on all GET routes
-app.use(isAuthenticated);
+// app.use(isAuthenticated);
 
 // routes
 app.use("/build", buildRoutes);
@@ -70,9 +103,21 @@ app.use(cors(corsOptions));
 app.use(urlencodedParser);
 
 // Start the server 🚀
-app.listen(process.env.PORT, () =>
-	debug(`app listening at http://localhost:${process.env.PORT}`)
-);
+app.listen(process.env.PORT, async () => {
+	debug(`app listening at http://localhost:${process.env.PORT}`);
+
+	// ! pseudo hot reload
+	nodeEnv = process.env.NODE_ENV;
+	if (nodeEnv == "development" || nodeEnv == undefined) {
+		// in this order, rebuild some pages for dev purposes (pseudo hot reload)
+		// Home, notes, Customising Linux
+		Promise.all([
+			devRebuildPage("5f36713524f4a368d7e2117c"),
+			devRebuildPage("5f39187aa50877014564db6e"),
+			devRebuildPage("5f3a2442f5e888024714709f"),
+		]);
+	}
+});
 
 // ! Single Sign On system
 app.get("/", isAuthenticated, (req, res, next) => {
@@ -103,8 +148,8 @@ app.use((err, req, res, next) => {
 	const statusCode = err.status || 500;
 	let message = err.message || "Internal Server Error";
 
-	debug(err.status);
-	debug(statusCode);
+	debug(`Eror status: ${err.status}`);
+	debug(`Status Code: ${statusCode}`);
 
 	if (statusCode === 500) {
 		message = "Internal Server Error";
