@@ -8,7 +8,7 @@ const debug = require("debug")("staticFolio:Build");
 const { minify } = require("terser");
 require("dotenv").config();
 
-const build = () => {
+const build = async () => {
 	debug("BUILDING");
 	// set the ROOT
 	process.env.ROOT = __dirname;
