@@ -5,6 +5,7 @@ const renderSass = require("./build/renderSass");
 // const server = require("./server/server");
 const util = require("util");
 const debug = require("debug")("staticFolio:Build");
+const { minify } = require("terser");
 const uglify = require("uglify-js");
 require("dotenv").config();
 
@@ -24,15 +25,33 @@ const build = () => {
 	// copy("scripts/index.js", "dist/index.js");
 
 	debug("writing");
-	fs.writeFileSync(
-		"./dist/gist.js",
-		UglifyJS.minify(require("dist/scripts/gist.js")),
-		{ encoding: "utf8", flag: "w" }
+	// TODO put this in a seperate function
+	let index = fs.readFileSync(
+		path.resolve(process.env.ROOT, "scripts/index.js"),
+		"utf-8"
 	);
+	index = await minify(index);
 	fs.writeFileSync(
-		"./dist/index.js",
-		UglifyJS.minify(require("dist/scripts/index.js")),
-		{ encoding: "utf8", flag: "w" }
+		path.resolve(process.env.ROOT, "dist/index.js"),
+		index.code,
+		{
+			encoding: "utf8",
+			flag: "w",
+		}
+	);
+
+	let gist = fs.readFileSync(
+		path.resolve(process.env.ROOT, "scripts/gist.js"),
+		"utf-8"
+	);
+	gist = await minify(gist);
+	fs.writeFileSync(
+		path.resolve(process.env.ROOT, "dist/gist.js"),
+		gist.code,
+		{
+			encoding: "utf8",
+			flag: "w",
+		}
 	);
 
 	// copy media to dist
