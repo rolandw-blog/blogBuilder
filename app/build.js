@@ -6,7 +6,6 @@ const renderSass = require("./build/renderSass");
 const util = require("util");
 const debug = require("debug")("staticFolio:Build");
 const { minify } = require("terser");
-const uglify = require("uglify-js");
 require("dotenv").config();
 
 const build = () => {
