@@ -82,22 +82,20 @@ article {
 		}
 	}
 
-	// generic code to be extended
-	// .codeblock-generic {
-	// 	float: right;
-	// 	padding: 5px;
-	// 	border-radius: 1ch;
-	// 	@extend .floatGradient;
-	// }
-
 	// code blocks
 	.code-wrapper {
+		// require this to place the copy button absolutely
+		position: relative;
 		margin: 2ch 0;
+
 		// copy button
 		.codeblock-copy-label {
+			display: block;
+			// absolute and to the right of the relative .code-wrapper
+			position: absolute;
 			float: right;
-			position: relative;
-			transform: translate(-1px, calc(100% + 1px));
+			top: 1px;
+			right: 1px;
 			box-sizing: border-box;
 			padding: 6px;
 			border-radius: 1ch;
@@ -132,7 +130,7 @@ article {
 			width: 100%;
 			background-color: $darkest;
 			padding: 1ch;
-			margin-top: 3rem;
+			// margin-top: 3rem;
 			box-sizing: border-box;
 			@extend .floatGradient;
 			overflow-x: auto;
@@ -159,24 +157,23 @@ article {
 
 	// inline code
 	:not(pre) > code {
-		background-color: $dark;
+		background-color: $darkest;
+		font-size: 0.9em;
 		color: $lightest;
 		font-weight: 500;
-		padding: 0 1ch;
+		padding: 2px 5px 2px 5px;
+		// padding: 0 5px 2px;
 		hyphens: none;
 		font-family: "Fira Code", monospace;
-		border: 2px solid;
+		border: 1px solid;
 		border-color: $darkest;
 		box-sizing: border-box;
-		border-radius: 0.5em;
-		line-height: 1.5em;
+		border-radius: 0.25em;
+		line-height: 1em;
 		display: inline-block;
 		word-break: break-all;
 
-		&::selection {
-			color: $dark;
-			background-color: $lightest;
-		}
+		@include selectionColors($light, $lightest);
 	}
 
 	// separate out the paragraphs

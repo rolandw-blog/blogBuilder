@@ -1,22 +1,29 @@
 @mixin browser($browsers) {
-  @each $browser in $browsers {
-    html[data-browser*="#{$browser}"] & {
-      @content;
-    }
-  }
+	@each $browser in $browsers {
+		html[data-browser*="#{$browser}"] & {
+			@content;
+		}
+	}
 }
 
 $tablet-width: 800px;
 $desktop-width: 1081px;
 
 @mixin tablet {
-  @media (min-width: #{$tablet-width}) and (max-width: #{$desktop-width - 1px}) {
-    @content;
-  }
+	@media (min-width: #{$tablet-width}) and (max-width: #{$desktop-width - 1px}) {
+		@content;
+	}
 }
 
 @mixin desktop {
-  @media (min-width: #{$desktop-width}) {
-    @content;
-  }
+	@media (min-width: #{$desktop-width}) {
+		@content;
+	}
+}
+
+@mixin selectionColors($bg, $fg) {
+	&::selection {
+		color: $fg;
+		background-color: $bg;
+	}
 }
