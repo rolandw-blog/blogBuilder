@@ -33,10 +33,14 @@ const EditContainer = Styled.form`
 
 const DisplayContainer = Styled.div`
 display: grid;
-grid-template-columns: 1fr 2fr auto;
+grid-template-columns: 30% 1fr 10%;
 
 span {
-	color: #363636 !important;
+	color: #363636;
+	// dont overflow text
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
 }
 
 button {

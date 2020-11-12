@@ -4,12 +4,12 @@ import { useTable, usePagination } from "react-table";
 import styled from "styled-components";
 import Modal from "./Modal";
 
-const Styles = styled.div`
-	// padding: 1rem;
+const Pagination = styled.div`
+	padding: 1em;
+`;
 
+const Styles = styled.div`
 	table {
-		// margin: 0 auto;
-		// border: 1px solid black;
 		border: none;
 		width: 100%;
 		border-spacing: 0;
@@ -179,7 +179,7 @@ export default function Table({ columns, data }) {
 						);
 					})}
 				</tbody>
-				<div className="pagination">
+				<Pagination className="pagination">
 					<button
 						onClick={() => gotoPage(0)}
 						disabled={!canPreviousPage}
@@ -233,7 +233,7 @@ export default function Table({ columns, data }) {
 							</option>
 						))}
 					</select>
-				</div>
+				</Pagination>
 			</table>
 		</Styles>
 	);
