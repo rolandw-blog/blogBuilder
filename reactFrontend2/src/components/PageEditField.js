@@ -35,6 +35,10 @@ const DisplayContainer = Styled.div`
 display: grid;
 grid-template-columns: 1fr 2fr auto;
 
+span {
+	color: #363636 !important;
+}
+
 button {
 	display: flex;
 	align-self: center;

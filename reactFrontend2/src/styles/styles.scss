@@ -17,6 +17,9 @@ $input-background-color: lighten($main, 10%);
 $input-border-color: #121212;
 $input-color: white;
 
+// tables
+$table-background-color: $main;
+
 // buttons
 // $button-text-hover-background-color: $main;
 @import "../../node_modules/bulma/bulma.sass";

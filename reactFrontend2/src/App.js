@@ -7,8 +7,8 @@ const Styles = styled.div`
 	background-color: #282c34;
 	// color: #fff;
 	font-size: calc(10px + 1.5vmin);
-	padding: 0 20vw;
-	min-width: 100vw;
+	padding: 0 10%;
+	// min-width: 100vw;
 	min-height: 100vh;
 `;
 
