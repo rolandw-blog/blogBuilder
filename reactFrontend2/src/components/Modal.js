@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 // eslint-disable-next-line
 // import bulma from "bulma";
 import "../styles/styles.scss";
-import Styled from "styled-components";
 import PageEditField from "./PageEditField";
 
 // const valueList = (values) => {
