@@ -3,6 +3,7 @@
 	"version": "0.1.0",
 	"private": true,
 	"dependencies": {
+		"@creativebulma/bulma-collapsible": "^1.0.4",
 		"@fortawesome/fontawesome-free": "^5.15.1",
 		"@fortawesome/fontawesome-svg-core": "^1.2.32",
 		"@fortawesome/free-solid-svg-icons": "^5.15.1",
@@ -13,6 +14,7 @@
 		"axios": "^0.20.0",
 		"bulma": "^0.9.1",
 		"concurrently": "^5.3.0",
+		"node-emoji": "^1.10.0",
 		"node-sass": "^4.14.1",
 		"react": "^16.13.1",
 		"react-dom": "^16.13.1",
@@ -22,12 +24,14 @@
 	},
 	"scripts": {
 		"start:client": "PORT=4000 react-scripts start",
-		"start:server": "npm run clean || cd server && DEBUG=app* nodemon index.js",
+		"start:server": "npm run clean:server && cd server && DEBUG=app* nodemon index.js || cd server && DEBUG=app* nodemon index.js",
 		"build": "react-scripts build",
 		"test": "react-scripts test",
 		"eject": "react-scripts eject",
 		"start": "DEBUG=app* PORT=3001 npm run start-client && (cd server && DEBUG=app* npm start)",
-		"clean": "kill $(lsof -t -i:3000)"
+		"clean:server": "kill $(lsof -t -i:3000)",
+		"clean:client": "kill $(lsof -t -i:4000)",
+		"clean": "npm run clean:server & npm run clean:client"
 	},
 	"eslintConfig": {
 		"extends": "react-app"

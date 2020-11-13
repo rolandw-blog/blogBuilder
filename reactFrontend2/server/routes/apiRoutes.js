@@ -8,6 +8,7 @@ const router = express.Router();
 // controllers
 const getPagesFromWatcher = require("../controllers/getPagesFromWatcher");
 const updatePage = require("../controllers/updatePage");
+const getHistoryFromWatcher = require("../controllers/getHistoryFromWatcher");
 
 // ! Single Sign On system
 // const isAuthenticated = require("../middleware/isAuthenticated");
@@ -43,6 +44,18 @@ const routes = [
 			method: this.method,
 			parameters: ["pageName: string"],
 			example: "/aaabbbccc?pageName=MyPage",
+		},
+	},
+	{
+		path: "/history/find/:_id",
+		method: "get",
+		middleware: [],
+		handler: getHistoryFromWatcher,
+		help: {
+			description: "Get all pages from the blog watcher API",
+			method: this.method,
+			parameters: [],
+			example: "/pages",
 		},
 	},
 ];

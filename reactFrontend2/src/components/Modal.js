@@ -1,22 +1,8 @@
 import React, { useState, useEffect } from "react";
-// eslint-disable-next-line
-// import bulma from "bulma";
+import Dropdown from "./Dropdown";
 import "../styles/styles.scss";
-import PageEditField from "./PageEditField";
 
-// const valueList = (values) => {
-// 	return values.map((v, i) => {
-// 		return (
-// 			<PageEditField name={v.name} value={v.value} />
-// 			// <li className="list-item" key={i}>
-// 			// 	<span>{v.name}</span>:{" "}
-// 			// 	<span className="is-family-code has-background-info">
-// 			// 		{v.value}
-// 			// 	</span>
-// 			// </li>
-// 		);
-// 	});
-// };
+import PageEditField from "./PageEditField";
 
 export default function Model(props) {
 	const [open, setOpen] = useState(false);
@@ -36,29 +22,39 @@ export default function Model(props) {
 
 	// a tempalte that defines each field in the edit
 	const formFields = [
-		{ name: "ID", fieldName: "_id", value: props._id, disabled: true },
+		{
+			name: "ID",
+			fieldName: "_id",
+			value: props._id,
+			history: props.history,
+			disabled: true,
+		},
 		{
 			name: "Page Name",
 			fieldName: "pageName",
 			value: props.pageName,
+			history: props.history,
 			disabled: false,
 		},
 		{
 			name: "Website Path",
 			fieldName: "websitePath",
 			value: props.websitePath,
+			history: props.history,
 			disabled: false,
 		},
 		{
 			name: "Hidden",
 			fieldName: "hidden",
 			value: props.hidden,
+			history: props.history,
 			disabled: false,
 		},
 		{
 			name: "Revision",
 			fieldName: "__v",
 			value: props.__v,
+			history: props.history,
 			disabled: true,
 		},
 	];
@@ -106,9 +102,10 @@ export default function Model(props) {
 						{formFieldComponents.map((field) => {
 							return field;
 						})}
+						<Dropdown _id={props.data.original._id}></Dropdown>
 					</section>
 					<footer className="modal-card-foot">
-						<button className="button is-dark">View history</button>
+						{/* <button className="button is-dark">View history</button> */}
 					</footer>
 				</div>
 				{/* End modal card */}

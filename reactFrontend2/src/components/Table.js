@@ -8,6 +8,7 @@ const Loading = styled.tr`
 	grid-column: 1 / -1;
 	progress {
 		width: 100%;
+		background: #363636;
 	}
 `;
 

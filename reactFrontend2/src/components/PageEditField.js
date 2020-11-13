@@ -11,6 +11,7 @@ import {
 const EditContainer = Styled.form`
 	display: grid;
 	grid-template-columns: 1fr auto;
+	padding: 5px;
 
 	// !center the button
 	button {
@@ -41,6 +42,7 @@ const EditContainer = Styled.form`
 const DisplayContainer = Styled.div`
 display: grid;
 grid-template-columns: 30% 1fr 10%;
+padding: 5px;
 
 span {
 	color: #dedede;
@@ -95,7 +97,6 @@ export default function PageEditField(props) {
 		const url = encodeURI(
 			`http://devel:3000/api/update/${props._id}?${params}`
 		);
-		console.log(url);
 
 		// ship it!
 		fetch(url, { method: "post", body: params })

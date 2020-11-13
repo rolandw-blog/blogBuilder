@@ -1,11 +1,11 @@
 // const crypto = require("crypto");
 const fetch = require("node-fetch");
-const debug = require("debug")("app:reqAllPages");
+const debug = require("debug")("app:reqHistory");
 const signPayload = require("../helper/signPayload");
 require("dotenv").config();
 
 const getPages = async (req, res) => {
-	debug("getting pages");
+	debug(`getting hsitory for ${req.params._id}`);
 	const websitePath = req.query.websitePath || "";
 	const body = {
 		websitePath: websitePath,
@@ -18,13 +18,8 @@ const getPages = async (req, res) => {
 		"x-payload-signature": sig,
 	};
 
-	const regQuery =
-		websitePath !== ""
-			? `?websitePath=${websitePath}.*[^/]&regex=true`
-			: "";
-
 	debug(req.query);
-	const url = `${process.env.WATCHER_IP}/pages${regQuery}?page=${req.query.page}&per_page=${req.query.per_page}`;
+	const url = `${process.env.WATCHER_IP}/history/find/${req.params._id}`;
 	debug(`polling ${url}`);
 	const request = await fetch(url, {
 		method: "post",
@@ -32,7 +27,11 @@ const getPages = async (req, res) => {
 		headers: headers,
 	});
 	const json = await request.json();
+	console.log(json);
 	return res.status(200).json(json);
 };
 
 module.exports = getPages;
+// module.exports = (req, res) => {
+// 	return res.status(200).json({ placeholder: "sample text" });
+// };
