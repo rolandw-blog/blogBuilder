@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Dropdown from "./dropdowns/Dropdown";
+import Dropdown from "./dropdowns/HistoryDropdown";
 import "../styles/styles.scss";
 
 import PageEditField from "./PageEditField";
