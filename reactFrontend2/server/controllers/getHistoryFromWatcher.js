@@ -27,6 +27,7 @@ const getPages = async (req, res) => {
 		headers: headers,
 	});
 	const json = await request.json();
+	// await json.json();
 	console.log(json);
 	return res.status(200).json(json);
 };

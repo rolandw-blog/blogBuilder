@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import Dropdown from "./dropdowns/HistoryDropdown";
+import HistoryDropdown from "./dropdowns/HistoryDropdown";
+import SourcesDropdown from "./dropdowns/SourcesDropdown";
 import "../styles/styles.scss";
 
 import PageEditField from "./PageEditField";
@@ -17,7 +18,7 @@ export default function Model(props) {
 	// print some debug stuff on component mount
 	useEffect(() => {
 		// console.log(`new page ${props.data.original.pageName}`);
-		console.log(props.data.original);
+		// console.log(props.data.original);
 	});
 
 	// a tempalte that defines each field in the edit
@@ -102,7 +103,14 @@ export default function Model(props) {
 						{formFieldComponents.map((field) => {
 							return field;
 						})}
-						<Dropdown _id={props.data.original._id}></Dropdown>
+						<HistoryDropdown
+							_id={props.data.original._id}
+							source={props.data.original.source}
+						></HistoryDropdown>
+						<SourcesDropdown
+							_id={props.data.original._id}
+							source={props.data.original.source}
+						></SourcesDropdown>
 					</section>
 					<footer className="modal-card-foot">
 						{/* <button className="button is-dark">View history</button> */}

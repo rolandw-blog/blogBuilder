@@ -1,6 +1,6 @@
 // const crypto = require("crypto");
 const fetch = require("node-fetch");
-const debug = require("debug")("app:reqNewPage");
+const debug = require("debug")("app:updatePage");
 const signPayload = require("../helper/signPayload");
 require("dotenv").config();
 
