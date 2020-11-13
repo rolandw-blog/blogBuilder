@@ -9,7 +9,7 @@ const Collapsible = styled.div`
 		max-height: 1000px;
 		transition: max-height 0.2s;
 		background-color: #363636;
-		padding: 2.5px;
+		padding: 2.5px 5px;
 	}
 
 	.collapsed {
@@ -24,7 +24,7 @@ const Collapsible = styled.div`
 		width: 100%;
 		display: grid;
 		grid-template-columns: 1fr auto 10px;
-		padding: 2.5px;
+		padding: 2.5px 5px;
 		padding-top: 5px;
 	}
 
@@ -38,7 +38,7 @@ const History = styled.div`
 	padding: 1ch 0;
 	font-size: 0.5em;
 	border-bottom: 1px solid #dedede;
-	padding: 2.5px;
+	padding: 2.5px 5px;
 `;
 
 export { Collapsible, History };

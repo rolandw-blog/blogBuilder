@@ -10,7 +10,7 @@ import Dropdown from "./Dropdown";
 const sourceEntry = (history, key) => {
 	return (
 		<div key={key.toString()}>
-			<PageEditField name={"URL"} value={history.url} />
+			<PageEditField noTitle name={"URL"} value={history.url} />
 		</div>
 	);
 };

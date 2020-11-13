@@ -41,7 +41,8 @@ const EditContainer = Styled.form`
 
 const DisplayContainer = Styled.div`
 display: grid;
-grid-template-columns: 30% 1fr 10%;
+grid-template-columns: ${(props) =>
+	props.noTitle ? "1fr auto" : "30% 1fr 10%"};;
 padding: 5px;
 
 span {
@@ -151,8 +152,9 @@ export default function PageEditField(props) {
 					</div>
 				</EditContainer>
 			) : (
-				<DisplayContainer>
-					<span>{props.name}: </span>
+				<DisplayContainer noTitle={props.noTitle ? true : false}>
+					{/* only print if noTitle is not included */}
+					{!props.noTitle && <span>{props.name}: </span>}
 					<span>{value}</span>
 
 					{/* buttons */}
