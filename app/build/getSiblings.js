@@ -41,7 +41,7 @@ const genSiblings = async (mask, sort) => {
 	const maskArray = mask.split("/").filter(String);
 
 	// check each page websitePath against the mask
-	for (page of pages) {
+	for (page of pages.data) {
 		// split the websitePath into an array
 		const pathArray = page.websitePath.split("/").filter(String);
 

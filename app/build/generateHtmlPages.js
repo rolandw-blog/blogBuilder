@@ -67,7 +67,7 @@ module.exports = async () => {
 	const head = await getHeadCommit();
 
 	// for each page
-	for (page of pages) {
+	for (page of pages.data) {
 		// timer("=========================================================");
 		debug(`Building page:\t${page.pageName}`);
 

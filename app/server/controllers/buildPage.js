@@ -76,7 +76,7 @@ const buildPage = async (req, res) => {
 	}
 
 	// Get the page
-	let page = await refreshPage(req.params.id);
+	let page = await refreshPage(req.params.id).data;
 
 	if (!page) {
 		return res.status(400).json({
