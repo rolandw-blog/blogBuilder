@@ -4,8 +4,75 @@ import { useTable, usePagination } from "react-table";
 import styled from "styled-components";
 import Modal from "./Modal";
 
+const Loading = styled.tr`
+	grid-column: 1 / -1;
+	progress {
+		width: 100%;
+	}
+`;
+
+const NavButtonsLeft = styled.div`
+	button {
+		margin: 0 10px;
+	}
+
+	*:last-child {
+		margin: 0;
+	}
+`;
+
+const NavButtonsRight = styled.div`
+	* {
+		margin: 0 10px;
+	}
+
+	*:first-child {
+		margin: 0;
+	}
+`;
+
 const Pagination = styled.div`
-	padding: 1em;
+	padding: 1em 0;
+	strong {
+		color: #dedede;
+	}
+
+	input {
+		background: #363636;
+		border: 0px solid black;
+		border-radius: 5px;
+		// padding: 10px;
+		height: 40px;
+		text-align: center;
+		color: #dedede;
+	}
+
+	// disable input spinners (tick goto page box up and down)
+	input[type="number"]::-webkit-outer-spin-button,
+	input[type="number"]::-webkit-inner-spin-button {
+		-webkit-appearance: none;
+		margin: 0;
+	}
+
+	input[type="number"] {
+		-moz-appearance: textfield;
+	}
+
+	select {
+		background: #363636;
+		border: 0px solid black;
+		padding: 5px;
+		text-align: center;
+		font-size: 1em;
+		border-radius: 5px;
+		color: #dedede;
+
+		// remove the dropdown arrow
+		-webkit-appearance: none;
+		-moz-appearance: none;
+		text-indent: 1px;
+		text-overflow: "";
+	}
 `;
 
 const Styles = styled.div`
@@ -20,6 +87,11 @@ const Styles = styled.div`
 			color: #dedede;
 		}
 
+		// make the loading bar (last row) span all columns
+		tr:last-child > td {
+			grid-column: 1 / -1;
+		}
+
 		tr:hover {
 			background: #51555e;
 		}
@@ -28,6 +100,12 @@ const Styles = styled.div`
 			text-overflow: ellipsis;
 			overflow: hidden;
 			white-space: nowrap;
+		}
+
+		td:last-child,
+		td:nth-last-child(2) {
+			align-self: end;
+			justify-self: right;
 		}
 
 		th {
@@ -48,12 +126,17 @@ const Styles = styled.div`
 	}
 `;
 
-export default function Table({ columns, data }) {
+export default function Table({
+	columns,
+	data,
+	fetchData,
+	loading,
+	pageCount: controlledPageCount,
+}) {
 	const {
 		getTableProps,
 		getTableBodyProps,
 		gotoPage,
-		rows,
 		page,
 		canPreviousPage,
 		canNextPage,
@@ -68,10 +151,17 @@ export default function Table({ columns, data }) {
 		{
 			columns,
 			data,
-			initialState: { pageIndex: 0 },
+			initialState: { pageIndex: 0 }, // Pass our hoisted table state
+			manualPagination: true,
+			pageCount: controlledPageCount,
 		},
 		usePagination
 	);
+
+	// Listen for changes in pagination and use the state to fetch our new data
+	React.useEffect(() => {
+		fetchData({ pageIndex, pageSize });
+	}, [fetchData, pageIndex, pageSize]);
 
 	// Render the UI for your table
 	return (
@@ -178,29 +268,58 @@ export default function Table({ columns, data }) {
 							</tr>
 						);
 					})}
+					<Loading>
+						{loading && (
+							// Use our custom loading state to show a loading indicator
+							<td>
+								<progress
+									className="progress is-medium is-dark"
+									max="100"
+								>
+									45%
+								</progress>
+							</td>
+						)}
+					</Loading>
 				</tbody>
-				<Pagination className="pagination">
+			</table>
+			<Pagination className="pagination">
+				<NavButtonsLeft>
+					{/* first page */}
 					<button
+						className="button is-dark"
 						onClick={() => gotoPage(0)}
 						disabled={!canPreviousPage}
 					>
 						{"<<"}
 					</button>{" "}
+					{/* previous page */}
 					<button
+						className="button is-dark"
 						onClick={() => previousPage()}
 						disabled={!canPreviousPage}
 					>
 						{"<"}
 					</button>{" "}
-					<button onClick={() => nextPage()} disabled={!canNextPage}>
+					{/* next page */}
+					<button
+						className="button is-dark"
+						onClick={() => nextPage()}
+						disabled={!canNextPage}
+					>
 						{">"}
 					</button>{" "}
+					{/* last page */}
 					<button
+						className="button is-dark"
 						onClick={() => gotoPage(pageCount - 1)}
 						disabled={!canNextPage}
 					>
 						{">>"}
 					</button>{" "}
+				</NavButtonsLeft>
+				<NavButtonsRight>
+					{/* page number of total */}
 					<span>
 						Page{" "}
 						<strong>
@@ -208,7 +327,7 @@ export default function Table({ columns, data }) {
 						</strong>{" "}
 					</span>
 					<span>
-						| Go to page:{" "}
+						Go to page:{" "}
 						<input
 							type="number"
 							defaultValue={pageIndex + 1}
@@ -222,6 +341,7 @@ export default function Table({ columns, data }) {
 						/>
 					</span>{" "}
 					<select
+						className="select"
 						value={pageSize}
 						onChange={(e) => {
 							setPageSize(Number(e.target.value));
@@ -233,8 +353,8 @@ export default function Table({ columns, data }) {
 							</option>
 						))}
 					</select>
-				</Pagination>
-			</table>
+				</NavButtonsRight>
+			</Pagination>
 		</Styles>
 	);
 }

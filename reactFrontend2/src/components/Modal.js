@@ -30,8 +30,8 @@ export default function Model(props) {
 
 	// print some debug stuff on component mount
 	useEffect(() => {
-		console.log(`new page ${props.data.original.pageName}`);
-		console.log(props.data.original);
+		// console.log(`new page ${props.data.original.pageName}`);
+		// console.log(props.data.original);
 	});
 
 	// a tempalte that defines each field in the edit

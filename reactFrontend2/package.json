@@ -22,7 +22,7 @@
 	},
 	"scripts": {
 		"start:client": "PORT=4000 react-scripts start",
-		"start:server": "cd server && DEBUG=app* npm start",
+		"start:server": "npm run clean || cd server && DEBUG=app* nodemon index.js",
 		"build": "react-scripts build",
 		"test": "react-scripts test",
 		"eject": "react-scripts eject",

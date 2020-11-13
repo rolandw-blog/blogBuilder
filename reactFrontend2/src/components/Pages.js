@@ -1,13 +1,15 @@
 import fetchDataPromise from "./fetchDataPromise";
-import React, { useState, useEffect } from "react";
+import React, { useMemo, useState, useRef } from "react";
 
 import Table from "./Table";
 
 export default function Pages() {
 	const [data, setData] = useState([]);
-	const [loadingData, setLoadingData] = useState(true);
+	const [loading, setLoading] = useState(true);
+	const [pageCount, setPageCount] = useState(0);
+	const fetchIdRef = useRef(0);
 
-	const columns = React.useMemo(
+	const columns = useMemo(
 		() => [
 			{
 				Header: "Index",
@@ -33,33 +35,66 @@ export default function Pages() {
 		[]
 	);
 
-	useEffect(() => {
-		const getData = async () => {
-			fetchDataPromise()
-				.then((res) => res.json())
-				.then((json) => {
-					setData(json.data);
-					setLoadingData(false);
-				});
-		};
+	const fetchData = React.useCallback(({ pageSize, pageIndex }) => {
+		console.log("running fetchData callback");
+		// This will get called when the table needs new data
+		// You could fetch your data from literally anywhere,
+		// even a server. But for this example, we'll just fake it.
 
-		if (loadingData) {
-			// if the result is not ready so you make the axios call
-			getData();
-		}
-	}, [loadingData]);
+		// Give this fetch an ID
+		const fetchId = ++fetchIdRef.current;
+
+		// Set the loading state
+		setLoading(true);
+
+		fetchDataPromise(pageIndex, pageSize)
+			.then((res) => {
+				return res.json();
+			})
+			.then((json) => {
+				console.log(json);
+				const newData = json.data;
+				console.log(newData[0].pageName);
+				console.log(fetchId);
+				console.log(fetchId.current);
+
+				setData(newData);
+				setPageCount(Math.ceil(parseInt(json.count) / pageSize));
+				setLoading(false);
+				if (fetchId === fetchId.current) {
+				}
+			});
+	}, []);
 
 	return (
 		<>
-			{/* <Table columns={columns} data={data} /> */}
-			{loadingData ? (
-				// <p>Loading Please wait...</p>
-				<progress className="progress is-medium is-dark" max="100">
-					45%
-				</progress>
-			) : (
-				<Table columns={columns} data={data} />
-			)}
+			<Table
+				columns={columns}
+				data={data}
+				fetchData={fetchData}
+				loading={loading}
+				pageCount={pageCount}
+			/>
 		</>
 	);
 }
+
+// return (
+// 	<>
+// 		{/* <Table columns={columns} data={data} /> */}
+// 		{loading ? (
+// 			// <p>Loading Please wait...</p>
+// <progress className="progress is-medium is-dark" max="100">
+// 	45%
+// </progress>
+// 		) : (
+// 			<Table
+// 				columns={columns}
+// 				data={data}
+// 				fetchData={fetchData}
+// 				loading={loading}
+// 				pageCount={pageCount}
+// 			/>
+// 		)}
+// 	</>
+// );

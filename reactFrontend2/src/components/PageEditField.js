@@ -28,6 +28,13 @@ const EditContainer = Styled.form`
 		width: 100%;
 		margin: 0;
 		padding: 0;
+		background: #282C34;
+		border-top: none;
+		border-left: none;
+		border-right: none;
+		border-bottom: 1px solid #dedede;
+		color: #dedede;
+		font-size: 1em;
 	}
 `;
 
@@ -36,7 +43,7 @@ display: grid;
 grid-template-columns: 30% 1fr 10%;
 
 span {
-	color: #363636;
+	color: #dedede;
 	// dont overflow text
 	text-overflow: ellipsis;
 	overflow: hidden;

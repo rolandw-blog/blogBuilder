@@ -23,7 +23,8 @@ const getPages = async (req, res) => {
 			? `?websitePath=${websitePath}.*[^/]&regex=true`
 			: "";
 
-	const url = `${process.env.WATCHER_IP}/pages${regQuery}`;
+	debug(req.query);
+	const url = `${process.env.WATCHER_IP}/pages${regQuery}?page=${req.query.page}&per_page=${req.query.per_page}`;
 	debug(`polling ${url}`);
 	const request = await fetch(url, {
 		method: "post",
@@ -32,7 +33,7 @@ const getPages = async (req, res) => {
 	});
 	const json = await request.json();
 	debug(json.length);
-	return res.status(200).json({ data: json });
+	return res.status(200).json(json);
 };
 
 module.exports = getPages;

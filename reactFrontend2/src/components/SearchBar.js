@@ -4,7 +4,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
 const Styles = Styled.form`
-	// paddo: 1em 0;
 	padding: 0;
 	padding: 1em 0;
 	
@@ -14,7 +13,9 @@ const Styles = Styled.form`
 	
 	
 	input {
-		grid-column: 1
+		grid-column: 1;
+		background-color: #363636;
+		border: none;
 	}
 
 	button {
