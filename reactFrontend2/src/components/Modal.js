@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Dropdown from "./Dropdown";
+import Dropdown from "./dropdowns/Dropdown";
 import "../styles/styles.scss";
 
 import PageEditField from "./PageEditField";
@@ -17,7 +17,7 @@ export default function Model(props) {
 	// print some debug stuff on component mount
 	useEffect(() => {
 		// console.log(`new page ${props.data.original.pageName}`);
-		// console.log(props.data.original);
+		console.log(props.data.original);
 	});
 
 	// a tempalte that defines each field in the edit

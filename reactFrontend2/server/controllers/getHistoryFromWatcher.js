@@ -5,7 +5,7 @@ const signPayload = require("../helper/signPayload");
 require("dotenv").config();
 
 const getPages = async (req, res) => {
-	debug(`getting hsitory for ${req.params._id}`);
+	// debug(`getting hsitory for ${req.params._id}`);
 	const websitePath = req.query.websitePath || "";
 	const body = {
 		websitePath: websitePath,

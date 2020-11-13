@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import fetchHistoryPromise from "./fetchHistoryPromise";
+import fetchHistoryPromise from "../fetchHistoryPromise";
 import emoji from "node-emoji";
 import styled from "styled-components";
-import "../styles/styles.scss";
+import "../../styles/styles.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleDown, faAngleUp } from "@fortawesome/free-solid-svg-icons";
 
@@ -92,16 +92,6 @@ function DropdownButton(props) {
 	);
 }
 
-// {message}{" "}
-// 			<FontAwesomeIcon
-// 				onclick={(e) => {
-// 					e.preventDefault();
-// 				}}
-// 				className="has-text-right icon"
-// 				icon={faAngleDown}
-// 				color={"white"}
-// 			/>
-
 export default function Dropdown(pageID) {
 	const [collapsed, setCollapsed] = useState(false);
 	const [buttonText, setButtonText] = useState("Open history");
@@ -112,7 +102,6 @@ export default function Dropdown(pageID) {
 	const loadHistoryData = async () => {
 		if (!collapsed) {
 			const { history } = await (await fetchHistoryPromise(_id)).json();
-			console.log(history);
 			setHistory(history);
 			setLoading(false);
 		}
