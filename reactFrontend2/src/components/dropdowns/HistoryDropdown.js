@@ -24,9 +24,9 @@ const historyEntry = (history, key) => {
 			{/* modified */}
 			<h3>Modified</h3>
 			<ul>
-				{history.data.modified.map((file) => {
+				{history.data.modified.map((file, index) => {
 					return (
-						<li>
+						<li key={index}>
 							<span>{file}</span>
 						</li>
 					);
@@ -56,7 +56,7 @@ export default function SourcesDropdown(props) {
 				return loadHistoryData(_id);
 			}}
 			renderDataCallback={(data, index) => {
-				console.log(data);
+				// console.log(data);
 				return historyEntry(data, index);
 			}}
 		></Dropdown>
