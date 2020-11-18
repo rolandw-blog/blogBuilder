@@ -3,7 +3,7 @@ import HistoryDropdown from "./dropdowns/HistoryDropdown";
 import SourcesDropdown from "./dropdowns/SourcesDropdown";
 import "../styles/styles.scss";
 
-import PageEditField from "./PageEditField";
+import PageEditField from "./pageEditField/PageEditField";
 
 export default function Model(props) {
 	const [open, setOpen] = useState(false);
@@ -26,28 +26,24 @@ export default function Model(props) {
 			name: "ID",
 			fieldName: "_id",
 			value: props._id,
-			history: props.history,
 			disabled: true,
 		},
 		{
 			name: "Page Name",
 			fieldName: "pageName",
 			value: props.pageName,
-			history: props.history,
 			disabled: false,
 		},
 		{
 			name: "Website Path",
 			fieldName: "websitePath",
 			value: props.websitePath,
-			history: props.history,
 			disabled: false,
 		},
 		{
 			name: "Hidden",
 			fieldName: "hidden",
 			value: props.hidden,
-			history: props.history,
 			disabled: false,
 		},
 		{
@@ -68,6 +64,7 @@ export default function Model(props) {
 				key={i}
 				_id={props._id}
 				disabled={field.disabled}
+				color={"#282C34"}
 				formCallback={(_id, newValue, fieldName, value) => {
 					// UPDATE WHERE SELECT _id IS _id
 					const filter = { _id: _id };

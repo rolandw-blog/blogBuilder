@@ -1,5 +1,5 @@
 import React from "react";
-import PageEditField from "../PageEditField";
+import PageEditField from "../pageEditField/PageEditField";
 import "../../styles/styles.scss";
 import Dropdown from "./Dropdown";
 
