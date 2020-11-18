@@ -1,5 +1,5 @@
 import React from "react";
-import fetchHistoryPromise from "../fetchHistoryPromise";
+import fetchHistoryPromise from "../helpers/fetchHistoryPromise";
 import emoji from "node-emoji";
 import "../../styles/styles.scss";
 import { History } from "./styles";

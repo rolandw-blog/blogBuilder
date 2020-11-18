@@ -1,4 +1,4 @@
-import fetchDataPromise from "./fetchDataPromise";
+import fetchDataPromise from "./helpers/fetchDataPromise";
 import React, { useMemo, useState } from "react";
 
 import Table from "./Table";

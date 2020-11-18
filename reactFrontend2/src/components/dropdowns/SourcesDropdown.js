@@ -10,7 +10,7 @@ import Dropdown from "./Dropdown";
 const sourceEntry = (data, _id) => {
 	// console.log("rendering source entry", data.url);
 	return (
-		<div key={_id}>
+		<div key={_id + "/" + data.url}>
 			<PageEditField
 				noTitle
 				name={"URL"}
@@ -69,6 +69,7 @@ export default function SourcesDropdown(props) {
 				? source
 				: new Array(source);
 
+		// console.log(JSON.stringify({ data: result }));
 		return { data: result };
 	};
 
