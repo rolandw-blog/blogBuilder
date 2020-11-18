@@ -7,8 +7,11 @@ import {
 	faUndo,
 } from "@fortawesome/free-solid-svg-icons";
 
-import DisplayContainer from "./DisplayContainer.style";
-import EditContainer from "./EditContainer.style";
+import {
+	DisplayContainer,
+	EditContainer,
+	BaseStyle,
+} from "./pageEditfield.style";
 
 // takes...
 // ? name - name of the input field
@@ -66,7 +69,7 @@ function PageEditField(props) {
 	};
 
 	return (
-		<div>
+		<BaseStyle>
 			{editing ? (
 				// display the field "name: value" and the edit button and save button
 				<EditContainer id={props.value} color={props.color}>
@@ -108,38 +111,32 @@ function PageEditField(props) {
 					<span>{value}</span>
 
 					{/* buttons */}
-					<div className="buttons">
-						{/* undo button */}
-						{firstValue !== value ? (
-							<button
-								className="button is-text"
-								onClick={resetField}
-							>
-								<FontAwesomeIcon
-									className="has-text-right icon"
-									icon={faUndo}
-								/>
-							</button>
-						) : (
-							<span></span>
-						)}
+					{/* <div className="buttons"> */}
+					{/* undo button */}
+					{firstValue !== value ? (
+						<button className="button is-text" onClick={resetField}>
+							<FontAwesomeIcon
+								className="has-text-right icon"
+								icon={faUndo}
+							/>
+						</button>
+					) : (
+						<span></span>
+					)}
 
-						{/* edit button */}
-						<div className="buttons">
-							<button
-								className="button is-text"
-								onClick={changeMode}
-							>
-								<FontAwesomeIcon
-									className="has-text-right icon"
-									icon={faEdit}
-								/>
-							</button>
-						</div>
-					</div>
+					{/* edit button */}
+					{/* <div className="buttons"> */}
+					<button className="button is-text" onClick={changeMode}>
+						<FontAwesomeIcon
+							className="has-text-right icon"
+							icon={faEdit}
+						/>
+					</button>
+					{/* </div> */}
+					{/* </div> */}
 				</DisplayContainer>
 			)}
-		</div>
+		</BaseStyle>
 	);
 }
 
