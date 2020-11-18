@@ -5,13 +5,13 @@ const signPayload = require("../helper/signPayload");
 require("dotenv").config();
 
 const getPages = async (req, res) => {
-	debug("Updating page");
+	debug("UPDATING PAGE");
 
-	if (!req.query)
-		return res.status(422).json({
-			success: false,
-			message: "query required in the form of ?oldValue=newValue",
-		});
+	// if (!req.query)
+	// 	return res.status(422).json({
+	// 		success: false,
+	// 		message: "query required in the form of ?oldValue=newValue",
+	// 	});
 
 	debug("PARAMS:");
 	debug(req.params);
@@ -50,6 +50,8 @@ const getPages = async (req, res) => {
 		headers: headers,
 	});
 	const document = await request.json();
+	console.log("received reply");
+	console.log(document);
 	return res.status(200).json({ ...document });
 };
 

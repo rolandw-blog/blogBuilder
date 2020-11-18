@@ -29,7 +29,7 @@ const EditContainer = Styled.form`
 		width: 100%;
 		margin: 0;
 		padding: 0;
-		background: #282C34;
+		background: ${(props) => (props.color ? props.color : "#282C34")};
 		border-top: none;
 		border-left: none;
 		border-right: none;
@@ -68,7 +68,15 @@ button {
 // takes...
 // ? name - name of the input field
 // ? value - current value of the input field
-export default function PageEditField(props) {
+/**
+ *
+ * @param {string} props.value - The initial text field string
+ * @param {string} props._id - The ID of the document this field belongs to
+ * @param {string} props.fieldName - The real name of the field in the database
+ * @param {string} props.disabled - Set this if you wish for the field to be turned off
+ * @param {string} props.formCallback - A callback method that receives the _id, and URLSearchParams (url queryString)
+ */
+function PageEditField(props) {
 	const [editing, setEditing] = useState(false);
 	const [firstValue, setFirstValue] = useState(props.value);
 	const [value, setValue] = useState(props.value);
@@ -85,34 +93,28 @@ export default function PageEditField(props) {
 		setEditing(!editing);
 	};
 
-	const saveInput = () => {
-		console.log(`sending to to ${newValue}`);
+	const saveInput = React.useCallback(() => {
 		setValue(newValue);
 
-		// encode the params
-		const params = new URLSearchParams({
-			[props.fieldName]: newValue,
-		});
-
-		// construct a fetch URL
-		const url = encodeURI(
-			`http://devel:3000/api/update/${props._id}?${params}`
-		);
-
-		// ship it!
-		fetch(url, { method: "post", body: params })
-			.then((res) => res.json())
-			.then((doc) => {
-				if (doc) {
-					// if it was saved then go ahead and update the firstValue to be this new value
-					// this prevents the "undo" button from appearing
-					setFirstValue(newValue);
-				}
-				console.log(doc);
-			});
-		setEditing(!editing);
-		console.log("phew");
-	};
+		try {
+			props
+				.formCallback(props._id, newValue, props.fieldName, value)
+				.then((res) => res.json())
+				.then((doc) => {
+					if (doc) {
+						// if it was saved then go ahead and update the firstValue to be this new value
+						// this prevents the "undo" button from appearing
+						setFirstValue(newValue);
+					}
+					console.log(doc);
+				});
+			setEditing(!editing);
+			console.log("finished updating field successfully");
+		} catch (err) {
+			console.log(err);
+			// TODO push an error to the client here
+		}
+	}, [value, editing, setEditing, newValue, props]);
 
 	const resetField = () => {
 		setValue(firstValue);
@@ -122,7 +124,7 @@ export default function PageEditField(props) {
 		<div>
 			{editing ? (
 				// display the field "name: value" and the edit button and save button
-				<EditContainer id={props.value}>
+				<EditContainer id={props.value} color={props.color}>
 					<input
 						className="is-primary"
 						defaultValue={value}
@@ -192,3 +194,5 @@ export default function PageEditField(props) {
 		</div>
 	);
 }
+
+export default React.memo(PageEditField);

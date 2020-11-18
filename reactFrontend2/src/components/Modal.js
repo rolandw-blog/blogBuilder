@@ -12,7 +12,6 @@ export default function Model(props) {
 	function toggleModal(e) {
 		e.preventDefault();
 		setOpen(!open);
-		console.log("The link was clicked.");
 	}
 
 	// print some debug stuff on component mount
@@ -69,6 +68,37 @@ export default function Model(props) {
 				key={i}
 				_id={props._id}
 				disabled={field.disabled}
+				formCallback={(_id, newValue, fieldName, value) => {
+					// UPDATE WHERE SELECT _id IS _id
+					const filter = { _id: _id };
+
+					// SET source.url = newValue
+					const update = { [fieldName]: newValue };
+
+					// print them out for debugging
+					// console.log(`filter: ${JSON.stringify(filter)}`);
+					// console.log(`update: ${JSON.stringify(update)}`);
+
+					// construct the body request
+					const body = {
+						filter: filter,
+						update: update,
+					};
+
+					// stringify it for the POST request
+					console.log("stringifying the body");
+					const bodyString = JSON.stringify(body);
+
+					// send the post request
+					const url = `https://watch.rolandw.dev/update/${_id}`;
+					return fetch(url, {
+						method: "POST",
+						headers: {
+							"Content-type": "application/json; charset=UTF-8",
+						},
+						body: bodyString,
+					});
+				}}
 			/>
 		);
 	});

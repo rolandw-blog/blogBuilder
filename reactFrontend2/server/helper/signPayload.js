@@ -1,5 +1,5 @@
 const crypto = require("crypto");
-const debug = require("debug")("app:crypto");
+const debug = require("debug")("v_app:crypto");
 require("dotenv").config();
 
 /**

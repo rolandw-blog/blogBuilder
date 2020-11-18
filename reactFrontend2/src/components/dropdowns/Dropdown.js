@@ -25,7 +25,7 @@ function DropdownButton(props) {
  * @param {*} fetchDataCallback
  * @param {*} renderDataCallback
  */
-export default function Dropdown(props) {
+function Dropdown(props) {
 	const [collapsed, setCollapsed] = useState(false);
 	const [buttonText, setButtonText] = useState(`Open ${props.name}`);
 	const [loading, setLoading] = useState(true);
@@ -66,9 +66,8 @@ export default function Dropdown(props) {
 			<div className="content collapsed">
 				{!loading &&
 					data.map((data, index) => {
-						console.log(`redering ${props.name}`);
-						console.log(index);
-						return props.renderDataCallback(data, index);
+						console.log(`redering ${props.name} dropdown`);
+						return props.renderDataCallback(data, _id, index);
 					})}
 
 				{!loading && data.length === 0 && `No data found.`}
@@ -76,3 +75,5 @@ export default function Dropdown(props) {
 		</Collapsible>
 	);
 }
+
+export default Dropdown;

@@ -35,7 +35,7 @@ export default function Pages() {
 	);
 
 	const fetchData = React.useCallback(({ pageSize, pageIndex }) => {
-		console.log("running fetchData callback");
+		// console.log("running fetchData callback");
 		// This will get called when the table needs new data
 
 		// Set the loading state
@@ -46,9 +46,8 @@ export default function Pages() {
 				return res.json();
 			})
 			.then((json) => {
-				console.log(json);
 				const newData = json.data;
-				console.log(`got ${newData.length} new items from the API`);
+				// console.log(`got ${newData.length} new items from the API`);
 
 				setData(newData);
 				setPageCount(Math.ceil(parseInt(json.count) / pageSize));
