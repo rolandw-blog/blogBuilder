@@ -21,16 +21,44 @@ const sourceEntry = (url, _id) => {
 			color={"#363636"}
 			key={_id + "/" + url}
 			// props._id, props.fieldName, value, newValue
-			formCallback={(_id, newValue, fieldName, value) => {
+			formCallback={async (
+				_id,
+				newValue,
+				fieldName,
+				value,
+				firstValue
+			) => {
 				// UPDATE WHERE SELECT _id IS _id
 				const filter = { _id: _id };
-
-				// SET source.url = newValue
-				const update = { source: { url: newValue } };
 
 				// print them out for debugging
 				// console.log(`filter: ${JSON.stringify(filter)}`);
 				// console.log(`update: ${JSON.stringify(update)}`);
+
+				// ##──────────────────────────────────────────────────────────────────────────────────────
+				// The goal of this code is to
+				// 1. get the og page.source from the database
+				// 2. remove the og value from it and keep everything else
+				// 3. replace the og value with our new one
+				// 4. submit that new array back as our updated sources list
+				const doc = await (
+					await fetch(`https://watch.rolandw.dev/page?_id=${_id}`)
+				).json();
+
+				// console.log(doc.source);
+				const sourceArray = doc.source;
+				console.log(`avoiding ${firstValue}`);
+
+				// get everything that isnt the first value from the og sources list
+				const newSourceList = sourceArray
+					.filter((source) => source.url !== firstValue)
+					.map((source) => source);
+
+				// now push our new source to the array that doesnt contain the one we are changing
+				newSourceList.push({ remote: true, url: newValue });
+
+				// fully overwrite the source list with our new one
+				const update = { source: newSourceList };
 
 				// construct the body request
 				const body = {

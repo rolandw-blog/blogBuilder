@@ -48,7 +48,13 @@ function PageEditField(props) {
 		console.log(props.formCallback);
 		try {
 			props
-				.formCallback(props._id, newValue, props.fieldName, value)
+				.formCallback(
+					props._id,
+					newValue,
+					props.fieldName,
+					value,
+					firstValue
+				)
 				.then((res) => res.json())
 				.then((doc) => {
 					if (doc) {
@@ -64,7 +70,7 @@ function PageEditField(props) {
 			console.log(err);
 			// TODO push an error to the client here
 		}
-	}, [value, setMode, newValue, props]);
+	}, [value, setMode, newValue, props, firstValue]);
 
 	const resetField = () => {
 		setValue(firstValue);
