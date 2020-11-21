@@ -70,6 +70,8 @@ function Dropdown(props) {
 						return props.renderDataCallback(data, _id, index);
 					})}
 
+				{!loading && props.addField && props.renderAddFieldCallback()}
+
 				{!loading && data.length === 0 && `No data found.`}
 			</div>
 		</Collapsible>

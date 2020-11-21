@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import HistoryDropdown from "./dropdowns/HistoryDropdown";
 import SourcesDropdown from "./dropdowns/SourcesDropdown";
 import "../styles/styles.scss";
@@ -6,19 +6,27 @@ import "../styles/styles.scss";
 import PageEditField from "./pageEditField/PageEditField";
 
 export default function Model(props) {
+	// console.log(props);
 	const [open, setOpen] = useState(false);
+	const [fields, setFields] = useState([]);
 
 	// uses the setOpen() state to control the modal
 	function toggleModal(e) {
 		e.preventDefault();
-		setOpen(!open);
-	}
 
-	// print some debug stuff on component mount
-	useEffect(() => {
-		// console.log(`new page ${props.data.original.pageName}`);
-		// console.log(props.data.original);
-	});
+		// set open to the opposite
+		setOpen(!open);
+
+		// if the modal is opening load in the fields for it
+		if (!open) {
+			console.log("loading fields");
+			setFields(
+				formFieldComponents.map((field) => {
+					return field;
+				})
+			);
+		}
+	}
 
 	// a tempalte that defines each field in the edit
 	const formFields = [
@@ -118,7 +126,7 @@ export default function Model(props) {
 				{/* Modal card */}
 				<div className="modal-card">
 					<header className="modal-card-head">
-						<p className="modal-card-title">Modal Editor</p>
+						<p className="modal-card-title">{props.pageName}</p>
 						<button
 							className="delete"
 							aria-label="close"
@@ -127,9 +135,15 @@ export default function Model(props) {
 					</header>
 					<section className="modal-card-body">
 						{/* print out every form field for this modal */}
-						{formFieldComponents.map((field) => {
+						<div className="fieldsGoHere">
+							{fields.map((f) => {
+								return f;
+							})}
+						</div>
+						{/* {formFieldComponents.map((field) => {
+							// console.log(field);
 							return field;
-						})}
+						})} */}
 						<HistoryDropdown
 							_id={props.data.original._id}
 							source={props.data.original.source}

@@ -52,6 +52,7 @@ export default function SourcesDropdown(props) {
 		<Dropdown
 			_id={_id}
 			name={"history"}
+			addfield={false}
 			fetchDataCallback={(_id) => {
 				return loadHistoryData(_id);
 			}}

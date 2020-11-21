@@ -2,22 +2,24 @@ import React from "react";
 import PageEditField from "../pageEditField/PageEditField";
 import "../../styles/styles.scss";
 import Dropdown from "./Dropdown";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { EditContainer } from "../pageEditField/pageEditContainer";
 
 /**
  *
  * @param {JSON} data - {remote: bool, url: string}
  */
-const sourceEntry = (data, _id) => {
+const sourceEntry = (url, _id) => {
 	// console.log("rendering source entry", data.url);
 	return (
 		<PageEditField
 			noTitle
 			name={"URL"}
-			value={data.url}
+			value={url}
 			fieldName={"url"}
 			_id={_id}
 			color={"#363636"}
-			key={_id + "/" + data.url}
+			key={_id + "/" + url}
 			// props._id, props.fieldName, value, newValue
 			formCallback={(_id, newValue, fieldName, value) => {
 				// UPDATE WHERE SELECT _id IS _id
@@ -80,10 +82,47 @@ export default function SourcesDropdown(props) {
 				return fetchData();
 			}}
 			renderDataCallback={(data, _id, index) => {
-				// console.log("render callback data:");
-				// console.log(data);
-				return sourceEntry(data, _id);
+				return sourceEntry(data.url, _id);
 			}}
-		></Dropdown>
+			addField={true}
+			renderAddFieldCallback={() => {
+				// return "Hello";
+				return (
+					<PageEditField
+						noTitle
+						name={"URL"}
+						// the addFields value text should be nothing
+						value={""}
+						fieldName={"url"}
+						_id={_id}
+						color={"#363636"}
+						key={_id + "/addField"}
+						initialMode={"add"}
+						formCallback={(_id, newValue, fieldName, value) => {
+							console.log(_id, newValue, fieldName, value);
+							const body = {
+								_id: _id,
+								url: newValue,
+								remote: true,
+							};
+
+							const headers = {
+								"Content-type":
+									"application/json; charset=UTF-8",
+							};
+
+							return fetch(
+								"https://watch.rolandw.dev/update/history/add",
+								{
+									method: "post",
+									headers: headers,
+									body: JSON.stringify(body),
+								}
+							);
+						}}
+					/>
+				);
+			}}
+		/>
 	);
 }
