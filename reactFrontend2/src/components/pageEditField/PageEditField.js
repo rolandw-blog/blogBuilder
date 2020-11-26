@@ -29,7 +29,7 @@ import {
 function PageEditField(props) {
 	const [mode, setMode] = useState(props.initialMode);
 	const [firstValue, setFirstValue] = useState(props.value);
-	const [value, setValue] = useState(props.value);
+	const [value, setValue] = useState("");
 	const [newValue, setNewValue] = useState(props.value);
 
 	const exitNoSave = () => {
@@ -39,9 +39,9 @@ function PageEditField(props) {
 		setMode("dispay");
 	};
 
-	// useEffect(() => {
-	// 	console.log("loaded");
-	// }, []);
+	const handleOnChange = (event) => {
+		console.log("changed");
+	};
 
 	const saveInput = React.useCallback(() => {
 		setValue(newValue);
@@ -89,12 +89,13 @@ function PageEditField(props) {
 					<EditContainer id={props.value} color={props.color}>
 						<input
 							className="is-primary"
-							defaultValue={value}
+							defaultValue={firstValue}
 							id="inputField"
 							disabled={props.disabled}
 							onChange={(e) => {
 								// every time the input field is changed change the prospective new value
 								setNewValue(e.currentTarget.value);
+								props.onChange(e.currentTarget.value);
 							}}
 						/>
 						<div className="buttons">
@@ -161,7 +162,7 @@ function PageEditField(props) {
 					>
 						{/* only print if noTitle is not included */}
 						{!props.noTitle && <span>{props.name}: </span>}
-						<span>{value}</span>
+						<span>{firstValue || value}</span>
 
 						{/* ! DEPRECARED BECAUSE I NEED TO FIX STYLING  */}
 						{/* {firstValue !== value ? (

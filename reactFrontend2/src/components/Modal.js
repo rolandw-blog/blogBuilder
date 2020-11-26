@@ -19,7 +19,7 @@ export default function Model(props) {
 
 		// if the modal is opening load in the fields for it
 		if (!open) {
-			console.log("loading fields");
+			console.log(`loading fields for the modal: "${props.pageName}"`);
 			setFields(
 				formFieldComponents.map((field) => {
 					return field;
@@ -151,6 +151,8 @@ export default function Model(props) {
 						<SourcesDropdown
 							_id={props.data.original._id}
 							source={props.data.original.source}
+							addField={true}
+							name={"sources"}
 						></SourcesDropdown>
 					</section>
 					<footer className="modal-card-foot">
