@@ -113,7 +113,7 @@ export default function SourcesDropdown(props) {
 				return sourceEntry(data.url, _id);
 			}}
 			addField={true}
-			renderAddFieldCallback={() => {
+			renderAddFieldCallback={(index) => {
 				// return "Hello";
 				return (
 					<PageEditField
@@ -124,7 +124,7 @@ export default function SourcesDropdown(props) {
 						fieldName={"url"}
 						_id={_id}
 						color={"#363636"}
-						key={_id + "/addField"}
+						key={_id + "/addField" + index}
 						initialMode={"add"}
 						formCallback={(_id, newValue, fieldName, value) => {
 							console.log(_id, newValue, fieldName, value);

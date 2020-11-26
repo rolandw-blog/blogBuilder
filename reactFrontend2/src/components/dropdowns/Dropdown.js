@@ -30,6 +30,7 @@ function Dropdown(props) {
 	const [buttonText, setButtonText] = useState(`Open ${props.name}`);
 	const [loading, setLoading] = useState(true);
 	const [data, setData] = useState([]);
+	const [addFieldIndex, setAddFieldIndex] = useState(0);
 	const { _id } = props;
 
 	const loadHistoryData = async () => {
@@ -70,7 +71,9 @@ function Dropdown(props) {
 						return props.renderDataCallback(data, _id, index);
 					})}
 
-				{!loading && props.addField && props.renderAddFieldCallback()}
+				{!loading &&
+					props.addField &&
+					props.renderAddFieldCallback(addFieldIndex)}
 
 				{!loading && data.length === 0 && `No data found.`}
 			</div>
