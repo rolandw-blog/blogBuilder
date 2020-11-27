@@ -72,6 +72,7 @@ export default function Model(props) {
 				key={i}
 				_id={props._id}
 				disabled={field.disabled}
+				deletable={false}
 				color={"#282C34"}
 				formCallback={(_id, newValue, fieldName, value) => {
 					// UPDATE WHERE SELECT _id IS _id

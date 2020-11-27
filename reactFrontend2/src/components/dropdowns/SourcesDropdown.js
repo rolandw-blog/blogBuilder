@@ -41,6 +41,60 @@ function PlusButton(props) {
 	);
 }
 
+const formCallback = async (_id, newValue, fieldName, value, firstValue) => {
+	// UPDATE WHERE SELECT _id IS _id
+	const filter = { _id: _id };
+
+	// print them out for debugging
+	// console.log(`filter: ${JSON.stringify(filter)}`);
+	// console.log(`update: ${JSON.stringify(update)}`);
+
+	// ##──────────────────────────────────────────────────────────────────────────────────────
+	// The goal of this code is to
+	// 1. get the og page.source from the database
+	// 2. remove the og value from it and keep everything else
+	// 3. replace the og value with our new one
+	// 4. submit that new array back as our updated sources list
+	const doc = await (
+		await fetch(`https://watch.rolandw.dev/page?_id=${_id}`)
+	).json();
+
+	// console.log(doc.source);
+	const sourceArray = doc.source;
+	console.log(`avoiding ${firstValue}`);
+
+	// get everything that isnt the first value from the og sources list
+	const newSourceList = sourceArray
+		.filter((source) => source.url !== firstValue)
+		.map((source) => source);
+
+	// now push our new source to the array that doesnt contain the one we are changing
+	newSourceList.push({ remote: true, url: newValue });
+
+	// fully overwrite the source list with our new one
+	const update = { source: newSourceList };
+
+	// construct the body request
+	const body = {
+		filter,
+		update,
+	};
+
+	// stringify it for the POST request
+	console.log("stringifying the body");
+	const bodyString = JSON.stringify(body);
+
+	// send the post request
+	const url = `https://watch.rolandw.dev/update/${_id}`;
+	return fetch(url, {
+		method: "POST",
+		headers: {
+			"Content-type": "application/json; charset=UTF-8",
+		},
+		body: bodyString,
+	});
+};
+
 const renderData = (url, _id, index) => {
 	return (
 		<PageEditField
@@ -48,68 +102,18 @@ const renderData = (url, _id, index) => {
 			name={"URL"}
 			value={url}
 			fieldName={"url"}
+			disabled={false}
+			deletable={true}
 			_id={_id}
 			color={"#363636"}
 			key={_id + "/" + url + index}
-			// props._id, props.fieldName, value, newValue
-			formCallback={async (
-				_id,
-				newValue,
-				fieldName,
-				value,
-				firstValue
-			) => {
-				// UPDATE WHERE SELECT _id IS _id
-				const filter = { _id: _id };
-
-				// print them out for debugging
-				// console.log(`filter: ${JSON.stringify(filter)}`);
-				// console.log(`update: ${JSON.stringify(update)}`);
-
-				// ##──────────────────────────────────────────────────────────────────────────────────────
-				// The goal of this code is to
-				// 1. get the og page.source from the database
-				// 2. remove the og value from it and keep everything else
-				// 3. replace the og value with our new one
-				// 4. submit that new array back as our updated sources list
-				const doc = await (
-					await fetch(`https://watch.rolandw.dev/page?_id=${_id}`)
-				).json();
-
-				// console.log(doc.source);
-				const sourceArray = doc.source;
-				console.log(`avoiding ${firstValue}`);
-
-				// get everything that isnt the first value from the og sources list
-				const newSourceList = sourceArray
-					.filter((source) => source.url !== firstValue)
-					.map((source) => source);
-
-				// now push our new source to the array that doesnt contain the one we are changing
-				newSourceList.push({ remote: true, url: newValue });
-
-				// fully overwrite the source list with our new one
-				const update = { source: newSourceList };
-
-				// construct the body request
-				const body = {
-					filter,
-					update,
-				};
-
-				// stringify it for the POST request
-				console.log("stringifying the body");
-				const bodyString = JSON.stringify(body);
-
-				// send the post request
-				const url = `https://watch.rolandw.dev/update/${_id}`;
-				return fetch(url, {
-					method: "POST",
-					headers: {
-						"Content-type": "application/json; charset=UTF-8",
-					},
-					body: bodyString,
-				});
+			formCallback={(_id, newValue, fieldName, value, firstValue) => {
+				const props = [_id, newValue, fieldName, value, firstValue];
+				return formCallback(...props);
+			}}
+			deleteCallback={(_id) => {
+				console.log("deleting");
+				const filter = { id: _id };
 			}}
 			onChange={(newValue) => {
 				console.log(newValue);
@@ -195,7 +199,7 @@ export default function SourcesDropdown(props) {
 				}
 				{/* {!loading && props.addField && renderData("", _id)} */}
 				{!loading && fields.length === 0 && `No data found.`}
-				Add <PlusButton onClick={handleAddField} />
+				<PlusButton onClick={handleAddField} />
 			</div>
 		</Collapsible>
 	);
