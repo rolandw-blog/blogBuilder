@@ -5,6 +5,7 @@ import {
 	faSave,
 	faTimesCircle,
 	faUndo,
+	faTrashAlt,
 	faPlusCircle,
 } from "@fortawesome/free-solid-svg-icons";
 
@@ -23,13 +24,16 @@ import {
  * @param {string} props._id - The ID of the document this field belongs to
  * @param {string} props.fieldName - The real name of the field in the database
  * @param {string} props.disabled - Set this if you wish for the field to be turned off
+ * @param {string} props.deletable - A string of "display" "edit" or "add" to set the intial mode
  * @param {string} props.formCallback - A callback method that receives the _id, and URLSearchParams (url queryString)
+ * @param {string} props.deleteCallback - A callback method that receives the _id, and URLSearchParams (url queryString)
  * @param {string} props.initialMode - A string of "display" "edit" or "add" to set the intial mode
  */
 function PageEditField(props) {
 	const [mode, setMode] = useState(props.initialMode);
 	const [firstValue, setFirstValue] = useState(props.value);
 	const [value, setValue] = useState("");
+	const [isDeleted, setIsDeleted] = useState(false);
 	const [newValue, setNewValue] = useState(props.value);
 
 	const exitNoSave = () => {
@@ -82,6 +86,7 @@ function PageEditField(props) {
 	 */
 	const renderField = () => {
 		// console.log(`mode: ${mode}`);
+
 		switch (mode) {
 			case "edit":
 				return (
@@ -182,7 +187,7 @@ function PageEditField(props) {
 						{/* edit button */}
 						{!props.disabled && (
 							<button
-								className="button is-text"
+								className="button is-text field-edit-button"
 								onClick={() => {
 									setMode("edit");
 								}}
@@ -193,12 +198,27 @@ function PageEditField(props) {
 								/>
 							</button>
 						)}
+
+						{props.deletable && (
+							<button
+								className="button is-text field-delete-button"
+								onClick={() => {
+									setIsDeleted(true);
+									props.deleteCallback(props._id);
+								}}
+							>
+								<FontAwesomeIcon
+									className="has-text-right icon"
+									icon={faTrashAlt}
+								/>
+							</button>
+						)}
 					</DisplayContainer>
 				);
 		}
 	};
 
-	return <BaseStyle>{renderField(mode)}</BaseStyle>;
+	return <BaseStyle>{!isDeleted ? renderField(mode) : <></>}</BaseStyle>;
 }
 
 export default PageEditField;
