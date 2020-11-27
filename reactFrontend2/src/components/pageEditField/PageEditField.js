@@ -204,7 +204,13 @@ function PageEditField(props) {
 								className="button is-text field-delete-button"
 								onClick={() => {
 									setIsDeleted(true);
-									props.deleteCallback(props._id);
+									props.deleteCallback(
+										props._id,
+										newValue,
+										props.fieldName,
+										value,
+										firstValue
+									);
 								}}
 							>
 								<FontAwesomeIcon
@@ -218,6 +224,7 @@ function PageEditField(props) {
 		}
 	};
 
+	// if its deleted, hide it
 	return <BaseStyle>{!isDeleted ? renderField(mode) : <></>}</BaseStyle>;
 }
 
