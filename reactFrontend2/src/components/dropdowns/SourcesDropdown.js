@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import PageEditField from "../pageEditField/PageEditField";
 import "../../styles/styles.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -8,9 +8,6 @@ import {
 	faPlusCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import { Collapsible } from "./styles";
-// import Dropdown from "./Dropdown";
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import { EditContainer } from "../pageEditField/pageEditContainer";
 
 function DropdownButton(props) {
 	const { collapsed } = props;
@@ -170,37 +167,59 @@ const renderData = (url, _id, index, initialMode) => {
 	);
 };
 
+/**
+ *
+ * @param {String} props._id - ID for the document that this dropdown refers to
+ * @param {Boolean} props.addField - set to true to enable add-field button
+ * @param {String} props.name - Name of this dropdown
+ * @param {Array} props.source - sources array of json. EG. [{url: string, remote: bool}]
+ */
 export default function SourcesDropdown(props) {
+	// ##──── State ─────────────────────────────────────────────────────────────────────────────
+	// toggle to control if the dropdown is displayed
 	const [collapsed, setCollapsed] = useState(false);
-	const [buttonText, setButtonText] = useState(`Open ${props.name}`);
-	const [loading, setLoading] = useState(true);
-	const [data, setData] = useState([]);
-	// Example data
-	// [{url: string, initialMode: string(optional)}]
-	const [fields, setFields] = useState([]);
-	const [addFieldIndex, setAddFieldIndex] = useState(0);
 
+	// the text of the dropdown button
+	const [buttonText, setButtonText] = useState(`Open ${props.name}`);
+
+	// controls when data is being loaded in to pause rendering
+	const [loading, setLoading] = useState(true);
+
+	// an array of JSON that describes the data of each field
+	// Example data: [{url: string, initialMode: string(optional)}]
+	const [fields, setFields] = useState([]);
+	// ##──── End state ─────────────────────────────────────────────────────────────────────────
+
+	// ##──── Prop params ───────────────────────────────────────────────────────────────────────
 	const { _id } = props;
 	const { source } = props;
-	const { name } = props;
-	const { addField } = props;
 
+	/**
+	 * When the collapser button is pressed this is called
+	 * - loadData uses the props.source given to this component to set the fields state
+	 * - loadData only sets the fields state if its not collapsed (ie visible)
+	 * - this function should only be called once
+	 *
+	 */
 	const loadData = () => {
 		if (!collapsed) {
 			const data =
 				source instanceof Array && source !== undefined
 					? source
 					: new Array(source);
-			// setData(data);
-			console.log(data);
-			// console.log(data[0].url);
-			// addField(data[0].url, 0);
-			setFields(fields.concat(data));
 
+			// set the fields state to render these in
+			setFields(data);
+
+			// set loading to false because setFields now has data
 			setLoading(false);
 		}
 	};
 
+	/**
+	 * handles if the dropdown should be displayed or not
+	 * @param {JSON} event - the click event from the associated button
+	 */
 	const handleCollapser = (event) => {
 		event.preventDefault();
 		setCollapsed(!collapsed);
@@ -218,13 +237,9 @@ export default function SourcesDropdown(props) {
 		}
 	};
 
-	// useEffect(() => {
-	// 	console.log("state change", addFieldIndex);
-	// 	return () => {
-	// 		console.log("unmount");
-	// 	};
-	// }, [addFieldIndex]);
-
+	/**
+	 * handles adding a field by adding a new object to the fields state for rendering
+	 */
 	const handleAddField = () => {
 		console.log("adding field");
 		setFields(fields.concat({ url: "", initialMode: "edit" }));
@@ -237,77 +252,23 @@ export default function SourcesDropdown(props) {
 			</a>
 
 			<div className="content collapsed">
-				{
-					!loading &&
-						fields.map((field, index) => {
-							// return <div key={index}>{field.url}</div>;
-							return renderData(
-								field.url,
-								_id,
-								index,
-								field.initialMode
-							);
-						})
-					// data.map((data, index) => {
-					// 	return renderData(data.url, index);
-					// })}
-				}
-				{/* {!loading && props.addField && renderData("", _id)} */}
+				{!loading &&
+					// render each field in the dropdown using the fields state
+					fields.map((field, index) => {
+						return renderData(
+							field.url,
+							_id,
+							index,
+							field.initialMode
+						);
+					})}
+
+				{/* if loading has finished and theres no fields to render "No Data"*/}
 				{!loading && fields.length === 0 && `No data found.`}
-				<PlusButton onClick={handleAddField} />
+
+				{/* render the add field button if enabled through props */}
+				{props.addField && <PlusButton onClick={handleAddField} />}
 			</div>
 		</Collapsible>
 	);
-
-	// return (
-	// 	<Dropdown
-	// 		_id={_id}
-	// 		name={"sources"}
-	// 		fetchDataCallback={() => {
-	// 			return fetchData();
-	// 		}}
-	// 		renderDataCallback={(data, _id, index) => {
-	// 			return sourceEntry(data.url, _id);
-	// 		}}
-	// 		addField={true}
-	// 		renderAddFieldCallback={(index) => {
-	// 			// return "Hello";
-	// 			return (
-	// 				<PageEditField
-	// 					noTitle
-	// 					name={"URL"}
-	// 					// the addFields value text should be nothing
-	// 					value={""}
-	// 					fieldName={"url"}
-	// 					_id={_id}
-	// 					color={"#363636"}
-	// 					key={_id + "/addField" + index}
-	// 					initialMode={"add"}
-	// 					formCallback={(_id, newValue, fieldName, value) => {
-	// 						console.log(_id, newValue, fieldName, value);
-	// 						const body = {
-	// 							_id: _id,
-	// 							url: newValue,
-	// 							remote: true,
-	// 						};
-
-	// 						const headers = {
-	// 							"Content-type":
-	// 								"application/json; charset=UTF-8",
-	// 						};
-
-	// 						return fetch(
-	// 							"https://watch.rolandw.dev/update/history/add",
-	// 							{
-	// 								method: "post",
-	// 								headers: headers,
-	// 								body: JSON.stringify(body),
-	// 							}
-	// 						);
-	// 					}}
-	// 				/>
-	// 			);
-	// 		}}
-	// 	/>
-	// );
 }
