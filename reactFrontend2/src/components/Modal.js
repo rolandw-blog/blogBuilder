@@ -1,24 +1,32 @@
-import React, { useState, useEffect } from "react";
-import Dropdown from "./Dropdown";
+import React, { useState } from "react";
+import HistoryDropdown from "./dropdowns/HistoryDropdown";
+import SourcesDropdown from "./dropdowns/SourcesDropdown";
 import "../styles/styles.scss";
 
-import PageEditField from "./PageEditField";
+import PageEditField from "./pageEditField/PageEditField";
 
 export default function Model(props) {
+	// console.log(props);
 	const [open, setOpen] = useState(false);
+	const [fields, setFields] = useState([]);
 
 	// uses the setOpen() state to control the modal
 	function toggleModal(e) {
 		e.preventDefault();
-		setOpen(!open);
-		console.log("The link was clicked.");
-	}
 
-	// print some debug stuff on component mount
-	useEffect(() => {
-		// console.log(`new page ${props.data.original.pageName}`);
-		// console.log(props.data.original);
-	});
+		// set open to the opposite
+		setOpen(!open);
+
+		// if the modal is opening load in the fields for it
+		if (!open) {
+			console.log(`loading fields for the modal: "${props.pageName}"`);
+			setFields(
+				formFieldComponents.map((field) => {
+					return field;
+				})
+			);
+		}
+	}
 
 	// a tempalte that defines each field in the edit
 	const formFields = [
@@ -26,28 +34,24 @@ export default function Model(props) {
 			name: "ID",
 			fieldName: "_id",
 			value: props._id,
-			history: props.history,
 			disabled: true,
 		},
 		{
 			name: "Page Name",
 			fieldName: "pageName",
 			value: props.pageName,
-			history: props.history,
 			disabled: false,
 		},
 		{
 			name: "Website Path",
 			fieldName: "websitePath",
 			value: props.websitePath,
-			history: props.history,
 			disabled: false,
 		},
 		{
 			name: "Hidden",
 			fieldName: "hidden",
 			value: props.hidden,
-			history: props.history,
 			disabled: false,
 		},
 		{
@@ -68,6 +72,39 @@ export default function Model(props) {
 				key={i}
 				_id={props._id}
 				disabled={field.disabled}
+				deletable={false}
+				color={"#282C34"}
+				formCallback={(_id, newValue, fieldName, value) => {
+					// UPDATE WHERE SELECT _id IS _id
+					const filter = { _id: _id };
+
+					// SET source.url = newValue
+					const update = { [fieldName]: newValue };
+
+					// print them out for debugging
+					// console.log(`filter: ${JSON.stringify(filter)}`);
+					// console.log(`update: ${JSON.stringify(update)}`);
+
+					// construct the body request
+					const body = {
+						filter: filter,
+						update: update,
+					};
+
+					// stringify it for the POST request
+					console.log("stringifying the body");
+					const bodyString = JSON.stringify(body);
+
+					// send the post request
+					const url = `https://watch.rolandw.dev/update/${_id}`;
+					return fetch(url, {
+						method: "POST",
+						headers: {
+							"Content-type": "application/json; charset=UTF-8",
+						},
+						body: bodyString,
+					});
+				}}
 			/>
 		);
 	});
@@ -90,7 +127,7 @@ export default function Model(props) {
 				{/* Modal card */}
 				<div className="modal-card">
 					<header className="modal-card-head">
-						<p className="modal-card-title">Modal Editor</p>
+						<p className="modal-card-title">{props.pageName}</p>
 						<button
 							className="delete"
 							aria-label="close"
@@ -99,10 +136,25 @@ export default function Model(props) {
 					</header>
 					<section className="modal-card-body">
 						{/* print out every form field for this modal */}
-						{formFieldComponents.map((field) => {
+						<div className="fieldsGoHere">
+							{fields.map((f) => {
+								return f;
+							})}
+						</div>
+						{/* {formFieldComponents.map((field) => {
+							// console.log(field);
 							return field;
-						})}
-						<Dropdown _id={props.data.original._id}></Dropdown>
+						})} */}
+						<HistoryDropdown
+							_id={props.data.original._id}
+							source={props.data.original.source}
+						></HistoryDropdown>
+						<SourcesDropdown
+							_id={props.data.original._id}
+							source={props.data.original.source}
+							addField={true}
+							name={"sources"}
+						></SourcesDropdown>
 					</section>
 					<footer className="modal-card-foot">
 						{/* <button className="button is-dark">View history</button> */}

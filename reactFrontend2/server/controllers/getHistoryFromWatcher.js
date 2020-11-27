@@ -4,8 +4,10 @@ const debug = require("debug")("app:reqHistory");
 const signPayload = require("../helper/signPayload");
 require("dotenv").config();
 
+// ! DEPRICATED. NO LONGER NEEDED (Changed route to use GET in 97e8729 of blogwatcher)
+// ! The request can now be done directly from the client
 const getPages = async (req, res) => {
-	debug(`getting hsitory for ${req.params._id}`);
+	// debug(`getting hsitory for ${req.params._id}`);
 	const websitePath = req.query.websitePath || "";
 	const body = {
 		websitePath: websitePath,
@@ -27,6 +29,7 @@ const getPages = async (req, res) => {
 		headers: headers,
 	});
 	const json = await request.json();
+	// await json.json();
 	console.log(json);
 	return res.status(200).json(json);
 };
