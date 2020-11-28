@@ -1,5 +1,6 @@
 import fetchDataPromise from "./helpers/fetchDataPromise";
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useRef, useEffect } from "react";
+import SearchBar from "./SearchBar";
 
 import Table from "./Table";
 
@@ -34,26 +35,29 @@ export default function Pages() {
 		[]
 	);
 
-	const fetchData = React.useCallback(({ pageSize, pageIndex }) => {
-		// console.log("running fetchData callback");
-		// This will get called when the table needs new data
+	const fetchData = React.useCallback(
+		({ pageSize, pageIndex, searchFilter }) => {
+			// console.log("running fetchData callback");
+			// This will get called when the table needs new data
 
-		// Set the loading state
-		setLoading(true);
+			// Set the loading state
+			setLoading(true);
 
-		fetchDataPromise(pageIndex, pageSize)
-			.then((res) => {
-				return res.json();
-			})
-			.then((json) => {
-				const newData = json.data;
-				// console.log(`got ${newData.length} new items from the API`);
+			fetchDataPromise(pageIndex, pageSize, searchFilter)
+				.then((res) => {
+					return res.json();
+				})
+				.then((json) => {
+					const newData = json.data;
+					// console.log(`got ${newData.length} new items from the API`);
 
-				setData(newData);
-				setPageCount(Math.ceil(parseInt(json.count) / pageSize));
-				setLoading(false);
-			});
-	}, []);
+					setData(newData);
+					setPageCount(Math.ceil(parseInt(json.count) / pageSize));
+					setLoading(false);
+				});
+		},
+		[]
+	);
 
 	return (
 		<>
@@ -67,23 +71,3 @@ export default function Pages() {
 		</>
 	);
 }
-
-// return (
-// 	<>
-// 		{/* <Table columns={columns} data={data} /> */}
-// 		{loading ? (
-// 			// <p>Loading Please wait...</p>
-// <progress className="progress is-medium is-dark" max="100">
-// 	45%
-// </progress>
-// 		) : (
-// 			<Table
-// 				columns={columns}
-// 				data={data}
-// 				fetchData={fetchData}
-// 				loading={loading}
-// 				pageCount={pageCount}
-// 			/>
-// 		)}
-// 	</>
-// );
