@@ -1,4 +1,4 @@
-import React, { useState, useDebugValue, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
 	faEdit,
@@ -31,7 +31,7 @@ import {
  */
 function PageEditField(props) {
 	const [mode, setMode] = useState(props.initialMode);
-	const [firstValue, setFirstValue] = useState(props.value, "firstValue");
+	const [firstValue] = useState(props.value, "firstValue");
 	const [value, setValue] = useState(props.value);
 	const [isDeleted, setIsDeleted] = useState(false);
 	const newValue = useRef(""); // this is a ref because its just internally tracking the proposed field change value
