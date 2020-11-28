@@ -1,7 +1,6 @@
 export default async (pageIndex, pageSize, searchFilter) => {
 	const pagination = `page=${pageIndex || 0}&per_page=${pageSize || 1}`;
 
-	console.log(searchFilter);
 	let url = "";
 	if (searchFilter) {
 		url = `https://watch.rolandw.dev/pages/${searchFilter}?${pagination}`;
