@@ -1,7 +1,6 @@
 import React from "react";
 import Pages from "./components/Pages";
 import styled from "styled-components";
-import SearchBar from "./components/SearchBar";
 
 const Styles = styled.div`
 	color: #dedede;
@@ -12,7 +11,6 @@ const Styles = styled.div`
 function App() {
 	return (
 		<Styles>
-			<SearchBar />
 			<Pages />
 		</Styles>
 	);

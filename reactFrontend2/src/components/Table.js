@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useRef } from "react";
 // import styled from "styled-components";
 import { useTable, usePagination } from "react-table";
 import styled from "styled-components";
 import Modal from "./Modal";
+import SearchBar from "./SearchBar";
 
 const Loading = styled.tr`
 	grid-column: 1 / -1;
@@ -159,14 +160,35 @@ export default function Table({
 		usePagination
 	);
 
+	const [searchFilter, setSearchFilter] = React.useState("");
+
 	// Listen for changes in pagination and use the state to fetch our new data
 	React.useEffect(() => {
-		fetchData({ pageIndex, pageSize });
-	}, [fetchData, pageIndex, pageSize]);
+		console.log(`the searchFilter is: ${searchFilter}`);
+		fetchData({ pageIndex, pageSize, searchFilter });
+	}, [fetchData, pageIndex, pageSize, searchFilter]);
 
 	// Render the UI for your table
 	return (
 		<Styles>
+			<SearchBar
+				formCallback={(queryString, tag) => {
+					if (!tag) {
+						setSearchFilter(
+							`pageName/${queryString || "placeholder"}`
+						);
+					} else {
+						setSearchFilter(`${tag.key}/${tag.value}`);
+					}
+
+					if (!queryString) {
+						setSearchFilter(``);
+					}
+
+					// set the current page number back to the first page
+					gotoPage(0);
+				}}
+			/>
 			<table {...getTableProps()}>
 				<tbody {...getTableBodyProps()}>
 					{page.map((row, i) => {

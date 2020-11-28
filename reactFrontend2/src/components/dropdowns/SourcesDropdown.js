@@ -161,7 +161,8 @@ const renderData = (url, _id, index, initialMode) => {
 				return deleteCallback(...props);
 			}}
 			onChange={(newValue) => {
-				console.log(newValue);
+				// this is a callback that runs every time a letter is typed into the field
+				// console.log(newValue);
 			}}
 		/>
 	);

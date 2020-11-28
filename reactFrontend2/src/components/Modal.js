@@ -69,7 +69,7 @@ export default function Model(props) {
 				name={field.name}
 				fieldName={field.fieldName}
 				value={field.value}
-				key={i}
+				key={props._id + i}
 				_id={props._id}
 				disabled={field.disabled}
 				deletable={false}
@@ -82,8 +82,8 @@ export default function Model(props) {
 					const update = { [fieldName]: newValue };
 
 					// print them out for debugging
-					// console.log(`filter: ${JSON.stringify(filter)}`);
-					// console.log(`update: ${JSON.stringify(update)}`);
+					console.log(`filter: ${JSON.stringify(filter)}`);
+					console.log(`update: ${JSON.stringify(update)}`);
 
 					// construct the body request
 					const body = {
@@ -141,10 +141,6 @@ export default function Model(props) {
 								return f;
 							})}
 						</div>
-						{/* {formFieldComponents.map((field) => {
-							// console.log(field);
-							return field;
-						})} */}
 						<HistoryDropdown
 							_id={props.data.original._id}
 							source={props.data.original.source}
