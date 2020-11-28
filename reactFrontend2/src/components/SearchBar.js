@@ -66,7 +66,7 @@ export default function SearchBar(props) {
 	const [queryString, setQueryString] = useState("");
 	const search = (event) => {
 		event.preventDefault();
-		console.log("searching!");
+		// console.log("searching!");
 
 		// right now theres a limitation on the blogwatcher backend that only allows for 1 things to be queried at a time
 		// this is a workaround where i just return an array of 1 tag so in the future i can work with multiple tags

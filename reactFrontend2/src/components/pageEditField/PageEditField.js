@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useDebugValue, useRef, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
 	faEdit,
@@ -31,30 +31,26 @@ import {
  */
 function PageEditField(props) {
 	const [mode, setMode] = useState(props.initialMode);
-	const [firstValue, setFirstValue] = useState(props.value);
-	const [value, setValue] = useState("");
+	const [firstValue, setFirstValue] = useState(props.value, "firstValue");
+	const [value, setValue] = useState(props.value);
 	const [isDeleted, setIsDeleted] = useState(false);
-	const [newValue, setNewValue] = useState(props.value);
+	const newValue = useRef(""); // this is a ref because its just internally tracking the proposed field change value
+	const [undoButton, setUndoButton] = useState(false);
 
 	const exitNoSave = () => {
 		console.log("exiting without saving");
 		setValue(value);
-		setNewValue(value);
+		newValue.current = value;
 		setMode("dispay");
 	};
 
-	const handleOnChange = (event) => {
-		console.log("changed");
-	};
-
-	const saveInput = React.useCallback(() => {
-		setValue(newValue);
-		console.log(props.formCallback);
+	// const saveInput = React.useCallback(() => {
+	const saveInput = () => {
 		try {
 			props
 				.formCallback(
 					props._id,
-					newValue,
+					newValue.current,
 					props.fieldName,
 					value,
 					firstValue
@@ -62,9 +58,10 @@ function PageEditField(props) {
 				.then((res) => res.json())
 				.then((doc) => {
 					if (doc) {
-						// if it was saved then go ahead and update the firstValue to be this new value
-						// this prevents the "undo" button from appearing
-						setFirstValue(newValue);
+						// if it was saved then go ahead and update the value (which is rendered in the field) to be this new value
+						// set the value to the returned data after updating it to ensure it matches
+						console.log(`value = ${doc.data[props.fieldName]}`);
+						setValue(doc.data[props.fieldName]);
 					}
 					console.log(doc);
 				});
@@ -74,10 +71,21 @@ function PageEditField(props) {
 			console.log(err);
 			// TODO push an error to the client here
 		}
-	}, [value, setMode, newValue, props, firstValue]);
+	};
+	// , [value, setMode, newValue, props, firstValue]);
 
 	const resetField = () => {
+		// change the field visually to the first value
 		setValue(firstValue);
+
+		// set the prospective new value to the first value
+		newValue.current = firstValue;
+
+		// save these changes
+		saveInput();
+
+		// hide the undo button
+		setUndoButton(false);
 	};
 
 	/**
@@ -99,15 +107,20 @@ function PageEditField(props) {
 							disabled={props.disabled}
 							onChange={(e) => {
 								// every time the input field is changed change the prospective new value
-								setNewValue(e.currentTarget.value);
-								props.onChange(e.currentTarget.value);
+								newValue.current = e.currentTarget.value;
+								if (props.onChange) {
+									props.onChange(e.currentTarget.value);
+								}
 							}}
 						/>
 						<div className="buttons">
 							{/* save button */}
 							<button
 								className="button is-text"
-								onClick={saveInput}
+								onClick={() => {
+									saveInput();
+									setUndoButton(true); // show the undo button to offer a "rollback"
+								}}
 							>
 								<FontAwesomeIcon
 									className="has-text-right icon"
@@ -140,7 +153,8 @@ function PageEditField(props) {
 							disabled={props.disabled}
 							onChange={(e) => {
 								// every time the input field is changed change the prospective new value
-								setNewValue(e.currentTarget.value);
+								// setNewValue(e.currentTarget.value);
+								newValue.current = e.currentTarget.value;
 							}}
 						/>
 						<div className="buttons">
@@ -167,10 +181,9 @@ function PageEditField(props) {
 					>
 						{/* only print if noTitle is not included */}
 						{!props.noTitle && <span>{props.name}: </span>}
-						<span>{firstValue || value}</span>
+						<span>{value}</span>
 
-						{/* ! DEPRECARED BECAUSE I NEED TO FIX STYLING  */}
-						{/* {firstValue !== value ? (
+						{undoButton && (
 							<button
 								className="button is-text"
 								onClick={resetField}
@@ -180,9 +193,7 @@ function PageEditField(props) {
 									icon={faUndo}
 								/>
 							</button>
-						) : (
-							<span></span>
-						)} */}
+						)}
 
 						{/* edit button */}
 						{!props.disabled && (

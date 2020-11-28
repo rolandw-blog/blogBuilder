@@ -51,15 +51,20 @@ export default function Pages() {
 					const newData = json.data;
 					// console.log(`got ${newData.length} new items from the API`);
 
+					// set the data for the table
 					setData(newData);
-					if (!searchFilter)
+
+					// if there isnt a search filter then display a page count for ALL possible pages (we load them in later)
+					if (!searchFilter) {
 						setPageCount(
 							Math.ceil(parseInt(json.count) / pageSize)
 						);
-					else
+					} else {
+						// if there is a filter (we are searching for a page) then only show page numbers for those results
 						setPageCount(
 							Math.ceil(parseInt(newData.length) / pageSize)
 						);
+					}
 					setLoading(false);
 				});
 		},

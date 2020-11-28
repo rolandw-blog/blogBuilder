@@ -160,10 +160,11 @@ export default function Table({
 		usePagination
 	);
 
-	const [searchFilter, setSearchFilter] = React.useState(""); // the searchFilter doesnt need to re-render the component so use useRef instead
+	const [searchFilter, setSearchFilter] = React.useState("");
 
 	// Listen for changes in pagination and use the state to fetch our new data
 	React.useEffect(() => {
+		console.log(`the searchFilter is: ${searchFilter}`);
 		fetchData({ pageIndex, pageSize, searchFilter });
 	}, [fetchData, pageIndex, pageSize, searchFilter]);
 
@@ -186,8 +187,6 @@ export default function Table({
 
 					// set the current page number back to the first page
 					gotoPage(0);
-
-					console.log(`the searchFilter is: ${searchFilter.current}`);
 				}}
 			/>
 			<table {...getTableProps()}>

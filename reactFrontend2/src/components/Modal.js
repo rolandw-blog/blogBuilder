@@ -82,8 +82,8 @@ export default function Model(props) {
 					const update = { [fieldName]: newValue };
 
 					// print them out for debugging
-					// console.log(`filter: ${JSON.stringify(filter)}`);
-					// console.log(`update: ${JSON.stringify(update)}`);
+					console.log(`filter: ${JSON.stringify(filter)}`);
+					console.log(`update: ${JSON.stringify(update)}`);
 
 					// construct the body request
 					const body = {
