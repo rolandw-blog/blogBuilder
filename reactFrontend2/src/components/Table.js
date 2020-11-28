@@ -183,6 +183,10 @@ export default function Table({
 					if (!queryString) {
 						setSearchFilter(``);
 					}
+
+					// set the current page number back to the first page
+					gotoPage(0);
+
 					console.log(`the searchFilter is: ${searchFilter.current}`);
 				}}
 			/>

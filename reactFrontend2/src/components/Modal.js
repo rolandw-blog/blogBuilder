@@ -20,7 +20,6 @@ export default function Model(props) {
 		// if the modal is opening load in the fields for it
 		if (!open) {
 			console.log(`loading fields for the modal: "${props.pageName}"`);
-			console.log(formFieldComponents);
 			setFields(
 				formFieldComponents.map((field) => {
 					return field;
@@ -142,10 +141,6 @@ export default function Model(props) {
 								return f;
 							})}
 						</div>
-						{/* {formFieldComponents.map((field) => {
-							// console.log(field);
-							return field;
-						})} */}
 						<HistoryDropdown
 							_id={props.data.original._id}
 							source={props.data.original.source}

@@ -52,7 +52,14 @@ export default function Pages() {
 					// console.log(`got ${newData.length} new items from the API`);
 
 					setData(newData);
-					setPageCount(Math.ceil(parseInt(json.count) / pageSize));
+					if (!searchFilter)
+						setPageCount(
+							Math.ceil(parseInt(json.count) / pageSize)
+						);
+					else
+						setPageCount(
+							Math.ceil(parseInt(newData.length) / pageSize)
+						);
 					setLoading(false);
 				});
 		},
