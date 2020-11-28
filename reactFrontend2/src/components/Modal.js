@@ -20,6 +20,7 @@ export default function Model(props) {
 		// if the modal is opening load in the fields for it
 		if (!open) {
 			console.log(`loading fields for the modal: "${props.pageName}"`);
+			console.log(formFieldComponents);
 			setFields(
 				formFieldComponents.map((field) => {
 					return field;
@@ -69,7 +70,7 @@ export default function Model(props) {
 				name={field.name}
 				fieldName={field.fieldName}
 				value={field.value}
-				key={i}
+				key={props._id + i}
 				_id={props._id}
 				disabled={field.disabled}
 				deletable={false}
