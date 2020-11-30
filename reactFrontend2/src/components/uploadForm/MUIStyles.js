@@ -23,6 +23,9 @@ const useStyles = makeStyles((theme) => ({
 			// marginTop: theme.spacing(1),
 			// marginBottom: theme.spacing(1),
 		},
+		"& pre": {
+			color: "#dedede",
+		},
 	},
 }));
 

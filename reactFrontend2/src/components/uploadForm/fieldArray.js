@@ -1,9 +1,16 @@
 import React from "react";
-import { useFormikContext, FieldArray, Field } from "formik";
+import {
+	useFormikContext,
+	FieldArray,
+	Field,
+	FastField,
+	useField,
+} from "formik";
 import { Button } from "@material-ui/core";
 import { TextField } from "formik-material-ui";
 import { SourceRow } from "./UploadForm.styles";
 import { sourceRowStyles } from "./MUIStyles";
+import MyCheckbox from "./Checkbox";
 
 function SourcesSection() {
 	// ? include handleSubmit if you want to submit from this component instead of including it in the overall form
@@ -13,22 +20,35 @@ function SourcesSection() {
 
 	return (
 		<FieldArray
-			name="sources"
+			name="source"
 			render={(arrayHelpers) => (
 				<div className={classes.root}>
-					{values.sources && values.sources.length > 0 ? (
-						values.sources.map((source, index) => (
+					{values.source && values.source.length > 0 ? (
+						values.source.map((source, index) => (
 							<SourceRow key={index}>
-								<Field
+								{/* {JSON.stringify(source)} */}
+								<MyCheckbox
+									// the box comes checked
+									// checked={true}
+									// the form control (name)
+									name={`source[${index}].remote`}
+									// value={`source[${index}].remote`}
+									// what is displayed on the page (label)
+									// label="remote"
+								>
+									Remote
+								</MyCheckbox>
+								<FastField
 									// ? material UI binding to style it as a textfield
 									component={TextField}
 									// ? material UI props
 									variant="outlined"
 									label={`url ${index}`}
 									// ? formik props
-									name={`sources.${index}`}
+									name={`source[${index}].url`}
 									// placeholder={`url ${index}`}
 								/>
+
 								{/* <IncrementDecrementButtonGroup> */}
 								<Button
 									className="top-button"

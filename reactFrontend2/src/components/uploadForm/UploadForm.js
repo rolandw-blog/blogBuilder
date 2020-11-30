@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Formik, Form } from "formik";
 import { Button, Container, Paper } from "@material-ui/core";
 import { Fieldset, FormWrapper, SubmitWrapper } from "./UploadForm.styles";
@@ -17,20 +17,22 @@ import SourcesSection from "./fieldArray";
 //     "meta": {"template": "blogPost.ejs"}
 // }
 
-const SignupForm = () => {
+const SignupForm = ({ setFieldValue }) => {
 	const classes = useStyles();
-
 	return (
 		<Container className={classes.root} maxWidth="md">
-			<Paper elevation={3} elementType={"div"}>
+			<Paper elevation={3} elementtype="section">
 				<Formik
 					initialValues={{
 						pageName: "",
 						websitePath: "",
 						hidden: false, // added for our checkbox
-						sources: ["", "", ""],
+						// sources: [{ remote: true, url: "" }],
+						source: [{ url: "", remote: true }],
 						meta: { template: "" },
 					}}
+					validateOnChange={false}
+					validateOnBlur={false}
 					// validationSchema={validationSchema}
 					onSubmit={(values, { setSubmitting }) => {
 						setTimeout(() => {
@@ -39,63 +41,96 @@ const SignupForm = () => {
 							setSubmitting(false);
 						}, 400);
 					}}
+					handleChange={(event) => {
+						console.log("alert!");
+					}}
 				>
-					<FormWrapper>
-						<Form>
-							<h1>Add page</h1>
-							<Fieldset>
-								{/* page name */}
-								<MyTextInput
-									label="Page Name"
-									name="pageName"
-									type="text"
-									placeholder="page name"
-								/>
+					{({ values }) => {
+						return (
+							<FormWrapper>
+								<Form>
+									<h1>Add page</h1>
+									<Fieldset>
+										{/* page name */}
+										<MyTextInput
+											label="Page Name"
+											name="pageName"
+											type="text"
+											placeholder="page name"
+										/>
 
-								{/* website path */}
-								<MyTextInput
-									label="Website Path"
-									name="websitePath"
-									type="text"
-									placeholder="website path"
-								/>
-							</Fieldset>
+										{/* website path */}
+										<MyTextInput
+											label="Website Path"
+											name="websitePath"
+											type="text"
+											placeholder="website path"
+										/>
+									</Fieldset>
 
-							<Fieldset>
-								<SourcesSection></SourcesSection>
-							</Fieldset>
+									<Fieldset>
+										<SourcesSection></SourcesSection>
+									</Fieldset>
 
-							{/* page hidden */}
-							<Fieldset>
-								<MyCheckbox name="hidden">Hide page</MyCheckbox>
-							</Fieldset>
+									{/* page hidden */}
+									<Fieldset>
+										<MyCheckbox
+											// the form control (name)
+											name="hidden"
+											// what is displayed on the page (label)
+											label="hidden"
+										>
+											Hide page
+										</MyCheckbox>
+									</Fieldset>
 
-							{/* template */}
+									{/* template dropdown */}
+									<Fieldset>
+										<MySelect
+											label="Template"
+											name="meta.template"
+										>
+											<option value="">
+												Select a template
+											</option>
+											<option value="blogPost.ejs">
+												blogPost.ejs
+											</option>
+											<option value="menu.ejs">
+												menu.ejs
+											</option>
+											<option value="homePage.ejs">
+												homePage.ejs
+											</option>
+										</MySelect>
+									</Fieldset>
 
-							<Fieldset>
-								<MySelect label="Template" name="meta.template">
-									<option value="">Select a template</option>
-									<option value="blogPost.ejs">
-										blogPost.ejs
-									</option>
-									<option value="menu.ejs">menu.ejs</option>
-									<option value="homePage.ejs">
-										homePage.ejs
-									</option>
-								</MySelect>
-							</Fieldset>
+									{/* submit */}
+									<SubmitWrapper>
+										<Button
+											variant="contained"
+											type="submit"
+											color="primary"
+										>
+											Submit
+										</Button>
+									</SubmitWrapper>
 
-							<SubmitWrapper>
-								<Button
-									variant="contained"
-									type="submit"
-									color="primary"
-								>
-									Submit
-								</Button>
-							</SubmitWrapper>
-						</Form>
-					</FormWrapper>
+									<Paper elevation={3}>
+										<pre>
+											<code>
+												{JSON.stringify(
+													values,
+													"\n",
+													4
+												)}
+											</code>
+										</pre>
+									</Paper>
+								</Form>
+							</FormWrapper>
+						);
+					}}
 				</Formik>
 			</Paper>
 		</Container>

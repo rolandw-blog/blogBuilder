@@ -11,12 +11,12 @@ padding: 2em;
 `;
 
 const SubmitWrapper = Styled.div`
-margin-top: 1.75em;
+margin: 1.75em 0;
 `;
 
 const SourceRow = Styled.div`
 display: grid;
-grid-template-columns: 1fr auto auto;
+grid-template-columns: auto 1fr auto auto;
 & button {
 	margin: 10px;
 }

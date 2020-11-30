@@ -1,5 +1,5 @@
 import React from "react";
-import { useField, Field } from "formik";
+import { useField, FastField } from "formik";
 import { TextField } from "formik-material-ui";
 
 const MyTextInput = ({ label, ...props }) => {
@@ -15,7 +15,7 @@ const MyTextInput = ({ label, ...props }) => {
 	return (
 		<div noValidate autoComplete="off">
 			{/* <label htmlFor={props.id || props.name}>{label}</label> */}
-			<Field
+			<FastField
 				// ? material UI binding to style it as a textfield
 				component={TextField}
 				// styled component props
