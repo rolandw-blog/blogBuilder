@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { Formik, Form } from "formik";
+import { Formik, Form, Field, getIn } from "formik";
 import { Button, Container, Paper } from "@material-ui/core";
 import { Fieldset, FormWrapper, SubmitWrapper } from "./UploadForm.styles";
 import { useStyles } from "./MUIStyles";
-// import validationSchema from "./validation";
+import validationSchema from "./validation";
 import MyTextInput from "./Input";
 import MyCheckbox from "./Checkbox";
 import MySelect from "./Option";
@@ -17,7 +17,18 @@ import SourcesSection from "./fieldArray";
 //     "meta": {"template": "blogPost.ejs"}
 // }
 
-const SignupForm = ({ setFieldValue }) => {
+const ErrorMessage = ({ name }) => (
+	<Field
+		name={name}
+		render={({ form }) => {
+			const error = getIn(form.errors, name);
+			const touch = getIn(form.touched, name);
+			return touch && error ? error : null;
+		}}
+	/>
+);
+
+const SignupForm = () => {
 	const classes = useStyles();
 	return (
 		<Container className={classes.root} maxWidth="md">
@@ -28,12 +39,12 @@ const SignupForm = ({ setFieldValue }) => {
 						websitePath: "",
 						hidden: false, // added for our checkbox
 						// sources: [{ remote: true, url: "" }],
-						source: [{ url: "", remote: true }],
+						source: [{ url: "" }],
 						meta: { template: "" },
 					}}
-					validateOnChange={false}
-					validateOnBlur={false}
-					// validationSchema={validationSchema}
+					// validateOnChange={false}
+					// validateOnBlur={false}
+					validationSchema={validationSchema}
 					onSubmit={(values, { setSubmitting }) => {
 						setTimeout(() => {
 							alert(JSON.stringify(values, null, 2));
@@ -116,6 +127,7 @@ const SignupForm = ({ setFieldValue }) => {
 										</Button>
 									</SubmitWrapper>
 
+									<ErrorMessage name="source[0].url" />
 									<Paper elevation={3}>
 										<pre>
 											<code>

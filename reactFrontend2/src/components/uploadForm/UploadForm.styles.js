@@ -16,7 +16,7 @@ margin: 1.75em 0;
 
 const SourceRow = Styled.div`
 display: grid;
-grid-template-columns: auto 1fr auto auto;
+grid-template-columns: 1fr auto auto;
 & button {
 	margin: 10px;
 }

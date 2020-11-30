@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect, getIn } from "react";
 import {
 	useFormikContext,
 	FieldArray,
@@ -12,11 +12,32 @@ import { SourceRow } from "./UploadForm.styles";
 import { sourceRowStyles } from "./MUIStyles";
 import MyCheckbox from "./Checkbox";
 
+const ErrorMessage = ({ name }) => (
+	<Field
+		name={name}
+		render={({ form }) => {
+			const error = getIn(form.errors, name);
+			const touch = getIn(form.touched, name);
+			return touch && error ? error : null;
+		}}
+	/>
+);
+
 function SourcesSection() {
 	// ? include handleSubmit if you want to submit from this component instead of including it in the overall form
 	// ? const { handleSubmit, values } = useFormikContext(); // formikProps
-	const { values } = useFormikContext(); // formikProps
+	const { values, errors } = useFormikContext(); // formikProps
 	const classes = sourceRowStyles();
+
+	const [checkedSources, setCheckedSources] = useState([]);
+
+	useEffect(() => {
+		console.log("updated");
+		// setCheckedSources()
+		return () => {
+			// cleanup
+		};
+	}, [values.source]);
 
 	return (
 		<FieldArray
@@ -26,18 +47,6 @@ function SourcesSection() {
 					{values.source && values.source.length > 0 ? (
 						values.source.map((source, index) => (
 							<SourceRow key={index}>
-								{/* {JSON.stringify(source)} */}
-								<MyCheckbox
-									// the box comes checked
-									// checked={true}
-									// the form control (name)
-									name={`source[${index}].remote`}
-									// value={`source[${index}].remote`}
-									// what is displayed on the page (label)
-									// label="remote"
-								>
-									Remote
-								</MyCheckbox>
 								<FastField
 									// ? material UI binding to style it as a textfield
 									component={TextField}
@@ -48,7 +57,6 @@ function SourcesSection() {
 									name={`source[${index}].url`}
 									// placeholder={`url ${index}`}
 								/>
-
 								{/* <IncrementDecrementButtonGroup> */}
 								<Button
 									className="top-button"
@@ -75,6 +83,7 @@ function SourcesSection() {
 									+
 								</Button>
 								{/* </IncrementDecrementButtonGroup> */}
+								{JSON.stringify(errors)}
 							</SourceRow>
 						))
 					) : (
