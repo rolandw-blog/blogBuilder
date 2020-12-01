@@ -32,7 +32,7 @@ import {
  */
 function PageEditField(props) {
 	const [mode, setMode] = useState(props.initialMode);
-	const [firstValue, setFirstValue] = useState(props.value);
+	const [firstValue] = useState(props.value);
 	const [value, setValue] = useState(props.value);
 	const [isDeleted, setIsDeleted] = useState(false);
 	const newValue = useRef(""); // this is a ref because its just internally tracking the proposed field change value
@@ -47,20 +47,29 @@ function PageEditField(props) {
 
 	// const saveInput = React.useCallback(() => {
 	const saveInput = () => {
-		// update the field visually
-		setValue(newValue.current);
 		try {
 			props
 				.formCallback(
-					props._id,
-					newValue.current,
-					props.fieldName,
+					// fieldState
+					{
+						_id: props._id,
+						newValue: newValue.current,
+						fieldName: props.fieldName,
+						value: value,
+						firstValue: firstValue,
+					},
+					// avoid this field
 					value,
-					firstValue
+					// substitute this field
+					newValue.current
 				)
 				.then((res) => res.json())
 				.then((doc) => {
 					if (doc) {
+						// TODO leaving this code graveyard here to remind myself that
+						// TODO the setValue should be set to the reponse from the database,
+						// TODO however i need a way to drill through JSON objects to get the right key value i want
+						// TODO see https://stackoverflow.com/questions/10799428/multiple-level-attribute-retrieval-using-array-notation-from-a-json-object
 						// if it was saved then go ahead and update the value (which is rendered in the field) to be this new value
 						// set the value to the returned data after updating it to ensure it matches
 						// console.log(`response: ${JSON.stringify(doc.data)}`);
@@ -70,6 +79,7 @@ function PageEditField(props) {
 						// console.log(`value = ${doc.data[props.fieldName]}`);
 						// setValue(newValue.current);
 						// setFirstValue(newValue);
+						setValue(newValue.current);
 					}
 					console.log(doc);
 				})
@@ -88,24 +98,19 @@ function PageEditField(props) {
 	// , [value, setMode, newValue, props, firstValue]);
 
 	const resetField = async () => {
-		// console.timeLog({ firstValue, value, newValue });
-		// change the field visually to the first value
-
-		// set the prospective new value to the first value
-		// newValue.current = firstValue;
-		// setValue(firstValue);
-
-		// console.log({ firstValue, value, ...newValue.current });
-		// console.log(value);
-		// console.log(newValue.current);
-		// save these changes
-		// saveInput();
 		await props
-			.resetField(
-				props._id,
+			.formCallback(
+				// fieldState
+				{
+					_id: props._id,
+					newValue: newValue.current,
+					fieldName: props.fieldName,
+					value: value,
+					firstValue: firstValue,
+				},
+				// avoid this field
 				newValue.current,
-				props.fieldName,
-				value,
+				// substitute this field
 				firstValue
 			)
 			.then((doc) => {
@@ -132,7 +137,7 @@ function PageEditField(props) {
 					<EditContainer id={props.value} color={props.color}>
 						<input
 							className="is-primary"
-							defaultValue={firstValue}
+							defaultValue={value}
 							id="inputField"
 							disabled={props.disabled}
 							onChange={(e) => {
