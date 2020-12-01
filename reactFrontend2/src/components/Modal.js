@@ -5,6 +5,39 @@ import "../styles/styles.scss";
 
 import PageEditField from "./pageEditField/PageEditField";
 
+const formCallback = async (fieldState, avoid, push) => {
+	const { _id, fieldName, newValue } = fieldState;
+	// UPDATE WHERE SELECT _id IS _id
+	const filter = { _id: _id };
+
+	// SET source.url = newValue
+	const update = { [fieldName]: push };
+
+	// print them out for debugging
+	console.log(`filter: ${JSON.stringify(filter)}`);
+	console.log(`update: ${JSON.stringify(update)}`);
+
+	// construct the body request
+	const body = {
+		filter: filter,
+		update: update,
+	};
+
+	// stringify it for the POST request
+	console.log("stringifying the body");
+	const bodyString = JSON.stringify(body);
+
+	// send the post request
+	const url = `https://watch.rolandw.dev/update/${_id}`;
+	return fetch(url, {
+		method: "POST",
+		headers: {
+			"Content-type": "application/json; charset=UTF-8",
+		},
+		body: bodyString,
+	});
+};
+
 export default function Model(props) {
 	// console.log(props);
 	const [open, setOpen] = useState(false);
@@ -74,37 +107,7 @@ export default function Model(props) {
 				disabled={field.disabled}
 				deletable={false}
 				color={"#282C34"}
-				formCallback={(_id, newValue, fieldName, value) => {
-					// UPDATE WHERE SELECT _id IS _id
-					const filter = { _id: _id };
-
-					// SET source.url = newValue
-					const update = { [fieldName]: newValue };
-
-					// print them out for debugging
-					console.log(`filter: ${JSON.stringify(filter)}`);
-					console.log(`update: ${JSON.stringify(update)}`);
-
-					// construct the body request
-					const body = {
-						filter: filter,
-						update: update,
-					};
-
-					// stringify it for the POST request
-					console.log("stringifying the body");
-					const bodyString = JSON.stringify(body);
-
-					// send the post request
-					const url = `https://watch.rolandw.dev/update/${_id}`;
-					return fetch(url, {
-						method: "POST",
-						headers: {
-							"Content-type": "application/json; charset=UTF-8",
-						},
-						body: bodyString,
-					});
-				}}
+				formCallback={formCallback}
 			/>
 		);
 	});

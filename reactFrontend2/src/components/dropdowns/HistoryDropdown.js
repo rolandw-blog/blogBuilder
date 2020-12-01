@@ -10,8 +10,13 @@ import Dropdown from "./Dropdown";
  * @param {JSON} history - History object returned from blogwatcher
  */
 const historyEntry = (history, key) => {
+	// if the history data is a single "event" its returned as a JSON object and needs to be turned into an iterable array
+	if (!Array.isArray(history.data.modified)) {
+		history.data.modified = new Array(history.data.modified);
+	}
+
 	return (
-		<History key={key}>
+		<History key={key + history.data.timestamp}>
 			{/* author */}
 			<h3>Author</h3>
 			<span>
@@ -26,7 +31,7 @@ const historyEntry = (history, key) => {
 			<ul>
 				{history.data.modified.map((file, index) => {
 					return (
-						<li key={index}>
+						<li key={history.data.timestamp}>
 							<span>{file}</span>
 						</li>
 					);
@@ -57,7 +62,7 @@ export default function SourcesDropdown(props) {
 				return loadHistoryData(_id);
 			}}
 			renderDataCallback={(data, index) => {
-				// console.log(data);
+				console.log(data);
 				return historyEntry(data, index);
 			}}
 		></Dropdown>

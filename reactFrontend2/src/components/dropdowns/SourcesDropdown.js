@@ -38,7 +38,16 @@ function PlusButton(props) {
 	);
 }
 
-const formCallback = async (_id, newValue, fieldName, value, firstValue) => {
+/**
+ *
+ * @param {*} fieldState - {_id, newValue, fieldName, value, firstValue}
+ * @param {*} avoid - the element to avoid
+ * @param {*} push - the element to substitute
+ */
+const formCallback = async (fieldState, avoid, push) => {
+	// extract the _id from the fieldState goody bag
+	const { _id } = fieldState;
+
 	// UPDATE WHERE SELECT _id IS _id
 	const filter = { _id: _id };
 
@@ -52,16 +61,25 @@ const formCallback = async (_id, newValue, fieldName, value, firstValue) => {
 		await fetch(`https://watch.rolandw.dev/page?_id=${_id}`)
 	).json();
 
+	console.log(
+		`the sources received from the database: ${JSON.stringify(
+			doc.source,
+			null,
+			2
+		)}`
+	);
+
 	const sourceArray = doc.source;
-	console.log(`avoiding ${firstValue}`);
+	console.log(`avoiding ${avoid} from the database sources`);
 
 	// get everything that isnt the first value from the og sources list
 	const newSourceList = sourceArray
-		.filter((source) => source.url !== firstValue)
+		.filter((source) => source.url !== avoid)
 		.map((source) => source);
 
 	// now push our new source to the array that doesnt contain the one we are changing
-	newSourceList.push({ remote: true, url: newValue });
+	console.log(`add ${push} to: ${newSourceList}`);
+	newSourceList.push({ remote: true, url: push });
 
 	// fully overwrite the source list with our new one
 	const update = { source: newSourceList };
@@ -73,11 +91,10 @@ const formCallback = async (_id, newValue, fieldName, value, firstValue) => {
 	};
 
 	// print them out for debugging
-	// console.log(`filter: ${JSON.stringify(filter)}`);
-	// console.log(`update: ${JSON.stringify(update)}`);
+	// console.log(`filter: ${JSON.stringify(filter, null, 2)}`);
+	console.log(`update: ${JSON.stringify(update, null, 2)}`);
 
 	// stringify it for the POST request
-	console.log("stringifying the body");
 	const bodyString = JSON.stringify(body);
 
 	// send the post request
@@ -145,17 +162,15 @@ const renderData = (url, _id, index, initialMode) => {
 			noTitle
 			name={"URL"}
 			value={url}
-			fieldName={"url"}
+			fieldName={"source.url"}
 			disabled={false}
 			deletable={true}
 			initialMode={initialMode || "display"}
 			_id={_id}
 			color={"#363636"}
 			key={_id + "/" + url + index}
-			formCallback={(_id, newValue, fieldName, value, firstValue) => {
-				const props = [_id, newValue, fieldName, value, firstValue];
-				return formCallback(...props);
-			}}
+			// formCallback takes: {fieldState: {_id, newValue, fieldName, value, firstValue}, avoid, push}
+			formCallback={formCallback}
 			deleteCallback={(_id, newValue, fieldName, value, firstValue) => {
 				const props = [_id, newValue, fieldName, value, firstValue];
 				return deleteCallback(...props);
