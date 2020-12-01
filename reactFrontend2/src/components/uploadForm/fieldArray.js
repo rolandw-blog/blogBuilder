@@ -83,7 +83,6 @@ function SourcesSection() {
 									+
 								</Button>
 								{/* </IncrementDecrementButtonGroup> */}
-								{JSON.stringify(errors)}
 							</SourceRow>
 						))
 					) : (
