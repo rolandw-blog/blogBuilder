@@ -1,5 +1,6 @@
 import fetchDataPromise from "./helpers/fetchDataPromise";
 import React, { useMemo, useState, useRef, useEffect } from "react";
+import { Container } from "@material-ui/core";
 import SearchBar from "./SearchBar";
 
 import Table from "./Table";
@@ -72,7 +73,7 @@ export default function Pages() {
 	);
 
 	return (
-		<>
+		<Container maxWidth="md">
 			<Table
 				columns={columns}
 				data={data}
@@ -80,6 +81,6 @@ export default function Pages() {
 				loading={loading}
 				pageCount={pageCount}
 			/>
-		</>
+		</Container>
 	);
 }

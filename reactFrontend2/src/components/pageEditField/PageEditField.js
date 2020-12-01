@@ -27,11 +27,12 @@ import {
  * @param {string} props.deletable - A string of "display" "edit" or "add" to set the intial mode
  * @param {string} props.formCallback - A callback method that receives the _id, and URLSearchParams (url queryString)
  * @param {string} props.deleteCallback - A callback method that receives the _id, and URLSearchParams (url queryString)
+ * @param {string} props.resetField -
  * @param {string} props.initialMode - A string of "display" "edit" or "add" to set the intial mode
  */
 function PageEditField(props) {
 	const [mode, setMode] = useState(props.initialMode);
-	const [firstValue] = useState(props.value, "firstValue");
+	const [firstValue, setFirstValue] = useState(props.value);
 	const [value, setValue] = useState(props.value);
 	const [isDeleted, setIsDeleted] = useState(false);
 	const newValue = useRef(""); // this is a ref because its just internally tracking the proposed field change value
@@ -46,6 +47,8 @@ function PageEditField(props) {
 
 	// const saveInput = React.useCallback(() => {
 	const saveInput = () => {
+		// update the field visually
+		setValue(newValue.current);
 		try {
 			props
 				.formCallback(
@@ -60,10 +63,20 @@ function PageEditField(props) {
 					if (doc) {
 						// if it was saved then go ahead and update the value (which is rendered in the field) to be this new value
 						// set the value to the returned data after updating it to ensure it matches
-						console.log(`value = ${doc.data[props.fieldName]}`);
-						setValue(doc.data[props.fieldName]);
+						// console.log(`response: ${JSON.stringify(doc.data)}`);
+						// console.log(
+						// 	`setting the field display 'value' to ${props.fieldName}`
+						// );
+						// console.log(`value = ${doc.data[props.fieldName]}`);
+						// setValue(newValue.current);
+						// setFirstValue(newValue);
 					}
 					console.log(doc);
+				})
+				.catch((err) => {
+					// if the update failed then set it back to the first value
+					console.error(err);
+					setValue(firstValue);
 				});
 			setMode("display");
 			console.log("finished updating field successfully");
@@ -74,15 +87,32 @@ function PageEditField(props) {
 	};
 	// , [value, setMode, newValue, props, firstValue]);
 
-	const resetField = () => {
+	const resetField = async () => {
+		// console.timeLog({ firstValue, value, newValue });
 		// change the field visually to the first value
-		setValue(firstValue);
 
 		// set the prospective new value to the first value
-		newValue.current = firstValue;
+		// newValue.current = firstValue;
+		// setValue(firstValue);
 
+		// console.log({ firstValue, value, ...newValue.current });
+		// console.log(value);
+		// console.log(newValue.current);
 		// save these changes
-		saveInput();
+		// saveInput();
+		await props
+			.resetField(
+				props._id,
+				newValue.current,
+				props.fieldName,
+				value,
+				firstValue
+			)
+			.then((doc) => {
+				if (doc) setValue(firstValue);
+			});
+
+		console.log("done");
 
 		// hide the undo button
 		setUndoButton(false);
@@ -153,7 +183,6 @@ function PageEditField(props) {
 							disabled={props.disabled}
 							onChange={(e) => {
 								// every time the input field is changed change the prospective new value
-								// setNewValue(e.currentTarget.value);
 								newValue.current = e.currentTarget.value;
 							}}
 						/>
