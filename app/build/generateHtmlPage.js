@@ -119,42 +119,45 @@ const generateHtmlpage = async (markdown, templateData) => {
 	debug(`Building html for ${templateData.source.length} sources`);
 
 	// import the custom renderer from createRenderer.js
+	debug("creating renderer");
 	marked.setOptions({
 		renderer: createRenderer(),
 	});
 
 	// determine info for building
+	debug("parsing markdown");
 	const html = marked(markdown);
+	debug("getting parents");
 	const parent = getParent(templateData.websitePath);
-	// debug("getting siblings");
+	debug("getting siblings");
 	const siblings = await getSiblings(parent, true);
-	// debug("getting children");
+	debug("getting children");
 	const children = await getSiblings(templateData.websitePath, true);
-	// debug("getting neighbours");
+	debug("getting neighbours");
 	const neighbours = getNeighbours(siblings, templateData);
-	// debug("getting breadcrumbs");
+	debug("getting breadcrumbs");
 	const breadCrumbs = await getBreadcrumbs(templateData.websitePath);
-	// debug("getting date data");
+	debug("getting date data");
 	const dateData = mongoIDtoDate(templateData._id);
 
 	// last edit date
 	let modDate;
 	let lastEdit = {};
-	const historyHead =
-		templateData.meta.history[templateData.meta.history.length - 1];
-	if (historyHead != undefined) {
-		// modified date of the most recent thing in the history head
-		modDate = new Date(historyHead.timestamp);
+	// const historyHead =
+	// 	templateData.meta.history[templateData.meta.history.length - 1];
+	// if (historyHead != undefined) {
+	// 	// modified date of the most recent thing in the history head
+	// 	modDate = new Date(historyHead.timestamp);
 
-		lastEdit = {
-			full: modDate,
-			year: modDate.getFullYear(),
-			month: modDate.getMonth() + 1,
-			day: modDate.getDate(),
-			hour: modDate.getHours(),
-			message: historyHead.message,
-		};
-	}
+	// 	lastEdit = {
+	// 		full: modDate,
+	// 		year: modDate.getFullYear(),
+	// 		month: modDate.getMonth() + 1,
+	// 		day: modDate.getDate(),
+	// 		hour: modDate.getHours(),
+	// 		message: historyHead.message,
+	// 	};
+	// }
 
 	// set template content for injection
 	templateData.content = html;

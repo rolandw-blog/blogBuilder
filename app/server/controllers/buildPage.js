@@ -29,6 +29,7 @@ const refreshPage = async (id) => {
 		"x-payload-signature": sig,
 	};
 
+	debug("fetching...");
 	let result = await fetch(`${process.env.WATCHER_IP}/build/${id}`, {
 		method: "post",
 		headers: headers,
@@ -36,6 +37,7 @@ const refreshPage = async (id) => {
 	});
 	result = await result.json();
 	page = result.page;
+	debug("returning page");
 	return page;
 };
 
@@ -76,7 +78,10 @@ const buildPage = async (req, res) => {
 	}
 
 	// Get the page
-	let page = await refreshPage(req.params.id).data;
+	debug("downloading the page");
+	let page = await refreshPage(req.params.id);
+	debug(page);
+	debug("received page");
 
 	if (!page) {
 		return res.status(400).json({
@@ -86,6 +91,7 @@ const buildPage = async (req, res) => {
 	}
 
 	// TODO put this in a seperate function
+	debug("writing scripts");
 	let index = fs.readFileSync(
 		path.resolve(process.env.ROOT, "scripts/index.js"),
 		"utf-8"
@@ -115,7 +121,7 @@ const buildPage = async (req, res) => {
 	);
 
 	// copy media to dist
-	// debug("copying stuff to dist");
+	debug("copying media to dist");
 	const mediaSrcPath = path.resolve(process.env.ROOT, "src/media");
 	const mediaDistPath = path.resolve(process.env.ROOT, "dist/media");
 
@@ -133,19 +139,19 @@ const buildPage = async (req, res) => {
 	renderSass("src/styles/home.scss", "dist/home.css");
 	renderSass("src/styles/menu.scss", "dist/menu.css");
 
-	// debug("reading the file", page._id);
+	debug("reading the file", page._id);
 	let outputMarkdown = await read(`content/${page._id}.md`, "utf8");
 
 	// now try and build it and write it to dist
 	try {
-		// debug("trying to generate html");
+		debug("trying to generate html");
 		generateHtmlpage(outputMarkdown, { ...page, head: head }).then(() => {
-			// debug(`finished building page ${page._id}.`);
+			debug(`finished building page ${page._id}.`);
 		});
 
 		return res.status(200).json({ success: true });
 	} catch (err) {
-		// debug(`error building page ${page._id}! ${err}`);
+		debug(`error building page ${page._id}! ${err}`);
 		return res.status(500).json({
 			success: false,
 			message: `failed to rebuild single page ${page._id}`,
