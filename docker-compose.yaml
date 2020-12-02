@@ -12,6 +12,7 @@ services:
         volumes:
             - ./content:/usr/src/app/content
             - ./app/dist:/usr/src/app/dist
+            - ./app:/usr/src/app
         ports:
             - 3000
 

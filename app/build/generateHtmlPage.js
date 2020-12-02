@@ -143,7 +143,6 @@ const generateHtmlpage = async (markdown, templateData) => {
 	debug(dateData);
 
 	// last edit date
-	let modDate;
 	let lastEdit = {};
 
 	const fetchUrl = `${process.env.WATCHER_IP}/history/find/${templateData._id}`;
