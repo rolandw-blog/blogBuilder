@@ -4,6 +4,8 @@ import { useTable, usePagination } from "react-table";
 import styled from "styled-components";
 import Modal from "./Modal";
 import SearchBar from "./SearchBar";
+import { Button } from "@material-ui/core";
+import BuildButton from "./BuildButton";
 
 const Loading = styled.tr`
 	grid-column: 1 / -1;
@@ -247,12 +249,17 @@ export default function Table({
 										case "Build":
 											output = (
 												<td {...cell.getCellProps()}>
-													<button
-														className="button is-dark"
+													<BuildButton
+														// disabled={isSubmitting}
+														// cell props
 														key={cell.row.id}
+														_id={
+															cell.row.original
+																._id
+														}
 													>
 														Build
-													</button>
+													</BuildButton>
 												</td>
 											);
 											break;
