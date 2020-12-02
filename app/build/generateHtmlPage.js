@@ -3,6 +3,7 @@ const fs = require("fs");
 const path = require("path");
 const marked = require("marked");
 const emoji = require("node-emoji");
+const fetch = require("node-fetch");
 const { minify } = require("html-minifier");
 const getSiblings = require("./getSiblings");
 const getParent = require("./getParent");
@@ -139,25 +140,37 @@ const generateHtmlpage = async (markdown, templateData) => {
 	const breadCrumbs = await getBreadcrumbs(templateData.websitePath);
 	debug("getting date data");
 	const dateData = mongoIDtoDate(templateData._id);
+	debug(dateData);
 
 	// last edit date
 	let modDate;
 	let lastEdit = {};
-	// const historyHead =
-	// 	templateData.meta.history[templateData.meta.history.length - 1];
-	// if (historyHead != undefined) {
-	// 	// modified date of the most recent thing in the history head
-	// 	modDate = new Date(historyHead.timestamp);
 
-	// 	lastEdit = {
-	// 		full: modDate,
-	// 		year: modDate.getFullYear(),
-	// 		month: modDate.getMonth() + 1,
-	// 		day: modDate.getDate(),
-	// 		hour: modDate.getHours(),
-	// 		message: historyHead.message,
-	// 	};
-	// }
+	const fetchUrl = `${process.env.WATCHER_IP}/history/find/${templateData._id}`;
+	const options = {
+		method: "GET",
+		headers: {
+			"Content-Type": "application/json",
+		},
+	};
+
+	const history = await (await fetch(fetchUrl, options)).json();
+
+	if (history.data.length > 0) {
+		// map the array of history and extract the most recent date
+		const modDate = new Date(
+			Math.max(...history.data.map((e) => new Date(e.data.timestamp)))
+		);
+
+		lastEdit = {
+			full: modDate,
+			year: modDate.getFullYear(),
+			month: modDate.getMonth() + 1,
+			day: modDate.getDate(),
+			hour: modDate.getHours(),
+			message: history.data.message,
+		};
+	}
 
 	// set template content for injection
 	templateData.content = html;

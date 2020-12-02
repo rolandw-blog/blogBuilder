@@ -25,9 +25,7 @@ const getPages = async (websitePath) => {
 		headers: headers,
 	});
 	const response = await request;
-	debug(response);
 	const json = response.json();
-	debug(json);
 	return json;
 };
 
