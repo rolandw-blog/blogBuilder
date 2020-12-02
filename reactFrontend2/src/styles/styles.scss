@@ -1,0 +1,41 @@
+// ##──── Bulma main settings ───────────────────────────────────────────────────────────────
+$main: #282c34;
+$scheme-main: #282c34;
+$background: #282c34;
+$border: #121212;
+
+$text-strong: #dedede;
+
+// modals
+$modal-card-head-border-bottom: none;
+$modal-card-foot-border-top: none;
+$modal-content-width: 740px;
+
+// forms
+// $input-background-color: lighten($main, 10%);
+// $input-border-color: #121212;
+// $input-color: white;
+
+// tables
+// $table-background-color: $main;
+
+// buttons
+// $button-text-hover-background-color: $main;
+@import "../../node_modules/bulma/bulma.sass";
+// @import "../../node_modules/@creativebulma/bulma-collapsible";
+
+//   yeet scrollbars
+::-webkit-scrollbar {
+	display: none; // Safari and Chrome
+	display: none; // Safari and Chrome
+}
+
+* {
+	-ms-overflow-style: none; // Internet Explorer 10+
+	// -ms-overflow-style: none; // Internet Explorer 10+
+	scrollbar-width: none; // Firefox
+}
+
+html {
+	background: $main;
+}
