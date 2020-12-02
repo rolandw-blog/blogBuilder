@@ -17,13 +17,15 @@ const getPages = async (websitePath) => {
 		"x-payload-signature": sig,
 	};
 
-	const url = `${process.env.WATCHER_IP}/pages?websitePath=${websitePath}.*[^/]&regex=true`;
+	const url = `${
+		process.env.WATCHER_IP
+	}/pages/websitePath/${websitePath.replace(/\//g, "%2F")}`;
 	const request = await fetch(url, {
-		method: "post",
-		body: new URLSearchParams(body),
+		method: "get",
 		headers: headers,
 	});
-	const json = await request.json();
+	const response = await request;
+	const json = response.json();
 	return json;
 };
 
