@@ -1,29 +1,39 @@
-const debug = require("debug")("auth_app:isAuthenticated");
+const getSession = require("../helpers/getSession");
+const url = require("url");
+const debug = require("debug")("app:isAuth");
 require("dotenv").config();
 
-// ! Single Sign On system
-const isAuthenticated = (req, res, next) => {
-	debug(`checking if authenticated`);
-	// simple check to see if the user is authenicated or not,
-	// if not redirect the user to the SSO Server for Login
-	// pass the redirect URL as current URL
-	// serviceURL is where the sso should redirect in case of valid user
-
-	// ! this is the service url so the sso server can redirect back to this application
-	// ? could also set the protocol to req.protocol
-	const redirectURL = `${process.env.PROTOCOL}://${req.headers.host}${req.path}`;
-	if (req.session == null || req.session.user == null) {
-		debug(
-			`not authenticated. going to "https://login.rolandw.dev/simplesso/login?serviceURL=${redirectURL}"`
-		);
-		return res.redirect(
-			`https://login.rolandw.dev/simplesso/login?serviceURL=${redirectURL}`
-		);
+const isTokenProvided = (token, verbose = false) => {
+	if (token) {
+		verbose && debug("a token was provided");
+		debug(true);
 	} else {
-		debug(`the user is (by email) ${req.session.user.email}`);
-		debug(req.session.user);
+		verbose && debug("no token was provided");
+		return false;
+	}
+};
+
+const isClientHasSession = async () => {
+	if (!req.locals.session) {
+	}
+};
+
+module.exports = async (req, res, next) => {
+	debug("isAuthenticated middleware");
+	const user = req.session.user;
+	const host = req.get("host");
+	const hostPathname = url.parse(req.url).pathname;
+
+	if (!user) {
+		// need to go get a token
+		debug("going to the SSO server");
+		// create service url
+		const serviceURL =
+			req.protocol + "://" + req.get("host") + req.originalUrl;
+
+		// create redirect url
+		const ssoServerURL = `https://api.blog.rolandw.dev/auth/promptLogin?serviceURL=${serviceURL}`;
+		return res.redirect(ssoServerURL);
 	}
 	next();
 };
-
-module.exports = isAuthenticated;
