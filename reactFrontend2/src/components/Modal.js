@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import HistoryDropdown from "./dropdowns/HistoryDropdown";
 import SourcesDropdown from "./dropdowns/SourcesDropdown";
+import { Button } from "@material-ui/core";
 import "../styles/styles.scss";
 
 import PageEditField from "./pageEditField/PageEditField";
@@ -38,10 +39,24 @@ const formCallback = async (fieldState, avoid, push) => {
 	});
 };
 
+const deletePageHandler = async (_id) => {
+	const postURL = `https://watch.rolandw.dev/delete/${_id}`;
+	const options = {
+		method: "POST",
+		headers: {
+			"Content-type": "application/json; charset=UTF-8",
+		},
+	};
+	const result = await (await fetch(postURL, options)).json();
+	return result;
+};
+
 export default function Model(props) {
 	// console.log(props);
 	const [open, setOpen] = useState(false);
 	const [fields, setFields] = useState([]);
+
+	const { _id } = props.data.original;
 
 	// uses the setOpen() state to control the modal
 	function toggleModal(e) {
@@ -156,7 +171,24 @@ export default function Model(props) {
 						></SourcesDropdown>
 					</section>
 					<footer className="modal-card-foot">
-						{/* <button className="button is-dark">View history</button> */}
+						<Button
+							variant="contained"
+							type="submit"
+							color="primary"
+							disabled={false}
+							onClick={async () => {
+								// delete the page
+								await deletePageHandler(_id);
+
+								// close the modal after deleting the page
+								toggleModal();
+
+								// TODO somehow let Pages/Table component know of the change to reload fetchData or remote the row somehow
+								// remove the row from the table
+							}}
+						>
+							Delete
+						</Button>
 					</footer>
 				</div>
 				{/* End modal card */}
