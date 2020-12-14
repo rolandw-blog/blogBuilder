@@ -9,5 +9,8 @@ export default async (pageIndex, pageSize, searchFilter) => {
 	}
 
 	console.log(`fetching items ${url}`);
-	return fetch(url, { method: "get" });
+	const response = await fetch(url, { method: "get" });
+	if (response.status !== 200) console.log(response);
+	const json = await response.json();
+	return json;
 };

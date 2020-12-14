@@ -37,37 +37,34 @@ export default function Pages() {
 	);
 
 	const fetchData = React.useCallback(
-		({ pageSize, pageIndex, searchFilter }) => {
+		async ({ pageSize, pageIndex, searchFilter }) => {
 			// console.log("running fetchData callback");
 			// This will get called when the table needs new data
 
 			// Set the loading state
 			setLoading(true);
 
-			fetchDataPromise(pageIndex, pageSize, searchFilter)
-				.then((res) => {
-					return res.json();
-				})
-				.then((json) => {
-					const newData = json.data;
-					// console.log(`got ${newData.length} new items from the API`);
+			const json = await fetchDataPromise(
+				pageIndex,
+				pageSize,
+				searchFilter
+			);
 
-					// set the data for the table
-					setData(newData);
+			const newData = json.data;
+			setData(newData);
 
-					// if there isnt a search filter then display a page count for ALL possible pages (we load them in later)
-					if (!searchFilter) {
-						setPageCount(
-							Math.ceil(parseInt(json.count) / pageSize)
-						);
-					} else {
-						// if there is a filter (we are searching for a page) then only show page numbers for those results
-						setPageCount(
-							Math.ceil(parseInt(newData.length) / pageSize)
-						);
-					}
-					setLoading(false);
-				});
+			if (!searchFilter) {
+				const pgCount = Math.ceil(parseInt(json.count) / pageSize);
+				setPageCount(pgCount);
+				console.log(`the new number of pages is: ${pgCount}`);
+			} else {
+				// if there is a filter (we are searching for a page) then only show page numbers for those results
+				const pgCount = Math.ceil(parseInt(newData.length) / pageSize);
+				setPageCount(pgCount);
+				console.log(`the new number of pages is: ${pgCount}`);
+			}
+
+			setLoading(false);
 		},
 		[]
 	);

@@ -96,6 +96,7 @@ const formCallback = async (fieldState, avoid, push) => {
 
 	// stringify it for the POST request
 	const bodyString = JSON.stringify(body);
+	console.log(body);
 
 	// send the post request
 	const url = `https://api.blog.rolandw.dev/api/v1/watch/update/${_id}`;

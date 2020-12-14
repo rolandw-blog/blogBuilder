@@ -30,7 +30,7 @@ app.use(
 	})
 );
 
-app.use(checkReceivingToken());
+app.use(checkReceivingToken);
 app.use(express.json());
 
 const corsOptions = { origin: "*" };
@@ -68,7 +68,7 @@ app.use("/api", apiRoutes);
 // });
 
 // serve the react app
-app.use([isAuthenticated], express.static(path.join(__dirname, "..", "build")));
+app.use([], express.static(path.join(__dirname, "..", "build")));
 
 // serve some static assets in server/public for example server/public/users.json
 // app.use(express.static("public"));

@@ -16,7 +16,7 @@ const BuildButton = (props) => {
 	};
 
 	const buildPage = async (_id) => {
-		const buildUrl = `https://build.rolandw.dev/build/${_id}`;
+		const buildUrl = `https://api.blog.rolandw.dev/api/v1/build/build/${_id}`;
 		const timeout = 10000;
 
 		// this wires into fetch to abort it
@@ -34,8 +34,8 @@ const BuildButton = (props) => {
 
 		try {
 			// start the request (has the controller and timeout in its options)
-			const result = (await fetch(buildUrl, options)).json();
-			console.log(result);
+			const response = await fetch(buildUrl, options);
+			const result = await response.json();
 
 			// if we got here then the request completed, so cancle the timer
 			clearTimeout(id);

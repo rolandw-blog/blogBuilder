@@ -40,7 +40,7 @@ const formCallback = async (fieldState, avoid, push) => {
 };
 
 const deletePageHandler = async (_id) => {
-	const postURL = `https://watch.rolandw.dev/delete/${_id}`;
+	const postURL = `https://api.blog.rolandw.dev/api/v1/watch/delete/${_id}`;
 	const options = {
 		method: "POST",
 		headers: {
@@ -59,9 +59,7 @@ export default function Model(props) {
 	const { _id } = props.data.original;
 
 	// uses the setOpen() state to control the modal
-	function toggleModal(e) {
-		e.preventDefault();
-
+	function toggleModal() {
 		// set open to the opposite
 		setOpen(!open);
 

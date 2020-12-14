@@ -1,22 +1,6 @@
-const getSession = require("../helpers/getSession");
 const url = require("url");
 const debug = require("debug")("app:isAuth");
 require("dotenv").config();
-
-const isTokenProvided = (token, verbose = false) => {
-	if (token) {
-		verbose && debug("a token was provided");
-		debug(true);
-	} else {
-		verbose && debug("no token was provided");
-		return false;
-	}
-};
-
-const isClientHasSession = async () => {
-	if (!req.locals.session) {
-	}
-};
 
 module.exports = async (req, res, next) => {
 	debug("isAuthenticated middleware");
@@ -32,7 +16,7 @@ module.exports = async (req, res, next) => {
 			req.protocol + "://" + req.get("host") + req.originalUrl;
 
 		// create redirect url
-		const ssoServerURL = `https://api.blog.rolandw.dev/auth/promptLogin?serviceURL=${serviceURL}`;
+		const ssoServerURL = `${process.env.PROMPT_LOGIN_URL}?serviceURL=${serviceURL}`;
 		return res.redirect(ssoServerURL);
 	}
 	next();
