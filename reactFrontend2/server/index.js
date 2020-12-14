@@ -1,6 +1,6 @@
 const path = require("path");
 const express = require("express");
-const checkSSORedirect = require("./middleware/checkSSORedirect");
+const checkReceivingToken = require("./middleware/checkReceivingToken");
 const isAuthenticated = require("./middleware/isAuthenticated");
 const debug = require("debug")("app:server");
 const app = express(); // create express app
@@ -30,7 +30,7 @@ app.use(
 	})
 );
 
-app.use(checkSSORedirect());
+app.use(checkReceivingToken());
 app.use(express.json());
 
 const corsOptions = { origin: "*" };
