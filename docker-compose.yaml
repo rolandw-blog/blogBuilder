@@ -34,4 +34,4 @@ services:
 networks:
     default:
         external:
-            name: nginx-proxy
+            name: gateway_network
