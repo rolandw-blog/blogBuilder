@@ -9,6 +9,9 @@ FROM node:14
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
+# Install nodemon
+RUN npm install -g nodemon
+
 # Install dependencies
 COPY ./app/package.json /usr/src/app/
 RUN npm install
