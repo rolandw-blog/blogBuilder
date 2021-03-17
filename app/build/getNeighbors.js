@@ -1,13 +1,13 @@
 const getParent = require("./getParent");
-const debug = require("debug")("staticFolio:neighbours");
+const debug = require("debug")("build:neighbors");
 const path = require("path");
 /**
  *
  * @param {Array} siblings - Array of siblings
  * @param {JSON} page - database page
- * @example getNeighbours(['page1', 'page2'], {websitePath: '/path/pages'})
+ * @example getneighbors(['page1', 'page2'], {websitePath: '/path/pages'})
  */
-const getNeighbours = (siblings, page) => {
+const getneighbors = (siblings, page) => {
 	const result = { prev: {}, next: {} };
 
 	// use find() to get the first page that matches the arguments websitePath by checking every sibling
@@ -21,4 +21,4 @@ const getNeighbours = (siblings, page) => {
 	return result;
 };
 
-module.exports = getNeighbours;
+module.exports = getneighbors;

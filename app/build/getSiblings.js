@@ -1,5 +1,5 @@
-const debug = require("debug")("staticFolio:getSiblings");
-const error = require("debug")("v_staticFolio:error");
+const debug = require("debug")("build:getSiblings");
+const error = require("debug")("v_build:error");
 const signPayload = require("./signPayload");
 const fetch = require("node-fetch");
 const path = require("path");
@@ -34,7 +34,7 @@ const getPages = async (websitePath) => {
  * @param {Array} pages - pages array of json from
  * @param {String} mask - a mask to get siblings from
  * @param {Boolean} sort - Sort by alpha (default is date added to db)
- * @example getNeighbours([{...},{...}], "/page/mask")
+ * @example getneighbors([{...},{...}], "/page/mask")
  */
 const genSiblings = async (mask, sort) => {
 	// debug("getting pages");

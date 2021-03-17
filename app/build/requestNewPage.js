@@ -1,7 +1,7 @@
 const crypto = require("crypto");
 const fetch = require("node-fetch");
-const debug = require("debug")("staticFolio:reqNewPage");
-const error = require("debug")("staticFolio:");
+const debug = require("debug")("build:reqNewPage");
+const error = require("debug")("build:");
 
 const requestNewPage = async (page) => {
 	debug(`requesting a new page for: "${page.pageName}"...`);

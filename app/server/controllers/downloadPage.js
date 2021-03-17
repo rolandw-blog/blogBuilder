@@ -1,5 +1,5 @@
 const fs = require("fs");
-const debug = require("debug")("staticFolio:DownloadPageC");
+const debug = require("debug")("build:DownloadPageC");
 
 // download some markdown from blog watcher
 const downloadPage = (req, res) => {

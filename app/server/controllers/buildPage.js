@@ -4,11 +4,11 @@ const path = require("path");
 const util = require("util");
 const signPayload = require("../../build/signPayload");
 const renderSass = require("../../build/renderSass");
-const generateHtmlpage = require("../../build/generateHtmlPage");
+const generateHtmlPage = require("../../build/generateHtmlPage");
 const deletePage = require("../../build/deletePage");
 const getHeadCommit = require("../../build/getHeadCommit");
 const { minify } = require("terser");
-const debug = require("debug")("staticFolio:BuildPageC");
+const debug = require("debug")("build:BuildPageC");
 
 const read = util.promisify(fs.readFile);
 const copy = util.promisify(fs.copyFile);
@@ -19,77 +19,52 @@ const copy = util.promisify(fs.copyFile);
  */
 const refreshPage = async (id) => {
 	// fetch the page fresh from blog watcher
-	debug("requesting the page and DOWNLOADING IT AGAIN", id);
-	// const body = {
-	// 	_id: id,
-	// };
-	// const sig = signPayload(body);
-	// const headers = {
-	// 	Authorization: "Bearer 3imim8awgeq99ikbmg14lnqe0fu8",
-	// 	"x-payload-signature": sig,
-	// };
-
-	debug("fetching...");
-	let result = await fetch(`${process.env.WATCHER_IP}/build/${id}`, {
+	debug("requesting the page", id);
+	const url = `${process.env.WATCHER_IP}/page/?_id=${id}`;
+	let result = await fetch(url, {
 		method: "get",
 	});
+
 	if (result.status != 200) debug(result);
-	result = await result.json();
-	page = result.page;
-	debug("returning page");
+
+	const page = await result.json();
 	return page;
 };
 
+// do some processing on the url
+// Sub in the github token to use my private repos
 /**
- * ! Just get the page object
- * @param {String} id - ID of the page
+ *
+ * @param {String} url
  */
-const fetchPage = async (id) => {
-	// fetch the page fresh from blog watcher
-	debug("requesting the page OBJECT ONLY", id);
-	const body = {
-		_id: id,
-	};
-	const sig = signPayload(body);
-	const headers = {
-		Authorization: "Bearer 3imim8awgeq99ikbmg14lnqe0fu8",
-		"x-payload-signature": sig,
-	};
-
-	let result = await fetch(`${process.env.WATCHER_IP}/page?_id=${id}`, {
-		method: "post",
-		headers: headers,
-		body: new URLSearchParams(body),
-	});
-	return await result.json();
+const treatUrl = (url) => {
+	const tokenReplace = new RegExp(/TOKEN/);
+	const result = url.replace(tokenReplace, process.env.GITHUB_TOKEN);
+	return result;
 };
 
-const buildPage = async (req, res) => {
-	debug(`building page ${req.params.id}`);
+/**
+ * Downloads raw markdown from a url (usually github)
+ * @param {String} url
+ */
+const downloadMarkdown = async (url) => {
+	debug("downloading markdown...");
+	url = decodeURI(url);
+	// debug(url);
 
-	const head = await getHeadCommit();
+	// fetch the content in async. await the response immediately
+	const response = await fetch(treatUrl(url));
 
-	if (!head) {
-		return res.status(500).json({
-			success: false,
-			reason: "there was nothing in the github head",
-		});
+	if (response.status != 200) {
+		debug(`Error fetching file: ${response.status}`);
 	}
 
-	// Get the page
-	debug("downloading the page");
-	let page = await refreshPage(req.params.id);
-	debug(page);
-	debug("received page");
+	// return the markdown text
+	return await response.text();
+};
 
-	if (!page) {
-		return res.status(400).json({
-			success: false,
-			message: `failed to rebuild page. It likely didnt exist or it was hidden`,
-		});
-	}
-
-	// TODO put this in a seperate function
+const preSetup = async (page) => {
+	// TODO put this in a separate function
 	debug("writing scripts");
 	let index = fs.readFileSync(
 		path.resolve(process.env.ROOT, "scripts/index.js"),
@@ -137,14 +112,41 @@ const buildPage = async (req, res) => {
 	renderSass("src/styles/gist.scss", "dist/gist.css");
 	renderSass("src/styles/home.scss", "dist/home.css");
 	renderSass("src/styles/menu.scss", "dist/menu.css");
+};
+
+const buildPage = async (req, res) => {
+	debug(`building page ${req.params.id}`);
+
+	// Get the page
+	let page = await refreshPage(req.params.id);
+	debug(page);
+
+	if (!page) {
+		return res.status(400).json({
+			success: false,
+			message: `failed to rebuild page. It likely didn't exist or it was hidden`,
+		});
+	}
+
+	preSetup(page);
 
 	debug("reading the file", page._id);
-	let outputMarkdown = await read(`content/${page._id}.md`, "utf8");
+	let markdownOutput = "";
+
+	debug(`downloading sources for "${page.pageName}"`);
+	for (let i = 0; i < page.source.length; i++) {
+		const pageSource = page.source[i];
+
+		// download markdown stuff if its remote or read it
+		const markdown = await downloadMarkdown(pageSource.url);
+		markdownOutput += markdown;
+	}
 
 	// now try and build it and write it to dist
 	try {
+		const head = await getHeadCommit();
 		debug("trying to generate html");
-		generateHtmlpage(outputMarkdown, { ...page, head: head }).then(() => {
+		generateHtmlPage(markdownOutput, { ...page, head: head }).then(() => {
 			debug(`finished building page ${page._id}.`);
 		});
 

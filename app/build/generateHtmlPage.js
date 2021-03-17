@@ -7,12 +7,12 @@ const fetch = require("node-fetch");
 const { minify } = require("html-minifier");
 const getSiblings = require("./getSiblings");
 const getParent = require("./getParent");
-const getNeighbours = require("./getNeighbours");
+const getNeighbors = require("./getNeighbors");
 const writeHtml = require("./writeHtml");
 const createRenderer = require("./createRenderer");
 const getBreadcrumbs = require("./getBreadcrumbs");
 const deletePage = require("./deletePage");
-const debug = require("debug")("staticFolio:genPage");
+const debug = require("debug")("build:genPage");
 require("dotenv").config();
 
 const minifyOptions = {
@@ -116,7 +116,7 @@ const mongoIDtoDate = (_id) => {
  * @param {Array} pages - array of pages from the db app
  * @param {JSOn} templateData - optional templateData
  */
-const generateHtmlpage = async (markdown, templateData) => {
+const generateHtmlPage = async (markdown, templateData) => {
 	debug(`Building html for ${templateData.source.length} sources`);
 
 	// import the custom renderer from createRenderer.js
@@ -126,22 +126,15 @@ const generateHtmlpage = async (markdown, templateData) => {
 	});
 
 	// determine info for building
-	debug("parsing markdown");
 	const html = marked(markdown);
-	debug("getting parents");
 	const parent = getParent(templateData.websitePath);
-	debug("getting siblings");
 	const siblings = await getSiblings(parent, true);
-	debug("getting children");
 	const children = await getSiblings(templateData.websitePath, true);
-	debug("getting neighbours");
-	const neighbours = getNeighbours(siblings, templateData);
-	debug("getting breadcrumbs");
+	const neighbors = getNeighbors(siblings, templateData);
 	const breadCrumbs = await getBreadcrumbs(templateData.websitePath);
-	debug("getting date data");
 	const dateData = mongoIDtoDate(templateData._id);
-	debug(dateData);
 
+	// ##──── dealing with history stuff ────────────────────────────────────────────────────────
 	// last edit date
 	let lastEdit = {};
 
@@ -155,11 +148,20 @@ const generateHtmlpage = async (markdown, templateData) => {
 
 	const history = await (await fetch(fetchUrl, options)).json();
 
-	if (history.data.length > 0) {
-		// map the array of history and extract the most recent date
-		const modDate = new Date(
-			Math.max(...history.data.map((e) => new Date(e.data.timestamp)))
-		);
+	if (history.length > 0) {
+		// get the most recent history object based on the timestamp
+		const mostRecentDate = history.reduce((max, e) => {
+			if (
+				new Date(e.data.timestamp).getTime() <=
+				new Date(max.data.timestamp).getTime()
+			) {
+				return e;
+			} else {
+				return max;
+			}
+		});
+
+		const modDate = new Date(mostRecentDate.data.timestamp);
 
 		lastEdit = {
 			full: modDate,
@@ -167,7 +169,7 @@ const generateHtmlpage = async (markdown, templateData) => {
 			month: modDate.getMonth() + 1,
 			day: modDate.getDate(),
 			hour: modDate.getHours(),
-			message: history.data.message,
+			message: mostRecentDate.data.message,
 		};
 	}
 
@@ -178,7 +180,7 @@ const generateHtmlpage = async (markdown, templateData) => {
 	templateData.parentName = path.parse(templateData.parentPath).name;
 	templateData.siblings = siblings;
 	templateData.children = children;
-	templateData.neighbours = neighbours;
+	templateData.neighbors = neighbors;
 	templateData.breadCrumbs = breadCrumbs;
 	templateData.scripts = assignScripts(templateData.meta.template);
 	templateData.styles = assignStyles(templateData.meta.template);
@@ -207,4 +209,4 @@ const generateHtmlpage = async (markdown, templateData) => {
 	writeHtml(result, templateData);
 };
 
-module.exports = generateHtmlpage;
+module.exports = generateHtmlPage;

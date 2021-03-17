@@ -1,5 +1,5 @@
 const crypto = require("crypto");
-const debug = require("debug")("staticFolio:crypto");
+const debug = require("debug")("build:crypto");
 
 /**
  *

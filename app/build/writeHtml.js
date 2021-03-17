@@ -1,8 +1,8 @@
 const fs = require("fs");
 const path = require("path");
 const mkdirp = require("mkdirp");
-const debug = require("debug")("staticFolio:writeHtml");
-const error = require("debug")("staticFolio:writeHtmlError");
+const debug = require("debug")("build:writeHtml");
+const error = require("debug")("build:writeHtmlError");
 
 const writeHtml = async (html, templateData) => {
 	// get paths to write to

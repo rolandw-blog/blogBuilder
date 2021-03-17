@@ -1,6 +1,6 @@
 const fetch = require("node-fetch");
 const signPayload = require("./signPayload");
-const debug = require("debug")("staticFolio:breadCrumbs");
+const debug = require("debug")("build:breadCrumbs");
 const { URLSearchParams } = require("url");
 
 const getPage = async (websitePath) => {

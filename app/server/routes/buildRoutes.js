@@ -1,21 +1,13 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const buildRouter = require("./buildRouter");
-const debug = require("debug")("staticFolio:routers");
+const debug = require("debug")("build:routers");
 const router = express.Router();
 
 // controllers
 const buildPage = require("../controllers/buildPage");
 const buildPages = require("../controllers/buildPages");
 
-// create application/x-www-form-urlencoded parser
-const urlencodedParser = bodyParser.urlencoded({
-	limit: "50mb",
-	extended: true,
-});
-
-// ! remember to protect the routes in production
-//  [urlencodedParser, verifyPayload]
 const routes = [
 	{
 		path: "/:id",
@@ -29,18 +21,18 @@ const routes = [
 			example: "/5f3fb41fdb3c861093356530",
 		},
 	},
-	{
-		path: "/",
-		method: "get",
-		middleware: [],
-		handler: buildPages,
-		help: {
-			description: "Build all routes",
-			method: this.method,
-			parameters: [],
-			example: "/",
-		},
-	},
+	// {
+	// 	path: "/",
+	// 	method: "get",
+	// 	middleware: [],
+	// 	handler: buildPages,
+	// 	help: {
+	// 		description: "Build all routes",
+	// 		method: this.method,
+	// 		parameters: [],
+	// 		example: "/",
+	// 	},
+	// },
 ];
 
 // build the router!

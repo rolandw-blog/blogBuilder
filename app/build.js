@@ -4,7 +4,7 @@ const generateHtmlPages = require("./build/generateHtmlPages");
 const renderSass = require("./build/renderSass");
 // const server = require("./server/server");
 const util = require("util");
-const debug = require("debug")("staticFolio:Build");
+const debug = require("debug")("build:Build");
 const { minify } = require("terser");
 require("dotenv").config();
 

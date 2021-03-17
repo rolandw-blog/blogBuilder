@@ -1,5 +1,5 @@
 const requestNewPage = require("./requestNewPage");
-const debug = require("debug")("staticFolio:generatePaths");
+const debug = require("debug")("build:generatePaths");
 
 /**
  * takes an array of paths and requests pages to be created for them

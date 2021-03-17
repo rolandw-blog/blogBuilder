@@ -1,5 +1,5 @@
 const fetch = require("node-fetch");
-const debug = require("debug")("staticFolio:DownloadPagesC");
+const debug = require("debug")("build:DownloadPagesC");
 
 // download ALL markdown from blog watcher
 // ! Not using this right now

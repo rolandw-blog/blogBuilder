@@ -1,6 +1,6 @@
 const fs = require("fs");
 const path = require("path");
-const debug = require("debug")("staticFolio:deletePage");
+const debug = require("debug")("build:deletePage");
 
 const deletePage = async (websitePath) => {
 	const relativeWebPath = websitePath.substring(1);

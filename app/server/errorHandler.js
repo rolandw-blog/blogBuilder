@@ -1,4 +1,4 @@
-const debug = require("debug")("staticFolio:CatchErrors");
+const debug = require("debug")("build:CatchErrors");
 
 /**
  * Catch errors and return them back to the client
@@ -14,7 +14,7 @@ const errorHandler = (err, req, res) => {
 	const statusCode = err.status || 500;
 	let message = err.message || "Internal Server Error";
 
-	debug(`Eror status: ${err.status}`);
+	debug(`Error status: ${err.status}`);
 	debug(`Status Code: ${statusCode}`);
 
 	if (statusCode === 500) {

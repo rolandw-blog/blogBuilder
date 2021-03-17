@@ -1,4 +1,4 @@
-const debug = require("debug")("staticFolio:findPage");
+const debug = require("debug")("build:findPage");
 
 // ! DEPRICATED. Should use a database query instead of this 💩
 const findPage = (pages, key, value) => {

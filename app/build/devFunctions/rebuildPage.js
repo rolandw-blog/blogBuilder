@@ -1,5 +1,5 @@
 const fetch = require("node-fetch");
-const debug = require("debug")("staticFolio:DEV_HotReload");
+const debug = require("debug")("build:DEV_HotReload");
 const ip = require("internal-ip");
 const signPayload = require("../../build/signPayload");
 

@@ -1,5 +1,5 @@
 const crypto = require("crypto");
-const debug = require("debug")("staticFolio:PayloadVerify");
+const debug = require("debug")("build:PayloadVerify");
 require("dotenv").config();
 
 const secret = process.env.DB_API_SECRET;

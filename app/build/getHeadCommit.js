@@ -1,4 +1,4 @@
-const debug = require("debug")("staticFolio:GetHeadCommit");
+const debug = require("debug")("build:GetHeadCommit");
 const fetch = require("node-fetch");
 /**
  * Return the commit data for the HEAD of this repo
@@ -12,7 +12,7 @@ const getHeadCommit = async () => {
 	return fetch(url, { method: "get" })
 		.then((res) => {
 			if (res.status != 200)
-				throw new Error("couldnt get head, probably rate limited");
+				throw new Error("couldn't get head, probably rate limited");
 			return res.json();
 		})
 		.then((json) => {

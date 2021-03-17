@@ -1,4 +1,4 @@
-const debug = require("debug")("staticFolio:paths");
+const debug = require("debug")("build:paths");
 const signPayload = require("./signPayload");
 const fetch = require("node-fetch");
 

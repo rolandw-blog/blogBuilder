@@ -1,6 +1,6 @@
 const marked = require("marked");
 const hljs = require("highlight.js");
-const debug = require("debug")("staticFolio:marked");
+const debug = require("debug")("build:marked");
 
 // PURPOSE
 //
