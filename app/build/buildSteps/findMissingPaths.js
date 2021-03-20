@@ -1,5 +1,5 @@
 const debug = require("debug")("build:paths");
-const signPayload = require("./signPayload");
+const signPayload = require("../signPayload");
 const fetch = require("node-fetch");
 
 // get a single page by its name. Please dont enter 2 pages with the same name 😢

@@ -1,5 +1,4 @@
 const fetch = require("node-fetch");
-const signPayload = require("./signPayload");
 const debug = require("debug")("build:breadCrumbs");
 const { URLSearchParams } = require("url");
 
@@ -9,18 +8,10 @@ const getPage = async (websitePath) => {
 		uuid: "some uuid here",
 	};
 
-	const sig = signPayload(body);
-
-	const headers = {
-		Authorization: "Bearer 3imim8awgeq99ikbmg14lnqe0fu8",
-		"x-payload-signature": sig,
-	};
-
 	const url = `${process.env.WATCHER_IP}/page?websitePath=${websitePath}`;
 
 	return fetch(url, {
 		method: "get",
-		headers: headers,
 	});
 };
 

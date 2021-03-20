@@ -5,9 +5,9 @@ const path = require("path");
  *
  * @param {Array} siblings - Array of siblings
  * @param {JSON} page - database page
- * @example getneighbors(['page1', 'page2'], {websitePath: '/path/pages'})
+ * @example getNeighbors(['page1', 'page2'], {websitePath: '/path/pages'})
  */
-const getneighbors = (siblings, page) => {
+const getNeighbors = (siblings, page) => {
 	const result = { prev: {}, next: {} };
 
 	// use find() to get the first page that matches the arguments websitePath by checking every sibling
@@ -21,4 +21,4 @@ const getneighbors = (siblings, page) => {
 	return result;
 };
 
-module.exports = getneighbors;
+module.exports = getNeighbors;

@@ -2,11 +2,9 @@ const fetch = require("node-fetch");
 const fs = require("fs");
 const path = require("path");
 const util = require("util");
-const signPayload = require("../../build/signPayload");
-const renderSass = require("../../build/renderSass");
+const renderSass = require("../../build/buildSteps/renderSass");
 const generateHtmlPage = require("../../build/generateHtmlPage");
-const deletePage = require("../../build/deletePage");
-const getHeadCommit = require("../../build/getHeadCommit");
+const getHeadCommit = require("../../build/buildSteps/getHeadCommit");
 const { minify } = require("terser");
 const debug = require("debug")("build:BuildPageC");
 
@@ -14,7 +12,6 @@ const read = util.promisify(fs.readFile);
 const copy = util.promisify(fs.copyFile);
 
 /**
- * ! Redownload the page and get its page object back from the db
  * @param {String} id - ID of the page
  */
 const refreshPage = async (id) => {

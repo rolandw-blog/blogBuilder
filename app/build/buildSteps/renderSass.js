@@ -6,7 +6,8 @@ require("dotenv").config();
 // render out sass and write it to the dist folder
 // entry could equal: 'src/styles/styles.scss'
 // output could equal: 'dist/app.css'
-module.exports = (entry, output) => {
+module.exports = (entry, output, options) => {
+	const {quiet} = options || false;
 	sass.render(
 		{
 			file: path.resolve(process.env.ROOT, entry),
@@ -15,11 +16,11 @@ module.exports = (entry, output) => {
 		},
 		function (error, result) {
 			if (!error) {
-				console.log(`rendered ${result.stats.entry}`);
 				fs.writeFile(
 					path.resolve(process.env.ROOT, output),
 					result.css,
 					() => {
+						if (!quiet) console.log(`rendered ${result.stats.entry}`);
 						//success
 					}
 				);

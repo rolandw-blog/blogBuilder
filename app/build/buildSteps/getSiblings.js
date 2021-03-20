@@ -1,6 +1,5 @@
 const debug = require("debug")("build:getSiblings");
 const error = require("debug")("v_build:error");
-const signPayload = require("./signPayload");
 const fetch = require("node-fetch");
 const path = require("path");
 
@@ -11,18 +10,11 @@ const getPages = async (websitePath) => {
 		uuid: "some random uuid here",
 	};
 
-	const sig = signPayload(body);
-	const headers = {
-		Authorization: "Bearer 3imim8awgeq99ikbmg14lnqe0fu8",
-		"x-payload-signature": sig,
-	};
-
 	const url = `${
 		process.env.WATCHER_IP
 	}/pages/websitePath/${websitePath.replace(/\//g, "%2F")}`;
 	const request = await fetch(url, {
 		method: "get",
-		headers: headers,
 	});
 	const response = await request;
 	const json = response.json();

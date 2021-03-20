@@ -6,7 +6,6 @@ const router = express.Router();
 
 // controllers
 const buildPage = require("../controllers/buildPage");
-const buildPages = require("../controllers/buildPages");
 
 const routes = [
 	{
@@ -20,19 +19,7 @@ const routes = [
 			parameters: [],
 			example: "/5f3fb41fdb3c861093356530",
 		},
-	},
-	// {
-	// 	path: "/",
-	// 	method: "get",
-	// 	middleware: [],
-	// 	handler: buildPages,
-	// 	help: {
-	// 		description: "Build all routes",
-	// 		method: this.method,
-	// 		parameters: [],
-	// 		example: "/",
-	// 	},
-	// },
+	}
 ];
 
 // build the router!
