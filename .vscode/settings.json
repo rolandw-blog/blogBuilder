@@ -6,5 +6,22 @@
 		"key": "/home/roland/Documents/certificates/server.key", //full path of the private key
 		"passphrase": "P@ssw0rd"
 	},
-	"liveServer.settings.multiRootWorkspaceName": "staticFolio"
+	"liveServer.settings.multiRootWorkspaceName": "staticFolio",
+	"workbench.colorCustomizations": {
+		"activityBar.activeBackground": "#8a6bdc",
+		"activityBar.activeBorder": "#81391e",
+		"activityBar.background": "#8a6bdc",
+		"activityBar.foreground": "#15202b",
+		"activityBar.inactiveForeground": "#15202b99",
+		"activityBarBadge.background": "#81391e",
+		"activityBarBadge.foreground": "#e7e7e7",
+		"statusBar.background": "#6942d2",
+		"statusBar.foreground": "#e7e7e7",
+		"statusBarItem.hoverBackground": "#8a6bdc",
+		"titleBar.activeBackground": "#6942d2",
+		"titleBar.activeForeground": "#e7e7e7",
+		"titleBar.inactiveBackground": "#6942d299",
+		"titleBar.inactiveForeground": "#e7e7e799"
+	},
+	"peacock.color": "#6942d2"
 }
