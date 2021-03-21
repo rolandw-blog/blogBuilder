@@ -22,5 +22,8 @@ COPY ./app /usr/src/app
  # Expose ports
 EXPOSE 3000
 EXPOSE 27017
+
+USER 1000:1000
+
  # Start!
 CMD [ "npm", "run", "monitor" ]
