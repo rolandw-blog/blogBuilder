@@ -23,7 +23,7 @@ const getBreadcrumbs = async (templateData, options) => {
 	const pages = [];
 
 	// copy the array to temp so we can pop elements from it
-	const temp = websitePath;
+	const temp = [...websitePath];
 	do {
 		// path: "/"		becomes ""
 		// path: "/foo"		becomes "/foo"
