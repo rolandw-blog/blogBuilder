@@ -13,6 +13,7 @@ const renderSass = require('./buildSteps/handleAssets/renderSass');
 // to populate the templateData object within the class
 const getParent = require('./buildSteps/getParent');
 const getSiblings = require('./buildSteps/getSiblings');
+const getNeighbors = require('./buildSteps/getNeighbors');
 
 
 class PageBuilder {
@@ -60,6 +61,8 @@ class PageBuilder {
 
 }
 
+// ! ##──── TESTING ───────────────────────────────────────────────────────────────────────────
+
 // for now im just testing here with a random page ID in the database
 // const factory = new PageBuilder("5f3a7be2605ef400b4ba3de6") // notes/programming/github
 const factory = new PageBuilder("5f3a7c67605ef400b4ba3df4") // notes/programming
@@ -72,16 +75,18 @@ const factory = new PageBuilder("5f3a7c67605ef400b4ba3df4") // notes/programming
 // define the steps we want to complete, these steps will add data to the pageBuilders templateData
 const templateSteps = [
 	{name: "parent", function: (templateData) => getParent(templateData.websitePath)},
-	{name: "siblings", function: (templateData) => getSiblings(templateData.parent.join("/"))},
+	{name: "siblings", function: (templateData) => getSiblings(templateData.parent.join("/"), 1)},
+	{name: "children", function: (templateData) => getSiblings(templateData.websitePath.join("/"), 1)},
+	{name: "neighbors", function: (templateData) => getNeighbors(templateData)},
 ]
 
 
 // ? The first way for getting the template set up
-// const test = async () => {
-// 	const a = await factory.prepareTemplateData(templateSteps)
-// 	console.log(a)
-// }
-// test()
+const test = async () => {
+	const a = await factory.prepareTemplateData(templateSteps)
+	console.log(a.neighbors)
+}
+test()
 
 
 // ? The other way for getting the template set up

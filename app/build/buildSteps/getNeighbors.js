@@ -1,22 +1,17 @@
-const getParent = require("./getParent");
-const debug = require("debug")("build:neighbors");
-const path = require("path");
-/**
- *
- * @param {Array} siblings - Array of siblings
- * @param {JSON} page - database page
- * @example getNeighbors(['page1', 'page2'], {websitePath: '/path/pages'})
- */
-const getNeighbors = (siblings, page) => {
-	const result = { prev: {}, next: {} };
+const getNeighbors = (templateData) => {
+	const result = { prev: undefined, next: undefined };
+	const {siblings, _id} = templateData;
 
-	// use find() to get the first page that matches the arguments websitePath by checking every sibling
-	siblings.find((potentialPage, i) => {
-		if (page.websitePath == potentialPage.websitePath) {
-			result.next = siblings[i + 1];
-			result.prev = siblings[i - 1];
-		}
-	});
+	// get the location of the actual page within its siblings
+	const currPageIndexInSiblings = siblings.findIndex((s) => {
+		if (s._id === _id) return s;
+	})
+
+	// if the location in its siblings + 1 is in range, then set it
+	if (currPageIndexInSiblings >= 1) result.prev = siblings[currPageIndexInSiblings - 1];
+
+	// if the location in its siblings + 1 is in range, then set it
+	if (currPageIndexInSiblings < siblings.length - 1) result.next = siblings[currPageIndexInSiblings + 1];
 
 	return result;
 };
