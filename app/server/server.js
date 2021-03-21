@@ -3,7 +3,7 @@ const fs = require("fs");
 const express = require("express");
 const debug = require("debug")("build:server");
 const cors = require("cors");
-const bodyParser = require("body-parser");	
+const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 require("dotenv").config();
 const miscRoutes = require("./routes/miscRoutes");
