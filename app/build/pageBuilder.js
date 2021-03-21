@@ -1,7 +1,7 @@
 const fs = require('fs');
-const path = require('path');
 const csso = require('csso');
 const fetch = require('node-fetch');
+const PageRender = require('./pageRenderer');
 require("dotenv").config()
 
 const wait = (ms) => new Promise((res) => setTimeout(res, ms));
@@ -17,13 +17,21 @@ const getNeighbors = require('./buildSteps/getNeighbors');
 const getBreadcrumbs = require('./buildSteps/getBreadcrumbs');
 const getDateData = require('./buildSteps/getDateData');
 const getLastModified = require('./buildSteps/getLastModified');
+const {getScripts, getHeaders} = require("./buildSteps/getHeadersAndScripts")
+
 
 
 class PageBuilder {
-	constructor(id) {
+	constructor(id, renderer) {
 		if (!fs.existsSync("dist")) fs.mkdirSync("dist");
 		this.id = id;
 		this._templateData = this.getPage(id)
+		this.pageRender = renderer;
+	}
+
+	async build() {
+		const sources = await this._templateData.source
+		this.pageRender.renderPage(sources)
 	}
 
 	async getPage(id) {
@@ -66,11 +74,14 @@ class PageBuilder {
 
 // ! ##──── TESTING ───────────────────────────────────────────────────────────────────────────
 
+const blogPostRenderer = new PageRender("blogPost.ejs");
+
+
 // for now im just testing here with a random page ID in the database
 // const factory = new PageBuilder("5f3a7be2605ef400b4ba3de6") // notes/programming/github
 // const factory = new PageBuilder("5f3a7c67605ef400b4ba3df4") // notes/programming
 // const factory = new PageBuilder("5f39187aa50877014564db6e") // notes
-const factory = new PageBuilder("5fd5783bf4500b001f1144a7") // deleteMe/test
+const factory = new PageBuilder("5fd5783bf4500b001f1144a7", blogPostRenderer) // deleteMe/test
 
 // TODO find a way to do this only once
 // Render the sass for this page
@@ -89,13 +100,17 @@ const templateSteps = [
 		return await (await fetch(url)).json();
 	}},
 	{name: "lastModified", function: (templateData) => getLastModified(templateData)},
+	{name: "styles", function: (templateData) => getHeaders(templateData.meta.template)},
+	{name: "scripts", function: (templateData) => getScripts(templateData.meta.template)},
 ]
 
 
 // ? The first way for getting the template set up
 const test = async () => {
 	const a = await factory.prepareTemplateData(templateSteps)
-	console.log(a.lastModified)
+	// factory.build()
+	console.log(a.scripts)
+	console.log(a.styles)
 	// console.log(JSON.stringify(a.lastModified))
 }
 test()
