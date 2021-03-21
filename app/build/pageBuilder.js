@@ -33,24 +33,21 @@ class PageBuilder {
 	}
 
 	async prepareTemplateData(steps) {
-		const jobs = [];
-
-		for(const step of steps) {
-
-			const templateData = await this._templateData;
-
-			// push a job to the stack
-			jobs.push(new Promise((res) => {
-				const stepName = step.name; // extract the steps name
-				const data = step.function(templateData); // run the step
-				this._templateData[stepName] = data; // update the template data
-				console.log("completed job:", stepName)
-				res() // call resolve to let promise.all know we are done with this task
-			}))
-		}
-
-		// make sure all our template building jobs have completed
-		return Promise.all(jobs).then(() => {console.log("done!")});
+		// https://github.com/RolandWarburton/knowledge/blob/master/programming/Javascript/Promise%20Chaining%20-%20Promises%20with%20Dependencies.md
+		return steps.reduce((acc, curr, i, arr) => {
+			return acc.then(async (curr) => {
+				const step = arr[i]
+				const data = await step.function(curr) // get the data
+				curr[step.name] = data // set the data in the current loop
+				// console.log(`curr has been updated`);
+				return curr
+			});
+		}, this.templateData)
+		.then((result) => {
+			// now that we have ALL data, set the template to it!
+			this._templateData = result
+			return result
+		});
 	}
 
 	async renderSass() {return renderSass()}
@@ -64,7 +61,9 @@ class PageBuilder {
 }
 
 // for now im just testing here with a random page ID in the database
-const factory = new PageBuilder("5f83269f900fd25401b55f54")
+// const factory = new PageBuilder("5f3a7be2605ef400b4ba3de6") // notes/programming/github
+const factory = new PageBuilder("5f3a7c67605ef400b4ba3df4") // notes/programming
+// const factory = new PageBuilder("5f39187aa50877014564db6e") // notes
 
 // TODO find a way to do this only once
 // Render the sass for this page
@@ -73,11 +72,23 @@ const factory = new PageBuilder("5f83269f900fd25401b55f54")
 // define the steps we want to complete, these steps will add data to the pageBuilders templateData
 const templateSteps = [
 	{name: "parent", function: (templateData) => getParent(templateData.websitePath)},
-	{name: "siblings", function: (templateData) => getSiblings(templateData.websitePath.join("/"))},
+	{name: "siblings", function: (templateData) => getSiblings(templateData.parent.join("/"))},
 ]
 
-factory.prepareTemplateData(templateSteps).then(() => {
-	console.log("Finished preparing the template data")
-});
+
+// ? The first way for getting the template set up
+// const test = async () => {
+// 	const a = await factory.prepareTemplateData(templateSteps)
+// 	console.log(a)
+// }
+// test()
+
+
+// ? The other way for getting the template set up
+// factory.prepareTemplateData(templateSteps)
+// .then((td) => {
+// 	console.log("Finished preparing the template data")
+// 	console.log(td)
+// });
 
 module.exports = PageBuilder;
