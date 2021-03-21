@@ -1,6 +1,3 @@
-<!-- Build ID: <%- head.sha %>  -->
-<!-- Build Message: <%- head.commit.message %>  -->
-<!-- Page rendered at: <%- renderTime %>  -->
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -25,8 +22,8 @@
 	<body>
 		<div id="hero">
 			<h1 class="lightHyperLink heroTitle"><%- pageName %></h1>
-			<a class="lightHyperLink" href="<%- backLink%>">
-				← back to <%- parentName %>
+			<a class="lightHyperLink" href="<%- parent.join("/")%>">
+				← back to <%- websitePath[websitePath.length - 1] %>
 			</a>
 			<nav id="heroNav">
 				<div id="dynamic-nav">

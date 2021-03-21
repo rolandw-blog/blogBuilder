@@ -19,24 +19,12 @@
 	<% } %>
 </div>
 
-<!-- <div id="nav-logo-box">
-	<div id="logoNavWrapper">
-		<img height="25px" src="/media/logo.svg" id="logo" />
-	</div>
-</div> -->
-
 <div id="nav-created-box">
 	<strong class="lightHyperLink">Added:</strong>
-	<span class="lightHyperLink"><%=createdDate.year%>.<%=createdDate.month%>.<%=createdDate.day%></span>
+	<span class="lightHyperLink"><%=firstModified.data.timestamp%></span>
 </div>
 
-<% if(lastEdit.year != undefined){ %>
 <div id="nav-edited-box">
 	<strong class="lightHyperLink">Edited: </strong>
-	<span class="lightHyperLink"><%=lastEdit.year%>.<%=lastEdit.month%>.<%=lastEdit.day%></span>
+	<span class="lightHyperLink"><%=lastModified.data.timestamp%></span>
 </div>
-<% } else { %>
-<div id="nav-edited-box"><strong class="lightHyperLink">Edited: </strong><span class="lightHyperLink">Unknown</span></div>
-<% } %>
-
-<!-- </div> -->

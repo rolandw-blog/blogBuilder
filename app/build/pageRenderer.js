@@ -41,14 +41,14 @@ class PageRenderer {
 		// render out the markdown to html
 		let html = marked(markdown)
 
-		// returns a function for currying
-		return (steps) => {
-			// iterate over the postProcessingSteps array and apply the functions to the
-			for (const step of steps) {
-				html = step(html)
-			}
-			return html
-		}
+		// // returns a function for currying
+		// return (steps) => {
+		// 	// iterate over the postProcessingSteps array and apply the functions to the
+		// 	for (const step of steps) {
+		// 		html = step(html)
+		// 	}
+		// }
+		return html
 	}
 
 	async renderPage(sources) {
@@ -67,8 +67,8 @@ class PageRenderer {
 		]
 
 		// then render the markdown into html
-		const markdownOutputHtml = this.renderMarkdown(markdownOutput)(postProcessingSteps);
-		console.log(markdownOutputHtml);
+		const markdownOutputHtml = this.renderMarkdown(markdownOutput);
+		return markdownOutputHtml;
 	}
 }
 

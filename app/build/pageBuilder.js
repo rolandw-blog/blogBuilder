@@ -1,6 +1,8 @@
 const fs = require('fs');
+const path = require('path');
 const csso = require('csso');
 const fetch = require('node-fetch');
+const ejs = require('ejs');
 const PageRender = require('./pageRenderer');
 require("dotenv").config()
 
@@ -8,6 +10,7 @@ const wait = (ms) => new Promise((res) => setTimeout(res, ms));
 
 // import helper functions for the PageBuilder
 const renderSass = require('./buildSteps/handleAssets/renderSass');
+const writeHtml = require('./buildSteps/writeHtml')
 
 // import functions for the templateSteps array, which is given to the PageBuilder
 // to populate the templateData object within the class
@@ -16,8 +19,11 @@ const getSiblings = require('./buildSteps/getSiblings');
 const getNeighbors = require('./buildSteps/getNeighbors');
 const getBreadcrumbs = require('./buildSteps/getBreadcrumbs');
 const getDateData = require('./buildSteps/getDateData');
-const getLastModified = require('./buildSteps/getLastModified');
+const {getLastModified, getFirstModified} = require('./buildSteps/getModified');
 const {getScripts, getHeaders} = require("./buildSteps/getHeadersAndScripts")
+
+// postProcessing functions
+const { minify } = require("html-minifier");
 
 
 
@@ -30,8 +36,13 @@ class PageBuilder {
 	}
 
 	async build() {
-		const sources = await this._templateData.source
-		this.pageRender.renderPage(sources)
+		const sources = await this._templateData.source;
+		this._templateData.content = await this.pageRender.renderPage(sources);
+
+		const template = await this.pageRender.template;
+		const html = ejs.render(template, this._templateData);
+		console.log(this._templateData.firstModified)
+		writeHtml(html, this._templateData)
 	}
 
 	async getPage(id) {
@@ -41,7 +52,7 @@ class PageBuilder {
 		};
 		const response = await fetch(url, options);
 		const data = await response.json();
-		return data[0];
+		return await data[0];
 	}
 
 	async prepareTemplateData(steps) {
@@ -100,17 +111,19 @@ const templateSteps = [
 		return await (await fetch(url)).json();
 	}},
 	{name: "lastModified", function: (templateData) => getLastModified(templateData)},
+	{name: "firstModified", function: (templateData) => getFirstModified(templateData)},
 	{name: "styles", function: (templateData) => getHeaders(templateData.meta.template)},
 	{name: "scripts", function: (templateData) => getScripts(templateData.meta.template)},
+	{name: "templateDir", function: (templateData) => path.resolve(process.env.SRC, "templates")},
 ]
 
 
 // ? The first way for getting the template set up
 const test = async () => {
 	const a = await factory.prepareTemplateData(templateSteps)
-	// factory.build()
-	console.log(a.scripts)
-	console.log(a.styles)
+	factory.build()
+	// console.log(a.scripts)
+	// console.log(a.styles)
 	// console.log(JSON.stringify(a.lastModified))
 }
 test()
