@@ -67,8 +67,9 @@ class PageBuilder {
 
 // for now im just testing here with a random page ID in the database
 // const factory = new PageBuilder("5f3a7be2605ef400b4ba3de6") // notes/programming/github
-const factory = new PageBuilder("5f3a7c67605ef400b4ba3df4") // notes/programming
+// const factory = new PageBuilder("5f3a7c67605ef400b4ba3df4") // notes/programming
 // const factory = new PageBuilder("5f39187aa50877014564db6e") // notes
+const factory = new PageBuilder("5fd5783bf4500b001f1144a7") // deleteMe/test
 
 // TODO find a way to do this only once
 // Render the sass for this page
@@ -82,13 +83,18 @@ const templateSteps = [
 	{name: "neighbors", function: (templateData) => getNeighbors(templateData)},
 	{name: "breadCrumbs", function: (templateData) => getBreadcrumbs(templateData)},
 	{name: "dateData", function: (templateData) => getDateData(templateData)},
+	{name: "history", function: async (templateData) => {
+		const url = `${process.env.WATCHER_IP}/history/find/${templateData._id}`;
+		return await (await fetch(url)).json();
+	}},
 ]
 
 
 // ? The first way for getting the template set up
 const test = async () => {
 	const a = await factory.prepareTemplateData(templateSteps)
-	console.log(a.dateData)
+	// console.log(a.history)
+	console.log(JSON.stringify(a))
 }
 test()
 
