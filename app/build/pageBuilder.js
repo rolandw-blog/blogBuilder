@@ -14,6 +14,7 @@ const renderSass = require('./buildSteps/handleAssets/renderSass');
 const getParent = require('./buildSteps/getParent');
 const getSiblings = require('./buildSteps/getSiblings');
 const getNeighbors = require('./buildSteps/getNeighbors');
+const getBreadcrumbs = require('./buildSteps/getBreadcrumbs');
 
 
 class PageBuilder {
@@ -78,13 +79,14 @@ const templateSteps = [
 	{name: "siblings", function: (templateData) => getSiblings(templateData.parent.join("/"), 1)},
 	{name: "children", function: (templateData) => getSiblings(templateData.websitePath.join("/"), 1)},
 	{name: "neighbors", function: (templateData) => getNeighbors(templateData)},
+	{name: "breadCrumbs", function: (templateData) => getBreadcrumbs(templateData)},
 ]
 
 
 // ? The first way for getting the template set up
 const test = async () => {
 	const a = await factory.prepareTemplateData(templateSteps)
-	console.log(a.neighbors)
+	console.log(a.breadCrumbs)
 }
 test()
 

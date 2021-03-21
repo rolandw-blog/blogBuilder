@@ -1,50 +1,55 @@
 const fetch = require("node-fetch");
-const debug = require("debug")("build:breadCrumbs");
-const { URLSearchParams } = require("url");
 
-const getPage = async (websitePath) => {
-	const body = {
-		websitePath: websitePath,
-		uuid: "some uuid here",
-	};
+const getPage = async (websitePath, level) => {
+	const url = `${process.env.WATCHER_IP}/page?websitePath=/${websitePath}`;
 
-	const url = `${process.env.WATCHER_IP}/page?websitePath=${websitePath}`;
+	// Request body
+	const options = {
+		method: "GET"
+	}
 
-	return fetch(url, {
-		method: "get",
-	});
+	// do the request
+	const request = await fetch(url, options);
+	const response = await request.json();
+	return response;
 };
 
-const getBreadcrumbs = async (websitePath) => {
-	const webPathArray = websitePath.split("/").filter(String);
-	const result = [];
+const getBreadcrumbs = async (templateData, options) => {
+	const { websitePath } = templateData;
+	const { includeHome } = options || false;
 
 	// use this to resolve all the fetch jobs
 	const jobs = [];
+	const pages = [];
 
-	// build the webpath up again
-	let webpathCurrentURL = "";
+	// copy the array to temp so we can pop elements from it
+	const temp = websitePath;
+	do {
+		// path: "/"		becomes ""
+		// path: "/foo"		becomes "/foo"
+		// path: "/foo/bar"	becomes "/foo/bar"
+		const pagePath = (temp.join("/") == "/") ? "" : temp.join("/")
 
-	// get the first page which is not included in the webPathArray
-	const home = await (await getPage("/")).json();
-	home.pageName = "~";
-	jobs.push(result.push(home));
+		// then get the page based on the pagePath
+		jobs.push(getPage(pagePath).then(page => pages.push(page[0])));
 
-	// loop through the rest of the segments in the websitePath and get their pages
-	// each time append the segment to the other ones to follow build the path
-	for (segment of webPathArray) {
-		webpathCurrentURL = `${webpathCurrentURL}/${segment}`;
-		// debug(`looking for ${webpathCurrentURL}`);
-		const page = await getPage(webpathCurrentURL);
-		result.push(await page.json());
+		// remove the end of the array
+		temp.pop();
+	} while(temp.length !== 0);
 
-		// track concurrent jobs to resolve later
-		jobs.push(page);
-	}
+	// push the root page as well if requested
+	if (includeHome) jobs.push(getPage("").then(page => pages.push(page[0])));
 
-	// resolve all the page queries
+	// wait for all the pages to come back
 	await Promise.all(jobs);
-	return result;
+
+	// Sort by websitePathLength in ascending order
+	pages.sort((a, b) => {
+		if (a.websitePathLength > b.websitePath) return 1;
+		else return -1;
+	});
+
+	return pages;
 };
 
 module.exports = getBreadcrumbs;
