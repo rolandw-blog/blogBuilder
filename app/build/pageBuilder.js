@@ -16,6 +16,7 @@ const getSiblings = require('./buildSteps/getSiblings');
 const getNeighbors = require('./buildSteps/getNeighbors');
 const getBreadcrumbs = require('./buildSteps/getBreadcrumbs');
 const getDateData = require('./buildSteps/getDateData');
+const getLastModified = require('./buildSteps/getLastModified');
 
 
 class PageBuilder {
@@ -87,14 +88,15 @@ const templateSteps = [
 		const url = `${process.env.WATCHER_IP}/history/find/${templateData._id}`;
 		return await (await fetch(url)).json();
 	}},
+	{name: "lastModified", function: (templateData) => getLastModified(templateData)},
 ]
 
 
 // ? The first way for getting the template set up
 const test = async () => {
 	const a = await factory.prepareTemplateData(templateSteps)
-	// console.log(a.history)
-	console.log(JSON.stringify(a))
+	console.log(a.lastModified)
+	// console.log(JSON.stringify(a.lastModified))
 }
 test()
 
