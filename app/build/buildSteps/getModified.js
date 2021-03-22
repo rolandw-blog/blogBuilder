@@ -1,4 +1,5 @@
 const getLastModified = (templateData) => {
+    if (templateData.history.length === 0) return undefined;
     return templateData.history.reduce((max, e) => {
         if (
             new Date(e.data.timestamp).getTime() <=
@@ -12,6 +13,7 @@ const getLastModified = (templateData) => {
 }
 
 const getFirstModified = (templateData) => {
+    if (templateData.history.length === 0) return undefined;
     return templateData.history.reduce((min, e) => {
         if (
             new Date(e.data.timestamp).getTime() >=

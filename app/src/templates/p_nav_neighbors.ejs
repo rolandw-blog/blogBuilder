@@ -5,7 +5,7 @@
 		>↑ <strong><%=neighbors.prev.pageName%></strong></a
 	>
 	<% } else { %>
-	<a class="lightHyperLink" href="#">↑ <strong></strong></a>
+	<!-- <a class="lightHyperLink" href="#">↑ <strong></strong></a> -->
 	<% } %>
 </div>
 
@@ -15,16 +15,20 @@
 		>↓ <strong><%=neighbors.next.pageName%></strong></a
 	>
 	<% } else { %>
-	<a class="lightHyperLink" href="#">↓ <strong></strong></a>
+	<!-- <a class="lightHyperLink" href="#">↓ <strong></strong></a> -->
 	<% } %>
 </div>
 
 <div id="nav-created-box">
+	<% if(firstModified != undefined){ %>
 	<strong class="lightHyperLink">Added:</strong>
 	<span class="lightHyperLink"><%=firstModified.data.timestamp%></span>
+	<% } %>
 </div>
 
 <div id="nav-edited-box">
+	<% if(lastModified != undefined){ %>
 	<strong class="lightHyperLink">Edited: </strong>
 	<span class="lightHyperLink"><%=lastModified.data.timestamp%></span>
+	<% } %>
 </div>
