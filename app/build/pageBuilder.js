@@ -32,7 +32,8 @@ class PageBuilder {
 		if (!fs.existsSync("dist")) fs.mkdirSync("dist");
 		this.id = id;
 		this._templateData = this.getPage(id)
-		this.pageRender = renderer;
+		this.pageRender = renderer || new PageRender("blogPost.ejs");
+		this.parentPages = [];
 	}
 
 	async build() {
@@ -41,8 +42,41 @@ class PageBuilder {
 
 		const template = await this.pageRender.template;
 		const html = ejs.render(template, this._templateData);
-		console.log(this._templateData.firstModified)
 		writeHtml(html, this._templateData)
+		return html;
+	}
+
+	async buildAllParents() {
+		const websitePath = [...await this._templateData.websitePath];
+		const jobs = [];
+
+		// loop through each parent from /foo/bar/baz to /foo/bar to /foo to /
+		// to exclude / change the loop to "> 1"
+		do {
+			// remove the end of the path
+			websitePath.pop()
+
+			// construct the parent with the new path
+			const websitePathParent = websitePath.join("/");
+
+			// create the URL to fetch with
+			const url = `${process.env.WATCHER_IP}/page?websitePath=/${websitePathParent}`;
+
+			// fetch the page data for this parent
+			const parent = fetch(url, {method: "GET"}).then(data => data.json()).then((json => json[0]))
+			jobs.push(parent) // push the parent fetch job to the queue
+		} while(websitePath.length > 0)
+
+		// resolve all the parent nodes
+		const parentNodes = await Promise.all(jobs)
+
+		// build every parent page
+		for (const node of parentNodes) {
+			const pageRender = new PageRender(node.meta.template);
+			const pageBuilder = new PageBuilder(node._id, pageRender);
+			await pageBuilder.prepareTemplateData(templateSteps)
+			pageBuilder.build()
+		}
 	}
 
 	async getPage(id) {
@@ -92,7 +126,8 @@ const blogPostRenderer = new PageRender("blogPost.ejs");
 // const factory = new PageBuilder("5f3a7be2605ef400b4ba3de6") // notes/programming/github
 // const factory = new PageBuilder("5f3a7c67605ef400b4ba3df4") // notes/programming
 // const factory = new PageBuilder("5f39187aa50877014564db6e") // notes
-const factory = new PageBuilder("5fd5783bf4500b001f1144a7", blogPostRenderer) // deleteMe/test
+// const factory = new PageBuilder("5fd5783bf4500b001f1144a7", blogPostRenderer) // deleteMe/test
+const factory = new PageBuilder("5f83269f900fd25401b55f54", blogPostRenderer) // notes/linux/samba
 
 // TODO find a way to do this only once
 // Render the sass for this page
