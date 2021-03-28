@@ -19,8 +19,11 @@ const getSiblings = require('./buildSteps/getSiblings');
 const getNeighbors = require('./buildSteps/getNeighbors');
 const getBreadcrumbs = require('./buildSteps/getBreadcrumbs');
 const getDateData = require('./buildSteps/getDateData');
-const {getLastModified, getFirstModified} = require('./buildSteps/getModified');
-const {getScripts, getHeaders} = require("./buildSteps/getHeadersAndScripts")
+const { getLastModified, getFirstModified } = require('./buildSteps/getModified');
+const { getScripts, getHeaders } = require("./buildSteps/getHeadersAndScripts")
+
+// template steps
+// const templateSteps = require("./common/templateSteps")
 
 // postProcessing functions
 const { minify } = require("html-minifier");
@@ -36,17 +39,24 @@ class PageBuilder {
 		this.parentPages = [];
 	}
 
-	async build() {
+	async build(postProcessingSteps) {
+		postProcessingSteps = (postProcessingSteps.length === 0) ? [] : postProcessingSteps
 		const sources = await this._templateData.source;
-		this._templateData.content = await this.pageRender.renderPage(sources);
+		this._templateData.content = await this.pageRender.renderMarkdown(sources);
 
 		const template = await this.pageRender.template;
-		const html = ejs.render(template, this._templateData);
+		let html = ejs.render(template, this._templateData);
+
+		// run post processing on the html
+		for (const step of postProcessingSteps) {
+			html = step(html)
+		}
+
 		writeHtml(html, this._templateData)
 		return html;
 	}
 
-	async buildAllParents() {
+	async buildAllParents(templateSteps, postProcessingSteps) {
 		const websitePath = [...await this._templateData.websitePath];
 		const jobs = [];
 
@@ -84,7 +94,7 @@ class PageBuilder {
 			const pageRender = new PageRender(node.meta.template);
 			const pageBuilder = new PageBuilder(node._id, pageRender);
 			await pageBuilder.prepareTemplateData(templateSteps)
-			pageBuilder.build()
+			pageBuilder.build(postProcessingSteps)
 		}
 	}
 
@@ -100,6 +110,7 @@ class PageBuilder {
 
 	async prepareTemplateData(steps) {
 		// https://github.com/RolandWarburton/knowledge/blob/master/programming/Javascript/Promise%20Chaining%20-%20Promises%20with%20Dependencies.md
+		// Run each promise sequentially, ensure A finishes before B starts
 		return steps.reduce((acc, curr, i, arr) => {
 			return acc.then(async (curr) => {
 				const step = arr[i]
