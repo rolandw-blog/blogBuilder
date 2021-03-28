@@ -128,10 +128,6 @@ class PageBuilder {
 			});
 	}
 
-	async renderSass() {
-		return renderSass();
-	}
-
 	// Be warned! this comes back as a promise
 	get templateData() {
 		return this._templateData;
