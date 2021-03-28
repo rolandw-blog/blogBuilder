@@ -19,11 +19,11 @@ RUN npm install
 # Bundle app source
 COPY ./app /usr/src/app
 
- # Expose ports
+# Expose ports
 EXPOSE 3000
 EXPOSE 27017
 
-USER 1000:1000
+# USER 1000:1000
 
- # Start!
+# Start!
 CMD [ "npm", "run", "monitor" ]

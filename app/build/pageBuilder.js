@@ -1,26 +1,26 @@
-const fs = require('fs');
-const path = require('path');
-const csso = require('csso');
-const fetch = require('node-fetch');
-const ejs = require('ejs');
-const PageRender = require('./pageRenderer');
-require("dotenv").config()
+const fs = require("fs");
+const path = require("path");
+const csso = require("csso");
+const fetch = require("node-fetch");
+const ejs = require("ejs");
+const PageRender = require("./pageRenderer");
+require("dotenv").config();
 
 const wait = (ms) => new Promise((res) => setTimeout(res, ms));
 
 // import helper functions for the PageBuilder
-const renderSass = require('./buildSteps/handleAssets/renderSass');
-const writeHtml = require('./buildSteps/writeHtml')
+const renderSass = require("./buildSteps/handleAssets/renderSass");
+const writeHtml = require("./buildSteps/writeHtml");
 
 // import functions for the templateSteps array, which is given to the PageBuilder
 // to populate the templateData object within the class
-const getParent = require('./buildSteps/getParent');
-const getSiblings = require('./buildSteps/getSiblings');
-const getNeighbors = require('./buildSteps/getNeighbors');
-const getBreadcrumbs = require('./buildSteps/getBreadcrumbs');
-const getDateData = require('./buildSteps/getDateData');
-const { getLastModified, getFirstModified } = require('./buildSteps/getModified');
-const { getScripts, getHeaders } = require("./buildSteps/getHeadersAndScripts")
+const getParent = require("./buildSteps/getParent");
+const getSiblings = require("./buildSteps/getSiblings");
+const getNeighbors = require("./buildSteps/getNeighbors");
+const getBreadcrumbs = require("./buildSteps/getBreadcrumbs");
+const getDateData = require("./buildSteps/getDateData");
+const { getLastModified, getFirstModified } = require("./buildSteps/getModified");
+const { getScripts, getHeaders } = require("./buildSteps/getHeadersAndScripts");
 
 // template steps
 // const templateSteps = require("./common/templateSteps")
@@ -28,19 +28,17 @@ const { getScripts, getHeaders } = require("./buildSteps/getHeadersAndScripts")
 // postProcessing functions
 const { minify } = require("html-minifier");
 
-
-
 class PageBuilder {
 	constructor(id, renderer) {
 		if (!fs.existsSync("dist")) fs.mkdirSync("dist");
 		this.id = id;
-		this._templateData = this.getPage(id)
+		this._templateData = this.getPage(id);
 		this.pageRender = renderer || new PageRender("blogPost.ejs");
 		this.parentPages = [];
 	}
 
 	async build(postProcessingSteps) {
-		postProcessingSteps = (postProcessingSteps.length === 0) ? [] : postProcessingSteps
+		postProcessingSteps = postProcessingSteps.length === 0 ? [] : postProcessingSteps;
 		const sources = await this._templateData.source;
 		this._templateData.content = await this.pageRender.renderMarkdown(sources);
 
@@ -49,22 +47,22 @@ class PageBuilder {
 
 		// run post processing on the html
 		for (const step of postProcessingSteps) {
-			html = step(html)
+			html = step(html);
 		}
 
-		writeHtml(html, this._templateData)
+		writeHtml(html, this._templateData);
 		return html;
 	}
 
 	async buildAllParents(templateSteps, postProcessingSteps) {
-		const websitePath = [...await this._templateData.websitePath];
+		const websitePath = [...(await this._templateData.websitePath)];
 		const jobs = [];
 
 		// loop through each parent from /foo/bar/baz to /foo/bar to /foo to /
 		// to exclude / change the loop to "> 1"
 		do {
 			// remove the end of the path
-			websitePath.pop()
+			websitePath.pop();
 
 			// construct the parent with the new path
 			const websitePathParent = websitePath.join("/");
@@ -73,35 +71,37 @@ class PageBuilder {
 			const url = `${process.env.WATCHER_IP}/page?websitePath=/${websitePathParent}`;
 
 			// fetch the page data for this parent
-			const parent = fetch(url, { method: "GET" }).then(data => data.json()).then((json => json[0]))
+			const parent = fetch(url, { method: "GET" })
+				.then((data) => data.json())
+				.then((json) => json[0]);
 
 			// If the parent is defined for any parent path then that means that the page probably doesnt exist
 			// We should log that so that the developer can add that missing page, otherwise the user cant navigate to it
-			if (await parent === undefined || await parent === null) {
+			if ((await parent) === undefined || (await parent) === null) {
 				// TODO log an error
-				console.warn(`the url ${url} returned an unexpected value: ${await parent}`)
+				console.warn(`the url ${url} returned an unexpected value: ${await parent}`);
 			}
 
-			jobs.push(parent) // push the parent fetch job to the queue
-		} while(websitePath.length > 0)
+			jobs.push(parent); // push the parent fetch job to the queue
+		} while (websitePath.length > 0);
 
 		// resolve all the parent nodes
-		const parentNodes = await Promise.all(jobs)
-		const parentNodesFilteres = parentNodes.filter((e) => e !== undefined);
+		const parentNodes = await Promise.all(jobs);
+		const parentNodesFilters = parentNodes.filter((e) => e !== undefined);
 
 		// build every parent page
-		for (const node of parentNodesFilteres) {
+		for (const node of parentNodesFilters) {
 			const pageRender = new PageRender(node.meta.template);
 			const pageBuilder = new PageBuilder(node._id, pageRender);
-			await pageBuilder.prepareTemplateData(templateSteps)
-			pageBuilder.build(postProcessingSteps)
+			await pageBuilder.prepareTemplateData(templateSteps);
+			pageBuilder.build(postProcessingSteps);
 		}
 	}
 
 	async getPage(id) {
 		const url = `${process.env.WATCHER_IP}/page?_id=${id}`;
 		const options = {
-			method: 'GET',
+			method: "GET",
 		};
 		const response = await fetch(url, options);
 		const data = await response.json();
@@ -111,36 +111,41 @@ class PageBuilder {
 	async prepareTemplateData(steps) {
 		// https://github.com/RolandWarburton/knowledge/blob/master/programming/Javascript/Promise%20Chaining%20-%20Promises%20with%20Dependencies.md
 		// Run each promise sequentially, ensure A finishes before B starts
-		return steps.reduce((acc, curr, i, arr) => {
-			return acc.then(async (curr) => {
-				const step = arr[i]
-				const data = await step.function(curr) // get the data
-				curr[step.name] = data // set the data in the current loop
-				// console.log(`curr has been updated`);
-				return curr
+		return steps
+			.reduce((acc, curr, i, arr) => {
+				return acc.then(async (curr) => {
+					const step = arr[i];
+					const data = await step.function(curr); // get the data
+					curr[step.name] = data; // set the data in the current loop
+					// console.log(`curr has been updated`);
+					return curr;
+				});
+			}, this.templateData)
+			.then((result) => {
+				// now that we have ALL data, set the template to it!
+				this._templateData = result;
+				return result;
 			});
-		}, this.templateData)
-		.then((result) => {
-			// now that we have ALL data, set the template to it!
-			this._templateData = result
-			return result
-		});
 	}
 
-	async renderSass() {return renderSass()}
+	async renderSass() {
+		return renderSass();
+	}
 
 	// Be warned! this comes back as a promise
-	get templateData() {return this._templateData}
+	get templateData() {
+		return this._templateData;
+	}
 
 	// Because we defined a getter, we also need a setter
-	set templateData(data) {this._templateData = data}
-
+	set templateData(data) {
+		this._templateData = data;
+	}
 }
 
 // ! ##──── TESTING ───────────────────────────────────────────────────────────────────────────
 
 // const blogPostRenderer = new PageRender("blogPost.ejs");
-
 
 // // for now im just testing here with a random page ID in the database
 // // const factory = new PageBuilder("5f3a7be2605ef400b4ba3de6") // notes/programming/github
@@ -172,7 +177,6 @@ class PageBuilder {
 // 	{name: "templateDir", function: (templateData) => path.resolve(process.env.SRC, "templates")},
 // ]
 
-
 // // ? The first way for getting the template set up
 // const test = async () => {
 // 	const a = await factory.prepareTemplateData(templateSteps)
@@ -182,7 +186,6 @@ class PageBuilder {
 // 	// console.log(JSON.stringify(a.lastModified))
 // }
 // test()
-
 
 // // ? The other way for getting the template set up
 // // factory.prepareTemplateData(templateSteps)
