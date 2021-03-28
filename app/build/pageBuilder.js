@@ -63,15 +63,24 @@ class PageBuilder {
 			const url = `${process.env.WATCHER_IP}/page?websitePath=/${websitePathParent}`;
 
 			// fetch the page data for this parent
-			const parent = fetch(url, {method: "GET"}).then(data => data.json()).then((json => json[0]))
+			const parent = fetch(url, { method: "GET" }).then(data => data.json()).then((json => json[0]))
+
+			// If the parent is defined for any parent path then that means that the page probably doesnt exist
+			// We should log that so that the developer can add that missing page, otherwise the user cant navigate to it
+			if (await parent === undefined || await parent === null) {
+				// TODO log an error
+				console.warn(`the url ${url} returned an unexpected value: ${await parent}`)
+			}
+
 			jobs.push(parent) // push the parent fetch job to the queue
 		} while(websitePath.length > 0)
 
 		// resolve all the parent nodes
 		const parentNodes = await Promise.all(jobs)
+		const parentNodesFilteres = parentNodes.filter((e) => e !== undefined);
 
 		// build every parent page
-		for (const node of parentNodes) {
+		for (const node of parentNodesFilteres) {
 			const pageRender = new PageRender(node.meta.template);
 			const pageBuilder = new PageBuilder(node._id, pageRender);
 			await pageBuilder.prepareTemplateData(templateSteps)

@@ -3,7 +3,6 @@ const fs = require("fs");
 const express = require("express");
 const debug = require("debug")("build:server");
 const cors = require("cors");
-const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 require("dotenv").config();
 const miscRoutes = require("./routes/miscRoutes");
@@ -23,8 +22,12 @@ app.use(express.json()); // support JSON on all routes
 
 // ##──── routes ────────────────────────────────────────────────────────────────────────────
 app.use("/page", buildRoutes);
-// app.use("/download", downloadRoutes);
+
 app.use("/", miscRoutes);
+
+// const blogPostRenderer = new PageRender("blogPost.ejs");
+// const homeRenderer = new PageRender("home.ejs");
+// const menuRenderer= new PageRender("menu.ejs");
 
 // Start the server 🚀
 app.listen(process.env.PORT, async () => {
