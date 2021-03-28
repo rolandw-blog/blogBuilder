@@ -36,22 +36,7 @@ class PageRenderer {
 		return template;
 	}
 
-
-	renderMarkdown(markdown) {
-		// render out the markdown to html
-		let html = marked(markdown)
-
-		// // returns a function for currying
-		// return (steps) => {
-		// 	// iterate over the postProcessingSteps array and apply the functions to the
-		// 	for (const step of steps) {
-		// 		html = step(html)
-		// 	}
-		// }
-		return html
-	}
-
-	async renderPage(sources) {
+	async renderMarkdown(sources) {
 		// store markdown here
 		let markdownOutput = "";
 
@@ -67,7 +52,7 @@ class PageRenderer {
 		]
 
 		// then render the markdown into html
-		const markdownOutputHtml = this.renderMarkdown(markdownOutput);
+		const markdownOutputHtml = marked(markdownOutput);
 		return markdownOutputHtml;
 	}
 }
