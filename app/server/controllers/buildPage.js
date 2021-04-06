@@ -19,42 +19,8 @@ const { getScripts, getHeaders } = require("../../build/buildSteps/getHeadersAnd
 const templateSteps = require("../../build/common/templateSteps");
 const postProcessingSteps = require("../../build/common/postProcessingSteps");
 
-// const preSetup = async (page) => {
-// 	// TODO put this in a separate function
-// 	debug("writing scripts");
-// 	let index = fs.readFileSync(
-// 		path.resolve(process.env.ROOT, "scripts/index.js"),
-// 		"utf-8"
-// 	);
-// 	index = await minify(index);
-// 	fs.writeFileSync(
-// 		path.resolve(process.env.ROOT, "dist/index.js"),
-// 		index.code,
-// 		{
-// 			encoding: "utf8",
-// 			flag: "w",
-// 		}
-// 	);
-
-// 	let gist = fs.readFileSync(
-// 		path.resolve(process.env.ROOT, "scripts/gist.js"),
-// 		"utf-8"
-// 	);
-// 	gist = await minify(gist);
-// 	fs.writeFileSync(
-// 		path.resolve(process.env.ROOT, "dist/gist.js"),
-// 		gist.code,
-// 		{
-// 			encoding: "utf8",
-// 			flag: "w",
-// 		}
-// 	);
-// };
-
 const buildPage = async (req, res) => {
 	console.log(`building page ${req.params.id}`);
-
-	// preSetup(page);
 
 	try {
 		const assetManager = new AssetManager();
