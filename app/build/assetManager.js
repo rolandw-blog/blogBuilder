@@ -1,4 +1,4 @@
-const fs = require("fs");
+const fs = require("fs-extra");
 const path = require("path");
 const { promisify } = require("util");
 const readdirp = require("readdirp");
@@ -70,6 +70,16 @@ class AssetManager {
 			const minifiedCss = minifyCSS(await css).css;
 			writeFile(output, minifiedCss, { encoding: "utf8" });
 		}
+	}
+
+	async copyMedia() {
+		const mediaDir = path.resolve(process.env.SRC || "/usr/src/app/src", "media");
+		const outputDir = path.resolve(process.env.DIST || "/usr/src/app/dist", "media");
+		fs.copySync("/usr/src/app/src/media/avatar.svg", "/usr/src/app/src/dist/avatar.svg");
+		fs.copySync("/usr/src/app/src/media/favicon.ico", "/usr/src/app/src/dist/favicon.ico");
+		fs.copySync("/usr/src/app/src/media/logo.min.png", "/usr/src/app/src/dist/logo.min.png");
+
+		// fs.copySync("/usr/src/app/src/media/*", "/usr/src/app/src/dist/*");
 	}
 
 	// render out sass and write it to the dist folder
