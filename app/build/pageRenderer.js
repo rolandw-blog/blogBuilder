@@ -30,7 +30,7 @@ class PageRenderer {
 	}
 
 	async readTemplate(templateFile) {
-		const templatePath = path.resolve(process.env.SRC, "templates", templateFile);
+		const templatePath = path.resolve(process.env.ROOT, "templates", templateFile);
 		const template = await promisify(fs.readFile)(templatePath, "utf-8");
 		// console.log(template)
 		return template;

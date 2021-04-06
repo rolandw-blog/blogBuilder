@@ -67,6 +67,8 @@ class PageBuilder {
 			// construct the parent with the new path
 			const websitePathParent = websitePath.join("/");
 
+			console.log(`Building parent ${websitePathParent}`);
+
 			// create the URL to fetch with
 			const url = `${process.env.WATCHER_IP}/page?websitePath=/${websitePathParent}`;
 
@@ -77,7 +79,10 @@ class PageBuilder {
 
 			// If the parent is defined for any parent path then that means that the page probably doesnt exist
 			// We should log that so that the developer can add that missing page, otherwise the user cant navigate to it
-			if ((await parent) === undefined || (await parent) === null) {
+			if (
+				(websitePathParent !== "" && (await parent) === undefined) ||
+				(await parent) === null
+			) {
 				// TODO log an error
 				console.warn(`the url ${url} returned an unexpected value: ${await parent}`);
 			}
@@ -93,6 +98,7 @@ class PageBuilder {
 		for (const node of parentNodesFilters) {
 			const pageRender = new PageRender(node.meta.template);
 			const pageBuilder = new PageBuilder(node._id, pageRender);
+			console.log(`building parent ${node.pageName}`);
 			await pageBuilder.prepareTemplateData(templateSteps);
 			pageBuilder.build(postProcessingSteps);
 		}
