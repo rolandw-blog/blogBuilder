@@ -24,7 +24,6 @@ const routes = [
 ];
 
 // build the router!
-debug("building the build routes");
 buildRouter(router, routes);
 
 module.exports = router;

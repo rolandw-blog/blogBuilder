@@ -33,7 +33,7 @@ class PageBuilder {
 		if (!fs.existsSync("dist")) fs.mkdirSync("dist");
 		this.id = id;
 		this._templateData = this.getPage(id);
-		this.pageRender = renderer || new PageRender("blogPost.ejs");
+		this.pageRender = renderer || undefined;
 		this.parentPages = [];
 	}
 

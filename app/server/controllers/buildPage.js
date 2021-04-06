@@ -72,7 +72,7 @@ const buildPage = async (req, res) => {
 		const templateData = await builder.prepareTemplateData(templateSteps);
 
 		// Create a page renderer for the associated template
-		builder.pageRender = new PageRenderer(templateData.meta.template);
+		builder.pageRender = new PageRenderer(await templateData.meta.template);
 
 		// Build all the parents of the page
 		await builder.buildAllParents(templateSteps, postProcessingSteps);
