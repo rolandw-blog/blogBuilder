@@ -60,6 +60,7 @@ const buildPage = async (req, res) => {
 		const assetManager = new AssetManager();
 		assetManager.renderCSS();
 		assetManager.renderJS();
+		// assetManager.copyMedia();
 	} catch (err) {
 		return res.status(500).json(err);
 	}
