@@ -56,7 +56,7 @@ const buildPage = async (req, res) => {
 		}
 
 		// return the pages template data for the UI frontend
-		return res.status(200).json(templateData);
+		return res.status(200).json({ ...templateData, content: undefined });
 	} catch (err) {
 		return res.status(500).json(err);
 	}

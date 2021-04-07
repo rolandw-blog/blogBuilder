@@ -43,11 +43,20 @@ class PageBuilder {
 		this._templateData.content = await this.pageRender.renderMarkdown(sources);
 
 		const template = await this.pageRender.template;
-		let html = ejs.render(template, this._templateData);
+		let html = ""
+		try {
+			html = ejs.render(template, this._templateData);
+		} catch (err) {
+			console.log(`There was an error while ejs template. ${err}`)
+		}
 
 		// run post processing on the html
 		for (const step of postProcessingSteps) {
-			html = step(html);
+			try {
+				html = step(html);
+			} catch (err) {
+				console.log(`There was an error while post processing the html on step ${step}. We will skip this step.`);
+			}
 		}
 
 		writeHtml(html, this._templateData);

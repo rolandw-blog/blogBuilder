@@ -1,7 +1,7 @@
 <!-- <div > -->
 <div id="nav-prev-link">
 	<% if(neighbors.prev){ %>
-	<a class="lightHyperLink" href="<%=neighbors.prev.websitePath%>"
+	<a class="lightHyperLink" href="/<%=neighbors.prev.websitePath.join("/")%>"
 		>↑ <strong><%=neighbors.prev.pageName%></strong></a
 	>
 	<% } else { %>
@@ -11,7 +11,7 @@
 
 <div id="nav-next-link">
 	<% if(neighbors.next){ %>
-	<a class="lightHyperLink" href="<%=neighbors.next.websitePath%>"
+	<a class="lightHyperLink" href="/<%=neighbors.next.websitePath.join("/")%>"
 		>↓ <strong><%=neighbors.next.pageName%></strong></a
 	>
 	<% } else { %>
