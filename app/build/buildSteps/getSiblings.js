@@ -10,13 +10,18 @@ const getSiblings = async (websitePath, level) => {
 
 	// Request body
 	const options = {
-		method: "GET"
-	}
+		method: "GET",
+	};
 
 	// do the request
 	const request = await fetch(url, options);
 	const response = await request.json();
-	return response;
+
+	// remove the root path "/"
+	// 		The reason why we want to do this is because if we are building the homepage
+	// 		we dont need to place a link to "/" on the "/" path. We dont need to worry about this for other cases (yet anyway)
+	const removedRootPath = response.filter(curr => curr.websitePath.join("/") !== "");
+	return removedRootPath;
 };
 
 module.exports = getSiblings;
