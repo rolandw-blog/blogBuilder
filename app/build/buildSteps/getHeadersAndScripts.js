@@ -19,7 +19,7 @@ const getScripts = (template) => {
             scripts.push(generate("gist.js"));
             break;
         case "home.ejs":
-            scripts.push(generate("home.js"));
+            scripts.push(generate("index.js"));
             break;
         case "template.ejs":
             scripts.push(generate("gist.js"));
@@ -40,6 +40,12 @@ const getHeaders = (template) => {
             break;
         case "home.ejs":
             styles.push(generate("home.css"));
+            break;
+         case "menu.ejs":
+            styles.push(generate("dark.css"));
+            break;
+        case "about.ejs":
+            styles.push(generate("dark.css"));
             break;
         case "template.ejs":
             styles.push(generate("light.css"));
