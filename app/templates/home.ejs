@@ -23,7 +23,7 @@
 		<div id="home_wrapper">
 			<div id="home_link_wrapper">
 				<% siblings.forEach((sibling)=> { %>
-					<a class="lightHyperLink" href="<%- sibling.websitePath %>">
+					<a class="lightHyperLink" href="/<%- sibling.websitePath.join(" /") %>">
 						<%- sibling.pageName %>
 					</a>
 					<% }); %>
