@@ -44,10 +44,14 @@ const buildPage = async (req, res) => {
 		// Build all the parents of the page
 		await builder.buildAllParents(templateSteps, postProcessingSteps);
 
+		// Build all the siblings of the page
+		// await builder.buildAllSiblings(templateSteps, postProcessingSteps);
+
 		// build the page itself
 		try {
 			await builder.build(postProcessingSteps);
 		} catch (err) {
+			console.log(`Error building ${await templateData._id}`);
 			console.log(err);
 		}
 

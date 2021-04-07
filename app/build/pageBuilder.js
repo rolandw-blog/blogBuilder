@@ -54,6 +54,25 @@ class PageBuilder {
 		return html;
 	}
 
+	async buildAllSiblings(templateSteps, postProcessingSteps) {
+		const siblings = [...(await this._templateData.siblings)];
+		const jobs = [];
+
+		// build every sibling page
+		for (const node of siblings) {
+			const pageRender = new PageRender(node.meta.template);
+			const pageBuilder = new PageBuilder(node._id, pageRender);
+			console.log(`building sibling ${node.pageName}`);
+			await pageBuilder.prepareTemplateData(templateSteps);
+			try {
+				pageBuilder.build(postProcessingSteps);
+			} catch (err) {
+				console.log(`Error building sibling ${node._id}`);
+				console.log(err);
+			}
+		}
+	}
+
 	async buildAllParents(templateSteps, postProcessingSteps) {
 		const websitePath = [...(await this._templateData.websitePath)];
 		const jobs = [];
