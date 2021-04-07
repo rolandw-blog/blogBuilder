@@ -43,11 +43,11 @@ class PageBuilder {
 		this._templateData.content = await this.pageRender.renderMarkdown(sources);
 
 		const template = await this.pageRender.template;
-		let html = ""
+		let html = "";
 		try {
 			html = ejs.render(template, this._templateData);
 		} catch (err) {
-			console.log(`There was an error while ejs template. ${err}`)
+			console.log(`There was an error while ejs template. ${err}`);
 		}
 
 		// run post processing on the html
@@ -55,7 +55,9 @@ class PageBuilder {
 			try {
 				html = step(html);
 			} catch (err) {
-				console.log(`There was an error while post processing the html on step ${step}. We will skip this step.`);
+				console.log(
+					`There was an error while post processing the html on step ${step}. We will skip this step.`
+				);
 			}
 		}
 
@@ -204,7 +206,7 @@ class PageBuilder {
 // 	{name: "firstModified", function: (templateData) => getFirstModified(templateData)},
 // 	{name: "styles", function: (templateData) => getHeaders(templateData.meta.template)},
 // 	{name: "scripts", function: (templateData) => getScripts(templateData.meta.template)},
-// 	{name: "templateDir", function: (templateData) => path.resolve(process.env.SRC, "templates")},
+// 	{name: "templateDir", function: (templateData) => path.resolve(process.env.ROOT, "templates")},
 // ]
 
 // // ? The first way for getting the template set up

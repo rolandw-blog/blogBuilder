@@ -1,4 +1,4 @@
-const fs = require("fs-extra");
+const fs = require("fs");
 const path = require("path");
 const { promisify } = require("util");
 const readdirp = require("readdirp");
@@ -15,11 +15,20 @@ class AssetManager {
 	constructor() {
 		// this.cssSources = css;
 		// this.javascriptSources = javascript;
+		if (process.env.ROOT !== "" || process.env.ROOT !== undefined) {
+			// ROOT env variable exists
+			this._root = path.resolve(process.env.ROOT);
+			this._src = path.resolve(process.env.ROOT, "src");
+		} else {
+			// ROOT env does not exist
+			this._root = "/usr/src/app";
+			this._src = "/usr/src/app/src";
+		}
 	}
 
 	async renderJS() {
-		const jsDir = path.resolve(process.env.SRC || "/usr/src/app/src", "scripts");
-		const outputPath = path.resolve(process.env.DIST || "/usr/src/app/dist");
+		const jsDir = path.resolve(this._src, "src/scripts");
+		const outputPath = path.resolve(this._root, "dist");
 		const js = [];
 
 		for await (const entry of readdirp(jsDir)) {
@@ -39,8 +48,8 @@ class AssetManager {
 	}
 
 	async renderCSS() {
-		const styleSheetDir = path.resolve(process.env.SRC || "/usr/src/app/src", "styles");
-		const outputPath = path.resolve(process.env.DIST || "/usr/src/app/dist");
+		const styleSheetDir = path.resolve(this._src, "src/styles");
+		const outputPath = path.resolve(this._root, "dist");
 		const scss = [];
 		const css = [];
 
@@ -70,16 +79,6 @@ class AssetManager {
 			const minifiedCss = minifyCSS(await css).css;
 			writeFile(output, minifiedCss, { encoding: "utf8" });
 		}
-	}
-
-	async copyMedia() {
-		const mediaDir = path.resolve(process.env.SRC || "/usr/src/app/src", "media");
-		const outputDir = path.resolve(process.env.DIST || "/usr/src/app/dist", "media");
-		fs.copySync("/usr/src/app/src/media/avatar.svg", "/usr/src/app/src/dist/avatar.svg");
-		fs.copySync("/usr/src/app/src/media/favicon.ico", "/usr/src/app/src/dist/favicon.ico");
-		fs.copySync("/usr/src/app/src/media/logo.min.png", "/usr/src/app/src/dist/logo.min.png");
-
-		// fs.copySync("/usr/src/app/src/media/*", "/usr/src/app/src/dist/*");
 	}
 
 	// render out sass and write it to the dist folder
