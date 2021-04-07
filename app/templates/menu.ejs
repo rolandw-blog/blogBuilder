@@ -27,7 +27,7 @@
 			<nav>
 				<% children.forEach((child) => { %>
 				<li>
-					<a class="lightHyperLink" href="<%- child.websitePath %>">
+					<a class="lightHyperLink" href="/<%- child.websitePath.join("/") %>">
 						<%- child.pageName %>
 					</a>
 				</li>

@@ -1,6 +1,13 @@
 <div class="breadCrumbs">
 
-
+<strong>
+	<a class="lightHyperLink" href="/">
+		~
+	</a>
+</strong>
+<span style="color: white; display: inline;">
+	/
+</span>
 
 	<% breadCrumbs.forEach((crumb, i) => { %> 
 
@@ -15,7 +22,7 @@
 
 	<span style="color: white; display: inline;"><%- divider %></span>
 	<strong>
-		<a class="lightHyperLink" href="<%- crumb.websitePath %>">
+		<a class="lightHyperLink" href="/<%- crumb.websitePath %>">
 			<%- crumb.pageName %>
 		</a>
 	</strong>
