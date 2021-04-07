@@ -45,7 +45,11 @@ const buildPage = async (req, res) => {
 		await builder.buildAllParents(templateSteps, postProcessingSteps);
 
 		// build the page itself
-		await builder.build(postProcessingSteps);
+		try {
+			await builder.build(postProcessingSteps);
+		} catch (err) {
+			console.log(err);
+		}
 
 		// return the pages template data for the UI frontend
 		return res.status(200).json(templateData);
