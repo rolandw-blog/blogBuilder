@@ -7,19 +7,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
 		socialBox.appendChild(
 			createSocialIcon(
-				"/media/twitter.svg",
+				"/static/twitter.svg",
 				"https://twitter.com/RolandIRL"
 			)
 		);
 		socialBox.appendChild(
 			createSocialIcon(
-				"/media/linkedin.svg",
+				"/static/linkedin.svg",
 				"https://www.linkedin.com/in/roland-w/"
 			)
 		);
 		socialBox.appendChild(
 			createSocialIcon(
-				"/media/github.svg",
+				"/static/github.svg",
 				"https://github.com/RolandWarburton"
 			)
 		);
