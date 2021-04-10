@@ -139,9 +139,15 @@ article {
 		margin-top: 1.5em;
 	}
 
+	// Set an aesthetic style height
 	span,
 	p {
 		line-height: 150%;
+	}
+
+	// Make sure you leave this, without it lists wont even get a circle/square ::marker
+	ul {
+		margin-left: 2ch;
 	}
 }
 
