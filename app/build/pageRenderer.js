@@ -1,4 +1,6 @@
 const fs = require('fs');
+const jsdom = require("jsdom");
+const { JSDOM } = jsdom;
 const path = require('path');
 const ejs = require('ejs');
 const { promisify } = require("util")
@@ -11,7 +13,10 @@ const { throws } = require('assert');
 class PageRenderer {
 	constructor(template) {
 		this.template = this.readTemplate(template)
-		this.markdown = undefined;
+		this.markdown = undefined; // We will populate this later when we render the markdown
+		this.options = {
+			removeFirstH1: true,
+		}
 
 		// Configure the markdown renderer
 		marked.setOptions({
@@ -47,12 +52,15 @@ class PageRenderer {
 			markdownOutput += markdown;
 		}
 
-		const postProcessingSteps = [
-			(html) => minify(html, this.minifyOptions),
-		]
-
 		// then render the markdown into html
-		const markdownOutputHtml = marked(markdownOutput);
+		let markdownOutputHtml = marked(markdownOutput);
+
+		if (this.options.removeFirstH1) {
+			const dom = new JSDOM(markdownOutputHtml);
+			dom.window.document.querySelector("h1").remove();
+			markdownOutputHtml = dom.serialize();
+		}
+
 		return markdownOutputHtml;
 	}
 }
