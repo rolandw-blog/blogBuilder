@@ -10,21 +10,21 @@
 </div>
 
 <div class="nav-section">
-	<div id="nav-prev-link">
-		<% if(neighbors.prev){ %>
-			<a href="/<%=neighbors.prev.websitePath.join("/")%>">
-				↑ <%=neighbors.prev.pageName%>
-			</a>
+	<% if(neighbors.prev){ %>
+		<a href="/<%=neighbors.prev.websitePath.join("/")%>">
+			<div class="nav-link">
+				<span>↑ </span><span><%=neighbors.prev.pageName%></span>
+			</div>
+		</a>
 		<% } %>
-	</div>
 
-	<div id="nav-next-link">
-		<% if(neighbors.next){ %>
-			<a href="/<%=neighbors.next.websitePath.join("/")%>">
-				↓ <%=neighbors.next.pageName%>
-			</a>
+	<% if(neighbors.next){ %>
+		<a href="/<%=neighbors.next.websitePath.join("/")%>">
+			<div class="nav-link">
+				<span>↓ </span><span><%=neighbors.next.pageName%></span>
+			</div>
+		</a>
 		<% } %>
-	</div>
 </div>
 
 <div class="nav-section">

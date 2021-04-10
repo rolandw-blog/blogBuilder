@@ -37,6 +37,8 @@ article {
 	max-width: 100vw;
 	grid-row: 1;
 	grid-column: 1;
+	// Fix so the article doesn't stick at the bottom of the page
+	margin-bottom: 2ch;
 	@include desktop {
 		grid-row: 1;
 		grid-column: 1;
@@ -93,6 +95,14 @@ nav {
 			overflow: hidden;
 			white-space: nowrap;
 		}
+	}
+}
+
+.nav-link {
+	display: grid;
+	grid-template-columns: auto 1fr;
+	span {
+		display: inline;
 	}
 }
 
