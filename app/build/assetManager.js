@@ -27,7 +27,7 @@ class AssetManager {
 	}
 
 	async renderJS() {
-		const jsDir = path.resolve(this._src, "src/scripts");
+		const jsDir = path.resolve(this._src, "scripts");
 		const outputPath = path.resolve(this._root, "dist");
 		const js = [];
 
@@ -48,7 +48,7 @@ class AssetManager {
 	}
 
 	async renderCSS() {
-		const styleSheetDir = path.resolve(this._src, "src/styles");
+		const styleSheetDir = path.resolve(this._src, "styles");
 		const outputPath = path.resolve(this._root, "dist");
 		const scss = [];
 		const css = [];
