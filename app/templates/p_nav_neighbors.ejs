@@ -1,34 +1,48 @@
-<!-- <div > -->
-<div id="nav-prev-link">
-	<% if(neighbors.prev){ %>
-	<a class="lightHyperLink" href="/<%=neighbors.prev.websitePath.join("/")%>"
-		>↑ <strong><%=neighbors.prev.pageName%></strong></a
-	>
-	<% } else { %>
-	<!-- <a class="lightHyperLink" href="#">↑ <strong></strong></a> -->
-	<% } %>
+<div class="nav-section">
+	<!-- <h3><%- pageName %></h3> -->
+	<% homeLinks.forEach((link)=> { %>
+		<div>
+			<a href="/<%- link.websitePath.join(" /") %>">
+				<%- link.pageName %>
+			</a>
+		</div>
+	<% }); %>
 </div>
 
-<div id="nav-next-link">
-	<% if(neighbors.next){ %>
-	<a class="lightHyperLink" href="/<%=neighbors.next.websitePath.join("/")%>"
-		>↓ <strong><%=neighbors.next.pageName%></strong></a
-	>
-	<% } else { %>
-	<!-- <a class="lightHyperLink" href="#">↓ <strong></strong></a> -->
-	<% } %>
+<div class="nav-section">
+	<div id="nav-prev-link">
+		<% if(neighbors.prev){ %>
+			<a href="/<%=neighbors.prev.websitePath.join("/")%>">
+				↑ <%=neighbors.prev.pageName%>
+			</a>
+		<% } %>
+	</div>
+
+	<div id="nav-next-link">
+		<% if(neighbors.next){ %>
+			<a href="/<%=neighbors.next.websitePath.join("/")%>">
+				↓ <%=neighbors.next.pageName%>
+			</a>
+		<% } %>
+	</div>
 </div>
 
-<div id="nav-created-box">
-	<% if(firstModified != undefined){ %>
-	<strong class="lightHyperLink">Added:</strong>
-	<span class="lightHyperLink"><%=firstModified.data.timestamp%></span>
-	<% } %>
-</div>
+<div class="nav-section">
+	<div id="nav-created-box">
+		<% if(firstModified != undefined){ %>
+		<div>
+			<strong>Added:</strong>
+		</div>
+		<span><%=firstModified.data.prettyDate%></span>
+		<% } %>
+	</div>
 
-<div id="nav-edited-box">
-	<% if(lastModified != undefined){ %>
-	<strong class="lightHyperLink">Edited: </strong>
-	<span class="lightHyperLink"><%=lastModified.data.timestamp%></span>
-	<% } %>
+	<div id="nav-edited-box">
+		<% if(lastModified != undefined){ %>
+		<div>
+			<strong>Edited:</strong>
+		</div>
+		<span><%=lastModified.data.prettyDate%></span>
+		<% } %>
+	</div>
 </div>

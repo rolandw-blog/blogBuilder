@@ -34,8 +34,7 @@ const getHeaders = (template) => {
     const styles = [];
     switch (template) {
         case "blogPost.ejs":
-            styles.push(generate("light.css"));
-            styles.push(generate("gist.css"));
+            styles.push(generate("tiny.css"));
             styles.push(generate("an-old-hope.css"));
             break;
         case "home.ejs":

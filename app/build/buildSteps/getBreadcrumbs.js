@@ -31,7 +31,10 @@ const getBreadcrumbs = async (templateData, options) => {
 		const pagePath = (temp.join("/") == "/") ? "" : temp.join("/")
 
 		// then get the page based on the pagePath
-		jobs.push(getPage(pagePath).then(page => pages.push(page[0])));
+		jobs.push(getPage(pagePath).then(page => {
+			// if there a page then store it
+			if (page.length !== 0) pages.push(page[0])
+		}));
 
 		// remove the end of the array
 		temp.pop();
@@ -47,7 +50,9 @@ const getBreadcrumbs = async (templateData, options) => {
 	pages.sort((a, b) => {
 		if (a.websitePathLength > b.websitePath) return 1;
 		else return -1;
-	});
+	})
+
+	const test = pages.filter((page) => page != undefined);
 
 	return pages;
 };

@@ -20,21 +20,18 @@
 	</head>
 
 	<body>
-		<div id="hero">
-			<h1 class="lightHyperLink heroTitle"><%- pageName %></h1>
-			<a class="lightHyperLink" href="/<%- parent.join("/")%>">
-				← back to <%- parent[parent.length - 1] %>
-			</a>
-			<nav id="heroNav">
-				<div id="dynamic-nav">
-					<%- include(templateDir + '/p_nav_neighbors.ejs') %>
-				</div>
+		<div id="app">
+			<!-- navigation -->
+			<nav>
+				<%- include(templateDir + '/p_nav_neighbors.ejs') %>
 			</nav>
+			<!-- content -->
+			<div id="content_wrapper">
+				<!-- article -->
+				<h1 id="heading"><%- pageName %></h1>
+				<article><%- content%></article>
+			</div>
 		</div>
-		<div id="content_wrapper">
-			<article><%- content%></article>
-		</div>
-		<div id="gotoTop"><a href="#">Top</a></div>
 
 		<% scripts.forEach((script) => { %> <%- script %> <% }); %>
 	</body>

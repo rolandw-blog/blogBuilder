@@ -85,12 +85,12 @@ const renderPre = (infoString, code, codeSpans, isOutput) => {
 const renderCode = (code, infostring, escaped) => {
 	const codeSpans = hljs.highlightAuto(code).value;
 	const isOutput = infostring == "output" ? true : false;
-	const copyButton = `<span class="codeblock-copy-label" onClick="copyCodeblockToClipboard(this)"><a class="darkHyperLink">Copy</a></span>`;
-	const outputLabel = `<div class='codeblock-output-label'>Output</div>`;
+	const copyButton = `<span class="codeblock-label codeblock-copy-label" onClick="copyCodeblockToClipboard(this)"><a class="darkHyperLink">Copy</a></span>`;
+	const outputLabel = `<div class='codeblock-label codeblock-output-label'>Output</div>`;
 
 	let output = `
-		<div class="code-wrapper">
-			${infostring == "output" ? outputLabel : copyButton}
+		<div class="code-wrapper ${infostring === "output" && "is-output"}">
+			${infostring === "output" ? outputLabel : copyButton}
 			<div class="codeblock-wrapper language-${infostring}">
 				<pre>
 					<code class="language-${infostring}">

@@ -22,7 +22,26 @@ const templateSteps = [
     {name: "history", function: async (templateData) => {
         const url = `${process.env.WATCHER_IP}/history/find/${templateData._id}`;
         return await (await fetch(url)).json();
-    }},
+    }
+    },
+    {name: "homeLinks", function: async (templateData) => {
+        const url = `${process.env.WATCHER_IP}/page?websitePath=/&level=1`;
+        const unordered = await (await fetch(url)).json();
+
+        // sort them by page name
+        const ordered = unordered.sort((a, b) => {
+            // put root page the the top no matter what
+            if (a.websitePath[0] === "") return -1;
+            if ( a.pageName < b.pageName ){
+                return -1;
+            }
+            if ( a.pageName > b.pageName ){
+                return 1;
+            }
+            return 0;
+        })
+    return ordered
+}},
     {name: "lastModified", function: (templateData) => getLastModified(templateData)},
     {name: "firstModified", function: (templateData) => getFirstModified(templateData)},
     {name: "styles", function: (templateData) => getHeaders(templateData.meta.template)},
