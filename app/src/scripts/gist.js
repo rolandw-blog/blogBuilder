@@ -1,8 +1,6 @@
 const scrollToHash = () => {
 	const hash = window.location.hash;
-	const e = hash
-		? document.getElementById(window.location.hash.replace("#", ""))
-		: undefined;
+	const e = hash ? document.getElementById(window.location.hash.replace("#", "")) : undefined;
 	if (e) {
 		e.scrollIntoView({ block: "center" });
 		e.style.transition = "background 0.25s ease-out";
@@ -19,7 +17,7 @@ const scrollToHash = () => {
 };
 
 const copyTextToClipboard = (text) => {
-	// if the clipboard api is avaliable (ie running in https)
+	// if the clipboard api is available (ie running in https)
 	if (navigator.clipboard) {
 		navigator.clipboard
 			.writeText(text)
@@ -29,7 +27,7 @@ const copyTextToClipboard = (text) => {
 			.catch((err) => console.log(err));
 	} else {
 		console.warn(
-			"failed to clopy to clipboard (possibly not running on https. Roland fucked up!)"
+			"failed to copy to clipboard (possibly not running on https. Roland fucked up!)"
 		);
 	}
 };
@@ -38,14 +36,9 @@ const copyTextToClipboard = (text) => {
  * @param {HTML element} elem - HTML element of the copy button
  */
 const copyCodeblockToClipboard = (elem) => {
-	const codeWrapperElement = getNearestParentNodeOfClass(
-		elem,
-		".code-wrapper"
-	);
-	const codeBlockText = getNearestChildNodeOfClass(
-		codeWrapperElement,
-		".codeblock-wrapper"
-	).innerText;
+	const codeWrapperElement = getNearestParentNodeOfClass(elem, ".code-wrapper");
+	const codeBlockText = getNearestChildNodeOfClass(codeWrapperElement, ".codeblock-wrapper")
+		.innerText;
 	copyTextToClipboard(codeBlockText);
 };
 
@@ -75,10 +68,9 @@ const getNearestChildNodeOfClass = (elem, targetElement) => {
 const toggleToc = () => {
 	// get the table of contents
 	const nav = document.getElementById("table-of-contents");
-	// if it exisits toggle between display block and none
+	// if it exists toggle between display block and none
 	if (nav) {
-		const block =
-			window.getComputedStyle(nav).display == "block" ? true : false;
+		const block = window.getComputedStyle(nav).display == "block" ? true : false;
 
 		// if its in block (or unset) then hide it
 		if (block) {
@@ -94,20 +86,7 @@ const toggleToc = () => {
 };
 
 document.addEventListener("DOMContentLoaded", (e) => {
-	// TODO fix this terrible buggy mess
-	// scrollToHash()
-	// window.addEventListener('scroll', (e) => {
-	// 	const scrollPercentage = getScrollPercent();
-	// 	const gotoTopButton = document.getElementById("gotoTop");
-	// 	// if scrolled > 200px
-	// 	if (scrollPercentage > 500) {
-	// 		if (gotoTopButton) {
-	// 			gotoTopButton.style.display = "block";
-	// 		}
-	// 	} else {
-	// 		gotoTopButton.style.display = "none";
-	// 	}
-	// })
+	scrollToHash();
 });
 
 const togglePermalinkAnchor = (id, entering) => {
