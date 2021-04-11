@@ -6,6 +6,7 @@
 	}
 }
 
+$tablet-width: 767px;
 $tablet-width: 800px;
 $desktop-width: 1081px;
 
@@ -15,15 +16,14 @@ $desktop-width: 1081px;
 	}
 }
 
-@mixin desktop {
-	@media (min-width: #{$desktop-width}) {
+@mixin mobile {
+	@media (max-width: #{$tablet-width}) {
 		@content;
 	}
 }
 
-@mixin selectionColors($bg, $fg) {
-	&::selection {
-		color: $fg;
-		background-color: $bg;
+@mixin desktop {
+	@media (min-width: #{$desktop-width}) {
+		@content;
 	}
 }

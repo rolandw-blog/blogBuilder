@@ -24,8 +24,12 @@ body {
 // ##──── Alignment ─────────────────────────────────────────────────────────────────────────
 #app {
 	display: grid;
-	grid-template-rows: auto auto;
 	padding: 0 4vw;
+
+	@include tablet {
+		grid-template-columns: auto 1fr;
+	}
+
 	@include desktop {
 		padding: 0;
 		grid-template-columns: auto 1fr;
@@ -62,41 +66,48 @@ article {
 
 // ##──── Nav ───────────────────────────────────────────────────────────────────────────────
 nav {
-	display: flex;
-	flex-wrap: wrap; // if theres so much crap on the row then wrap it
-	align-items: flex-start;
+	// The nav is a desktop first component
+	@include mobile {
+		display: none;
+	}
+
+	// This is the desktop styling
+	display: grid;
+	grid-template-rows: repeat(4, auto) 1fr;
+	height: calc(100% - 200px); // allow everything to fit in 1 col. subtract the padding-top
+	padding: 0 5ch; // pad either side so text doesn't stick too close to the nav
+	padding-top: 200px;
+	margin-right: 12ch; // pad between the nav and the article
+	flex-direction: column; // a column sticks all the flex items up the top
 
 	@include tablet {
-	}
-
-	@include desktop {
-		width: 120px; // the total width of the nav
-		height: calc(100% - 200px); // allow everything to fit in 1 col. subtract the padding-top
-		padding: 0 5ch; // pad either side so text doesn't stick too close to the nav
-		padding-top: 200px;
-		margin-right: 12ch; // pad between the nav and the article
-		flex-direction: column; // a column sticks all the flex items up the top
-	}
-
-	.nav-section {
-		text-align: left;
-		max-height: 100px;
-		margin: 1ch 2.5em; // pad the gap between each nav item
-		min-width: 100px; // loosely guess the size of a nav box
-		@include desktop {
-			text-align: right;
-			width: 120px; // make all the nav sections 120px wide
-			margin: 2.5ch 0; // pad the top/btm of each nav section so they don't stick to each other
-			* {
-				// handle overflowing text in nav sections so they don't cause any scrolling/wrapping
-				text-overflow: ellipsis;
-				overflow: hidden;
-				white-space: nowrap;
-			}
-		}
+		// reduce the space between the nav and the article
+		margin: unset;
 	}
 }
 
+.nav-section {
+	min-width: 100px; // loosely guess the size of a nav box
+	text-align: right;
+	width: 120px; // make all the nav sections 120px wide
+	margin: 2.5ch 0; // pad the top/btm of each nav section so they don't stick to each other
+	* {
+		// handle overflowing text in nav sections so they don't cause any scrolling/wrapping
+		text-overflow: ellipsis;
+		overflow: hidden;
+		white-space: nowrap;
+	}
+}
+
+.nav-subsection {
+	margin: 0.5ch 0;
+}
+
+.nav-bottom {
+	margin-top: auto;
+}
+
+// organize the prev and next nav links
 .nav-link {
 	display: grid;
 	grid-template-columns: auto 1fr;
@@ -114,6 +125,7 @@ nav {
 }
 
 article {
+	// margin: 2ch;
 	// Extra fancy H1 if its the first one
 	h1:not(:first-of-type) {
 		font-size: 50px;

@@ -8,7 +8,7 @@
 		</div>
 	<% }); %>
 	<div>
-		<a href="/<%= websitePath.join(" /") %>">← Back</a>
+		<a href="/<%= parent.join("/") %>">← Back</a>
 	</div>
 </div>
 
@@ -31,7 +31,7 @@
 </div>
 
 <div class="nav-section">
-	<div id="nav-created-box">
+	<div class="nav-subsection">
 		<% if(firstModified != undefined){ %>
 		<div>
 			<strong>Added:</strong>
@@ -40,24 +40,36 @@
 		<% } %>
 	</div>
 
-	<div id="nav-edited-box">
+	<div class="nav-subsection">
 		<% if(lastModified != undefined){ %>
 		<div>
 			<strong>Edited:</strong>
 		</div>
-		<span><%=lastModified.data.prettyDate%></span>
+		<div>
+			<span>
+				<%=lastModified.data.prettyDate%>
+			</span>
+		</div>
 		<% } %>
 	</div>
-</div>
 
-<div class="nav-section">
-	<div>
-		<strong>Built on:</strong>
+	<div class="nav-subsection">
+		<% if(lastModified !=undefined){ %>
+			<div>
+				<strong>Revision:</strong>
+			</div>
+			<div>
+				<%= __v %>
+			</div>
+			<% } %>
 	</div>
-	<div>
-		<%= dateData.full %>
-	</div>
-	<div>
-		Revision <%= __v %>
-	</div>
+
+	<!-- <div class="nav-subsection">
+		<div>
+			<strong>Built on:</strong>
+		</div>
+		<div>
+			<%= dateData.full %>
+		</div>
+	</div> -->
 </div>
