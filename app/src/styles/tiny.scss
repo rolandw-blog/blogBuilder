@@ -63,37 +63,36 @@ article {
 // ##──── Nav ───────────────────────────────────────────────────────────────────────────────
 nav {
 	display: flex;
-	flex-direction: row;
+	flex-wrap: wrap; // if theres so much crap on the row then wrap it
+	align-items: flex-start;
 
 	@include tablet {
 	}
 
 	@include desktop {
-		width: 120px;
-		height: 100vh;
-		padding: 0 5ch;
-		margin-top: 200px;
-		margin-right: 12ch;
-		flex-direction: column;
+		width: 120px; // the total width of the nav
+		height: calc(100% - 200px); // allow everything to fit in 1 col. subtract the padding-top
+		padding: 0 5ch; // pad either side so text doesn't stick too close to the nav
+		padding-top: 200px;
+		margin-right: 12ch; // pad between the nav and the article
+		flex-direction: column; // a column sticks all the flex items up the top
 	}
 
 	.nav-section {
 		text-align: left;
-		margin: 2.5ch 5ch;
-		// Adjust the first nav section to have 0 left margin so it aligns with the article
-		&:first-child {
-			margin: 2.5ch 0;
-			margin-right: 5ch;
-		}
+		max-height: 100px;
+		margin: 1ch 2.5em; // pad the gap between each nav item
+		min-width: 100px; // loosely guess the size of a nav box
 		@include desktop {
 			text-align: right;
-			width: 120px;
-			margin: 2.5ch 0;
-		}
-		* {
-			text-overflow: ellipsis;
-			overflow: hidden;
-			white-space: nowrap;
+			width: 120px; // make all the nav sections 120px wide
+			margin: 2.5ch 0; // pad the top/btm of each nav section so they don't stick to each other
+			* {
+				// handle overflowing text in nav sections so they don't cause any scrolling/wrapping
+				text-overflow: ellipsis;
+				overflow: hidden;
+				white-space: nowrap;
+			}
 		}
 	}
 }
