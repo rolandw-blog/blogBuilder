@@ -1,63 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
+	<%- include(templateDir + '/p_build_info.ejs' ) %>
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="description" content="Roland's Blog and WWWebsite" />
+		<meta property="og:title" content="Roland's Blog and WWWebsite" />
+		<meta property="og:type" content="website" />
+		<meta property="og:image" content="/static/favicon.png" />
+		<meta property="og:url" content="https://www.rolandw.dev/" />
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:site" content="@RolandIRL" />
+		<link rel="icon" type="image/png" href="/static/favicon.ico" />
+		<title>Roland</title>
+		<% styles.forEach((script)=> { %> <%- script %> <% }); %>
+	</head>
 
-<head>
-	<meta charset="utf-8" />
-	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<meta name="description" content="Roland's Blog and WWWebsite" />
-	<meta property="og:title" content="Roland's Blog and WWWebsite" />
-	<meta property="og:type" content="website" />
-	<meta property="og:image" content="/static/favicon.png" />
-	<meta property="og:url" content="https://www.rolandw.dev/" />
-	<meta name="twitter:card" content="summary_large_image" />
-	<meta name="twitter:site" content="@RolandIRL" />
-	<link rel="icon" type="image/png" href="/static/favicon.ico" />
-	<title>Roland</title>
-	<% styles.forEach((script)=> { %> <%- script %> <% }); %>
-</head>
+	<body>
+		<div id="content_wrapper">
+			<div id="home_wrapper">
+				<h1 class="lightHyperLink">
+					<%- pageName %>
+				</h1>
+				<a class="lightHyperLink" href="/<%- parent.join(" /")%>">
+					← back to <%- websitePath[websitePath.length - 1] %>
+				</a>
+				<div id="about">
+					<aside>
+						<!-- <a class="lightHyperLink" href="/Resume">View my resume.</a>
+						<a class="lightHyperLink" href="/files"
+							>Copy my resume cls</a
+						> -->
+						<p>
+							I am a Computer enthusiast writing software and
+							building things.
+						</p>
+						<br />
+						<p>
+							My interests are hacking, automation, and talking
+							about software design philosophy. My career goal is
+							to work in devops / system administration by day and
+							hack computers by night.
+						</p>
+						<br />
+						<p>
+							I am studying a BA of Computer Science in
+							cybersecurity and network design at a university in
+							Melbourne Australia.
+						</p>
+					</aside>
 
-<body>
-	<div id="content_wrapper">
-		<div id="home_wrapper">
-			<h1 class="lightHyperLink">
-				<%- pageName %>
-			</h1>
-			<a class="lightHyperLink" href="/<%- parent.join(" /")%>">
-				← back to <%- websitePath[websitePath.length - 1] %>
-			</a>
-			<div id="about">
-				<aside>
-					<!-- <a class="lightHyperLink" href="/Resume">View my resume.</a>
-					<a class="lightHyperLink" href="/files"
-						>Copy my resume cls</a
-					> -->
-					<p>
-						I am a Computer enthusiast writing software and
-						building things.
-					</p>
-					<br />
-					<p>
-						My interests are hacking, automation, and talking
-						about software design philosophy. My career goal is
-						to work in devops / system administration by day and
-						hack computers by night.
-					</p>
-					<br />
-					<p>
-						I am studying a BA of Computer Science in
-						cybersecurity and network design at a university in
-						Melbourne Australia.
-					</p>
-				</aside>
-
-				<img src="/static/avatar.svg" alt="me!" />
+					<img src="/static/avatar.svg" alt="me!" />
+				</div>
 			</div>
 		</div>
-	</div>
 
-	<% scripts.forEach((script)=> { %> <%- script %>
-			<% }); %>
-</body>
-
+		<% scripts.forEach((script)=> { %> <%- script %>
+				<% }); %>
+	</body>
 </html>

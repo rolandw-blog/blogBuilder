@@ -26,7 +26,7 @@ const getDateData = (templateData) => {
 
 	const createdDate = {
 		year: dateData.getFullYear(),
-		month: dateData.getMonth() + 1,
+		month: dateData.getMonth(),
 		day: dateData.getDate(),
 		hour: dateData.getHours(),
 	};
