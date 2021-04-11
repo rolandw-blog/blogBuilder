@@ -1,41 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
+	<%- include(templateDir + '/p_build_info.ejs' ) %>
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="description" content="Roland's Blog and WWWebsite" />
+		<meta property="og:title" content="Roland's Blog and WWWebsite" />
+		<meta property="og:type" content="website" />
+		<meta property="og:image" content="https://www.rolandw.dev/static/favicon.png" />
+		<meta property="og:url" content="https://www.rolandw.dev/" />
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:site" content="@RolandIRL" />
+		<link rel="icon" type="image/png" href="/static/favicon.ico" />
+		<title>Roland</title>
+		<% styles.forEach((script)=> { %> <%- script %>
+				<% }); %>
+	</head>
 
-<head>
-	<meta charset="utf-8" />
-	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<meta name="description" content="Roland's Blog and WWWebsite" />
-	<meta property="og:title" content="Roland's Blog and WWWebsite" />
-	<meta property="og:type" content="website" />
-	<meta property="og:image" content="https://www.rolandw.dev/static/favicon.png" />
-	<meta property="og:url" content="https://www.rolandw.dev/" />
-	<meta name="twitter:card" content="summary_large_image" />
-	<meta name="twitter:site" content="@RolandIRL" />
-	<link rel="icon" type="image/png" href="/static/favicon.ico" />
-	<title>Roland</title>
-	<% styles.forEach((script)=> { %> <%- script %>
-			<% }); %>
-</head>
-
-<body>
-	<div id="content_wrapper">
-		<div id="home_wrapper">
-			<div id="home_link_wrapper">
-				<% siblings.forEach((sibling)=> { %>
-					<a class="lightHyperLink" href="/<%- sibling.websitePath.join(" /") %>">
-						<%- sibling.pageName %>
-					</a>
-					<% }); %>
+	<body>
+		<div id="content_wrapper">
+			<div id="home_wrapper">
+				<div id="home_link_wrapper">
+					<% siblings.forEach((sibling)=> { %>
+						<a class="lightHyperLink" href="/<%- sibling.websitePath.join(" /") %>">
+							<%- sibling.pageName %>
+						</a>
+						<% }); %>
+				</div>
+				<a id="caret_anchor" class="darkHyperLink">
+					<img height="25px" src="/static/logo.min.png" class="caret" />
+				</a>
 			</div>
-			<a id="caret_anchor" class="darkHyperLink">
-				<img height="25px" src="/static/logo.min.png" class="caret" />
-			</a>
 		</div>
-	</div>
 
-	<% scripts.forEach((script)=> { %> <%- script %>
-			<% }); %>
-</body>
+		<% scripts.forEach((script)=> { %> <%- script %>
+				<% }); %>
+	</body>
 
 </html>
