@@ -57,7 +57,8 @@ class PageRenderer {
 
 		if (this.options.removeFirstH1) {
 			const dom = new JSDOM(markdownOutputHtml);
-			dom.window.document.querySelector("h1").remove();
+			const firstH1 = dom.window.document.querySelector("h1")
+			if (firstH1) firstH1.remove();
 			markdownOutputHtml = dom.serialize();
 		}
 
