@@ -46,7 +46,8 @@ const templateSteps = [
     {name: "firstModified", function: (templateData) => getFirstModified(templateData)},
     {name: "styles", function: (templateData) => getHeaders(templateData.meta.template)},
     {name: "scripts", function: (templateData) => getScripts(templateData.meta.template)},
-    {name: "templateDir", function: (templateData) => path.resolve(process.env.ROOT, "templates")},
+    { name: "templateDir", function: (templateData) => path.resolve(process.env.ROOT, "templates") },
+    { name: "heroImage", function: (templateData) => "" } // put an image here or grab it from template data
 ]
 
 module.exports = templateSteps

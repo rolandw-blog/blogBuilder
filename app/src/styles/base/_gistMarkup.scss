@@ -173,7 +173,7 @@ article {
 		display: inline-block;
 		word-break: break-all;
 
-		@include selectionColors($light, $lightest);
+		// @include selectionColors($light, $lightest);
 	}
 
 	// separate out the paragraphs

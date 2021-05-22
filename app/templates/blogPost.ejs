@@ -24,13 +24,20 @@
 		<div id="app">
 			<!-- navigation -->
 			<nav>
+				<div class="nav-section">
+					<h1><%- pageName %></h1>
+				</div>
 				<%- include(templateDir + '/p_nav_neighbors.ejs') %>
 			</nav>
 			<!-- content -->
 			<div id="content_wrapper">
 				<!-- article -->
-				<h1 id="heading"><%- pageName %></h1>
-				<article><%- content%></article>
+				<% if(heroImage){ %>
+					<img id="hero-image" src="<%- heroImage %>" alt="">
+				<% } %>
+				<article>
+					<%- content%>
+				</article>
 			</div>
 		</div>
 
