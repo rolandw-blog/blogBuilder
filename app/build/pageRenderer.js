@@ -1,22 +1,22 @@
-const fs = require('fs');
+const fs = require("fs");
 const jsdom = require("jsdom");
 const { JSDOM } = jsdom;
-const path = require('path');
-const ejs = require('ejs');
-const { promisify } = require("util")
+const path = require("path");
+const ejs = require("ejs");
+const { promisify } = require("util");
 const marked = require("marked");
-const createRenderer = require('./buildSteps/createRenderer');
-const downloadMarkdown = require('./buildSteps/downloadMarkdown');
+const createRenderer = require("./buildSteps/createRenderer");
+const downloadMarkdown = require("./buildSteps/downloadMarkdown");
 const { minify } = require("html-minifier");
-const { throws } = require('assert');
+const { throws } = require("assert");
 
 class PageRenderer {
 	constructor(template) {
-		this.template = this.readTemplate(template)
+		this.template = this.readTemplate(template);
 		this.markdown = undefined; // We will populate this later when we render the markdown
 		this.options = {
 			removeFirstH1: true,
-		}
+		};
 
 		// Configure the markdown renderer
 		marked.setOptions({
@@ -57,7 +57,7 @@ class PageRenderer {
 
 		if (this.options.removeFirstH1) {
 			const dom = new JSDOM(markdownOutputHtml);
-			const firstH1 = dom.window.document.querySelector("h1")
+			const firstH1 = dom.window.document.querySelector("h1");
 			if (firstH1) firstH1.remove();
 			markdownOutputHtml = dom.serialize();
 		}
@@ -66,4 +66,4 @@ class PageRenderer {
 	}
 }
 
-module.exports = PageRenderer
+module.exports = PageRenderer;
