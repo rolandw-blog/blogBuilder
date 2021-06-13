@@ -28,7 +28,7 @@ const getBreadcrumbs = async (templateData, options) => {
 		// path: "/"		becomes ""
 		// path: "/foo"		becomes "/foo"
 		// path: "/foo/bar"	becomes "/foo/bar"
-		const pagePath = (temp.join("/") == "/") ? "" : temp.join("/")
+		const pagePath = (temp.join("/") == "/") ? "" : temp.join("")
 
 		// then get the page based on the pagePath
 		jobs.push(getPage(pagePath).then(page => {
