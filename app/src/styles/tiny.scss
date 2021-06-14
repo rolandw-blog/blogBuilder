@@ -42,10 +42,10 @@ article {
 		// clamp the width of the article on desktop
 		width: clamp(300px, 45vw, 900px);
 	}
+}
 
-	img {
-		width: 100%;	
-	}
+img {
+	max-width: 100%;
 }
 
 // ##──── Nav ───────────────────────────────────────────────────────────────────────────────
