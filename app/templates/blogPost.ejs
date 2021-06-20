@@ -30,7 +30,7 @@
 				<%- include(templateDir + '/p_nav_neighbors.ejs') %>
 			</nav>
 			<!-- content -->
-			<div id="content_wrapper">
+			<main id="content_wrapper">
 				<!-- article -->
 				<% if(heroImage){ %>
 					<img id="hero-image" src="<%- heroImage %>" alt="">
@@ -38,7 +38,7 @@
 				<article>
 					<%- content%>
 				</article>
-			</div>
+			</main>
 		</div>
 
 		<% scripts.forEach((script) => { %> <%- script %> <% }); %>
