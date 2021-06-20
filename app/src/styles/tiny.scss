@@ -1,10 +1,11 @@
 @import "base/mixins";
 @import "components/chapters";
 
-$light: #9fa8a8;
-$dark: #0f1020;
-$fonts: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Verdana,
-	sans-serif;
+$dark: #252728;
+$light: #f6f6fa;
+$code-block-bg: #000000;
+$fonts: "sans serif", "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode",
+	Verdana, sans-serif;
 
 $a-tags: "a, a:active, a:hover, a:visited";
 $headers: "h1, h2, h3, h4, h5, h6";
@@ -16,6 +17,10 @@ $headers: "h1, h2, h3, h4, h5, h6";
 	font-family: $fonts;
 }
 
+::-webkit-scrollbar {
+	display: none;
+}
+
 body {
 	background-color: $light;
 	color: $dark;
@@ -25,7 +30,6 @@ body {
 #app {
 	display: flex;
 	padding: 0;
-
 }
 
 #hero-image {
@@ -34,13 +38,13 @@ body {
 
 article {
 	overflow-x: hidden;
-	padding: 1rem 2.5rem;
+	padding: 2.5rem;
 
 	// Fix so the article doesn't stick at the bottom of the page
 	margin-bottom: 2ch;
 	@include desktop {
 		// clamp the width of the article on desktop
-		width: clamp(300px, 45vw, 900px);
+		width: clamp(300px, 55em, 900px);
 	}
 }
 
@@ -80,6 +84,7 @@ nav {
 
 // organize the prev and next nav links
 .nav-link {
+	color: #ffffff;
 	display: grid;
 	grid-template-columns: auto 1fr;
 	span {
@@ -88,46 +93,38 @@ nav {
 }
 
 // ##──── Typography ────────────────────────────────────────────────────────────────────────
-#heading {
-	font-size: 50px;
-	border-bottom: 10px solid gray;
-	box-sizing: border-box;
-}
-
 article {
-	// Extra fancy H1 if its the first one
-	h1:not(:first-of-type) {
-		font-size: 50px;
-		padding: 50px 0 50px 0;
-		border-bottom: 10px solid gray;
-		box-sizing: border-box;
-	}
-
-	// Regular H1s after the fancy one
-	h1 {
-		font-size: 50px;
-		padding: 50px 0 50px 0;
-	}
-
-	// H2 gets a lot of padding
-	h2:not(first-child) {
-		margin-top: 3em;
-	}
+	font-size: 16.18px;
 
 	// H3 gets a little bit of padding
-	h3:not(first-child) {
+	h3 {
 		margin-top: 1.5em;
 	}
 
-	// Set an aesthetic style height
+	// Set a nicer line height
 	span,
 	p {
-		line-height: 150%;
+		line-height: 140%;
+		// font-size: 120%;
+	}
+
+	// separate the paragraphs
+	p {
+		margin: 20px 0;
 	}
 
 	// Make sure you leave this, without it lists wont even get a circle/square ::marker
 	ul {
 		margin-left: 2ch;
+	}
+
+	// size the heading elements
+	h1,
+	h2 {
+		font-size: 2.5em;
+	}
+	h3 {
+		font-size: 1.5em;
 	}
 }
 
@@ -136,7 +133,7 @@ article {
 	.code-wrapper {
 		display: grid;
 		grid-template-columns: 70px 1fr;
-		background-color: $dark;
+		background-color: $code-block-bg;
 		color: $light;
 
 		// pad the code block itself (not the left button)
@@ -152,25 +149,25 @@ article {
 		// code block labels
 		.codeblock-label {
 			grid-column: 1;
-			background-color: lighten($dark, 20%);
+			background-color: $dark;
 			cursor: pointer;
 			display: flex;
 			justify-content: center;
 			align-items: center;
 			&:hover {
-				background-color: lighten($dark, 30%);
+				background-color: lighten($dark, 40%);
 			}
 		}
 
 		.codeblock-output-label {
 			cursor: unset;
 			&:hover {
-				background-color: lighten($dark, 20%);
+				background-color: lighten($dark, 40%);
 			}
 		}
 	}
 
-	// A code block followed by anything that isn't its "output" ill be padded
+	// A code block followed by anything that isn't its "output" will be padded
 	// we also DON'T want to pad code + p because p already has adequate padding itself...
 	// and then the margin we apply to the code-wrapper would conflict and the top vs btm spacing would be uneven
 	.code-wrapper + :not(.is-output):not(p) {
@@ -179,10 +176,10 @@ article {
 
 	// "output" language
 	.is-output {
-		background-color: lighten($dark, 20%);
+		background-color: $dark;
 		color: $light;
 		.codeblock-label {
-			color: $light;
+			display: none;
 		}
 	}
 
