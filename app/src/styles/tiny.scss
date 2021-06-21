@@ -17,10 +17,6 @@ $headers: "h1, h2, h3, h4, h5, h6";
 	font-family: $fonts;
 }
 
-::-webkit-scrollbar {
-	display: none;
-}
-
 body {
 	background-color: $light;
 	color: $dark;
@@ -143,11 +139,40 @@ article {
 		// pad the code block itself (not the left button)
 		.codeblock-wrapper {
 			grid-column: 2;
-			margin: 1ch;
+			padding: 1ch;
 			// Scroll the code when it overflows
 			overflow-x: scroll;
-			-ms-overflow-style: none; /* IE and Edge */
-			scrollbar-width: none; /* Firefox */
+			scrollbar-color: $light $code-block-bg;
+			scrollbar-width: thin;
+
+			// chrome
+			&::-webkit-scrollbar {
+				width: 5px;
+				height: 5px;
+			}
+
+			&::-webkit-scrollbar-thumb {
+				background: lighten($dark, 60%);
+			}
+
+			&::-webkit-scrollbar-track {
+				background: $code-block-bg;
+			}
+		}
+
+		// output blocks have a different background color to code blocks
+		// 		so we need to adjust the scroll bar background color for outputs to match
+		// 		the surrounding codeblock
+		// code block = $code-block-bg
+		// output block = $dark
+		.language-output {
+			// chrome scrollbar bg color
+			&::-webkit-scrollbar-track {
+				// change the color to $dark instead of $code-block-bg for output blocks
+				background-color: $dark;
+			}
+			// firefox scrollbar bg color
+			scrollbar-color: $light $dark;
 		}
 
 		// code block labels
