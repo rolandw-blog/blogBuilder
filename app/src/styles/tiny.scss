@@ -40,7 +40,7 @@ article {
 	margin-bottom: 2ch;
 	@include desktop {
 		// clamp the width of the article on desktop
-		width: clamp(300px, 55em, 900px);
+		width: clamp(300px, 80%, 55em);
 	}
 }
 
