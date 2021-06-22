@@ -126,6 +126,11 @@ article {
 	h3 {
 		font-size: 1.5em;
 	}
+
+	// fix to evenly space letters for ascii diagrams
+	.language-output {
+		font-family: monospace;
+	}
 }
 
 // ##──── Code ────────────────────────────────────────────────────────────────────────────
