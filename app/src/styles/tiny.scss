@@ -26,6 +26,7 @@ body {
 #app {
 	display: flex;
 	padding: 0;
+	min-height: 100vh;
 }
 
 #hero-image {
