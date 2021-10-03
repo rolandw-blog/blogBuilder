@@ -1,30 +1,36 @@
-FROM nginx:latest
-EXPOSE 3000
-EXPOSE 27017
-COPY ./docker/nginx.conf /etc/nginx/nginx.conf
+FROM node:16 as common
 
-FROM node:14
+# RUN chown -R node /usr/local/lib/node_modules
+# RUN chown -R node /usr/local/bin/npm
+# RUN chown -R node /usr/local/bin/npx
+
+# Keep npm up to date
+# fixed an invalid package-lock.json warning
+RUN npm install -g npm
 
 # Create app directory
 RUN mkdir -p /usr/src/app
-RUN mkdir -p /usr/src/app/content
+RUN chown -R node:node /usr/src/app
 WORKDIR /usr/src/app
 
-# Install nodemon
-RUN npm install -g nodemon
+# USER node
 
 # Install dependencies
-COPY ./app/package.json /usr/src/app/
+COPY ./package*.json ./
 RUN npm install
 
-# Bundle app source
-COPY ./app /usr/src/app
+# Copy stuff over
+COPY  --chown=node:node . ./
 
-# Expose ports
-EXPOSE 3000
-EXPOSE 27017
+# Make dist directory
+RUN mkdir -p dist
 
-# USER 1000:1000
+FROM common as development
+ENV NODE_ENV development
+USER node
+CMD [ "npm", "run", "dev" ]
 
-# Start!
-CMD [ "npm", "run", "monitor" ]
+FROM common as production
+ENV NODE_ENV development
+USER node
+CMD [ "npm", "run", "start" ]

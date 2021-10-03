@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+	<!-- build info preamble -->
+	<%- include(templateDir + '/p_build_info.ejs' ) %>
+
+	<!-- head -->
+	<%- include(templateDir + '/p_head.ejs' ) %>
+
+	<body>
+		<div id="app">
+			<!-- navigation -->
+			<nav>
+				<div id="nav-wrapper">
+					<h1><%- name %></h1>
+				</div>
+				<!-- breadcrumbs -->
+				<section><%- include(templateDir + '/p_breadcrumbs.ejs') _%></section>
+				<!-- home nav links -->
+				<section><%- include(templateDir + '/p_home_nav.ejs') _%></section>
+				<!-- nav prev and next -->
+				<section><%- include(templateDir + '/p_nav_neighbors.ejs') _%></section>
+			</nav>
+			<!-- content -->
+			<main id="content_wrapper">
+				<!-- article -->
+				<article><%- content%></article>
+			</main>
+		</div>
+
+		<% scripts.forEach((script) => { %> <%- script %> <% }); %>
+	</body>
+</html>

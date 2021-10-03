@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+	<!-- build info preamble -->
+	<%- include(templateDir + '/p_build_info.ejs' ) %>
+	<!-- head -->
+	<%- include(templateDir + '/p_head.ejs' ) %>
+
+	<body>
+		<div id="content_wrapper">
+			<div id="home_wrapper">
+				<h1 class="lightHyperLink"><%- name %></h1>
+				<div>
+					<a href="/<%= parent.path.join('/') %>">← Back</a>
+				</div>
+				<div id="about">
+					<aside>
+						<!-- <a class="lightHyperLink" href="/Resume">View my resume.</a>
+						<a class="lightHyperLink" href="/files"
+							>Copy my resume cls</a
+						> -->
+						<p>I am a Computer enthusiast writing software and building things.</p>
+						<br />
+						<p>
+							My interests are hacking, automation, and talking about software design
+							philosophy. My career goal is to work in devops / system administration
+							by day and hack computers by night.
+						</p>
+						<br />
+						<p>
+							I am studying a BA of Computer Science in cybersecurity and network
+							design at a university in Melbourne Australia.
+						</p>
+					</aside>
+
+					<img src="/static/avatar.svg" alt="me!" />
+				</div>
+			</div>
+		</div>
+
+		<% scripts.forEach((script)=> { %> <%- script %> <% }); %>
+	</body>
+</html>
