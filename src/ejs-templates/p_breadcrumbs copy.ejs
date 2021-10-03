@@ -1,0 +1,12 @@
+<div class="breadCrumbs">
+	<strong>
+		<a class="lightHyperLink" href="/">~</a>
+	</strong>
+
+	<% breadCrumbs.forEach((crumb, i) => { _%>
+		<span style="color: white; display: inline">/</span>	
+		<strong>
+			<a class="lightHyperLink" href="/<%- crumb.join("/") %>"><%- crumb[crumb.length - 1] %></a>
+		</strong>
+	<%_ }); %>
+</div>

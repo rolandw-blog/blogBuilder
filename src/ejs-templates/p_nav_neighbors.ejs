@@ -1,0 +1,17 @@
+<div>
+	<a href="/<%= parent.path.join('/') %>">← Back</a>
+</div>
+<% if(prevPage){ %>
+	<a href="/<%=prevPage.path.join('/')%>">
+		<div class="nav-link">
+			<span>↑ </span><span><%=prevPage.name%></span>
+		</div>
+	</a>
+<% } %>
+<% if(nextPage){ %>
+	<a href="/<%=nextPage.path.join('/')%>">
+		<div class="nav-link">
+			<span>↓ </span><span><%=nextPage.name%></span>
+		</div>
+	</a>
+<% } %>
