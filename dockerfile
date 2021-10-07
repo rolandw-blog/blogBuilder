@@ -24,6 +24,8 @@ COPY  --chown=node:node . ./
 
 # Make dist directory
 RUN mkdir -p dist
+RUN chmod 777 /usr/src/app/dist
+RUN chown -R node:node /usr/src/app/dist
 
 FROM common as development
 ENV NODE_ENV development
