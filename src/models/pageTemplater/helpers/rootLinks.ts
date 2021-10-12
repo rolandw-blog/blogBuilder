@@ -21,6 +21,11 @@ class BuildStepRootLinks implements IPageTemplaterBuildStep {
 			// you can place logic here and add stuff to templateData by returning it
 			// note you do not need to return { ...templateData }, just return the new data you add
 			getRootLinks().then((rootPages) => {
+				// remove the page with the name "index" which is the root page and should
+				// not be displayed as a "root" because the user will be on the root page already
+				const indexRootLink = rootPages.findIndex((page) => page.path[0] === "");
+				if (indexRootLink >= 0) rootPages.splice(indexRootLink, 1);
+				console.log(rootPages);
 				resolve({ rootLinks: rootPages });
 			});
 		});
