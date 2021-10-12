@@ -25,7 +25,6 @@ class BuildStepRootLinks implements IPageTemplaterBuildStep {
 				// not be displayed as a "root" because the user will be on the root page already
 				const indexRootLink = rootPages.findIndex((page) => page.path[0] === "");
 				if (indexRootLink >= 0) rootPages.splice(indexRootLink, 1);
-				console.log(rootPages);
 				resolve({ rootLinks: rootPages });
 			});
 		});
