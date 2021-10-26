@@ -7,9 +7,9 @@ const generate = (fileName: string) => {
 	const ext = path.parse(fileName).ext;
 	switch (ext) {
 		case ".css":
-			return `<link rel="stylesheet" type="text/css" href="/${fileName}" id="style-${fileName}"/>`;
+			return `<link rel="stylesheet" type="text/css" href="/static/${fileName}" id="style-${fileName}"/>`;
 		case ".js":
-			return `<script src="/${fileName}"></script>`;
+			return `<script src="/static/${fileName}"></script>`;
 		default:
 			return "";
 	}
