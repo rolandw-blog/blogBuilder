@@ -19,7 +19,6 @@ const getScripts = (template: string) => {
 	const scripts = [];
 	switch (template) {
 		case "blogPost.ejs":
-		case "menu.ejs":
 			scripts.push(generate("gist.js"));
 			break;
 		case "home.ejs":
