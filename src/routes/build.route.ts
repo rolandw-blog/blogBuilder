@@ -4,7 +4,7 @@
 // 	In this case, the IndexController just returns 200 "OK"
 
 import Ajv, { ValidateFunction } from "ajv";
-import { NextFunction, Request, Response, Router } from "express";
+import { Router } from "express";
 import BuildController from "../controllers/builder.controller";
 import Route from "../interfaces/routes.interface";
 import validateRequest from "../middleware/validateReq.middleware";
@@ -32,9 +32,7 @@ class BuildRoute implements Route {
 		this.router.get(
 			`${this.path}`,
 			[...this.middleware()],
-			(req: Request, res: Response, next: NextFunction) => {
-				this.controller.build(req, res, next);
-			}
+			this.controller.build.bind(this.controller)
 		);
 	}
 }
