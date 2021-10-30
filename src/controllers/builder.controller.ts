@@ -14,6 +14,7 @@ import axios, { AxiosRequestConfig } from "axios";
 import IPage from "../interfaces/page.interface";
 import loggerFunction from "../utils/genericLogger";
 import getPage from "../utils/getPage";
+import { QueryTypes } from "../interfaces/page.searchQueryParams.interface";
 const logger = loggerFunction(__filename);
 
 const getPages = async (path: string): Promise<IPage[]> => {
@@ -58,24 +59,30 @@ class BuildController {
 		// an example of queries that could be passed:
 		//     by the path: /page?path=/home/roland
 		//     by the id:   /page?id=24letterstring
-		let key: string;
+		let queryFor: QueryTypes = "path";
 		let val: string;
 		if ("path" in req.query) {
-			key = "path";
+			queryFor = "path";
 			val = req.query["path"] as string;
 		} else if ("id" in req.query) {
-			key = "_id";
+			queryFor = "id";
 			val = req.query["id"] as string;
 		} else {
 			// defaults to fall back on
-			key = "path";
+			queryFor = "path";
 			val = "/";
 		}
 
 		// get the page from the database api
-		const page = (await getPage(key, val))[0];
+		const pages = await getPage(queryFor, {
+			[queryFor]: val,
+			page: "1",
+			limit: "1",
+		});
+		const page = pages[0];
+
 		if (page === undefined) {
-			next(new HttpException(500, "no page found"));
+			next(new HttpException(500, `No page found for where ${queryFor} = ${val}`));
 		} else {
 			// saturate the template with all the template related data from the database
 			const template = await this.pageTemplater.saturateTemplate(page, this.steps);
