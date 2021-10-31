@@ -5,6 +5,11 @@ interface buildInfo {
 	uuid: string;
 }
 
+interface RecentPages {
+	created?: IPage[];
+	edits?: IPage[];
+}
+
 interface ITemplateData extends IPage {
 	page: IPage;
 	// [["a"], ["a", "b"], ["a", "b", "c"]]
@@ -20,6 +25,7 @@ interface ITemplateData extends IPage {
 	templateDir: string;
 	build: buildInfo;
 	rootLinks: Array<IPage>;
+	recent: RecentPages;
 }
 
 export default ITemplateData;

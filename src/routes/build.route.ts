@@ -3,24 +3,37 @@
 // 	The job for IndexController is to actually run some code for the request
 // 	In this case, the IndexController just returns 200 "OK"
 
-import { Request, Response, Router } from "express";
+import Ajv, { ValidateFunction } from "ajv";
+import { Router } from "express";
 import BuildController from "../controllers/builder.controller";
 import Route from "../interfaces/routes.interface";
+import validateRequest from "../middleware/validateReq.middleware";
+import { RequestHandler } from "express";
+import schema, { IQueryParams } from "../models/ajv/IQueryParams.schema";
 
 class BuildRoute implements Route {
-	public path = "/id/:id";
+	public path = "/page";
 	public router = Router({ strict: true });
 	public controller: BuildController;
+	private validator: ValidateFunction<IQueryParams>;
+	private schema = schema;
 
 	constructor() {
+		this.validator = new Ajv().compile(this.schema);
 		this.controller = new BuildController();
 		this.initializeRoutes();
 	}
 
+	private middleware(): RequestHandler[] {
+		return [validateRequest<IQueryParams>("query", this.validator)];
+	}
+
 	private initializeRoutes() {
-		this.router.get(`${this.path}`, (req: Request, res: Response) => {
-			this.controller.build(req, res);
-		});
+		this.router.get(
+			`${this.path}`,
+			[...this.middleware()],
+			this.controller.build.bind(this.controller)
+		);
 	}
 }
 

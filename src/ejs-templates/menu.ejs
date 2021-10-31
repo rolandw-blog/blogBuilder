@@ -21,14 +21,15 @@
 			<!-- content -->
 			<main id="content_wrapper">
 				<!-- article -->
-				<article>
-					<% children.forEach((child) => { %>
-					<div>
-						<a class="lightHyperLink" href="/<%- child.path.join('/') %>">
-							<%- child.name %>
-						</a>
+				<article id="list-article">
+					<div id="list-menu">
+						<% children.forEach((child) => { %>
+						<div>
+							<span style="color: var(--font-color)">→ </span
+							><a href="/<%- child.path.join('/') %>"> <%- child.name %> </a>
+						</div>
+						<% }); %>
 					</div>
-					<% }); %>
 				</article>
 			</main>
 		</div>

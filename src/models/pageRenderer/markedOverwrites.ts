@@ -17,7 +17,7 @@ const renderHeading = (text: string, level: number) => {
 	escapedText = escapedText.replace(/"|'|`/g, "");
 
 	return stripIndent`
-	<strong onmouseover="togglePermalinkAnchor('${escapedText}', true);" onmouseleave="togglePermalinkAnchor('${escapedText}', false)">
+	<strong>
 		<h${level} id="${escapedText}">
 			${text}
 			<a 
@@ -82,6 +82,7 @@ const renderImage = (href: string, title: string) => {
  * @param {String} infostring
  * @param {Boolean} escaped
  */
+// eslint-disable-next-line complexity
 const renderCode = (code: string, language: string) => {
 	let codeSpans = "";
 	if (language === "none") {
@@ -93,18 +94,37 @@ const renderCode = (code: string, language: string) => {
 	const copyButton = stripIndent`<span class="codeblock-label codeblock-copy-label" onClick="copyCodeblockToClipboard(this)"><a class="darkHyperLink">Copy</a></span>`;
 	const outputLabel = stripIndent`<div class='codeblock-label codeblock-output-label'>Output</div>`;
 
-	const output = stripIndent`
-		<div class="code-wrapper ${language === "output" && "is-output"}">
-			${language === "output" ? outputLabel : copyButton}
-			<div class="codeblock-wrapper language-${language}">
-				<pre>
-					<code class="language-${language}">
-						${isOutput ? code : codeSpans}
-					</code>
-				<pre>
-			</div>
-		</div>
-	`;
+	let output = "";
+
+	switch (language) {
+		case "output":
+			output = stripIndent`
+				<div class="output-wrapper is-output">
+					
+						<pre>
+							<code class="language-${language}">
+								${code}
+							</code>
+						<pre>
+					
+				</div>
+			`;
+			break;
+		default:
+			output = stripIndent`
+				<div class="code-wrapper">
+					${language === "output" ? outputLabel : copyButton}
+					<div class="codeblock-wrapper language-${language}">
+						<pre>
+							<code class="language-${language}">
+								${isOutput ? code : codeSpans}
+							</code>
+						<pre>
+					</div>
+				</div>
+			`;
+			break;
+	}
 
 	// replace 1 new line, followed by 1+ tabs with blank space (i.e remove it)
 	return output.replace(/\n\t+/g, "");

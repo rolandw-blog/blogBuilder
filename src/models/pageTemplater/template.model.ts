@@ -1,37 +1,25 @@
-import IPage from "../../interfaces/page.interface";
 import ITemplateData from "../../interfaces/template.interface";
-import axios, { AxiosRequestConfig } from "axios";
 import IPageTemplaterBuildStep from "../../interfaces/pageTemplateBuildStep.interface";
+import IPage from "../../interfaces/page.interface";
+import getPage from "../../utils/getPage";
 
 class PageTemplater {
-	// private templateData: Partial<ITemplateData>;
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	// constructor(buildSteps: Array<any>) {
-	// 	// const page = this.getPage(id);
-	// 	// this.templateData = this.saturateTemplate(page, buildSteps) as unknown as ITemplateData;
-	// }
-
-	private async getPage(id: string): Promise<IPage> {
-		const url = `${process.env["DB_API"] as string}/page/${id}`;
-		const options: AxiosRequestConfig = {};
-		const response = await axios(url, options);
-		const data = await response.data;
-		// TODO check if data is valid
-		return data as IPage;
-	}
-
 	// the build steps parameter is created based on the ../helpers/example.ts file
 	public async saturateTemplate(
-		_id: string,
+		page: IPage,
 		buildSteps: Array<IPageTemplaterBuildStep>
 	): Promise<ITemplateData> {
-		const page = await this.getPage(_id);
+		// TODO implement a cache for "created recently" pages
+		const createdRecently = await getPage("path", { path: "/**", page: "1", limit: "5" });
 		// pre-populate the template with the page data from api
 		let templateData: Partial<ITemplateData> = {
 			page: page,
 			templateDir: "/usr/src/app/src/ejs-templates",
 			build: {
 				uuid: Math.random().toString().substring(2, 6),
+			},
+			recent: {
+				created: createdRecently,
 			},
 		};
 
@@ -41,11 +29,6 @@ class PageTemplater {
 
 		return { ...page, ...templateData } as ITemplateData;
 	}
-
-	// this is the getter to get the template data as a promise so we can await it in other code
-	// public get template(): Promise<ITemplateData> {
-	// 	return this.templateData as Promise<ITemplateData>;
-	// }
 }
 
 export default PageTemplater;

@@ -9,6 +9,7 @@ import ejs from "ejs";
 import markedOverwrites from "./markedOverwrites";
 import { ISource } from "../../interfaces/page.interface";
 import axios, { AxiosRequestConfig } from "axios";
+import { minify } from "html-minifier";
 
 marked.setOptions({
 	renderer: markedOverwrites(),
@@ -67,7 +68,7 @@ function getPage(): (url: string) => Promise<string> {
 class Renderer {
 	private readTemplateFile: (templateFile: string) => string;
 	private getPage: (url: string) => Promise<string>;
-	public outDir = process["env"]["OUTPUT"] || "/data/dist";
+	public outDir = process["env"]["OUTPUT"] || "/html/dist";
 
 	constructor() {
 		this.readTemplateFile = readTemplateFile();
@@ -77,7 +78,7 @@ class Renderer {
 	public async render(templateData: ITemplateData): Promise<string> {
 		const templateFilePath = path.resolve(templateData.templateDir, templateData.meta.template);
 		const template = this.readTemplateFile(templateFilePath);
-		const html = ejs.render(
+		const unminifiedHtml = ejs.render(
 			template,
 			{
 				...templateData,
@@ -85,13 +86,29 @@ class Renderer {
 			},
 			{ rmWhitespace: true }
 		);
-		return html;
+
+		try {
+			return minify(unminifiedHtml, {
+				collapseWhitespace: true,
+				removeComments: true,
+				trimCustomFragments: true,
+				minifyCSS: true,
+				useShortDoctype: true,
+				minifyURLs: true,
+			});
+		} catch (err) {
+			logger.error("Failed to minify HTML");
+			return unminifiedHtml;
+		}
 	}
 
+	// write the rendered html to disk
 	public async writeToDisk(template: ITemplateData, html: string): Promise<void> {
-		// write the rendered html to disk
+		// if the name is "index" then the output is "/data/dist/index.html"
+		// if the name is not "index" then the output is joined based on its path
 		const pathString = template.name === "index" ? this.outDir : template.path.join("/");
 
+		// /data/dist + /foo + /bar + index.html
 		const outputFilePath = path.resolve(
 			this.outDir,
 			pathString,
@@ -100,7 +117,10 @@ class Renderer {
 		);
 
 		if (!fs.existsSync(path.parse(outputFilePath).dir)) {
-			fs.mkdirSync(path.parse(outputFilePath).dir, { recursive: true });
+			await fs.promises.mkdir(path.parse(outputFilePath).dir, { recursive: true });
+			logger.debug(`Created folder ${path.parse(outputFilePath).dir}`);
+		} else {
+			logger.debug(`Folder ${path.parse(outputFilePath).dir} already exists`);
 		}
 
 		fs.promises.writeFile(outputFilePath, html).then(() => {

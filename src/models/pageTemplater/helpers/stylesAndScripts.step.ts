@@ -7,9 +7,9 @@ const generate = (fileName: string) => {
 	const ext = path.parse(fileName).ext;
 	switch (ext) {
 		case ".css":
-			return `<link rel="stylesheet" type="text/css" href="/${fileName}" id="style-${fileName}"/>`;
+			return `<link rel="stylesheet" type="text/css" href="/static/${fileName}" id="style-${fileName}"/>`;
 		case ".js":
-			return `<script src="/${fileName}"></script>`;
+			return `<script src="/static/${fileName}"></script>`;
 		default:
 			return "";
 	}
@@ -19,7 +19,6 @@ const getScripts = (template: string) => {
 	const scripts = [];
 	switch (template) {
 		case "blogPost.ejs":
-		case "menu.ejs":
 			scripts.push(generate("gist.js"));
 			break;
 		case "home.ejs":
@@ -38,14 +37,14 @@ const getHeaders = (template: string) => {
 	const styles = [];
 	switch (template) {
 		case "blogPost.ejs":
-			styles.push(generate("tiny_light.css"));
+			styles.push(generate("tiny_dark.css"));
 			styles.push(generate("an-old-hope.css"));
 			break;
 		case "home.ejs":
 			styles.push(generate("solarized.css"));
 			break;
 		case "menu.ejs":
-			// styles.push(generate("menu.css"));
+			styles.push(generate("menu.css"));
 			styles.push(generate("tiny_dark.css"));
 			break;
 		case "about.ejs":
