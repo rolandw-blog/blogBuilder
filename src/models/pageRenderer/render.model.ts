@@ -9,6 +9,7 @@ import ejs from "ejs";
 import markedOverwrites from "./markedOverwrites";
 import { ISource } from "../../interfaces/page.interface";
 import axios, { AxiosRequestConfig } from "axios";
+import { minify } from "html-minifier";
 
 marked.setOptions({
 	renderer: markedOverwrites(),
@@ -77,7 +78,7 @@ class Renderer {
 	public async render(templateData: ITemplateData): Promise<string> {
 		const templateFilePath = path.resolve(templateData.templateDir, templateData.meta.template);
 		const template = this.readTemplateFile(templateFilePath);
-		const html = ejs.render(
+		const unminifiedHtml = ejs.render(
 			template,
 			{
 				...templateData,
@@ -85,7 +86,20 @@ class Renderer {
 			},
 			{ rmWhitespace: true }
 		);
-		return html;
+
+		try {
+			return minify(unminifiedHtml, {
+				collapseWhitespace: true,
+				removeComments: true,
+				trimCustomFragments: true,
+				minifyCSS: true,
+				useShortDoctype: true,
+				minifyURLs: true,
+			});
+		} catch (err) {
+			logger.error("Failed to minify HTML");
+			return unminifiedHtml;
+		}
 	}
 
 	// write the rendered html to disk

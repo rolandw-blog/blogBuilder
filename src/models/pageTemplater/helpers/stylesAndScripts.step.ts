@@ -37,14 +37,14 @@ const getHeaders = (template: string) => {
 	const styles = [];
 	switch (template) {
 		case "blogPost.ejs":
-			styles.push(generate("tiny_light.css"));
+			styles.push(generate("tiny_dark.css"));
 			styles.push(generate("an-old-hope.css"));
 			break;
 		case "home.ejs":
 			styles.push(generate("solarized.css"));
 			break;
 		case "menu.ejs":
-			// styles.push(generate("menu.css"));
+			styles.push(generate("menu.css"));
 			styles.push(generate("tiny_dark.css"));
 			break;
 		case "about.ejs":

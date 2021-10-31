@@ -8,18 +8,15 @@
 
 	<body>
 		<div id="content_wrapper">
-			<div id="home_wrapper">
-				<div id="home_link_wrapper">
-					<% rootLinks.forEach((sibling)=> { %>
-						<a class="lightHyperLink" href="/<%- sibling.path.join(" /") %>"><%- sibling.name %></a><% }); %>
+			<div class="wrapper">
+				<div id="root-links">
+					<div id="home_link_wrapper">
+						<% rootLinks.forEach((sibling)=> { %>
+							<a class="home-achor" href="/<%- sibling.path.join(" /") %>"><%- sibling.name %></a><% }); %>
+					</div>
 				</div>
-				<a id="caret_anchor" class="darkHyperLink">
-					<img height="25px" src="/logo.png" class="caret" />
-				</a>
 			</div>
 		</div>
-
-		<% scripts.forEach((script)=> { %> <%- script %><% }); %>
 	</body>
 
 </html>

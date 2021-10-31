@@ -1,0 +1,7 @@
+<div id="recent-links" style="color: white;">
+    <% recent.created.forEach((sibling)=> { %>
+        <div class="recent-line">
+            <span>→ </span> <span class="text-ellipsis"><a class="lightHyperLink" href="/<%- sibling.path.join("/") %>"><%- sibling.name %></a></span>
+        </div>
+    <% }); %>
+</div>
