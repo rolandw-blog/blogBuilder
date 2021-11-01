@@ -19,17 +19,15 @@ const renderHeading = (text: string, level: number) => {
 	return stripIndent`
 	<strong>
 		<h${level} id="${escapedText}">
-			${text}
 			<a 
 				name="${escapedText}" 
 				id="${escapedText}-permalinkAnchor" 
 				onClick="copyTextToClipboard(document.location.href);" 
-				class="gistShareAnchor" 
+				class="gist-share-anchor" 
 				title="Permalink to this headline"
 				href="#${escapedText}"
-			>
-				#
-			</a>	
+			>#</a>	
+			${text}
 		</h${level}>
 	</strong>`;
 };
