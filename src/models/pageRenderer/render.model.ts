@@ -19,28 +19,32 @@ marked.setOptions({
 const postProcessingSteps = [
 	// remove the article H1 tag
 	(html: string) => {
-		// parse the dom
-		const dom = new JSDOM(html);
+		// ! I dont like this at the moment but will enable later
+		return html;
+		// // parse the dom
+		// const dom = new JSDOM(html);
 
-		// get the first h1
-		const h1 = dom.window.document.querySelector("article h1");
-		if (h1) {
-			// to change the title use this
-			// h1.textContent = "hello world";
+		// // get the first h1
+		// const h1 = dom.window.document.querySelector("article h1");
+		// if (h1) {
+		// 	// to change the title use this
+		// 	// h1.textContent = "hello world";
 
-			// to remove the text use this
-			h1.remove();
-		}
+		// 	// to remove the text use this
+		// 	h1.remove();
+		// }
 
-		// return the html as a strin
-		return dom.serialize();
+		// // return the html as a strin
+		// return dom.serialize();
 	},
 	// convert all headings to caps first titles
 	(html: string) => {
 		// parse the dom
 		const dom = new JSDOM(html);
 
-		for (const h of dom.window.document.querySelectorAll("h1, h2, h3, h4, h5, h6")) {
+		for (const h of dom.window.document.querySelectorAll(
+			"article h1, article h2, article h3, article h4, article h5, article h6"
+		)) {
 			if (h.textContent) {
 				let sentence = "";
 				// iterate over each word and caps where required
