@@ -21,7 +21,7 @@ const getScripts = (template: string) => {
 		case "blogPost.ejs":
 			scripts.push(generate("gist.js"));
 			break;
-		case "home.ejs":
+		case "index.ejs":
 			scripts.push(generate("index.js"));
 			break;
 		case "template.ejs":
@@ -40,7 +40,7 @@ const getHeaders = (template: string) => {
 			styles.push(generate("tiny_dark.css"));
 			styles.push(generate("an-old-hope.css"));
 			break;
-		case "home.ejs":
+		case "index.ejs":
 			styles.push(generate("solarized.css"));
 			break;
 		case "menu.ejs":
