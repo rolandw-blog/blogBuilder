@@ -11,7 +11,7 @@
 			<!-- navigation -->
 			<nav>
 				<div id="nav-wrapper">
-					<h1><%- name %></h1>
+					<h1><%- name.toLowerCase() %></h1>
 				</div>
 				<!-- breadcrumbs -->
 				<section><%- include(templateDir + '/p_breadcrumbs.ejs') _%></section>
@@ -25,15 +25,21 @@
 					<div id="list-menu">
 						<% children.forEach((child) => { %>
 						<div>
-							<span style="color: var(--font-color)">→ </span
-							><a href="/<%- child.path.join('/') %>"> <%- child.name %> </a>
+							<% if (child.meta.template === "menu.ejs") { %>
+							<a class="menu-directory" href="/<%- child.path.join('/') %>">
+								<%- child.name.toLowerCase() %>
+							</a>
+							<% } else { %>
+							<a class="menu-file" href="/<%- child.path.join('/') %>">
+								<%- child.name.toLowerCase() %>
+							</a>
+							<% } %>
 						</div>
 						<% }); %>
 					</div>
 				</article>
 			</main>
 		</div>
-
 		<% scripts.forEach((script) => { %> <%- script %> <% }); %>
 	</body>
 </html>
