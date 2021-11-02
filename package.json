@@ -48,6 +48,7 @@
 		"express": "^4.17.1",
 		"helmet": "^4.6.0",
 		"html-minifier": "^4.0.0",
+		"jsdom": "^18.0.1",
 		"marked": "^3.0.4",
 		"winston": "^3.3.3",
 		"winston-daily-rotate-file": "^4.5.5",

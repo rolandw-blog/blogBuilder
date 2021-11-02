@@ -10,10 +10,67 @@ import markedOverwrites from "./markedOverwrites";
 import { ISource } from "../../interfaces/page.interface";
 import axios, { AxiosRequestConfig } from "axios";
 import { minify } from "html-minifier";
+import { JSDOM } from "jsdom";
 
 marked.setOptions({
 	renderer: markedOverwrites(),
 });
+
+const postProcessingSteps = [
+	// remove the article H1 tag
+	(html: string) => {
+		// parse the dom
+		const dom = new JSDOM(html);
+
+		// get the first h1
+		const h1 = dom.window.document.querySelector("article h1");
+		if (h1) {
+			// to change the title use this
+			// h1.textContent = "hello world";
+
+			// to remove the text use this
+			h1.remove();
+		}
+
+		// return the html as a strin
+		return dom.serialize();
+	},
+	// convert all headings to caps first titles
+	(html: string) => {
+		// parse the dom
+		const dom = new JSDOM(html);
+
+		for (const h of dom.window.document.querySelectorAll("h1, h2, h3, h4, h5, h6")) {
+			if (h.textContent) {
+				let sentence = "";
+				// iterate over each word and caps where required
+				for (const w of h.textContent.split(" ")) {
+					// if the word is long enough it should be capitalised
+					if (w.length > 3) {
+						sentence += w.charAt(0).toUpperCase() + w.slice(1) + " ";
+					}
+				}
+
+				// set the new text
+				h.textContent = sentence;
+			}
+		}
+
+		// return the html as a string
+		return dom.serialize();
+	},
+	// minify the html
+	(html: string) => {
+		return minify(html, {
+			collapseWhitespace: true,
+			removeComments: true,
+			trimCustomFragments: true,
+			minifyCSS: true,
+			useShortDoctype: true,
+			minifyURLs: true,
+		});
+	},
+];
 
 // memoize the template read to avoid reading it multiple times
 function readTemplateFile(): (templateFile: string) => string {
@@ -65,6 +122,11 @@ function getPage(): (url: string) => Promise<string> {
 	};
 }
 
+// for the post processing
+type postProcessConstructor = {
+	(html: string): string;
+};
+
 class Renderer {
 	private readTemplateFile: (templateFile: string) => string;
 	private getPage: (url: string) => Promise<string>;
@@ -73,6 +135,28 @@ class Renderer {
 	constructor() {
 		this.readTemplateFile = readTemplateFile();
 		this.getPage = getPage();
+	}
+
+	// run through the post processing steps, try each step, if a step fails, try the next one etc
+	// this is recursive and will run until all steps are complete
+	private postProcess(html: string, steps: postProcessConstructor[], index: number): string {
+		if (index < steps.length && steps.length >= 0) {
+			try {
+				// create the step with a fallback in case the step given is undefined for some reason
+				const step = steps[index] || ((html) => html);
+
+				// process the html through that step, then return the result and set that to the html
+				// then call the next step passing the processed html
+				const newHtml = step(html);
+				return this.postProcess(newHtml, steps, index + 1);
+			} catch (err) {
+				// if the post step fails, log the error and continue to the next step
+				logger.error(`Failed to post process ${err}`);
+				return this.postProcess(html, steps, index + 1);
+			}
+		} else {
+			return html;
+		}
 	}
 
 	public async render(templateData: ITemplateData): Promise<string> {
@@ -87,19 +171,8 @@ class Renderer {
 			{ rmWhitespace: true }
 		);
 
-		try {
-			return minify(unminifiedHtml, {
-				collapseWhitespace: true,
-				removeComments: true,
-				trimCustomFragments: true,
-				minifyCSS: true,
-				useShortDoctype: true,
-				minifyURLs: true,
-			});
-		} catch (err) {
-			logger.error("Failed to minify HTML");
-			return unminifiedHtml;
-		}
+		// return the html after attempting to do some post processing on the DOM
+		return this.postProcess(unminifiedHtml, [...postProcessingSteps], 0);
 	}
 
 	// write the rendered html to disk
