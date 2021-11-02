@@ -48,7 +48,7 @@ const getHeaders = (template: string) => {
 			styles.push(generate("tiny_dark.css"));
 			break;
 		case "about.ejs":
-			styles.push(generate("dark.css"));
+			styles.push(generate("about.css"));
 			break;
 		case "template.ejs":
 			styles.push(generate("light.css"));

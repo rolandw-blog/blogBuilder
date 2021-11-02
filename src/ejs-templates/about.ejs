@@ -7,32 +7,44 @@
 
 	<body>
 		<div id="content_wrapper">
-			<div id="home_wrapper">
-				<h1 class="lightHyperLink"><%- name %></h1>
-				<div>
-					<a href="/<%= parent.path.join('/') %>">← Back</a>
-				</div>
-				<div id="about">
-					<aside>
-						<!-- <a class="lightHyperLink" href="/Resume">View my resume.</a>
-						<a class="lightHyperLink" href="/files"
-							>Copy my resume cls</a
-						> -->
-						<p>I am a Computer enthusiast writing software and building things.</p>
-						<br />
-						<p>
-							My interests are hacking, automation, and talking about software design
-							philosophy. My career goal is to work in devops / system administration
-							by day and hack computers by night.
-						</p>
-						<br />
-						<p>
-							I am studying a BA of Computer Science in cybersecurity and network
-							design at a university in Melbourne Australia.
-						</p>
-					</aside>
-
+			<div id="content">
+				<div id="avatar">
 					<img src="/static/avatar.svg" alt="me!" />
+				</div>
+				<div id="bio">
+					<aside>
+						<p>Hi, I'm Roland.</p>
+						<br />
+						<p>I am a computer enthusiast writing software and building things.</p>
+						<br />
+						<p>
+							I appreciate efficient programming and making the computer work for you,
+							not the reverse!
+						</p>
+						<br />
+						<p>
+							I am studying a BA of Computer Science in Cybersecurity and Network
+							Design at a university in Melbourne Australia.
+						</p>
+						<br />
+						<p>
+							I consider this website a
+							<a href="https://nesslabs.com/mind-garden">digital garden</a>, some of
+							the garden is well kept, others not. As time goes on the garden grows
+							and evolves, recent pages that i worked on were
+							<a href="<%= recent.created[0].path.join('/') %>"
+								>"<%= recent.created[0].name %>"</a
+							>
+							, and
+							<a href="<%= recent.created[1].path.join('/') %>"
+								>"<%= recent.created[1].name %>"</a
+							>. You can also check out my <a href="#">resume</a>, or read my
+							<a href="https://twitter.com/RolandIRL">twitter</a>.
+						</p>
+						<nav>
+							<a href="/<%= parent.path.join('/') %>">← back</a>
+						</nav>
+					</aside>
 				</div>
 			</div>
 		</div>
