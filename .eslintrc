@@ -24,7 +24,7 @@
 		"eslint:recommended"
 	],
 	"rules": {
-		"complexity": ["error", { "max": 6 }],
+		"complexity": ["error", { "max": 7 }],
 		"no-console": 0,
 		// disable no-unused-vars here (tsc will catch unused vars). And include `noUnusedLocals`, `noUnusedParameters`, `strict` to true in tsconfig
 		// https://stackoverflow.com/questions/63767199/typescript-eslint-no-unused-vars-false-positive-in-type-declarations
