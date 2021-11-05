@@ -11,6 +11,7 @@ import { ISource } from "../../interfaces/page.interface";
 import axios, { AxiosRequestConfig } from "axios";
 import { minify } from "html-minifier";
 import { JSDOM } from "jsdom";
+import safeSyncRead from "../../utils/safeSyncRead";
 
 marked.setOptions({
 	renderer: markedOverwrites(),
@@ -88,7 +89,7 @@ function readTemplateFile(): (templateFile: string) => string {
 			logger.debug(`TemplateFile read hit cache for ${templateFile}`);
 			return cache[templateFile];
 		}
-		const template = fs.readFileSync(templateFile, "utf8");
+		const template = safeSyncRead(templateFile);
 		cache[templateFile] = template;
 		// check the cache size is not too big
 		if (Object.keys(cache).length > 50) {

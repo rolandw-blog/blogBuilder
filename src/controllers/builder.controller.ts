@@ -84,20 +84,24 @@ class BuildController {
 		if (page === undefined) {
 			next(new HttpException(500, `No page found for where ${queryFor} = ${val}`));
 		} else {
-			// saturate the template with all the template related data from the database
-			const template = await this.pageTemplater.saturateTemplate(page, this.steps);
+			try {
+				// saturate the template with all the template related data from the database
+				const template = await this.pageTemplater.saturateTemplate(page, this.steps);
 
-			// render the page with the template
-			const html = await this.pageRenderer.render(template);
+				// render the page with the template
+				const html = await this.pageRenderer.render(template);
 
-			// write to disk
-			this.pageRenderer.writeToDisk(template, html).then(() => {
-				logger.info(`"${template.path}" written to disk`);
-			});
+				// write to disk
+				this.pageRenderer.writeToDisk(template, html).then(() => {
+					logger.info(`"${template.path}" written to disk`);
+				});
 
-			// send the page back as html
-			res.header("Content-Type", "text/html");
-			res.send(html);
+				// send the page back as html
+				res.header("Content-Type", "text/html");
+				res.send(html);
+			} catch (err) {
+				next(err);
+			}
 		}
 	}
 
