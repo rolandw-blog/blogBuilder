@@ -51,7 +51,10 @@ const postProcessingSteps = [
 				for (const w of h.textContent.split(" ")) {
 					// if the word is long enough it should be capitalised
 					if (w.length > 3) {
-						sentence += w.charAt(0).toUpperCase() + w.slice(1) + " ";
+						const wordStripped = w.replace(/\t|\n/g, "");
+						const firstLetter = wordStripped.charAt(0).toUpperCase();
+						const restOfWord = wordStripped.substring(1);
+						sentence += `${firstLetter}${restOfWord} `;
 					}
 				}
 
