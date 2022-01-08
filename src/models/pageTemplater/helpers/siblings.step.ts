@@ -9,7 +9,12 @@ async function getSiblings(templateData: ITemplateData): Promise<Partial<ITempla
 	const parentPath = templateData.page.path.slice(0, -1);
 	const encPath = encodeURIComponent(parentPath.join("/"));
 	const url = `${API_URL}/pages?path=/${encPath}/*&limit=-1`;
-	const options: AxiosRequestConfig = {};
+	const options: AxiosRequestConfig = {
+		method: "GET",
+		headers: {
+			"Content-Type": "application/json",
+		},
+	};
 	const response = await axios(url, options);
 	const siblings = (await response.data) as IPage[];
 	// console.log(siblings);
