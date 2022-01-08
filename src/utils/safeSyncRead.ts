@@ -2,6 +2,7 @@ import HttpException from "../exceptions/HttpException";
 import path from "node:path";
 import fs from "node:fs";
 import loggerFunction from "./genericLogger";
+import { NODE_ENV } from "../constants";
 const logger = loggerFunction(__filename);
 
 // Throw an error if the file cannot be read
@@ -12,7 +13,7 @@ function safeSyncRead(filePath: string): string {
 		logger.error(`safeSyncRead error ${err}`);
 
 		// throw a more verbose error if in development
-		if (process.env["NODE_ENV"] === "development") {
+		if (NODE_ENV === "development") {
 			console.trace();
 		}
 

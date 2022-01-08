@@ -2,12 +2,12 @@ import ITemplateData from "../../../interfaces/template.interface";
 import axios, { AxiosRequestConfig } from "axios";
 import IPage from "../../../interfaces/page.interface";
 import IPageTemplaterBuildStep from "../../../interfaces/pageTemplateBuildStep.interface";
+import { API_URL } from "../../../constants";
 
 async function getSiblings(templateData: ITemplateData): Promise<Partial<ITemplateData>> {
-	const dbUrl = process.env["DB_API"] as string;
 	const parentPath = templateData.page.path;
 	const encPath = encodeURIComponent(`${parentPath.join("/")}/*`);
-	const url = `${dbUrl}/pages?path=/${encPath}&limit=-1`;
+	const url = `${API_URL}/pages?path=/${encPath}&limit=-1`;
 	const options: AxiosRequestConfig = {};
 	const response = await axios(url, options);
 	const children = (await response.data) as IPage[];

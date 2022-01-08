@@ -8,6 +8,7 @@ const logger = loggerFunction(__filename);
 import dotenv from "dotenv";
 import BuildRoute from "./routes/build.route";
 import BuildAllRoute from "./routes/buildAll.route";
+import { PORT } from "./constants";
 dotenv.config();
 
 logger.info("Starting up");
@@ -27,7 +28,7 @@ function start() {
 	routes.push(new PageNotFound());
 
 	// then create the app and start listening on the port
-	new App(routes, { port: process.env["PORT"] as string }).listen();
+	new App(routes, { port: PORT }).listen();
 }
 
 start();

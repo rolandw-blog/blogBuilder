@@ -9,6 +9,7 @@ import openapiSpecification from "./swagger";
 import AppOptions from "./interfaces/appOptions.interface";
 import { Server } from "http";
 import errorMiddleware from "./middleware/error.middleware";
+import { NODE_ENV, DOMAIN } from "./constants";
 
 class App {
 	// List all the fields that this class will contain
@@ -16,12 +17,12 @@ class App {
 	// 	Thats because the routes are consumer immediately by initializeRoutes and attached to the app at runtime
 	public app: express.Application;
 	public port: string;
-	public env: boolean;
+	public env: "production" | "development";
 
-	constructor(routes: Route[], options: AppOptions = { port: "3001" }) {
+	constructor(routes: Route[], options: AppOptions) {
 		this.app = express();
 		this.port = options.port;
-		this.env = process.env["NODE_ENV"] === "production" ? true : false;
+		this.env = NODE_ENV as "production" | "development";
 
 		this.initializeMiddlewares();
 		this.initilizeDocs();
@@ -50,10 +51,10 @@ class App {
 			next();
 		});
 
-		if (this.env) {
+		if (this.env === "production") {
 			logger.info("running in production");
 			this.app.use(helmet());
-			this.app.use(cors({ origin: `${process.env["DOMAIN"]}`, credentials: true }));
+			this.app.use(cors({ origin: `${DOMAIN}`, credentials: true }));
 		} else {
 			this.app.use(cors({ origin: true, credentials: true }));
 		}
@@ -84,7 +85,7 @@ class App {
 
 		// Optionally you can enable this error middleware to catch errors of generic type Error (instead of just HTTP exceptions)
 		// 		This is possible because the httpExceptionMiddleware will pass any error on if its not a httpException
-		if (process.env["NODE_ENV"] == "production") {
+		if (NODE_ENV == "production") {
 			this.app.use(errorMiddleware);
 		}
 	}
