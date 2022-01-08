@@ -5,7 +5,7 @@ const validateEnv = function (): boolean {
 	const errors: Array<string> = [];
 	const e = process.env;
 
-	const expectedEnv = ["NODE_ENV", "DOMAIN", "LOG_LEVEL", "API_URL", "PORT"];
+	const expectedEnv = ["NODE_ENV", "DOMAIN", "LOG_LEVEL", "API_URL", "PORT", "OUTPUT_DIR"];
 
 	for (const envVar of expectedEnv) {
 		if (typeof e[envVar] === "undefined") errors.push(`${envVar} is not defined`);

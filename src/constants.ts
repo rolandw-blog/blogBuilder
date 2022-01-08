@@ -3,4 +3,5 @@ const NODE_ENV = process.env["NODE_ENV"] || "development";
 const DOMAIN = process.env["DOMAIN"] || "blogbuilder";
 const PORT = process.env["PORT"] || "3000";
 const LOG_LEVEL = process.env["LOG_LEVEL"] || "debug";
-export { API_URL, NODE_ENV, DOMAIN, PORT, LOG_LEVEL };
+const OUTPUT_DIR = process.env["OUTPUT_DIR"] || "/data/dist";
+export { API_URL, NODE_ENV, DOMAIN, PORT, LOG_LEVEL, OUTPUT_DIR };
