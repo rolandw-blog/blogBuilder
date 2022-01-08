@@ -6,6 +6,7 @@ import IPage from "../interfaces/page.interface";
 import genericLogger from "./genericLogger";
 const logger = genericLogger(__filename);
 import IPageSearchQuery, { QueryTypes } from "../interfaces/page.searchQueryParams.interface";
+import { API_URL } from "../constants";
 
 // construct the query (URL) string
 function constructQuery(
@@ -23,7 +24,7 @@ function constructQuery(
 }
 
 async function getPage(queryString: QueryTypes, query: IPageSearchQuery): Promise<IPage[]> {
-	const apiRoot = process.env["DB_API"] as string;
+	const apiRoot = API_URL;
 
 	// get the pagination
 	const { page, limit } = query;

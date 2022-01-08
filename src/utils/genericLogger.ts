@@ -9,6 +9,7 @@ import consoleTransport from "./transports/console";
 import ConsoleTimestampTransport from "./transports/consoleTimestamp";
 import logLevels from "./logLevels";
 import path from "path";
+import { LOG_LEVEL, NODE_ENV } from "../constants";
 
 // ##──── GENERIC LOGGER ────────────────────────────────────────────────────────────────────
 
@@ -29,10 +30,10 @@ export default (filepath: string): winston.Logger => {
 		// IE when we call gernericLogger.add(consoleTransport) it will add the defaultMeta as arguments to the consoleTransport
 		defaultMeta: { filename: filename },
 		// the highest log level to log on. when set to debug it will log everything debug and above (everything)
-		level: process.env["LOG_LEVEL"] || "debug",
+		level: LOG_LEVEL,
 	});
 
-	switch (process.env["NODE_ENV"]) {
+	switch (NODE_ENV) {
 		case "development":
 			genericLogger.add(consoleTransport);
 			break;
@@ -43,7 +44,7 @@ export default (filepath: string): winston.Logger => {
 
 		default:
 			// This is a dead (silent: true) logger that just exists as a backup if there is no transports defined
-			// The purpose of this is because if we are not running in development or production (IE process.env.NODE_ENV === "test")
+			// The purpose of this is because if we are not running in development or production (IE NODE_ENV === "test")
 			// 		Then we decide to just log nothing at all
 			// genericLogger.add(
 			// 	new winston.transports.Console({
