@@ -1,17 +1,17 @@
 <div>
-	<a href="/<%= parent.path.join('/') %>">← Back</a>
+	<a href="/<%= parent.path.join('/') %>">← back</a>
 </div>
 <% if(prevPage){ %>
 	<a href="/<%=prevPage.path.join('/')%>">
 		<div class="nav-link">
-			<span>↑ </span><span><%=prevPage.name%></span>
+			<span>↑ </span><span><%=prevPage.name.toLowerCase()%></span>
 		</div>
 	</a>
 <% } %>
 <% if(nextPage){ %>
 	<a href="/<%=nextPage.path.join('/')%>">
 		<div class="nav-link">
-			<span>↓ </span><span><%=nextPage.name%></span>
+			<span>↓ </span><span><%=nextPage.name.toLowerCase()%></span>
 		</div>
 	</a>
 <% } %>
