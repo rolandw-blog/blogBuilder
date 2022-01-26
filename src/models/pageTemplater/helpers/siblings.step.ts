@@ -2,14 +2,19 @@ import ITemplateData from "../../../interfaces/template.interface";
 import axios, { AxiosRequestConfig } from "axios";
 import IPage from "../../../interfaces/page.interface";
 import IPageTemplaterBuildStep from "../../../interfaces/pageTemplateBuildStep.interface";
+import { API_URL } from "../../../constants";
 
 async function getSiblings(templateData: ITemplateData): Promise<Partial<ITemplateData>> {
-	const dbUrl = process.env["DB_API"] as string;
 	// get the pages siblings by getting the children of the current pages parents
 	const parentPath = templateData.page.path.slice(0, -1);
 	const encPath = encodeURIComponent(parentPath.join("/"));
-	const url = `${dbUrl}/pages?path=/${encPath}/*&limit=-1`;
-	const options: AxiosRequestConfig = {};
+	const url = `${API_URL}/pages?path=/${encPath}/*&limit=-1`;
+	const options: AxiosRequestConfig = {
+		method: "GET",
+		headers: {
+			"Content-Type": "application/json",
+		},
+	};
 	const response = await axios(url, options);
 	const siblings = (await response.data) as IPage[];
 	// console.log(siblings);

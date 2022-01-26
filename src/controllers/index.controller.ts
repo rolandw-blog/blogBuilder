@@ -3,6 +3,7 @@
 
 interface IndexDoc {
 	message: string;
+	service: string;
 }
 
 import { Request, Response } from "express";
@@ -11,6 +12,7 @@ class IndexController {
 	public index = (_req: Request, res: Response): void => {
 		const response: IndexDoc = {
 			message: "ok",
+			service: "blogbuilder",
 		};
 
 		res.status(200).json(response);

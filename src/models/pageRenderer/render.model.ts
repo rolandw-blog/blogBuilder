@@ -12,6 +12,7 @@ import axios, { AxiosRequestConfig } from "axios";
 import { minify } from "html-minifier";
 import { JSDOM } from "jsdom";
 import safeSyncRead from "../../utils/safeSyncRead";
+import { OUTPUT_DIR } from "../../constants";
 
 marked.setOptions({
 	renderer: markedOverwrites(),
@@ -138,7 +139,7 @@ type postProcessConstructor = {
 class Renderer {
 	private readTemplateFile: (templateFile: string) => string;
 	private getPage: (url: string) => Promise<string>;
-	public outDir = process["env"]["OUTPUT"] || "/html/dist";
+	public outDir = OUTPUT_DIR || "/html/dist";
 
 	constructor() {
 		this.readTemplateFile = readTemplateFile();

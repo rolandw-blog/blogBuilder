@@ -15,12 +15,13 @@ import IPage from "../interfaces/page.interface";
 import loggerFunction from "../utils/genericLogger";
 import getPage from "../utils/getPage";
 import { QueryTypes } from "../interfaces/page.searchQueryParams.interface";
+import { API_URL, OUTPUT_DIR } from "../constants";
 const logger = loggerFunction(__filename);
 
 const getPages = async (path: string): Promise<IPage[]> => {
 	const encPath = encodeURIComponent(`${path}`);
 	// const encPath = path;
-	const url = `${process.env["DB_API"] as string}/pages?path=${encPath}&limit=-1`;
+	const url = `${API_URL}/pages?path=${encPath}&limit=-1`;
 	const options: AxiosRequestConfig = {};
 	const response = await axios(url, options);
 	const data = await response.data;
@@ -29,7 +30,7 @@ const getPages = async (path: string): Promise<IPage[]> => {
 
 class BuildController {
 	public pageTemplater: PageTemplater;
-	public outDir = process["env"]["OUTPUT"] || "/data/dist";
+	public outDir = OUTPUT_DIR || "/data/dist";
 	private pageRenderer: Renderer;
 
 	// use these steps for this page build
