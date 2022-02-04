@@ -1,5 +1,5 @@
 <!-- this needs to look ugly because ejs for loops have failed me -->
 <!-- it is impossible to remote whitespace when putting new lines in this template -->
 <div class="breadCrumbs">
-	<strong><a class="lightHyperLink" href="/">~</a></strong><%_ breadCrumbs.forEach((crumb, i) => { -%><%_ if (i < breadCrumbs.length - 1) { -%><span class="bread-crumb-nav-slash"style="display: inline">/</span><strong><a href="/<%=crumb.join('/')-%>"><%-crumb[crumb.length-1]%></a></strong><%_} -%><%_ });-%>
+	<a class="lightHyperLink" href="/">~</a><%_ breadCrumbs.forEach((crumb, i) => { -%><%_ if (i < breadCrumbs.length - 1) { -%><span class="bread-crumb-nav-slash"style="display: inline">/</span><a href="/<%=crumb.join('/')-%>"><%-crumb[crumb.length-1]%></a><%_} -%><%_ });-%>
 </div>
