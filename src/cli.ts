@@ -151,8 +151,14 @@ export async function cli(processArgs: any) {
         configPath: resolve(argv.config),
         blogConfig: JSON.parse(readFileSync(resolve(argv.config), "utf-8")),
       };
+      if (config.blogConfig?.root && !existsSync(config.blogConfig?.root)) {
+        console.log(chalk.red(`Error: ${config.blogConfig?.root} does not exist`));
+        process.exit(1);
+
+      }
     } catch (err) {
       console.log(chalk.red(`Error reading config file: ${err}`));
+      process.exit(1);
     }
   }
 
