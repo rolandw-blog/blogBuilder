@@ -85,7 +85,8 @@ export async function cli(processArgs: any) {
   const args = yargs(hideBin(processArgs))
     .option("file", {
       alias: "f",
-      describe: "Path to individual file to rebuild. Use config.json root to build whole blog.",
+      describe:
+        "Path to individual file to rebuild. Use config.json root to build whole blog.",
       type: "string",
     })
     .option("output", {
@@ -154,7 +155,6 @@ export async function cli(processArgs: any) {
       if (config.blogConfig?.root && !existsSync(config.blogConfig?.root)) {
         console.log(chalk.red(`Error: ${config.blogConfig?.root} does not exist`));
         process.exit(1);
-
       }
     } catch (err) {
       console.log(chalk.red(`Error reading config file: ${err}`));
@@ -162,6 +162,9 @@ export async function cli(processArgs: any) {
     }
   }
 
+  if (argv.file) {
+    const resolvedPath = resolve(argv.file);
+  }
   if (argv.file && existsSync(resolve(argv.file))) {
     if (statSync(argv.file).isFile()) {
       config = { ...config, buildSinglePage: true, file: resolve(argv.file) };

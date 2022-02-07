@@ -2,6 +2,8 @@
 <html lang="en">
 {{> header }}
 <body>
-  home
+  {{#each sibling}}
+    <div>{{nameFromPath this.pathOnDisk}}</div>
+  {{/each}}
 </body>
 </html>

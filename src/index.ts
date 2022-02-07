@@ -62,11 +62,11 @@ function saturate(
     prev: prev || undefined,
   };
 
-  // children
-  const children = [...rootGroup];
-  children.splice(pageIndex, 1);
+  // siblings
+  const siblings = [...rootGroup];
+  siblings.splice(pageIndex, 1);
 
-  return { ...file, pagination, href, name, parent, sourceUrl, neighbors, children };
+  return { ...file, pagination, href, name, parent, sourceUrl, neighbors, siblings };
 }
 
 async function main(config: IConfig) {
@@ -141,10 +141,53 @@ async function main(config: IConfig) {
   }
 
   console.log("rendering");
+// {
+//     "template": "blogPost.hbs",
+//     "pathOnDisk": "/home/roland/knowledge/tech/Backing Up MongoDB.md",
+//     "virtual": false,
+//     "pagination": [
+//         "tech",
+//         "backing_up_mongodb"
+//     ],
+//     "href": "http://localhost/tech/backing_up_mongodb",
+//     "name": "Backing Up MongoDB",
+//     "parent": "/tech",
+//     "sourceUrl": "https://github.com/rolandwarburton/knowledge/Backing Up MongoDB.md",
+//     "neighbors": {
+//         "next": {
+//             "template": "blogPost.hbs",
+//             "pathOnDisk": "/home/roland/knowledge/tech/Grimoire.md",
+//             "virtual": false
+//         }
+//     },
+//     "siblings": [
+//         {
+//             "template": "blogPost.hbs",
+//             "pathOnDisk": "/home/roland/knowledge/tech/Grimoire.md",
+//             "virtual": false
+//         },
+//         {
+//             "template": "blogPost.hbs",
+//             "pathOnDisk": "/home/roland/knowledge/tech/certbot.md",
+//             "virtual": false
+//         },
+//         {
+//             "template": "blogPost.hbs",
+//             "pathOnDisk": "/home/roland/knowledge/tech/dockerode.md",
+//             "virtual": false
+//         },
+//         {
+//             "template": "menu.hbs",
+//             "pathOnDisk": "/home/roland/knowledge/tech/index.md",
+//             "virtual": true
+//         }
+//     ]
+// }
   const render = new Render(config);
   for (const template of templates) {
     console.log(`rendering ${template.name}`);
     const html = render.render(template);
+    debugger
     console.log(html);
   }
 }
