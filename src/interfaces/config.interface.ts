@@ -8,6 +8,7 @@ interface IConfig {
   protocol: string;
   baseUrl: string;
   buildSinglePage: boolean;
+  targetingVirtualFile: boolean;
   sourceBaseUrl: string;
   blogConfig: {
     version: number;

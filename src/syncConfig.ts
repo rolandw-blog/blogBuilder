@@ -1,10 +1,10 @@
 import { IConfig } from "./interfaces/config.interface";
-import { IPageMeta } from "./interfaces/pageMeta.interface";
+import { IFileEntry } from "./interfaces/fileEntry.interface";
 import chalk from "chalk";
 import { EntryInfo } from "readdirp";
 import { writeFileSync } from "fs";
 
-function syncMetaPages(config: IConfig, filesOnDisk: EntryInfo[], directories: EntryInfo[]) {
+function syncMetaPages(config: IConfig, filesOnDisk: IFileEntry[], directories: EntryInfo[]) {
   const filesPathOnDisk = filesOnDisk.map((file) => file.fullPath);
   const filesPathInConfig = config.blogConfig.pageMeta.map((meta) => meta.pathOnDisk);
   const filesOnDiskAndNotInConfig = filesPathOnDisk.filter(
@@ -34,7 +34,7 @@ function syncMetaPages(config: IConfig, filesOnDisk: EntryInfo[], directories: E
 
   // remove files that have been removed from disk but are still in the config
   // only do this if we are building multiple files (all of them)
-  if (filesInConfigAndNotOnDisk.length > 0 && !config.buildSinglePage) {
+  if (filesInConfigAndNotOnDisk.length > 0) {
     console.log(
       chalk.yellow(
         `The are ${filesInConfigAndNotOnDisk.length} files in the config that are not on the disk`
@@ -118,7 +118,7 @@ function syncMetaPages(config: IConfig, filesOnDisk: EntryInfo[], directories: E
 // }
 
 // TODO add menu groups as files as well
-function syncConfig(config: IConfig, filesOnDisk: EntryInfo[], directories: EntryInfo[]) {
+function syncConfig(config: IConfig, filesOnDisk: IFileEntry[], directories: EntryInfo[]) {
   // sync the config and files on disk
   // const filesPathOnDisk = filesOnDisk.map((file) => file.fullPath);
   syncMetaPages(config, filesOnDisk, directories);

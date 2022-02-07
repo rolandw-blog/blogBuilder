@@ -77,7 +77,7 @@ async function main(config: IConfig) {
   // sync the disk with the config meta and vice versa
   syncConfig(config, files, directories);
 
-  // add the virtual files to the meta array
+  // add the directories as virtual files
   const virtualMenuPages: IPageMeta[] = directories.map((dir) => {
     return {
       template: "menu.hbs",
@@ -85,6 +85,7 @@ async function main(config: IConfig) {
       virtual: true,
     };
   });
+  // add the virtual pages from the config file
   const virtualConfigPages: IPageMeta[] = config.blogConfig.virtualPageMeta;
   config.blogConfig.pageMeta = [
     ...config.blogConfig.pageMeta,
@@ -141,53 +142,52 @@ async function main(config: IConfig) {
   }
 
   console.log("rendering");
-// {
-//     "template": "blogPost.hbs",
-//     "pathOnDisk": "/home/roland/knowledge/tech/Backing Up MongoDB.md",
-//     "virtual": false,
-//     "pagination": [
-//         "tech",
-//         "backing_up_mongodb"
-//     ],
-//     "href": "http://localhost/tech/backing_up_mongodb",
-//     "name": "Backing Up MongoDB",
-//     "parent": "/tech",
-//     "sourceUrl": "https://github.com/rolandwarburton/knowledge/Backing Up MongoDB.md",
-//     "neighbors": {
-//         "next": {
-//             "template": "blogPost.hbs",
-//             "pathOnDisk": "/home/roland/knowledge/tech/Grimoire.md",
-//             "virtual": false
-//         }
-//     },
-//     "siblings": [
-//         {
-//             "template": "blogPost.hbs",
-//             "pathOnDisk": "/home/roland/knowledge/tech/Grimoire.md",
-//             "virtual": false
-//         },
-//         {
-//             "template": "blogPost.hbs",
-//             "pathOnDisk": "/home/roland/knowledge/tech/certbot.md",
-//             "virtual": false
-//         },
-//         {
-//             "template": "blogPost.hbs",
-//             "pathOnDisk": "/home/roland/knowledge/tech/dockerode.md",
-//             "virtual": false
-//         },
-//         {
-//             "template": "menu.hbs",
-//             "pathOnDisk": "/home/roland/knowledge/tech/index.md",
-//             "virtual": true
-//         }
-//     ]
-// }
+  // {
+  //     "template": "blogPost.hbs",
+  //     "pathOnDisk": "/home/roland/knowledge/tech/Backing Up MongoDB.md",
+  //     "virtual": false,
+  //     "pagination": [
+  //         "tech",
+  //         "backing_up_mongodb"
+  //     ],
+  //     "href": "http://localhost/tech/backing_up_mongodb",
+  //     "name": "Backing Up MongoDB",
+  //     "parent": "/tech",
+  //     "sourceUrl": "https://github.com/rolandwarburton/knowledge/Backing Up MongoDB.md",
+  //     "neighbors": {
+  //         "next": {
+  //             "template": "blogPost.hbs",
+  //             "pathOnDisk": "/home/roland/knowledge/tech/Grimoire.md",
+  //             "virtual": false
+  //         }
+  //     },
+  //     "siblings": [
+  //         {
+  //             "template": "blogPost.hbs",
+  //             "pathOnDisk": "/home/roland/knowledge/tech/Grimoire.md",
+  //             "virtual": false
+  //         },
+  //         {
+  //             "template": "blogPost.hbs",
+  //             "pathOnDisk": "/home/roland/knowledge/tech/certbot.md",
+  //             "virtual": false
+  //         },
+  //         {
+  //             "template": "blogPost.hbs",
+  //             "pathOnDisk": "/home/roland/knowledge/tech/dockerode.md",
+  //             "virtual": false
+  //         },
+  //         {
+  //             "template": "menu.hbs",
+  //             "pathOnDisk": "/home/roland/knowledge/tech/index.md",
+  //             "virtual": true
+  //         }
+  //     ]
+  // }
   const render = new Render(config);
   for (const template of templates) {
     console.log(`rendering ${template.name}`);
     const html = render.render(template);
-    debugger
     console.log(html);
   }
 }

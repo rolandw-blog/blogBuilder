@@ -1,7 +1,7 @@
 import yargs, { required } from "yargs";
 import { hideBin } from "yargs/helpers";
 import { main } from "./index";
-import { readFileSync, existsSync, mkdirSync, statSync } from "fs";
+import { readFileSync, existsSync, mkdirSync } from "fs";
 import { resolve } from "path";
 import Ajv, { JSONSchemaType } from "ajv";
 import chalk from "chalk";
@@ -20,6 +20,7 @@ const schema: JSONSchemaType<IConfig> = {
     protocol: { type: "string" },
     baseUrl: { type: "string" },
     sourceBaseUrl: { type: "string" },
+    targetingVirtualFile: { type: "boolean" },
     // sourceBaseUrl: { type: "uri" },
     blogConfig: {
       type: "object",
@@ -62,6 +63,8 @@ const schema: JSONSchemaType<IConfig> = {
     "templates",
     "configPath",
     "blogConfig",
+    "buildSinglePage",
+    "targetingVirtualFile",
   ],
   // when one single file is passed, buildSinglePage should be true
   oneOf: [
@@ -85,8 +88,7 @@ export async function cli(processArgs: any) {
   const args = yargs(hideBin(processArgs))
     .option("file", {
       alias: "f",
-      describe:
-        "Path to individual file to rebuild. Use config.json root to build whole blog.",
+      describe: "Path to individual file to rebuild. Use config.json root to build whole blog.",
       type: "string",
     })
     .option("output", {
@@ -162,22 +164,33 @@ export async function cli(processArgs: any) {
     }
   }
 
-  if (argv.file) {
-    const resolvedPath = resolve(argv.file);
-  }
-  if (argv.file && existsSync(resolve(argv.file))) {
-    if (statSync(argv.file).isFile()) {
-      config = { ...config, buildSinglePage: true, file: resolve(argv.file) };
-    }
-  } else {
-    if (argv.file) {
-      // we were expecting a file but it doesn't exist
+  if (config.blogConfig && argv.file) {
+    const virtualFilePath = resolve(config.blogConfig.root, argv.file);
+    const isVirtual = config.blogConfig.virtualPageMeta.find(
+      (x) => x.pathOnDisk === virtualFilePath
+    );
+    if (isVirtual) {
+      config = {
+        ...config,
+        file: isVirtual.pathOnDisk,
+        buildSinglePage: true,
+        targetingVirtualFile: true,
+      };
+    } else if (existsSync(resolve(argv.file))) {
+      config = {
+        ...config,
+        file: resolve(argv.file),
+        buildSinglePage: true,
+        targetingVirtualFile: false,
+      };
+    } else {
+      // we were expecting a real file but it doesn't exist
       console.log(chalk.red(`Error: file ${argv.file} does not exist`));
       process.exit(1);
-    } else {
-      // we were not expecting a file and can continue as normal
-      config = { ...config, buildSinglePage: false };
     }
+  } else {
+    // we were not expecting a file and can continue as normal
+    config = { ...config, buildSinglePage: false, targetingVirtualFile: false };
   }
 
   if (argv.protocol) {
