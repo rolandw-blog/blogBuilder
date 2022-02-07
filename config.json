@@ -4,12 +4,12 @@
   "virtualPageMeta": [
     {
       "template": "home.hbs",
-      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/index.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/index.md",
       "virtual": true
     },
     {
       "template": "about.hbs",
-      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/about.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/about.md",
       "virtual": true
     }
   ],
