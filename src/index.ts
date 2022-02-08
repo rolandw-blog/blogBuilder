@@ -7,6 +7,9 @@ import { IPageMeta } from "./interfaces/pageMeta.interface";
 import { getDirectories } from "./getDirectories";
 import { IPageMetaSaturated } from "./interfaces/pageMetaSaturated.interface";
 import { Render } from "./render";
+import { marked } from "marked";
+import { mkdirSync, readFileSync } from "fs";
+import { writeFile } from "fs/promises";
 
 function compare(a: IPageMeta, b: IPageMeta): -1 | 0 | 1 {
   const afileName = parse(a.pathOnDisk).name;
@@ -66,7 +69,17 @@ function saturate(
   const siblings = [...rootGroup];
   siblings.splice(pageIndex, 1);
 
-  return { ...file, pagination, href, name, parent, sourceUrl, neighbors, siblings };
+  let content = "";
+  try {
+    if (!config.targetingVirtualFile) {
+      content = marked.parse(readFileSync(file.pathOnDisk, "utf8"));
+      console.log(content);
+    }
+  } catch (err) {
+    console.log(chalk.red(`Error parsing ${file.pathOnDisk}`));
+  }
+
+  return { ...file, pagination, href, name, parent, sourceUrl, neighbors, siblings, content };
 }
 
 async function main(config: IConfig) {
@@ -141,7 +154,6 @@ async function main(config: IConfig) {
     }
   }
 
-  console.log("rendering");
   // {
   //     "template": "blogPost.hbs",
   //     "pathOnDisk": "/home/roland/knowledge/tech/Backing Up MongoDB.md",
@@ -187,8 +199,19 @@ async function main(config: IConfig) {
   const render = new Render(config);
   for (const template of templates) {
     console.log(`rendering ${template.name}`);
-    const html = render.render(template);
-    console.log(html);
+    const urlPath = new URL(template.href).pathname.substring(1) + "/index.html";
+
+    // TODO figure out why i need to replace /index/index.html
+    // resolve the output + the url path
+    // also replace duplicate index's (not sure why this happens yet)
+    const fileOutputPath = resolve(config.output, urlPath).replace(
+      /\/index\/index.html/,
+      "/index.html"
+    );
+    try {
+      mkdirSync(parse(fileOutputPath).dir, { recursive: true });
+    } catch (err) {}
+    writeFile(fileOutputPath, render.render(template));
   }
 }
 export { main };
