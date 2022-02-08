@@ -117,7 +117,7 @@ function syncMetaPages(config: IConfig, filesOnDisk: IFileEntry[], directories: 
 //   }
 // }
 
-// TODO add menu groups as files as well
+// TODO this does not remove old page entries from config.json for some reason
 function syncConfig(config: IConfig, filesOnDisk: IFileEntry[], directories: EntryInfo[]) {
   // sync the config and files on disk
   // const filesPathOnDisk = filesOnDisk.map((file) => file.fullPath);
