@@ -1,0 +1,19 @@
+@import "./fonts";
+
+* {
+  margin: 0;
+  padding: 0;
+  color: unset;
+}
+
+html,
+body {
+  font-family: $fonts;
+}
+
+a {
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
+}
