@@ -86,6 +86,7 @@ const schema: JSONSchemaType<IConfig> = {
 
 export async function cli(processArgs: any) {
   const args = yargs(hideBin(processArgs))
+    .strict()
     .option("file", {
       alias: "f",
       describe: "Path to individual file to rebuild. Use config.json root to build whole blog.",
