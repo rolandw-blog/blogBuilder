@@ -8,6 +8,8 @@ interface IPageMetaSaturated extends IPageMeta {
   sourceUrl: string;
   siblings: IPageMeta[];
   content: string;
+  styles: string[];
+  // scripts: string[];
   neighbors: {
     next?: IPageMeta;
     prev?: IPageMeta;

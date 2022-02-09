@@ -44,6 +44,13 @@ function saturate(
   pagination.pop();
   pagination.push(parse(file.pathOnDisk).name.toLocaleLowerCase().replace(/ /g, "_"));
 
+  const styles = [];
+  // const scripts = [];
+  switch (file.template) {
+    case "blogPost.hbs":
+      styles.push("/css/blogPost.css");
+  }
+
   // href
   const href = `${config.protocol}://${config.baseUrl}/${pagination.join("/").replace(/ /g, "_")}`;
 
@@ -78,7 +85,18 @@ function saturate(
     console.log(chalk.red(`Error parsing ${file.pathOnDisk}`));
   }
 
-  return { ...file, pagination, href, name, parent, sourceUrl, neighbors, siblings, content };
+  return {
+    ...file,
+    pagination,
+    href,
+    name,
+    parent,
+    sourceUrl,
+    neighbors,
+    siblings,
+    content,
+    styles,
+  };
 }
 
 async function main(config: IConfig) {
