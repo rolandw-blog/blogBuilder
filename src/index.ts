@@ -87,7 +87,7 @@ async function main(config: IConfig) {
   const directories = await getDirectories(config);
 
   // sync the disk with the config meta and vice versa
-  syncConfig(config, files, directories);
+  syncConfig(config, files);
 
   // add the directories as virtual files
   const virtualMenuPages: IPageMeta[] = directories.map((dir) => {
