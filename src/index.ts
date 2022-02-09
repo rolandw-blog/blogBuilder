@@ -71,9 +71,8 @@ function saturate(
 
   let content = "";
   try {
-    if (!config.targetingVirtualFile) {
+    if (!file.virtual) {
       content = marked.parse(readFileSync(file.pathOnDisk, "utf8"));
-      console.log(content);
     }
   } catch (err) {
     console.log(chalk.red(`Error parsing ${file.pathOnDisk}`));
