@@ -2,7 +2,8 @@
   "name": "blogbuilderstatic",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "type": "module",
+  "exports": "./index.js",
   "bin": {
     "@rolandwarburton/blogBuilder": "bin/index.js",
     "blogBuilder": "bin/index.js"
@@ -30,6 +31,7 @@
     "handlebars": "^4.7.7",
     "marked": "^4.0.12",
     "readdirp": "^3.6.0",
+    "remark": "^14.0.2",
     "yargs": "^17.3.1"
   }
 }

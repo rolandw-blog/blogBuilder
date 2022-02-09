@@ -1,15 +1,17 @@
-import { IConfig } from "./interfaces/config.interface";
-import { getFiles } from "./getFiles";
+import { IConfig } from "./interfaces/config.interface.js";
+import { getFiles } from "./getFiles.js";
 import { parse, resolve } from "path";
 import chalk from "chalk";
-import { syncConfig } from "./syncConfig";
-import { IPageMeta } from "./interfaces/pageMeta.interface";
-import { getDirectories } from "./getDirectories";
-import { IPageMetaSaturated } from "./interfaces/pageMetaSaturated.interface";
-import { Render } from "./render";
+import { syncConfig } from "./syncConfig.js";
+import { IPageMeta } from "./interfaces/pageMeta.interface.js";
+import { getDirectories } from "./getDirectories.js";
+import { IPageMetaSaturated } from "./interfaces/pageMetaSaturated.interface.js";
+import { Render } from "./render.js";
 import { marked } from "marked";
 import { mkdirSync, readFileSync } from "fs";
 import { writeFile } from "fs/promises";
+import { frontMatter } from "./frontMatter.js";
+import { remark } from "remark";
 
 function compare(a: IPageMeta, b: IPageMeta): -1 | 0 | 1 {
   const afileName = parse(a.pathOnDisk).name;
@@ -79,7 +81,14 @@ function saturate(
   let content = "";
   try {
     if (!file.virtual) {
-      content = marked.parse(readFileSync(file.pathOnDisk, "utf8"));
+      // read the file
+      const mdContent = readFileSync(file.pathOnDisk, "utf8");
+      // parse the front matter
+      const { frontMatter: matter, markdown } = frontMatter(mdContent);
+      // parse the markdown
+      const ast = remark().processSync(markdown);
+      console.log(ast);
+      content = marked.parse(markdown);
     }
   } catch (err) {
     console.log(chalk.red(`Error parsing ${file.pathOnDisk}`));

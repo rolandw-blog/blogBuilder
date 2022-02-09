@@ -1,11 +1,11 @@
 import yargs, { required } from "yargs";
 import { hideBin } from "yargs/helpers";
-import { main } from "./index";
+import { main } from "./index.js";
 import { readFileSync, existsSync, mkdirSync } from "fs";
 import { resolve } from "path";
 import Ajv, { JSONSchemaType } from "ajv";
 import chalk from "chalk";
-import { IConfig } from "./interfaces/config.interface";
+import { IConfig } from "./interfaces/config.interface.js";
 
 const ajv = new Ajv();
 
@@ -84,7 +84,7 @@ const schema: JSONSchemaType<IConfig> = {
   additionalProperties: false,
 };
 
-export async function cli(processArgs: any) {
+async function cli(processArgs: any) {
   const args = yargs(hideBin(processArgs))
     .strict()
     .option("file", {
@@ -216,3 +216,5 @@ export async function cli(processArgs: any) {
     process.exit(1);
   }
 }
+
+export { cli };
