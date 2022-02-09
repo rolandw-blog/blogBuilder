@@ -12,6 +12,8 @@ import { mkdirSync, readFileSync } from "fs";
 import { writeFile } from "fs/promises";
 import { frontMatter } from "./frontMatter.js";
 import { remark } from "remark";
+import { traverseNodes } from "./traverseNodes.js";
+import { Link } from "mdast";
 
 function compare(a: IPageMeta, b: IPageMeta): -1 | 0 | 1 {
   const afileName = parse(a.pathOnDisk).name;
@@ -85,10 +87,17 @@ function saturate(
       const mdContent = readFileSync(file.pathOnDisk, "utf8");
       // parse the front matter
       const { frontMatter: matter, markdown } = frontMatter(mdContent);
-      // parse the markdown
-      const ast = remark().processSync(markdown);
-      console.log(ast);
-      content = marked.parse(markdown);
+      // parse the markdown for further processing
+      const ast = remark().parse(markdown);
+      // traverse the markdown ast and replace the .md links with .html links for local use
+      traverseNodes<Link>({
+        node: ast,
+        nodeOfType: "link",
+        cb: (node) => {
+          node.url = node.url.replace(/md$/, "html");
+        },
+      });
+      content = marked.parse(remark().stringify(ast));
     }
   } catch (err) {
     console.log(chalk.red(`Error parsing ${file.pathOnDisk}`));
