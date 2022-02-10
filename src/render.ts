@@ -20,6 +20,7 @@ class Render {
 
     this.partials = {
       header: getTemplate(config, "./partials/header.hbs"),
+      frontMatter: getTemplate(config, "./partials/frontMatter.hbs"),
     };
 
     this.helpers = {
