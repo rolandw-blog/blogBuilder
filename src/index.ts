@@ -15,19 +15,15 @@ import { remark } from "remark";
 import { traverseNodes } from "./traverseNodes.js";
 import { Link } from "mdast";
 import { buildReferences } from "./buildReferences.js";
+import { JSDOM } from "jsdom";
+import hljs from "highlight.js";
 
 function compare(a: IPageMeta, b: IPageMeta): -1 | 0 | 1 {
-  const afileName = parse(a.pathOnDisk).name;
-  const bfileName = parse(b.pathOnDisk).name;
-  if (a.template === "menu.hbs" || a.virtual) {
-    return -1;
-  } else if (b.template === "menu.hbs" || b.virtual) {
-    return 1;
-  } else if (afileName < bfileName) {
-    return -1;
-  } else if (afileName > bfileName) {
-    return 1;
-  }
+  if (a.template === "menu.hbs" || a.virtual) return -1;
+  else if (b.template === "menu.hbs" || b.virtual) return 1;
+  else if (parse(a.pathOnDisk).name < parse(b.pathOnDisk).name) return -1;
+  else if (parse(a.pathOnDisk).name > parse(b.pathOnDisk).name) return 1;
+
   return 0;
 }
 
@@ -106,6 +102,12 @@ function saturate(config: IConfig, file: IPageMeta, rootGroup: IPageMeta[]): IPa
       markdownContent += "\n" + referenceTable;
       // parse it to html
       content = marked.parse(markdownContent);
+      // const dom = new JSDOM(content);
+      // dom.window.document.querySelectorAll("pre code").forEach((block) => {
+      //   return hljs.highlightElement(block as HTMLElement);
+      // });
+      // content = dom.window.document.querySelector("")?.outerHTML || "";
+      // console.log(content);
     }
   } catch (err) {
     console.log(chalk.red(`Error parsing ${file.pathOnDisk}`));
@@ -255,7 +257,17 @@ async function main(config: IConfig) {
     try {
       mkdirSync(parse(fileOutputPath).dir, { recursive: true });
     } catch (err) {}
-    writeFile(fileOutputPath, render.render(template));
+    // render the html
+    const html = render.render(template);
+
+    // hljs styles
+    const dom = new JSDOM(html);
+    dom.window.document.querySelectorAll("pre code").forEach((block) => {
+      return hljs.highlightElement(block as HTMLElement);
+    });
+
+    // write the file with the serialized html
+    writeFile(fileOutputPath, dom.serialize());
   }
 
   // create directories for styles and scripts
