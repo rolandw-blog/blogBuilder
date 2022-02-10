@@ -14,6 +14,7 @@ import { frontMatter } from "./frontMatter.js";
 import { remark } from "remark";
 import { traverseNodes } from "./traverseNodes.js";
 import { Link } from "mdast";
+import { buildReferences } from "./buildReferences.js";
 
 function compare(a: IPageMeta, b: IPageMeta): -1 | 0 | 1 {
   const afileName = parse(a.pathOnDisk).name;
@@ -90,14 +91,23 @@ function saturate(
       // parse the markdown for further processing
       const ast = remark().parse(markdown);
       // traverse the markdown ast and replace the .md links with .html links for local use
+      const fileReferenceLinks: Link[] = [];
       traverseNodes<Link>({
         node: ast,
         nodeOfType: "link",
         cb: (node) => {
+          fileReferenceLinks.push(node);
           node.url = node.url.replace(/md$/, "html");
         },
       });
-      content = marked.parse(remark().stringify(ast));
+      // get the reference table as a markdown string
+      const referenceTable = buildReferences(config, file.pathOnDisk, fileReferenceLinks);
+      // render the markdown content
+      let markdownContent = remark().stringify(ast);
+      // append the reference table
+      markdownContent += "\n" + referenceTable;
+      // parse it to html
+      content = marked.parse(markdownContent);
     }
   } catch (err) {
     console.log(chalk.red(`Error parsing ${file.pathOnDisk}`));
