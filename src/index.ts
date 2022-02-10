@@ -10,7 +10,7 @@ import { Render } from "./render.js";
 import { marked } from "marked";
 import { mkdirSync, readFileSync } from "fs";
 import { writeFile } from "fs/promises";
-import { frontMatter } from "./frontMatter.js";
+import { getFrontMatter } from "./frontMatter.js";
 import { remark } from "remark";
 import { traverseNodes } from "./traverseNodes.js";
 import { Link } from "mdast";
@@ -81,13 +81,17 @@ function saturate(
   const siblings = [...rootGroup];
   siblings.splice(pageIndex, 1);
 
+  // front matter (will be defined once/if it is parsed)
+  let frontMatter = {};
+
   let content = "";
   try {
     if (!file.virtual) {
       // read the file
       const mdContent = readFileSync(file.pathOnDisk, "utf8");
       // parse the front matter
-      const { frontMatter: matter, markdown } = frontMatter(mdContent);
+      const { frontMatter: matter, markdown } = getFrontMatter(mdContent);
+      frontMatter = matter || {};
       // parse the markdown for further processing
       const ast = remark().parse(markdown);
       // traverse the markdown ast and replace the .md links with .html links for local use
@@ -124,6 +128,7 @@ function saturate(
     siblings,
     content,
     styles,
+    frontMatter,
   };
 }
 

@@ -1,4 +1,4 @@
-function frontMatter(markdown: string) {
+function getFrontMatter(markdown: string) {
   const lines = markdown.split("\n");
   const hasFrontMatter = /^---$/.test(lines[0]);
   interface IFrontMatter {
@@ -25,4 +25,4 @@ function frontMatter(markdown: string) {
   return { frontMatter, markdown: lines.splice(i + 1, lines.length).join("\n") };
 }
 
-export { frontMatter };
+export { getFrontMatter };

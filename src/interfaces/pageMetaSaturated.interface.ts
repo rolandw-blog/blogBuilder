@@ -10,6 +10,7 @@ interface IPageMetaSaturated extends IPageMeta {
   content: string;
   styles: string[];
   // scripts: string[];
+  frontMatter: { [key: string]: any };
   neighbors: {
     next?: IPageMeta;
     prev?: IPageMeta;
