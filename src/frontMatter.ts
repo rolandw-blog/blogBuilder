@@ -1,7 +1,6 @@
 function frontMatter(markdown: string) {
   const lines = markdown.split("\n");
   const hasFrontMatter = /^---$/.test(lines[0]);
-  console.log(hasFrontMatter);
   interface IFrontMatter {
     [key: string]: any;
   }
