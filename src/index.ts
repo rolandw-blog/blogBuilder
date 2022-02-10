@@ -31,13 +31,7 @@ function compare(a: IPageMeta, b: IPageMeta): -1 | 0 | 1 {
   return 0;
 }
 
-function saturate(
-  config: IConfig,
-  file: IPageMeta,
-  rootGroup: IPageMeta[],
-  // fileGroups: { [index: string]: IPageMeta[] },
-  target: IPageMeta
-): IPageMetaSaturated {
+function saturate(config: IConfig, file: IPageMeta, rootGroup: IPageMeta[]): IPageMetaSaturated {
   const lengthOfRoot = config.blogConfig.root.length;
   const pageLocation =
     parse(file.pathOnDisk.substring(lengthOfRoot)).dir + `/${parse(file.pathOnDisk).name}.html`;
@@ -186,7 +180,7 @@ async function main(config: IConfig) {
     if (!target) {
       throw new Error("Could not find target file in the local root group");
     }
-    templates.push(saturate(config, target, localRootGroup, target));
+    templates.push(saturate(config, target, localRootGroup));
   } else {
     // for each group
     for (let i = 0; i < Object.keys(fileGroups).length; i++) {
@@ -199,7 +193,7 @@ async function main(config: IConfig) {
         if (!target) {
           throw new Error("Could not find target file in the local root group");
         }
-        templates.push(saturate(config, target, localRootGroup, target));
+        templates.push(saturate(config, target, localRootGroup));
       }
     }
   }
