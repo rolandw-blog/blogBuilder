@@ -1,0 +1,31 @@
+article {
+  line-height: 1.4em;
+  #content {
+    width: clamp(300px, 60em, 100%);
+  }
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  line-height: 3.5em;
+  text-transform: lowercase;
+}
+
+p {
+  &:first-letter {
+    text-transform: capitalize;
+  }
+}
+
+code {
+  font-family: monospace;
+  font-size: 1em;
+}
+
+pre {
+  line-height: 1.5em;
+}

@@ -1,2 +1,30 @@
-@import "./components/reset";
 @import "./components/variables_dark";
+@import "./components/reset";
+@import "./components/typography";
+
+body {
+  background-color: $bg-color;
+  color: $font-color;
+  display: grid;
+  grid-template-columns: auto 1fr;
+}
+
+nav {
+  grid-column: 1;
+  padding: 2em;
+}
+
+article {
+  grid-column: 2;
+  padding: 2em;
+}
+
+pre {
+  background-color: $code-block-bg;
+}
+
+code:not(pre > code) {
+  font-size: 16px;
+  font-family: monospace;
+  background-color: $font-accent2;
+}
