@@ -4,6 +4,7 @@ interface IConfig {
   file: string;
   output: string;
   templates: string;
+  styles: string;
   configPath: string;
   protocol: string;
   baseUrl: string;

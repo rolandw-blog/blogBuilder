@@ -8,7 +8,7 @@ import { getDirectories } from "./getDirectories.js";
 import { IPageMetaSaturated } from "./interfaces/pageMetaSaturated.interface.js";
 import { Render } from "./render.js";
 import { marked } from "marked";
-import { mkdirSync, readFileSync } from "fs";
+import { copyFileSync, existsSync, mkdirSync, readdirSync, readFileSync } from "fs";
 import { writeFile } from "fs/promises";
 import { getFrontMatter } from "./frontMatter.js";
 import { remark } from "remark";
@@ -262,6 +262,21 @@ async function main(config: IConfig) {
       mkdirSync(parse(fileOutputPath).dir, { recursive: true });
     } catch (err) {}
     writeFile(fileOutputPath, render.render(template));
+  }
+
+  // create directories for styles and scripts
+  if (!existsSync(resolve(config.output, "css"))) {
+    mkdirSync(resolve(config.output, "css"));
+  }
+
+  if (!existsSync(resolve(config.output, "scripts"))) {
+    mkdirSync(resolve(config.output, "scripts"));
+  }
+
+  // bundle styles
+  for (const file of readdirSync(config.styles)) {
+    console.log(file);
+    copyFileSync(resolve(config.styles, file), resolve(config.output, "css", file));
   }
 }
 export { main };

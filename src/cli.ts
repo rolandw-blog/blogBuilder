@@ -15,6 +15,7 @@ const schema: JSONSchemaType<IConfig> = {
     file: { type: "string" },
     output: { type: "string" },
     templates: { type: "string" },
+    styles: { type: "string" },
     configPath: { type: "string" },
     buildSinglePage: { type: "boolean" },
     protocol: { type: "string" },
@@ -65,6 +66,7 @@ const schema: JSONSchemaType<IConfig> = {
     "blogConfig",
     "buildSinglePage",
     "targetingVirtualFile",
+    "styles",
   ],
   // when one single file is passed, buildSinglePage should be true
   oneOf: [
@@ -110,6 +112,12 @@ async function cli(processArgs: any) {
       type: "string",
       default: "./src/templates",
     })
+    .option("styles", {
+      alias: "s",
+      describe: "path to load styles directory",
+      type: "string",
+      default: "./public/styles/css",
+    })
     .option("protocol", {
       describe: "http or https protocol",
       type: "string",
@@ -145,6 +153,10 @@ async function cli(processArgs: any) {
 
   if (argv.templates && existsSync(resolve(argv.templates))) {
     config = { ...config, templates: resolve(argv.templates) };
+  }
+
+  if (argv.styles && existsSync(resolve(argv.styles))) {
+    config = { ...config, styles: argv.styles };
   }
 
   if (argv.config && existsSync(resolve(argv.config))) {
