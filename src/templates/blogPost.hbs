@@ -2,7 +2,11 @@
 <html lang="en">
 {{> header }}
 <body>
-  {{> frontMatter }}
-  {{{content}}}
+  {{> navigation }}
+  <article>
+    <div id="content">
+      {{{content}}}
+    </div>
+  </article>
 </body>
 </html>
