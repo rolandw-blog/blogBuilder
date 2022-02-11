@@ -28,11 +28,11 @@ function compare(a: IPageMeta, b: IPageMeta): -1 | 0 | 1 {
 }
 
 function saturate(config: IConfig, file: IPageMeta, rootGroup: IPageMeta[]): IPageMetaSaturated {
-  const lengthOfRoot = config.blogConfig.root.length;
-  const pageLocation =
-    parse(file.pathOnDisk.substring(lengthOfRoot)).dir + `/${parse(file.pathOnDisk).name}.html`;
+  // the directory as an absolute path (but relative to the blog config root)
+  const relRootDir = parse(file.pathOnDisk.substring(config.blogConfig.root.length)).dir;
+  const pageLoc = relRootDir + `/${parse(file.pathOnDisk).name}.html`;
 
-  const pagination = pageLocation
+  const pagination = pageLoc
     .split("/")
     .filter((x) => x)
     .map((x) => x.replace(/ /g, "_").toLocaleLowerCase());
@@ -97,9 +97,8 @@ function saturate(config: IConfig, file: IPageMeta, rootGroup: IPageMeta[]): IPa
       // get the reference table as a markdown string
       const referenceTable = buildReferences(config, file.pathOnDisk, fileReferenceLinks);
       // render the markdown content
-      let markdownContent = remark().stringify(ast);
+      const markdownContent = remark().stringify(ast) + "\n" + referenceTable;
       // append the reference table
-      markdownContent += "\n" + referenceTable;
       // parse it to html
       content = marked.parse(markdownContent);
       // const dom = new JSDOM(content);
@@ -262,9 +261,9 @@ async function main(config: IConfig) {
 
     // hljs styles
     const dom = new JSDOM(html);
-    dom.window.document.querySelectorAll("pre code").forEach((block) => {
-      return hljs.highlightElement(block as HTMLElement);
-    });
+    dom.window.document
+      .querySelectorAll("pre code")
+      .forEach((block) => hljs.highlightElement(block as HTMLElement));
 
     // write the file with the serialized html
     writeFile(fileOutputPath, dom.serialize());
@@ -280,9 +279,10 @@ async function main(config: IConfig) {
   }
 
   // bundle styles
-  for (const file of readdirSync(config.styles)) {
-    console.log(file);
-    copyFileSync(resolve(config.styles, file), resolve(config.output, "css", file));
-  }
+  // ! this is out of scope
+  // for (const file of readdirSync(config.styles)) {
+  //   console.log(file);
+  //   copyFileSync(resolve(config.styles, file), resolve(config.output, "css", file));
+  // }
 }
 export { main };

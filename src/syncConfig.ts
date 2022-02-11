@@ -1,28 +1,23 @@
 import { IConfig } from "./interfaces/config.interface";
 import { IFileEntry } from "./interfaces/fileEntry.interface";
 import chalk from "chalk";
-import { EntryInfo } from "readdirp";
 import { writeFileSync } from "fs";
 
+// sync the config and files on disk
 function syncConfig(config: IConfig, filesOnDisk: IFileEntry[]) {
-  // sync the config and files on disk
   const filesPathOnDisk = filesOnDisk.map((file) => file.fullPath);
   const filesPathInConfig = config.blogConfig.pageMeta.map((meta) => meta.pathOnDisk);
-  const filesOnDiskAndNotInConfig = filesPathOnDisk.filter(
-    (path) => !filesPathInConfig.includes(path)
-  );
-  const filesInConfigAndNotOnDisk = filesPathInConfig.filter(
-    (path) => !filesPathOnDisk.includes(path)
-  );
+
+  // files on the disk and not in the config
+  const dskNotCfg = filesPathOnDisk.filter((path) => !filesPathInConfig.includes(path));
+
+  // files in the config and not on the disk
+  const cfgNotDsk = filesPathInConfig.filter((path) => !filesPathOnDisk.includes(path));
 
   // add files that are on disk but not in config
-  if (filesOnDiskAndNotInConfig.length > 0) {
-    console.log(
-      chalk.yellow(
-        `The are ${filesOnDiskAndNotInConfig.length} files on disk that are not in the config`
-      )
-    );
-    for (const file of filesOnDiskAndNotInConfig) {
+  if (dskNotCfg.length > 0) {
+    console.log(chalk.yellow(`${dskNotCfg.length} files on disk that are not in config`));
+    for (const file of dskNotCfg) {
       console.log(chalk.yellow(`Adding ${file} to config`));
       config.blogConfig.pageMeta.push({
         template: "blogPost.hbs",
@@ -35,13 +30,9 @@ function syncConfig(config: IConfig, filesOnDisk: IFileEntry[]) {
 
   // remove files that have been removed from disk but are still in the config
   // only do this if we are building multiple files (all of them)
-  if (filesInConfigAndNotOnDisk.length > 0) {
-    console.log(
-      chalk.yellow(
-        `The are ${filesInConfigAndNotOnDisk.length} files in the config that are not on the disk`
-      )
-    );
-    for (const file of filesInConfigAndNotOnDisk) {
+  if (cfgNotDsk.length > 0) {
+    console.log(chalk.yellow(`${cfgNotDsk.length} files in the config that are not on  disk`));
+    for (const file of cfgNotDsk) {
       console.log(chalk.yellow(`Removing ${file} from config`));
       config.blogConfig.pageMeta = config.blogConfig.pageMeta.filter(
         (meta) => meta.pathOnDisk !== file

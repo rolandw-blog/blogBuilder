@@ -8,9 +8,7 @@ interface TraverseNodesParams<T> {
 
 function traverseNodes<T>({ node, nodeOfType, cb }: TraverseNodesParams<T>): void {
   // check this nodes type
-  if (node.type === nodeOfType) {
-    cb(node as unknown as T);
-  }
+  if (node.type === nodeOfType) cb(node as unknown as T);
 
   // if there are children on this node, then we need to traverseNodes them as well
   if (node.children) {
