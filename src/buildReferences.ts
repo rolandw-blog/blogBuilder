@@ -9,6 +9,7 @@ function buildReferences(config: IConfig, pathOnDist: string, nodes: Link[]) {
   let references = "## References";
   const areAt = parse(pathOnDist).dir;
   for (const node of nodes) {
+    if (node.url.startsWith("https://")) continue;
     // where we want to go
     // can be relative or absolute
     const goingTo = node.url;
@@ -24,9 +25,10 @@ function buildReferences(config: IConfig, pathOnDist: string, nodes: Link[]) {
     );
 
     // construct the children if it exists
-    references += `\n- [${(node.children[0] as unknown as Text).value}](${destinationFull})`;
+    // double parse exists here because we need to pop /file/index.html -> /file
+    references += `\n- [${parse(parse(destinationFull).dir).name}](${destinationFull})`;
   }
-  return references;
+  return references.length === 13 ? "" : references;
 }
 
 export { buildReferences };
