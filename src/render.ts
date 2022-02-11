@@ -31,6 +31,13 @@ class Render {
       nameFromPath: (name) => {
         return parse(name).name;
       },
+      getPaginationSeg: (index: number, context: any) => {
+        let result = "/";
+        for (let i = 0; i <= index; i++) {
+          result += context.data.root.pagination[i] + "/";
+        }
+        return result.replace(/\/$/, "");
+      },
     };
 
     // register partials

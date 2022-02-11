@@ -1,3 +1,15 @@
 <nav>
   {{> frontMatter}}
+  <div>
+{{#each pagination ~}}
+ <a href="{{~ getPaginationSeg @index ~}}">{{~ this ~}}</a>/
+  {{~^~}}
+{{/each}}
+  </div>
 </nav>
+
+{{!-- IGNORE THIS JUNK --}}
+{{!-- {{@index}}  --}}
+{{!-- {{#each pagination }}
+  /{{this}}
+{{/each}} --}}
