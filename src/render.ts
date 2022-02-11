@@ -1,27 +1,30 @@
-import { getTemplate } from "./getTemplate.js";
+// import { getTemplate } from "./getTemplate.js";
 import { IConfig } from "./interfaces/config.interface.js";
 import { IPageMetaSaturated } from "./interfaces/pageMetaSaturated.interface.js";
 import Handlebars from "handlebars";
-import { parse } from "path";
+import { parse, resolve } from "path";
+import { readFileSync } from "fs";
 
 class Render {
   public templates: { [index: string]: string };
   public partials: { [index: string]: string };
   public helpers: {
-    [index: string]: (name: string) => string;
+    [index: string]: (...args: any) => any;
   };
   constructor(config: IConfig) {
+    const getTemplate = (templateName: string) =>
+      readFileSync(resolve(config.templates, templateName), "utf8");
     this.templates = {
-      "home.hbs": getTemplate(config, "home.hbs"),
-      "blogPost.hbs": getTemplate(config, "blogPost.hbs"),
-      "menu.hbs": getTemplate(config, "menu.hbs"),
-      "about.hbs": getTemplate(config, "about.hbs"),
+      "home.hbs": getTemplate("home.hbs"),
+      "blogPost.hbs": getTemplate("blogPost.hbs"),
+      "menu.hbs": getTemplate("menu.hbs"),
+      "about.hbs": getTemplate("about.hbs"),
     };
 
     this.partials = {
-      header: getTemplate(config, "./partials/header.hbs"),
-      frontMatter: getTemplate(config, "./partials/frontMatter.hbs"),
-      navigation: getTemplate(config, "./partials/navigation.hbs"),
+      header: getTemplate("./partials/header.hbs"),
+      frontMatter: getTemplate("./partials/frontMatter.hbs"),
+      navigation: getTemplate("./partials/navigation.hbs"),
     };
 
     this.helpers = {
@@ -30,13 +33,13 @@ class Render {
       },
     };
 
-    for (const partialName of Object.keys(this.partials)) {
+    // register partials
+    for (const partialName of Object.keys(this.partials))
       Handlebars.registerPartial(partialName, this.partials[partialName]);
-    }
 
-    for (const helper of Object.keys(this.helpers)) {
+    // register helpers
+    for (const helper of Object.keys(this.helpers))
       Handlebars.registerHelper(helper, this.helpers[helper]);
-    }
   }
 
   public render(template: IPageMetaSaturated): string {
