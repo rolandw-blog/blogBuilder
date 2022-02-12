@@ -40,9 +40,11 @@ class Render {
       },
       getUrlOrigin: (name: string) => new URL(name).origin,
       getLastChange: (changes: { hash: string; date: string }[]) =>
-        new Date(changes[0].date).toString().slice(0, 15),
+        changes[0] ? new Date(changes[0].date).toString().slice(0, 15) : "nothing here",
       getFirstChange: (changes: { hash: string; date: string }[]) =>
-        new Date(changes[changes.length - 1].date).toString().slice(0, 15),
+        changes[changes.length - 1]
+          ? new Date(changes[changes.length - 1].date).toString().slice(0, 15)
+          : "nothing here",
     };
 
     // register partials
