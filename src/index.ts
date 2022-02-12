@@ -181,8 +181,11 @@ async function main(config: IConfig) {
 
   console.log("grouping files");
   config.blogConfig.pageMeta.forEach((file) => {
-    const parsedPath = parse(resolve(file.pathOnDisk));
-    fileGroups[parsedPath.dir] = [...(fileGroups[parsedPath.dir] || []), file];
+    // only add the file if its allowed to be built (IE not hidden)
+    if (file.build) {
+      const parsedPath = parse(resolve(file.pathOnDisk));
+      fileGroups[parsedPath.dir] = [...(fileGroups[parsedPath.dir] || []), file];
+    }
   });
 
   if (config.buildSinglePage) {
