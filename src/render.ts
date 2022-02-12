@@ -38,6 +38,11 @@ class Render {
         }
         return result.replace(/\/$/, "");
       },
+      getUrlOrigin: (name: string) => new URL(name).origin,
+      getLastChange: (changes: { hash: string; date: string }[]) =>
+        new Date(changes[0].date).toString().slice(0, 10),
+      getFirstChange: (changes: { hash: string; date: string }[]) =>
+        new Date(changes[changes.length - 1].date).toString().slice(0, 10),
     };
 
     // register partials

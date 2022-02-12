@@ -17,6 +17,7 @@ import { Link } from "mdast";
 import { buildReferences } from "./buildReferences.js";
 import { JSDOM } from "jsdom";
 import hljs from "highlight.js";
+import { execSync } from "child_process";
 
 function compare(a: IPageMeta, b: IPageMeta): -1 | 0 | 1 {
   if (a.template === "menu.hbs" || a.virtual) return -1;
@@ -57,6 +58,19 @@ function saturate(config: IConfig, file: IPageMeta, rootGroup: IPageMeta[]): IPa
 
   // source
   const sourceUrl = `${config.sourceBaseUrl}/${name}.md`;
+
+  // changes
+  const changes = JSON.parse(
+    execSync(
+      `echo [ $(git log --pretty=format:'{"hash":"%H","date":"%aD"}' -- ${file.pathOnDisk} | sed 's/$/,/' | head -c -1) ]`,
+      {
+        cwd: parse(file.pathOnDisk).dir,
+        encoding: "utf8",
+        stdio: "pipe",
+      }
+    )
+  );
+  console.log(changes);
 
   // neightboring pages
   const pageIndex = rootGroup.findIndex((x) => x.pathOnDisk === file.pathOnDisk);
@@ -124,6 +138,7 @@ function saturate(config: IConfig, file: IPageMeta, rootGroup: IPageMeta[]): IPa
     content,
     styles,
     frontMatter,
+    changes,
   };
 }
 
