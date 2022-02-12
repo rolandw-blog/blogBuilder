@@ -10,6 +10,10 @@ async function getFiles(config: IConfig): Promise<IFileEntry[]> {
   let files = [];
   if (config.targetingVirtualFile) {
     isFile = true;
+  } else {
+    // if a file is specified, check it actually exists
+    // if the file does not exist then its not a file (we are building all files)
+    isFile = config.file ? statSync(config.file).isFile() : false;
   }
 
   if (isFile && config.buildSinglePage) {
