@@ -23,6 +23,7 @@ function syncConfig(config: IConfig, filesOnDisk: IFileEntry[]) {
         template: "blogPost.hbs",
         pathOnDisk: file,
         virtual: false,
+        build: true,
       });
     }
     writeFileSync(config.configPath, JSON.stringify(config.blogConfig, null, 2));

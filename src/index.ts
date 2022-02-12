@@ -155,6 +155,7 @@ async function main(config: IConfig) {
       template: "menu.hbs",
       pathOnDisk: dir.fullPath + "/index.md",
       virtual: true,
+      build: true,
     };
   });
   // add the virtual pages from the config file
