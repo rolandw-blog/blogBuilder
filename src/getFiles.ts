@@ -2,11 +2,7 @@ import readdirp from "readdirp";
 import { IConfig } from "./interfaces/config.interface";
 import { statSync } from "fs";
 import { parse } from "path";
-
-interface IFileEntry {
-  path: string;
-  fullPath: string;
-}
+import { IFileEntry } from "./interfaces/fileEntry.interface";
 
 async function getFiles(config: IConfig): Promise<IFileEntry[]> {
   let isFile = false;
@@ -14,8 +10,6 @@ async function getFiles(config: IConfig): Promise<IFileEntry[]> {
   let files = [];
   if (config.targetingVirtualFile) {
     isFile = true;
-  } else {
-    const isFile = config.file ? statSync(config.file).isFile() : false;
   }
 
   if (isFile && config.buildSinglePage) {
