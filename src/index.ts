@@ -70,7 +70,6 @@ function saturate(config: IConfig, file: IPageMeta, rootGroup: IPageMeta[]): IPa
       }
     )
   );
-  console.log(changes);
 
   // neightboring pages
   const pageIndex = rootGroup.findIndex((x) => x.pathOnDisk === file.pathOnDisk);
