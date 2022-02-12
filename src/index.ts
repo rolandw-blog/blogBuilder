@@ -17,7 +17,11 @@ import { Link } from "mdast";
 import { buildReferences } from "./buildReferences.js";
 import { JSDOM } from "jsdom";
 import hljs from "highlight.js";
+import { none } from "./languages/none.js";
 import { execSync } from "child_process";
+
+// this also aliases to "output"
+hljs.registerLanguage("none", none);
 
 function compare(a: IPageMeta, b: IPageMeta): -1 | 0 | 1 {
   if (a.template === "menu.hbs" || a.virtual) return -1;
