@@ -7,6 +7,7 @@ function buildReferences(config: IConfig, pathOnDist: string, nodes: Link[]) {
   // const paginationWithoutLastFile = pagination.slice(0, pagination.length - 1).join("/");
 
   let references = "## References";
+  const seen: string[] = [];
   const areAt = parse(pathOnDist).dir;
   for (const node of nodes) {
     if (node.url.startsWith("https://")) continue;
@@ -26,7 +27,9 @@ function buildReferences(config: IConfig, pathOnDist: string, nodes: Link[]) {
 
     // construct the children if it exists
     // double parse exists here because we need to pop /file/index.html -> /file
-    references += `\n- [${parse(parse(destinationFull).dir).name}](${destinationFull})`;
+    if (seen.findIndex((s) => s === destinationFull) === -1)
+      references += `\n- [${parse(parse(destinationFull).dir).name}](${destinationFull})`;
+    seen.push(destinationFull);
   }
   return references.length === 13 ? "" : references;
 }
