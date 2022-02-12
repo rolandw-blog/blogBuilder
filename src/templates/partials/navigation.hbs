@@ -1,0 +1,29 @@
+<nav>
+  {{!-- frontmatter --}}
+  <div class="nav-section">
+    {{> frontMatter}}
+    <div>
+      created: {{getFirstChange changes}}
+    </div>
+    <div>
+      last edited: {{getLastChange changes}}
+    </div>
+
+  {{!-- pagination --}}
+    path:
+    <a href="/">~</a>/
+    {{~#each pagination ~}}
+    <a href="{{~ getPaginationSeg @index ~}}">{{~ this ~}}</a>/
+      {{~^~}}
+    {{/each}}
+    <div>
+      page source: <a href="{{sourceUrl}}">{{getUrlOrigin sourceUrl }}</a>
+    </div>
+  </div>
+</nav>
+
+{{!-- IGNORE THIS JUNK --}}
+{{!-- {{@index}}  --}}
+{{!-- {{#each pagination }}
+  /{{this}}
+{{/each}} --}}

@@ -1,0 +1,95 @@
+$font-base: 24px;
+body {
+  letter-spacing: 0.0625em;
+  word-spacing: 00.0625em;
+}
+
+article {
+  line-height: 1.5em;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  line-height: 1.5em;
+  text-transform: lowercase;
+  margin: 0.5em 0;
+  padding: 2px 0;
+}
+
+// heading sizes
+h1,
+h2 {
+  font-size: clamp($font-base * 1.25, $font-base * 1.25, $font-base * 2.5);
+  // border-bottom: 2px solid $font-accent3;
+}
+
+h3,
+h4,
+h5,
+h6 {
+  font-size: clamp($font-base * 0.5, $font-base * 0.9, $font-base * 1);
+}
+
+// caps first letter of sentences
+p {
+  &:first-letter {
+    text-transform: capitalize;
+  }
+}
+
+// code typography
+code {
+  font-family: monospace;
+  font-size: 1em;
+}
+
+pre {
+  line-height: 1.5em;
+}
+
+// heading styles
+h1::before {
+  content: "# ";
+  color: $font-accent3;
+}
+
+h2::before {
+  content: "## ";
+  color: $font-accent3;
+}
+
+h3::before {
+  content: "### ";
+  color: $font-accent3;
+}
+
+// anchor styles
+a {
+  // color: $font-accent3;
+  color: $font-color;
+  text-decoration: underline;
+  // font-weight: bold;
+  font-style: italic;
+  &:hover {
+    background-color: $bg-accent;
+    border: 1px solid $font-accent3;
+    padding: 1px;
+  }
+}
+
+// article specific anchor styles
+article {
+  a {
+    &::before {
+      content: "{";
+    }
+
+    &::after {
+      content: "}";
+    }
+  }
+}

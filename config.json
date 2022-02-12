@@ -1,0 +1,188 @@
+{
+  "version": 0.1,
+  "root": "/home/roland/Documents/projects/blogv2/knowledge",
+  "virtualPageMeta": [
+    {
+      "template": "home.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/index.md",
+      "virtual": true
+    },
+    {
+      "template": "about.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/about.md",
+      "virtual": true
+    }
+  ],
+  "pageMeta": [
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/tech/Backing Up MongoDB.md",
+      "virtual": false
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/tech/Grimoire.md",
+      "virtual": false
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/tech/certbot.md",
+      "virtual": false
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/tech/dockerode.md",
+      "virtual": false
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Networking/Cable Standards.md",
+      "virtual": false
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Networking/Connectors.md",
+      "virtual": false
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Networking/FreeRADIUS.md",
+      "virtual": false
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Networking/MAC Addresses.md",
+      "virtual": false
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Networking/Media Types and Standards.md",
+      "virtual": false
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Networking/NAT.md",
+      "virtual": false
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Networking/Network Components.md",
+      "virtual": false
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Networking/PFSense.md",
+      "virtual": false
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Networking/Portainer Remote Endpoints.md",
+      "virtual": false
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Networking/Squid Proxy.md",
+      "virtual": false
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Networking/Subnets.md",
+      "virtual": false
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Networking/Topologies.md",
+      "virtual": false
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Networking/Ubiquiti Log.md",
+      "virtual": false
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Networking/Windows Server.md",
+      "virtual": false
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Networking/Wireless Technologies.md",
+      "virtual": false
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Networking/Wiring Standards.md",
+      "virtual": false
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Networking/bastion.md",
+      "virtual": false
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Networking/n&s speedrun.md",
+      "virtual": false
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Networking/vmnet Interfaces Explained.md",
+      "virtual": false
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Networking/zabbix and Bind9 DNS monitoring.md",
+      "virtual": false
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Networking/zabbix monitor docker.md",
+      "virtual": false
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/programming/file1.md",
+      "virtual": false
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/programming/Javascript/file2.md",
+      "virtual": false
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/programming/Javascript/Typescript API Boilerplate/file three.md",
+      "virtual": false
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Writing/a.md",
+      "virtual": false
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Linux/file1.md",
+      "virtual": false
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Linux/file2.md",
+      "virtual": false
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/programming/file2.md",
+      "virtual": false
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/programming/file3.md",
+      "virtual": false
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/programming/file4.md",
+      "virtual": false
+    }
+  ]
+}

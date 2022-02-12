@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html lang="en">
+{{> header }}
+<body>
+  home
+  {{#each siblings}}
+    <div>{{nameFromPath this.pathOnDisk}}</div>
+  {{/each}}
+</body>
+</html>

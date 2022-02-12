@@ -1,0 +1,39 @@
+@import "./components/variables_dark";
+@import "./components/reset";
+@import "./components/typography";
+@import "./components//navigation";
+@import "./components/an-old-hope";
+
+body {
+  background-color: $bg-color;
+  color: $font-color;
+  display: grid;
+  grid-template-columns: auto 1fr;
+}
+article {
+  #content {
+    width: clamp(300px, 45em, 100%);
+  }
+}
+
+article {
+  grid-column: 2;
+  padding: 2em;
+}
+
+// code blocks
+pre {
+  background-color: $code-block-bg;
+  padding: 5px;
+  margin: 2em 0;
+}
+
+// inline code
+code:not(pre > code) {
+  // font-size: 16px;
+  font-size: 105%;
+  padding: 2px;
+  font-family: monospace;
+  background-color: $font-accent2;
+  border: 1px solid $font-color;
+}
