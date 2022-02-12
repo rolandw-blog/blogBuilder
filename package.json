@@ -4,6 +4,13 @@
   "description": "",
   "type": "module",
   "exports": "./index.js",
+  "bin": {
+    "@rolandwarburton/blogBuilder": "bin/index.js",
+    "blogBuilder": "bin/index.js"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "tsc"
   },
