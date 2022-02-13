@@ -11,6 +11,8 @@ import { Link } from "mdast";
 import { buildReferences } from "./buildReferences.js";
 import { execSync } from "child_process";
 
+// TODO split this into somethign more managable
+/* eslint-disable-next-line max-lines-per-function*/
 function saturate(config: IConfig, file: IPageMeta, rootGroup: IPageMeta[]) {
   // the directory as an absolute path (but relative to the blog config root)
   const relRootDir = parse(file.pathOnDisk.substring(config.blogConfig.root.length)).dir;

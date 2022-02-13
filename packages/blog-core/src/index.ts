@@ -25,7 +25,8 @@ function compare(a: IPageMeta, b: IPageMeta): -1 | 0 | 1 {
   return 0;
 }
 
-/* eslint-disable-next-line complexity*/
+// TODO split this into something more managable
+/* eslint-disable-next-line complexity, max-lines-per-function*/
 async function main(config: IConfig) {
   console.log("getting files");
   const files = await getFiles(config);

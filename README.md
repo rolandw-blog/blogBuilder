@@ -12,7 +12,7 @@ lerna run build
 Then build example styles in `./public/styles/`
 
 ```none
-node-sass -r -o ./css ./public/styles/
+node-sass -r -o ./public/styles/css ./public/styles
 
 // once the blog has been built
 cp ./public/styles ./output
