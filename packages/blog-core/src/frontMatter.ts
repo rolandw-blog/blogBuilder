@@ -24,7 +24,8 @@ function getFrontMatter(markdown: string) {
       i++;
     }
   }
-  return { frontMatter, markdown: lines.splice(i + 1, lines.length).join("\n") };
+  const spliceOffset = hasFrontMatter ? i - 1 : i - 2;
+  return { frontMatter, markdown: lines.splice(i + spliceOffset, lines.length).join("\n") };
 }
 
 export { getFrontMatter };
