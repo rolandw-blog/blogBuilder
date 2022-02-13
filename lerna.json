@@ -2,7 +2,7 @@
   "packages": [
     "packages/*"
   ],
-  "version": "incremental",
+  "version": null,
   "npmClient": "npm",
   "useWorkspaces": true
 }
