@@ -79,3 +79,12 @@ example \
   ]
 }
 ```
+
+## Publishing
+
+```none
+npm login --scope=@rolandwarburton --registry=https://npm.pkg.github.com
+// use your github PAT (token) as the password
+
+lerna publish --registry=https://npm.pkg.github.com/
+```
