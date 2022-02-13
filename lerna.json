@@ -1,7 +1,11 @@
 {
-  "packages": [
-    "packages/*"
-  ],
+  "packages": ["packages/*"],
+  "command": {
+    "publish": {
+      "ignoreChanges": ["*.md"],
+      "registry": "https://npm.pkg.github.com"
+    }
+  },
   "version": "independent",
   "npmClient": "npm",
   "useWorkspaces": true
