@@ -23,14 +23,20 @@
   "scripts": {
     "build": "tsc -b",
     "watch": "tsc -b -w --preserveWatchOutput",
-    "clean": "rm -rf ./dist"
+    "clean": "rm -rf ./dist",
+    "lint": "eslint -c .eslintrc ./src "
   },
   "dependencies": {
     "@rolandwarburton/blog-core": "^1.0.1",
+    "@rolandwarburton/eslint-config": "^1.0.0",
     "ajv": "^8.10.0",
+    "chalk": "^5.0.0",
     "yargs": "^17.3.1"
   },
   "bugs": {
     "url": "https://github.com/rolandw-blog/blogbuilder/issues"
+  },
+  "engines": {
+    "node": ">=16"
   }
 }

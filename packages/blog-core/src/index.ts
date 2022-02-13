@@ -5,20 +5,13 @@ import chalk from "chalk";
 import { syncConfig } from "./syncConfig.js";
 import { IPageMeta } from "@rolandwarburton/blog-common";
 import { getDirectories } from "./getDirectories.js";
-import { IPageMetaSaturated } from "@rolandwarburton/blog-common";
 import { Render } from "./render.js";
-import { marked } from "marked";
-import { copyFileSync, existsSync, mkdirSync, readdirSync, readFileSync } from "fs";
+import { existsSync, mkdirSync } from "fs";
 import { writeFile } from "fs/promises";
-import { getFrontMatter } from "./frontMatter.js";
-import { remark } from "remark";
-import { traverseNodes } from "./traverseNodes.js";
-import { Link } from "mdast";
-import { buildReferences } from "./buildReferences.js";
 import { JSDOM } from "jsdom";
 import hljs from "highlight.js";
 import { none } from "./languages/none.js";
-import { execSync } from "child_process";
+import { saturate } from "./saturate.js";
 
 // this also aliases to "output"
 hljs.registerLanguage("none", none);
@@ -32,119 +25,7 @@ function compare(a: IPageMeta, b: IPageMeta): -1 | 0 | 1 {
   return 0;
 }
 
-function saturate(config: IConfig, file: IPageMeta, rootGroup: IPageMeta[]): IPageMetaSaturated {
-  // the directory as an absolute path (but relative to the blog config root)
-  const relRootDir = parse(file.pathOnDisk.substring(config.blogConfig.root.length)).dir;
-  const pageLoc = relRootDir + `/${parse(file.pathOnDisk).name}.html`;
-
-  const pagination = pageLoc
-    .split("/")
-    .filter((x) => x)
-    .map((x) => x.replace(/ /g, "_").toLocaleLowerCase());
-  pagination.pop();
-  pagination.push(parse(file.pathOnDisk).name.toLocaleLowerCase().replace(/ /g, "_"));
-
-  const styles = [];
-  // const scripts = [];
-  switch (file.template) {
-    case "blogPost.hbs":
-      styles.push("/css/blogPost.css");
-  }
-
-  // href
-  const href = `${config.protocol}://${config.baseUrl}/${pagination.join("/").replace(/ /g, "_")}`;
-
-  // page name
-  const name = parse(file.pathOnDisk).name;
-
-  // parent
-  const parent = "/" + pagination.slice(0, pagination.length - 1).join("/");
-
-  // source
-  const sourceUrl = `${config.sourceBaseUrl}/${name}.md`;
-
-  // changes
-  const changes = JSON.parse(
-    execSync(
-      `echo [ $(git log --pretty=format:'{"hash":"%H","date":"%aD"}' -- ${file.pathOnDisk} | sed 's/$/,/' | head -c -1) ]`,
-      {
-        cwd: parse(file.pathOnDisk).dir,
-        encoding: "utf8",
-        stdio: "pipe",
-      }
-    )
-  );
-
-  // neightboring pages
-  const pageIndex = rootGroup.findIndex((x) => x.pathOnDisk === file.pathOnDisk);
-  const next = rootGroup[pageIndex + 1];
-  const prev = rootGroup[pageIndex - 1];
-  const neighbors = {
-    next: next || undefined,
-    prev: prev || undefined,
-  };
-
-  // siblings
-  const siblings = [...rootGroup];
-  siblings.splice(pageIndex, 1);
-
-  // front matter (will be defined once/if it is parsed)
-  let frontMatter = {};
-
-  let content = "";
-  try {
-    if (!file.virtual) {
-      // read the file
-      const mdContent = readFileSync(file.pathOnDisk, "utf8");
-      // parse the front matter
-      const { frontMatter: matter, markdown } = getFrontMatter(mdContent);
-      frontMatter = matter || {};
-      // parse the markdown for further processing
-      const ast = remark().parse(markdown);
-      // traverse the markdown ast and replace the .md links with .html links for local use
-      const fileReferenceLinks: Link[] = [];
-      traverseNodes<Link>({
-        node: ast,
-        nodeOfType: "link",
-        cb: (node) => {
-          fileReferenceLinks.push(node);
-          node.url = node.url.replace(/md$/, "html");
-        },
-      });
-      // get the reference table as a markdown string
-      const referenceTable = buildReferences(config, file.pathOnDisk, fileReferenceLinks);
-      // render the markdown content
-      const markdownContent = remark().stringify(ast) + "\n" + referenceTable;
-      // append the reference table
-      // parse it to html
-      content = marked.parse(markdownContent);
-      // const dom = new JSDOM(content);
-      // dom.window.document.querySelectorAll("pre code").forEach((block) => {
-      //   return hljs.highlightElement(block as HTMLElement);
-      // });
-      // content = dom.window.document.querySelector("")?.outerHTML || "";
-      // console.log(content);
-    }
-  } catch (err) {
-    console.log(chalk.red(`Error parsing ${file.pathOnDisk}`));
-  }
-
-  return {
-    ...file,
-    pagination,
-    href,
-    name,
-    parent,
-    sourceUrl,
-    neighbors,
-    siblings,
-    content,
-    styles,
-    frontMatter,
-    changes,
-  };
-}
-
+/* eslint-disable-next-line complexity*/
 async function main(config: IConfig) {
   console.log("getting files");
   const files = await getFiles(config);
@@ -159,15 +40,16 @@ async function main(config: IConfig) {
       template: "menu.hbs",
       pathOnDisk: dir.fullPath + "/index.md",
       virtual: true,
-      build: true,
+      build: true
     };
   });
+
   // add the virtual pages from the config file
   const virtualConfigPages: IPageMeta[] = config.blogConfig.virtualPageMeta;
   config.blogConfig.pageMeta = [
     ...config.blogConfig.pageMeta,
     ...virtualMenuPages,
-    ...virtualConfigPages,
+    ...virtualConfigPages
   ];
 
   // do a quick sanity check to see if the blogs root is set correctly
@@ -275,9 +157,7 @@ async function main(config: IConfig) {
       /\/index\/index.html/,
       "/index.html"
     );
-    try {
-      mkdirSync(parse(fileOutputPath).dir, { recursive: true });
-    } catch (err) {}
+    mkdirSync(parse(fileOutputPath).dir, { recursive: true });
     // render the html
     const html = render.render(template);
 
@@ -307,5 +187,6 @@ async function main(config: IConfig) {
   //   copyFileSync(resolve(config.styles, file), resolve(config.output, "css", file));
   // }
 }
+
 export { main };
 export default main;

@@ -1,34 +1,35 @@
 {
-  "name": "@rolandwarburton/blog-common",
-  "version": null,
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "private": true,
+  "name": "@rolandwarburton/eslint-config",
+  "version": "1.0.0",
   "description": "> TODO: description",
   "author": "RolandWarburton <warburtonroland@gmail.com>",
   "homepage": "https://github.com/rolandw-blog/blogbuilder#readme",
   "license": "ISC",
+  "main": "src/eslint-config.js",
   "directories": {
     "lib": "lib",
     "test": "__tests__"
   },
   "files": [
-    "dist"
+    "lib"
   ],
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/rolandw-blog/blogbuilder.git"
   },
   "scripts": {
-    "build": "tsc -b",
-    "watch": "tsc -b -w --preserveWatchOutput",
-    "clean": "rm -rf ./dist",
-    "lint": "eslint -c .eslintrc ./src"
+    "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "bugs": {
     "url": "https://github.com/rolandw-blog/blogbuilder/issues"
   },
   "devDependencies": {
-    "typescript": "^4.5.5"
+    "eslint": "^8.9.0"
+  },
+  "engines": {
+    "node": ">=16"
   }
 }

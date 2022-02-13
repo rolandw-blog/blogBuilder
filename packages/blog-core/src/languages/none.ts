@@ -1,8 +1,8 @@
-function none(hljs: any) {
+function none() {
   return {
     name: "none",
     aliases: ["output"],
-    contains: [{}],
+    contains: [{}]
   };
 }
 

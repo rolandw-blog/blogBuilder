@@ -11,7 +11,7 @@ async function getDirectories(config: IConfig) {
       depth: 0,
       alwaysStat: true,
       type: "directories",
-      directoryFilter: ["!.git", "!media", "!assets"],
+      directoryFilter: ["!.git", "!media", "!assets"]
     });
   } else {
     // find and return all markdown files
@@ -19,7 +19,7 @@ async function getDirectories(config: IConfig) {
       depth: 99,
       alwaysStat: true,
       type: "directories",
-      directoryFilter: ["!.git", "!media", "!assets"],
+      directoryFilter: ["!.git", "!media", "!assets"]
     });
   }
 }

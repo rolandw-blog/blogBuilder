@@ -23,14 +23,17 @@
   "scripts": {
     "build": "tsc -b",
     "watch": "tsc -b -w --preserveWatchOutput",
-    "clean": "rm -rf ./dist"
+    "clean": "rm -rf ./dist",
+    "lint": "eslint -c .eslintrc ./src "
   },
   "bugs": {
     "url": "https://github.com/rolandw-blog/blogbuilder/issues"
   },
   "dependencies": {
+    "@rolandwarburton/common": "1.0.0",
     "@types/marked": "^4.0.2",
     "@types/mdast": "^3.0.10",
+    "chalk": "^5.0.0",
     "handlebars": "^4.7.7",
     "highlight.js": "^11.4.0",
     "jsdom": "^19.0.0",
@@ -40,6 +43,10 @@
     "remark": "^14.0.2"
   },
   "devDependencies": {
+    "@rolandwarburton/eslint-config": "1.0.0",
     "@types/yargs": "^17.0.8"
+  },
+  "engines": {
+    "node": ">=16"
   }
 }

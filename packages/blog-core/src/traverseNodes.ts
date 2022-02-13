@@ -12,6 +12,7 @@ function traverseNodes<T>({ node, nodeOfType, cb }: TraverseNodesParams<T>): voi
 
   // if there are children on this node, then we need to traverseNodes them as well
   if (node.children) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     node.children.forEach((child: any) => {
       // the callback will make this recursive by providing traverseNodes with the ability
       // to call traverseNextNodes on the child node once it is done

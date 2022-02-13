@@ -1,4 +1,4 @@
-import { Link, Text } from "mdast";
+import { Link } from "mdast";
 import { IConfig } from "@rolandwarburton/blog-common";
 import { parse, resolve } from "path";
 

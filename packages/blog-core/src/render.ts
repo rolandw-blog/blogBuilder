@@ -9,6 +9,7 @@ class Render {
   public templates: { [index: string]: string };
   public partials: { [index: string]: string };
   public helpers: {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     [index: string]: (...args: any) => any;
   };
   constructor(config: IConfig) {
@@ -18,19 +19,20 @@ class Render {
       "home.hbs": getTemplate("home.hbs"),
       "blogPost.hbs": getTemplate("blogPost.hbs"),
       "menu.hbs": getTemplate("menu.hbs"),
-      "about.hbs": getTemplate("about.hbs"),
+      "about.hbs": getTemplate("about.hbs")
     };
 
     this.partials = {
       header: getTemplate("./partials/header.hbs"),
       frontMatter: getTemplate("./partials/frontMatter.hbs"),
-      navigation: getTemplate("./partials/navigation.hbs"),
+      navigation: getTemplate("./partials/navigation.hbs")
     };
 
     this.helpers = {
       nameFromPath: (name) => {
         return parse(name).name;
       },
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       getPaginationSeg: (index: number, context: any) => {
         let result = "/";
         for (let i = 0; i <= index; i++) {
@@ -44,7 +46,7 @@ class Render {
       getFirstChange: (changes: { hash: string; date: string }[]) =>
         changes[changes.length - 1]
           ? new Date(changes[changes.length - 1].date).toString().slice(0, 15)
-          : "nothing here",
+          : "nothing here"
     };
 
     // register partials

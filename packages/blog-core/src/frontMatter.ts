@@ -1,6 +1,7 @@
-interface IFrontMatter {
-  [key: string]: any;
-}
+import { IFrontMatter } from "@rolandwarburton/blog-common";
+// interface IFrontMatter {
+//   [key: string]: unknown;
+// }
 
 function getFrontMatter(markdown: string) {
   const lines = markdown.split("\n");

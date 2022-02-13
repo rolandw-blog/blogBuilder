@@ -1,139 +1,64 @@
-import yargs, { required } from "yargs";
+/* eslint-disable no-process-exit */
+/* eslint-disable complexity */
+import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
 import main from "@rolandwarburton/blog-core";
 import { readFileSync, existsSync, mkdirSync } from "fs";
 import { resolve } from "path";
-import Ajv, { JSONSchemaType } from "ajv";
+import Ajv from "ajv";
 import chalk from "chalk";
 import { IConfig } from "@rolandwarburton/blog-common";
+import { schema } from "./schema";
 
 const ajv = new Ajv();
 
-const schema: JSONSchemaType<IConfig> = {
-  type: "object",
-  properties: {
-    file: { type: "string" },
-    output: { type: "string" },
-    templates: { type: "string" },
-    styles: { type: "string" },
-    configPath: { type: "string" },
-    buildSinglePage: { type: "boolean" },
-    protocol: { type: "string" },
-    baseUrl: { type: "string" },
-    sourceBaseUrl: { type: "string" },
-    targetingVirtualFile: { type: "boolean" },
-    // sourceBaseUrl: { type: "uri" },
-    blogConfig: {
-      type: "object",
-      required: ["version", "root"],
-      properties: {
-        version: { type: "number" },
-        root: { type: "string" },
-        virtualPageMeta: {
-          type: "array",
-          items: {
-            type: "object",
-            required: ["template"],
-            properties: {
-              template: { type: "string" },
-              pathOnDisk: { type: "string" },
-              virtual: { type: "boolean" },
-              build: { type: "boolean" },
-            },
-          },
-        },
-        pageMeta: {
-          type: "array",
-          items: {
-            type: "object",
-            required: ["template"],
-            properties: {
-              template: { type: "string" },
-              pathOnDisk: { type: "string" },
-              virtual: { type: "boolean" },
-              build: { type: "boolean" },
-            },
-          },
-        },
-      },
-    },
-  },
-  required: [
-    "sourceBaseUrl",
-    "protocol",
-    "baseUrl",
-    "output",
-    "templates",
-    "configPath",
-    "blogConfig",
-    "buildSinglePage",
-    "targetingVirtualFile",
-    "styles",
-  ],
-  // when one single file is passed, buildSinglePage should be true
-  oneOf: [
-    {
-      properties: {
-        file: { type: "string" },
-        buildSinglePage: { type: "boolean", oneOf: [true] },
-      },
-    },
-    {
-      properties: {
-        file: { type: "null" },
-        buildSinglePage: { type: "boolean", oneOf: [false] },
-      },
-    },
-  ],
-  additionalProperties: false,
-};
-
+/* eslint-disable-next-line @typescript-eslint/no-explicit-any, max-lines-per-function */
 async function cli(processArgs: any) {
   const args = yargs(hideBin(processArgs))
     .strict()
     .option("file", {
       alias: "f",
       describe: "Path to individual file to rebuild. Use config.json root to build whole blog.",
-      type: "string",
+      type: "string"
     })
     .option("output", {
       alias: "o",
       describe: "path to output directory",
       type: "string",
-      default: "./output",
+      default: "./output"
     })
     .option("config", {
       alias: "c",
       describe: "path to config file",
       type: "string",
-      default: "./config.json",
+      default: "./config.json"
     })
     .option("templates", {
       alias: "t",
       describe: "path to templates directory",
       type: "string",
-      default: "./src/templates",
+      default: "./src/templates"
     })
     .option("styles", {
       alias: "s",
       describe: "path to load styles directory",
       type: "string",
-      default: "./public/styles/css",
+      default: "./public/styles/css"
     })
     .option("protocol", {
       describe: "http or https protocol",
       type: "string",
-      default: "http",
+      default: "http"
     })
     .option("baseUrl", {
       describe: "base url for the site",
       type: "string",
-      default: "localhost",
+      default: "localhost"
     })
     .option("sourceBaseUrl", {
       describe: "base url for the git repo (if using remote for page storage)",
       type: "string",
-      default: "https://github.com/rolandwarburton/knowledge",
+      default: "https://github.com/rolandwarburton/knowledge"
     });
   const argv = await args.argv;
 
@@ -167,7 +92,7 @@ async function cli(processArgs: any) {
       config = {
         ...config,
         configPath: resolve(argv.config),
-        blogConfig: JSON.parse(readFileSync(resolve(argv.config), "utf-8")),
+        blogConfig: JSON.parse(readFileSync(resolve(argv.config), "utf-8"))
       };
       if (config.blogConfig?.root && !existsSync(config.blogConfig?.root)) {
         console.log(chalk.red(`Error: ${config.blogConfig?.root} does not exist`));
@@ -189,14 +114,14 @@ async function cli(processArgs: any) {
         ...config,
         file: isVirtual.pathOnDisk,
         buildSinglePage: true,
-        targetingVirtualFile: true,
+        targetingVirtualFile: true
       };
     } else if (existsSync(resolve(argv.file))) {
       config = {
         ...config,
         file: resolve(argv.file),
         buildSinglePage: true,
-        targetingVirtualFile: false,
+        targetingVirtualFile: false
       };
     } else {
       // we were expecting a real file but it doesn't exist
