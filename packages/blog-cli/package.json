@@ -1,6 +1,6 @@
 {
   "name": "@rolandwarburton/blog-cli",
-  "version": null,
+  "version": "1.0.0",
   "main": "dist/index.js",
   "type": "module",
   "types": "dist/index.d.ts",
@@ -26,7 +26,7 @@
     "clean": "rm -rf ./dist"
   },
   "dependencies": {
-    "@rolandwarburton/blog-core": "^0.0.0",
+    "@rolandwarburton/blog-core": "^1.0.0",
     "ajv": "^8.10.0",
     "yargs": "^17.3.1"
   },
