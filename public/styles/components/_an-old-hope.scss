@@ -9,9 +9,10 @@
 
 /* Millenium Falcon */
 .hljs {
-  background: #1c1d21;
+  // background: #1c1d21;
+  // color: #c0c5ce;
   background: $code-block-bg;
-  color: #c0c5ce;
+  color: invert($code-block-bg);
 }
 
 /* Death Star Comment */

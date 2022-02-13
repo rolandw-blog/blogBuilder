@@ -1,7 +1,8 @@
 $font-base: 24px;
 body {
-  letter-spacing: 0.0625em;
-  word-spacing: 00.0625em;
+  letter-spacing: 0.0225em;
+  word-spacing: 00.0225em;
+  font-weight: 400;
 }
 
 article {
@@ -15,15 +16,16 @@ h4,
 h5,
 h6 {
   line-height: 1.5em;
-  text-transform: lowercase;
+  text-transform: uppercase;
   margin: 0.5em 0;
   padding: 2px 0;
+  letter-spacing: 0.02em;
 }
 
 // heading sizes
 h1,
 h2 {
-  font-size: clamp($font-base * 1.25, $font-base * 1.25, $font-base * 2.5);
+  font-size: clamp($font-base * 1, $font-base * 0.8, $font-base * 2.5);
   // border-bottom: 2px solid $font-accent3;
 }
 
@@ -31,7 +33,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-size: clamp($font-base * 0.5, $font-base * 0.9, $font-base * 1);
+  font-size: clamp($font-base * 0.5, $font-base * 0.7, $font-base * 1);
 }
 
 // caps first letter of sentences
@@ -57,13 +59,26 @@ h1::before {
   color: $font-accent3;
 }
 
+h2 {
+  &:hover::before {
+    content: "># ";
+  }
+}
+
 h2::before {
   content: "## ";
   color: $font-accent3;
 }
 
+h3 {
+  &:hover::before {
+    content: ">## ";
+  }
+}
+
 h3::before {
   content: "### ";
+  // font-family: "monospace";
   color: $font-accent3;
 }
 

@@ -1,4 +1,4 @@
-@import "./components/variables_dark";
+@import "./components/colors";
 @import "./components/reset";
 @import "./components/typography";
 @import "./components//navigation";
@@ -26,6 +26,7 @@ pre {
   background-color: $code-block-bg;
   padding: 5px;
   margin: 2em 0;
+  color: $font-accent1;
 }
 
 // inline code
