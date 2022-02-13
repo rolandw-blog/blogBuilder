@@ -12,10 +12,19 @@ lerna run build
 Then build example styles in `./public/styles/`
 
 ```none
-node-sass -r -o ./public/styles/css ./public/styles
+mkdir output/css
+node-sass -r -o ./output/css ./public/styles/
 
 // once the blog has been built
 cp ./public/styles ./output
+```
+
+### Hot Reload CSS
+
+Keep it simple, use nodemon.
+
+```none
+nodemon -e scss --exec node-sass -r -o ./output/css ./public/styles/
 ```
 
 ## Usage Examples
