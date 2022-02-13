@@ -1,9 +1,10 @@
+interface IFrontMatter {
+  [key: string]: any;
+}
+
 function getFrontMatter(markdown: string) {
   const lines = markdown.split("\n");
   const hasFrontMatter = /^---$/.test(lines[0]);
-  interface IFrontMatter {
-    [key: string]: any;
-  }
   const frontMatter: IFrontMatter = {};
   let i = 1;
   if (hasFrontMatter) {

@@ -1,0 +1,33 @@
+{
+  "name": "@rolandwarburton/blog-common",
+  "version": "0.0.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "private": true,
+  "description": "> TODO: description",
+  "author": "RolandWarburton <warburtonroland@gmail.com>",
+  "homepage": "https://github.com/rolandw-blog/blogbuilder#readme",
+  "license": "ISC",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rolandw-blog/blogbuilder.git"
+  },
+  "scripts": {
+    "build": "tsc -b",
+    "watch": "tsc -b -w --preserveWatchOutput",
+    "clean": "rm -rf ./dist"
+  },
+  "bugs": {
+    "url": "https://github.com/rolandw-blog/blogbuilder/issues"
+  },
+  "devDependencies": {
+    "typescript": "^4.5.5"
+  }
+}

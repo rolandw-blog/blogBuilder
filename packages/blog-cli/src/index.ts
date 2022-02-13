@@ -1,11 +1,11 @@
 import yargs, { required } from "yargs";
 import { hideBin } from "yargs/helpers";
-import { main } from "./index.js";
+import main from "@rolandwarburton/blog-core";
 import { readFileSync, existsSync, mkdirSync } from "fs";
 import { resolve } from "path";
 import Ajv, { JSONSchemaType } from "ajv";
 import chalk from "chalk";
-import { IConfig } from "./interfaces/config.interface.js";
+import { IConfig } from "@rolandwarburton/blog-common";
 
 const ajv = new Ajv();
 

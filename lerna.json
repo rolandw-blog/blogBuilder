@@ -1,0 +1,8 @@
+{
+  "packages": [
+    "packages/*"
+  ],
+  "version": "incremental",
+  "npmClient": "npm",
+  "useWorkspaces": true
+}

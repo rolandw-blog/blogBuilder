@@ -1,5 +1,5 @@
-import { IConfig } from "./interfaces/config.interface";
-import { IFileEntry } from "./interfaces/fileEntry.interface";
+import { IConfig } from "@rolandwarburton/blog-common";
+import { IFileEntry } from "@rolandwarburton/blog-common";
 import chalk from "chalk";
 import { writeFileSync } from "fs";
 

@@ -1,6 +1,6 @@
 // import { getTemplate } from "./getTemplate.js";
-import { IConfig } from "./interfaces/config.interface.js";
-import { IPageMetaSaturated } from "./interfaces/pageMetaSaturated.interface.js";
+import { IConfig } from "@rolandwarburton/blog-common";
+import { IPageMetaSaturated } from "@rolandwarburton/blog-common";
 import Handlebars from "handlebars";
 import { parse, resolve } from "path";
 import { readFileSync } from "fs";

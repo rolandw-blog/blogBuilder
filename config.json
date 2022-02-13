@@ -16,173 +16,831 @@
   "pageMeta": [
     {
       "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/about.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
       "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/tech/Backing Up MongoDB.md",
-      "virtual": false
+      "virtual": false,
+      "build": true
     },
     {
       "template": "blogPost.hbs",
       "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/tech/Grimoire.md",
-      "virtual": false
+      "virtual": false,
+      "build": true
     },
     {
       "template": "blogPost.hbs",
       "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/tech/certbot.md",
-      "virtual": false
+      "virtual": false,
+      "build": true
     },
     {
       "template": "blogPost.hbs",
       "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/tech/dockerode.md",
-      "virtual": false
+      "virtual": false,
+      "build": true
     },
     {
       "template": "blogPost.hbs",
-      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Networking/Cable Standards.md",
-      "virtual": false
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/tech/index.md",
+      "virtual": false,
+      "build": true
     },
     {
       "template": "blogPost.hbs",
-      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Networking/Connectors.md",
-      "virtual": false
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/programming/Boot MongoDB With JS Init Script.md",
+      "virtual": false,
+      "build": true
     },
     {
       "template": "blogPost.hbs",
-      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Networking/FreeRADIUS.md",
-      "virtual": false
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/programming/Deploying docker websites.md",
+      "virtual": false,
+      "build": true
     },
     {
       "template": "blogPost.hbs",
-      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Networking/MAC Addresses.md",
-      "virtual": false
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/programming/Docker Tidbits.md",
+      "virtual": false,
+      "build": true
     },
     {
       "template": "blogPost.hbs",
-      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Networking/Media Types and Standards.md",
-      "virtual": false
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/programming/Fetching private files on NodeJS.md",
+      "virtual": false,
+      "build": true
     },
     {
       "template": "blogPost.hbs",
-      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Networking/NAT.md",
-      "virtual": false
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/programming/Github.md",
+      "virtual": false,
+      "build": true
     },
     {
       "template": "blogPost.hbs",
-      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Networking/Network Components.md",
-      "virtual": false
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/programming/Learning Laravel.md",
+      "virtual": false,
+      "build": true
     },
     {
       "template": "blogPost.hbs",
-      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Networking/PFSense.md",
-      "virtual": false
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/programming/MERN getting started.md",
+      "virtual": false,
+      "build": true
     },
     {
       "template": "blogPost.hbs",
-      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Networking/Portainer Remote Endpoints.md",
-      "virtual": false
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/programming/Node Tidbits.md",
+      "virtual": false,
+      "build": true
     },
     {
       "template": "blogPost.hbs",
-      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Networking/Squid Proxy.md",
-      "virtual": false
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/programming/Object Oriented PHP.md",
+      "virtual": false,
+      "build": true
     },
     {
       "template": "blogPost.hbs",
-      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Networking/Subnets.md",
-      "virtual": false
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/programming/Principles of OOP.md",
+      "virtual": false,
+      "build": true
     },
     {
       "template": "blogPost.hbs",
-      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Networking/Topologies.md",
-      "virtual": false
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/programming/Rich previews with Open Graph protocol.md",
+      "virtual": false,
+      "build": true
     },
     {
       "template": "blogPost.hbs",
-      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Networking/Ubiquiti Log.md",
-      "virtual": false
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/programming/Web Components.md",
+      "virtual": false,
+      "build": true
     },
     {
       "template": "blogPost.hbs",
-      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Networking/Windows Server.md",
-      "virtual": false
-    },
-    {
-      "template": "blogPost.hbs",
-      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Networking/Wireless Technologies.md",
-      "virtual": false
-    },
-    {
-      "template": "blogPost.hbs",
-      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Networking/Wiring Standards.md",
-      "virtual": false
-    },
-    {
-      "template": "blogPost.hbs",
-      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Networking/bastion.md",
-      "virtual": false
-    },
-    {
-      "template": "blogPost.hbs",
-      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Networking/n&s speedrun.md",
-      "virtual": false
-    },
-    {
-      "template": "blogPost.hbs",
-      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Networking/vmnet Interfaces Explained.md",
-      "virtual": false
-    },
-    {
-      "template": "blogPost.hbs",
-      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Networking/zabbix and Bind9 DNS monitoring.md",
-      "virtual": false
-    },
-    {
-      "template": "blogPost.hbs",
-      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Networking/zabbix monitor docker.md",
-      "virtual": false
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/programming/bash.md",
+      "virtual": false,
+      "build": true
     },
     {
       "template": "blogPost.hbs",
       "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/programming/file1.md",
-      "virtual": false
-    },
-    {
-      "template": "blogPost.hbs",
-      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/programming/Javascript/file2.md",
-      "virtual": false
-    },
-    {
-      "template": "blogPost.hbs",
-      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/programming/Javascript/Typescript API Boilerplate/file three.md",
-      "virtual": false
-    },
-    {
-      "template": "blogPost.hbs",
-      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Writing/a.md",
-      "virtual": false
-    },
-    {
-      "template": "blogPost.hbs",
-      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Linux/file1.md",
-      "virtual": false
-    },
-    {
-      "template": "blogPost.hbs",
-      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Linux/file2.md",
-      "virtual": false
+      "virtual": false,
+      "build": true
     },
     {
       "template": "blogPost.hbs",
       "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/programming/file2.md",
-      "virtual": false
+      "virtual": false,
+      "build": true
     },
     {
       "template": "blogPost.hbs",
       "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/programming/file3.md",
-      "virtual": false
+      "virtual": false,
+      "build": true
     },
     {
       "template": "blogPost.hbs",
       "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/programming/file4.md",
-      "virtual": false
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/programming/index.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/programming/Javascript/Concurrency in Node.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/programming/Javascript/Debugging.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/programming/Javascript/Javascript Patterns.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/programming/Javascript/Logging Event Emitters.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/programming/Javascript/Passing Class Objects.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/programming/Javascript/Promise Chaining - Promises with Dependencies.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/programming/Javascript/Promises.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/programming/Javascript/Remote Debugging Node Containers.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/programming/Javascript/Solving Undefined Callbacks in Methods.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/programming/Javascript/file2.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/programming/Javascript/index.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/programming/Javascript/promisifying file read and write.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/programming/Javascript/signingPayloads.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/programming/Javascript/Typescript API Boilerplate/1. Introduction.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/programming/Javascript/Typescript API Boilerplate/10. Practical Example - Adding a New Route.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/programming/Javascript/Typescript API Boilerplate/11. Unit Testing.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/programming/Javascript/Typescript API Boilerplate/2. Setting up TS for Compiling.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/programming/Javascript/Typescript API Boilerplate/3. Package json and VSC launch scripts.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/programming/Javascript/Typescript API Boilerplate/4. Simple Boilerplate.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/programming/Javascript/Typescript API Boilerplate/5. Tooling - Prettier.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/programming/Javascript/Typescript API Boilerplate/6. Tooling - ESLint.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/programming/Javascript/Typescript API Boilerplate/7. Intermediate Boilerplate.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/programming/Javascript/Typescript API Boilerplate/8. Logging.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/programming/Javascript/Typescript API Boilerplate/9. OpenAPI Standardization.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/programming/Javascript/Typescript API Boilerplate/file three.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/programming/Javascript/Typescript API Boilerplate/index.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Writing/AJourneyinWebDevelopment.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Writing/Automating Photo Backups.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Writing/a.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Writing/bookmarks.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Writing/index.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Writing/phrases.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Networking/Cable Standards.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Networking/Connectors.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Networking/FreeRADIUS.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Networking/MAC Addresses.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Networking/Media Types and Standards.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Networking/NAT.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Networking/Network Components.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Networking/PFSense.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Networking/Portainer Remote Endpoints.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Networking/Squid Proxy.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Networking/Subnets.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Networking/Topologies.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Networking/Ubiquiti Log.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Networking/Windows Server.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Networking/Wireless Technologies.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Networking/Wiring Standards.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Networking/bastion.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Networking/index.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Networking/n&s speedrun.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Networking/vmnet Interfaces Explained.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Networking/zabbix and Bind9 DNS monitoring.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Networking/zabbix monitor docker.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Linux/Apt Package Manager.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Linux/Bash.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Linux/CISCO on Linux.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Linux/Compressing and extracting files.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Linux/Customising Linux.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Linux/Databases on Linux.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Linux/Debugging.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Linux/FF on Debian.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Linux/Fan speed config.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Linux/Future learning checklist.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Linux/Git on Linux.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Linux/Grep and Regex.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Linux/HID.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Linux/Host Names.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Linux/Image manipulation.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Linux/Input and interfaces.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Linux/Installing Arch.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Linux/Intro.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Linux/LAMP & WordPress.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Linux/LVM.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Linux/MIME.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Linux/Man pages.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Linux/Managing drives.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Linux/MongoDB.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Linux/Multiplexing.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Linux/Networked Webcams.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Linux/Networking part 1 - FTP vs FSTP vs SSHFS.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Linux/Networking part 2 - Network File Systems and PXE booting.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Linux/Networking part 3 - SSH stuff.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Linux/Networking part 4 - IPs.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Linux/Node on Linux.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Linux/Nvidia drivers.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Linux/Printing.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Linux/Python on Linux.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Linux/Ranger.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Linux/Resize Partitions.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Linux/SSH.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Linux/Setting up storage server.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Linux/Systemd.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Linux/Terminals.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Linux/User management.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Linux/VPNs.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Linux/Virtual Camera.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Linux/Virtualization.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Linux/Workflow.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Linux/X11 Forwarding.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Linux/XFiles.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Linux/ZSH.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Linux/borg.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Linux/file1.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Linux/file2.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Linux/index.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Linux/nginx.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Linux/pass.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Linux/pwnconfig.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Linux/ricing.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Linux/samba.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Linux/tmux.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Linux/wget and curl.md",
+      "virtual": false,
+      "build": true
+    },
+    {
+      "template": "blogPost.hbs",
+      "pathOnDisk": "/home/roland/Documents/projects/blogv2/knowledge/Linux/xfce install notes.md",
+      "virtual": false,
+      "build": true
     }
   ]
 }

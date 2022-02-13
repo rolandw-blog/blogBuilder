@@ -1,11 +1,11 @@
-import { IConfig } from "./interfaces/config.interface.js";
+import { IConfig } from "@rolandwarburton/blog-common";
 import { getFiles } from "./getFiles.js";
 import { parse, resolve } from "path";
 import chalk from "chalk";
 import { syncConfig } from "./syncConfig.js";
-import { IPageMeta } from "./interfaces/pageMeta.interface.js";
+import { IPageMeta } from "@rolandwarburton/blog-common";
 import { getDirectories } from "./getDirectories.js";
-import { IPageMetaSaturated } from "./interfaces/pageMetaSaturated.interface.js";
+import { IPageMetaSaturated } from "@rolandwarburton/blog-common";
 import { Render } from "./render.js";
 import { marked } from "marked";
 import { copyFileSync, existsSync, mkdirSync, readdirSync, readFileSync } from "fs";
@@ -308,3 +308,4 @@ async function main(config: IConfig) {
   // }
 }
 export { main };
+export default main;

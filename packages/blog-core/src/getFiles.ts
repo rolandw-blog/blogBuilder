@@ -1,8 +1,8 @@
 import readdirp from "readdirp";
-import { IConfig } from "./interfaces/config.interface";
+import { IConfig } from "@rolandwarburton/blog-common";
 import { statSync } from "fs";
 import { parse } from "path";
-import { IFileEntry } from "./interfaces/fileEntry.interface";
+import { IFileEntry } from "@rolandwarburton/blog-common";
 
 async function getFiles(config: IConfig): Promise<IFileEntry[]> {
   let files = [];

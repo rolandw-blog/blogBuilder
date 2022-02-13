@@ -1,7 +1,5 @@
 import readdirp from "readdirp";
-import { IConfig } from "./interfaces/config.interface";
-import { statSync, lstat } from "fs";
-import { promisify } from "util";
+import { IConfig } from "@rolandwarburton/blog-common";
 import { parse } from "path";
 // const stat = promisify(statSync);
 

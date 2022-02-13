@@ -1,5 +1,5 @@
 import { Link, Text } from "mdast";
-import { IConfig } from "./interfaces/config.interface";
+import { IConfig } from "@rolandwarburton/blog-common";
 import { parse, resolve } from "path";
 
 function buildReferences(config: IConfig, pathOnDist: string, nodes: Link[]) {
