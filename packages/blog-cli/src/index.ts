@@ -8,7 +8,7 @@ import { resolve } from "path";
 import Ajv from "ajv";
 import chalk from "chalk";
 import { IConfig } from "@rolandwarburton/blog-common";
-import { schema } from "./schema";
+import { schema } from "./schema.js";
 
 const ajv = new Ajv();
 
