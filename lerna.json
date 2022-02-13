@@ -2,7 +2,7 @@
   "packages": [
     "packages/*"
   ],
-  "version": null,
+  "version": "independent",
   "npmClient": "npm",
   "useWorkspaces": true
 }
