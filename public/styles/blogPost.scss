@@ -12,13 +12,42 @@ body {
 }
 article {
   #content {
-    width: clamp(300px, 45em, 100%);
+    width: clamp(300px, 42em, 800px);
+  }
+  ul {
+    list-style-type: none;
+    margin: 1em 0;
+    li:before {
+      display: inline-block;
+      content: "-";
+      width: 1em;
+      margin-left: -1em;
+    }
+    li:hover {
+      &:before {
+        display: inline-block;
+        content: ">";
+        width: 1em;
+        margin-left: -1em;
+      }
+    }
   }
 }
 
 article {
   grid-column: 2;
   padding: 2em;
+  ::-webkit-scrollbar {
+    background: $bg-accent;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-corner {
+    background: $bg-color;
+  }
+  ::-webkit-scrollbar-thumb {
+    // background: $bg-color;
+    background: $font-accent1;
+  }
 }
 
 // code blocks
@@ -27,6 +56,8 @@ pre {
   padding: 5px;
   margin: 2em 0;
   color: $font-accent1;
+  overflow-x: scroll;
+  scrollbar-width: thin;
 }
 
 // inline code

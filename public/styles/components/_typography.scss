@@ -19,14 +19,24 @@ h6 {
   text-transform: uppercase;
   margin: 0.5em 0;
   padding: 2px 0;
-  letter-spacing: 0.02em;
+  // letter-spacing: 0px;
 }
 
 // heading sizes
+h1 {
+  border: 2px solid $font-color;
+  padding: 20px;
+  margin-bottom: 4em;
+}
+
 h1,
 h2 {
-  font-size: clamp($font-base * 1, $font-base * 0.8, $font-base * 2.5);
+  font-size: clamp($font-base * 0.5, $font-base * 0.7, $font-base * 2.5);
   // border-bottom: 2px solid $font-accent3;
+}
+
+h2 {
+  border-bottom: 2px solid $font-accent3;
 }
 
 h3,
