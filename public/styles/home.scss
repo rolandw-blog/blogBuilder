@@ -1,0 +1,27 @@
+@import "./components/colors";
+@import "./components/reset";
+@import "./components/typography";
+@import "./components//navigation";
+@import "./components/an-old-hope";
+
+body {
+  background-color: $bg-color;
+  color: $font-color;
+}
+
+#root {
+  display: grid;
+  justify-content: center;
+  align-content: center;
+  // margin: auto auto;
+  height: 100vh;
+  // grid-template-columns: auto 1fr;
+}
+.links {
+  // height: 100px;
+  display: flex;
+}
+
+.link {
+  padding: 1em;
+}

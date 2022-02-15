@@ -30,6 +30,8 @@ function saturate(config: IConfig, file: IPageMeta, rootGroup: IPageMeta[]) {
   switch (file.template) {
     case "blogPost.hbs":
       styles.push("/css/blogPost.css");
+    case "home.hbs":
+      styles.push("/css/home.css");
   }
 
   // href

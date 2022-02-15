@@ -2,9 +2,14 @@
 <html lang="en">
 {{> header }}
 <body>
-  home
-  {{#each siblings}}
-    <div>{{nameFromPath this.pathOnDisk}}</div>
-  {{/each}}
+  <div id="root">
+    <div class="links">
+      {{#each siblings}}
+        <div class="link">
+          <a href="{{urlFromPath this.pathOnDisk}}">{{nameFromPath this.pathOnDisk}}</a>
+        </div>
+      {{/each}}
+    </div>
+  </div>
 </body>
 </html>
