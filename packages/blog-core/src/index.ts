@@ -39,7 +39,7 @@ async function main(config: IConfig) {
   const virtualMenuPages: IPageMeta[] = directories.map((dir) => {
     return {
       template: "menu.hbs",
-      pathOnDisk: dir.fullPath + "/index.md",
+      pathOnDisk: dir.fullPath,
       virtual: true,
       build: true
     };
@@ -70,8 +70,13 @@ async function main(config: IConfig) {
   config.blogConfig.pageMeta.forEach((file) => {
     // only add the file if its allowed to be built (IE not hidden)
     if (file.build) {
-      const parsedPath = parse(resolve(file.pathOnDisk));
-      fileGroups[parsedPath.dir] = [...(fileGroups[parsedPath.dir] || []), file];
+      // parse the path on the disk so we can get the directory
+      const dir = parse(file.pathOnDisk).dir;
+
+      // in a map we place the old files and append the new file
+      fileGroups[dir] = [...(fileGroups[dir] || []), file];
+      //                                 |            |
+      //                             old files     new file
     }
   });
 
