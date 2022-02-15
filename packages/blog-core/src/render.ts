@@ -32,6 +32,9 @@ class Render {
       nameFromPath: (name) => {
         return parse(name).name;
       },
+      urlFromPath: (pathOnDisk) => {
+        return pathOnDisk.replace(config.blogConfig.root, "").replace(/\.md/, "");
+      },
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       getPaginationSeg: (index: number, context: any) => {
         let result = "/";
