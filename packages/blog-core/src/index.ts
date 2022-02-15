@@ -36,14 +36,26 @@ async function main(config: IConfig) {
   syncConfig(config, files);
 
   // add the directories as virtual files
+  // these pages will be resolved in the group the file is in
   const virtualMenuPages: IPageMeta[] = directories.map((dir) => {
     return {
       template: "menu.hbs",
-      pathOnDisk: dir.fullPath,
+      pathOnDisk: dir.fullPath + "/index.md",
       virtual: true,
       build: true
     };
   });
+
+  // these pages will be resolved to the parent of the group the file is in
+  // this is so we can "virtually" place the menu as a link in its parents to navigate to it
+  virtualMenuPages.push(
+    ...virtualMenuPages.map((page) => {
+      return {
+        ...page,
+        pathOnDisk: page.pathOnDisk.split("/").slice(0, -1).join("/")
+      };
+    })
+  );
 
   // add the virtual pages from the config file
   const virtualConfigPages: IPageMeta[] = config.blogConfig.virtualPageMeta;
