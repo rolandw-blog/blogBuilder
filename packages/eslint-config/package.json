@@ -20,9 +20,6 @@
     "type": "git",
     "url": "git+https://github.com/rolandw-blog/blogbuilder.git"
   },
-  "scripts": {
-    "test": "echo \"Error: run tests from root\" && exit 1"
-  },
   "bugs": {
     "url": "https://github.com/rolandw-blog/blogbuilder/issues"
   },
