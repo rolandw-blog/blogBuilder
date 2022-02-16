@@ -30,7 +30,7 @@
     "url": "https://github.com/rolandw-blog/blogbuilder/issues"
   },
   "dependencies": {
-    "@rolandwarburton/common": "1.0.0",
+    "@rolandwarburton/blog-common": "1.0.0",
     "@types/marked": "^4.0.2",
     "@types/mdast": "^3.0.10",
     "chalk": "^5.0.0",
