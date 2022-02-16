@@ -24,7 +24,8 @@
     "build": "tsc -b",
     "watch": "tsc -b -w --preserveWatchOutput",
     "clean": "rm -rf ./dist",
-    "lint": "eslint -c .eslintrc ./src "
+    "lint": "eslint -c .eslintrc ./src",
+    "test": "jest"
   },
   "bugs": {
     "url": "https://github.com/rolandw-blog/blogbuilder/issues"
