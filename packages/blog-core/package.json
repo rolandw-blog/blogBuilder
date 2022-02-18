@@ -44,8 +44,7 @@
     "remark": "^14.0.2"
   },
   "devDependencies": {
-    "@rolandwarburton/eslint-config": "1.0.0",
-    "@types/yargs": "^17.0.8"
+    "@rolandwarburton/eslint-config": "1.0.0"
   },
   "engines": {
     "node": ">=16"

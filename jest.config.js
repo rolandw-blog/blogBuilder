@@ -8,5 +8,6 @@ export default {
   coveragePathIgnorePatterns: ["node_modules", "src/database", "src/test", "src/types"],
   reporters: ["default"],
   globals: { "ts-jest": { diagnostics: true } },
-  transform: {}
+  transform: {},
+  resolver: "../../util/jest-ts-webcompat-resolver.cjs"
 };

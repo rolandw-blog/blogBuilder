@@ -27,8 +27,5 @@
   },
   "bugs": {
     "url": "https://github.com/rolandw-blog/blogbuilder/issues"
-  },
-  "devDependencies": {
-    "typescript": "^4.5.5"
   }
 }

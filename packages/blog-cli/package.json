@@ -10,7 +10,7 @@
   "homepage": "https://github.com/rolandw-blog/blogbuilder#readme",
   "license": "ISC",
   "directories": {
-    "lib": "lib",
+    "src": "src",
     "test": "__tests__"
   },
   "files": [
@@ -24,7 +24,8 @@
     "build": "tsc -b",
     "watch": "tsc -b -w --preserveWatchOutput",
     "clean": "rm -rf ./dist",
-    "lint": "eslint -c .eslintrc ./src "
+    "lint": "eslint -c .eslintrc ./src ",
+    "start": "node ./dist/index.js"
   },
   "dependencies": {
     "@rolandwarburton/blog-core": "^1.0.1",
@@ -38,5 +39,8 @@
   },
   "engines": {
     "node": ">=16"
+  },
+  "devDependencies": {
+    "@types/yargs": "^17.0.8"
   }
 }
