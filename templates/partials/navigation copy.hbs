@@ -1,0 +1,35 @@
+<nav>
+  {{!-- frontmatter --}}
+  <div class="nav-section">
+    {{> frontMatter}}
+    {{!-- only show on pages that are NOT menus --}}
+    {{#unless (templateIs this.pathOnDisk "menu.hbs")}}
+      <div>
+        created: {{getFirstChange changes}}
+      </div>
+      <div>
+        last edited: {{getLastChange changes}}
+      </div>
+    {{/unless}}
+
+  {{!-- pagination --}}
+    path:
+    <a href="/">~</a>/
+    {{~#each pagination ~}}
+    <a href="{{~ getPaginationSeg @index ~}}">{{~ this ~}}</a>/
+      {{~^~}}
+    {{/each}}
+    {{!-- only show on pages that are NOT menus --}}
+    {{#unless (templateIs this.pathOnDisk "menu.hbs")}}
+      <div>
+        page source: <a href="{{sourceUrl}}">{{getUrlOrigin sourceUrl }}</a>
+      </div>
+    {{/unless}}
+  </div>
+</nav>
+
+{{!-- IGNORE THIS JUNK --}}
+{{!-- {{@index}}  --}}
+{{!-- {{#each pagination }}
+  /{{this}}
+{{/each}} --}}

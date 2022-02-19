@@ -92,20 +92,6 @@ h3::before {
   color: $font-accent3;
 }
 
-// anchor styles
-a {
-  // color: $font-accent3;
-  color: $font-color;
-  text-decoration: underline;
-  // font-weight: bold;
-  font-style: italic;
-  &:hover {
-    background-color: $bg-accent;
-    border: 1px solid $font-accent3;
-    padding: 1px;
-  }
-}
-
 // article specific anchor styles
 article {
   a {

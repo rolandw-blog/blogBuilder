@@ -1,4 +1,4 @@
-@import "./components/colors";
+@import "./components/colors_light";
 @import "./components/reset";
 @import "./components/typography";
 @import "./components//navigation";
@@ -9,6 +9,9 @@ body {
   color: $font-color;
   display: grid;
   grid-template-columns: auto 1fr;
+}
+nav {
+  padding: 2em;
 }
 article {
   #content {
@@ -68,4 +71,18 @@ code:not(pre > code) {
   font-family: monospace;
   background-color: $font-accent2;
   border: 1px solid $font-color;
+}
+
+// anchor styles
+a {
+  // color: $font-accent3;
+  color: $font-color;
+  text-decoration: underline;
+  // font-weight: bold;
+  font-style: italic;
+  &:hover {
+    background-color: $bg-accent;
+    border: 1px solid $font-accent3;
+    padding: 1px;
+  }
 }

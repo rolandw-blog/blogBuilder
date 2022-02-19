@@ -1,0 +1,27 @@
+{{#with frontMatter}}
+  {{!-- version --}}
+  {{#if (templateIs this.pathOnDisk "menu.hbs")}}
+    {{#if version}}
+      <div>
+        version: {{version}}
+      </div>
+    {{else}}
+      <div>
+        version: 1.0
+      </div>
+    {{/if}}
+  {{/if}}
+
+  {{!-- author --}}
+  {{#if (templateIs this.pathOnDisk "menu.hbs")}}
+    {{#if author}}
+      <div>
+        written by: {{author}}
+      </div>
+      {{else}}
+      <div>
+        written by: roland
+      </div>
+    {{/if}}
+  {{/if}}
+{{/with}}

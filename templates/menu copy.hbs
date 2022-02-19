@@ -3,8 +3,14 @@
 {{> header }}
 <body>
   {{> navigation }}
-  <div class="links">
+  {{!-- <div class="links"> --}}
     {{#each siblings}}
+      <div>
+        {{!-- {{this.pathOnDisk}} --}}
+        a
+      </div>
+    {{/each}}
+    {{!-- {{#each siblings}}
           {{#if (templateIs this.pathOnDisk "menu.hbs")}}
             <a href="{{urlFromPath this.pathOnDisk}}">
               <div class="link link-folder">
@@ -20,7 +26,7 @@
               </div>
             </a>
           {{/if}}
-    {{/each}}
-  </div>
+    {{/each}} --}}
+  {{!-- </div> --}}
 </body>
 </html>
