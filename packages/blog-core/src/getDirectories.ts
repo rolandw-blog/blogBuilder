@@ -9,7 +9,7 @@ async function getDirectories(config: IConfig) {
     const parent = parse(config.file).dir;
     return await readdirp.promise(parent, {
       depth: 0,
-      alwaysStat: true,
+      alwaysStat: false,
       type: "directories",
       directoryFilter: ["!.git", "!media", "!assets"]
     });
@@ -17,7 +17,7 @@ async function getDirectories(config: IConfig) {
     // find and return all markdown files
     return await readdirp.promise(config.blogConfig.root, {
       depth: 99,
-      alwaysStat: true,
+      alwaysStat: false,
       type: "directories",
       directoryFilter: ["!.git", "!media", "!assets"]
     });
