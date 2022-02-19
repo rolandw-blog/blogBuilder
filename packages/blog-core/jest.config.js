@@ -1,6 +1,6 @@
-import jestConfig from "../../jest.config.js";
+const jestConfig = require("../../jest.config");
 
 /** @type {import('ts-jest/dist/types').InitialOptionsTsJest} */
-export default {
+module.exports = {
   ...jestConfig
 };

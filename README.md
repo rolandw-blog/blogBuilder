@@ -34,6 +34,8 @@ build everything.
 By default, if no file is passed in with `--file` or `-f` flag,
 then the whole blog will be built from the blog root in `config.json`.
 
+Also for now pass in `-r esm` to node when running the cli.
+
 ```none
 example \
   --templates="./templates/" \
